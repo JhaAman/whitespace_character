@@ -1,2 +1,2 @@
 # whitespace_character
-' '
+'hello'
