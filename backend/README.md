@@ -1,5 +1,5 @@
 # Whitespace character ' ' backend
-___
+
 ## How to run
 1. clone the repo
 2. change directory to the backend folder
