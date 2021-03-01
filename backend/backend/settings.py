@@ -74,17 +74,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'whitespace',
-        'CLIENT': {
-            'enforce_schema': False,
-            'host': '127.0.0.1',
-            'port': 27017,
-            'username': 'admin',
-            'password': 'password',
-            'authSource': 'admin',
-            'authMechanism': 'SCRAM-SHA-1'
-        }
+        'USER': 'admin',
+        'PASSWORD': 'password',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 # Password validation

@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=whitespace
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - whitespace-db-data:/var/lib/postgresql/data/pgdata
+
+  api-server:
+    build:
+      context: ./backend
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/code
+    ports:
+      - 8000:8000
+    command:
+      - bash
+      - -c
+      - |
+        ./wait-for-it.sh db:5432 -- python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000
+
+volumes:
+  whitespace-db-data:
