@@ -22,10 +22,11 @@ def create_user(request):
     try:
         first_name = json.loads(request.body)['first_name']
         last_name = json.loads(request.body)['last_name']
-        user = api.models.User.objects.create(first_name=first_name, last_name=last_name)
+        User.objects.create(first_name=first_name, last_name=last_name)
         return Response(None, status.HTTP_201_CREATED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(["POST"])
 def create_users(request):
@@ -37,6 +38,7 @@ def create_users(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["POST"])
 def create_vote(request):
     try:
@@ -45,6 +47,7 @@ def create_vote(request):
         return Response(None, status.HTTP_201_CREATED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(["GET"])
 def get_users(request):
