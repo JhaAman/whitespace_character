@@ -35,7 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # libraries
     'rest_framework',
+
+    # apps
     'api'
 ]
 
@@ -75,10 +79,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'whitespace',
-        'USER': 'admin',
-        'PASSWORD': 'password',
-        'HOST': 'db',
+        'NAME': 'iaplital',
+        'USER': 'iaplital',
+        'PASSWORD': 's7UgITMAJt3IYnP2_qCG9jfad5v7oVTz',
+        'HOST': 'rosie.db.elephantsql.com',
         'PORT': 5432,
     }
 }
