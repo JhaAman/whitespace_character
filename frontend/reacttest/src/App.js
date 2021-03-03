@@ -15,7 +15,7 @@ function App() {
       <h1>CHUCK NORRIS FACTS</h1>
       <h1>Hello</h1>
       <div className="facts">
-        {facts.value}
+        
       </div>
       <div>
         <button className="apifetchbutton" onClick={fetchFact}>Get New Fact</button>
