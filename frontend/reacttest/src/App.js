@@ -27,7 +27,7 @@ class App extends Component {
         />
           <h3 className="App-title">Who's the Rockstar Employee of the Week? Scroll down below to find out!</h3>
         </header>
-        <Banner title="John Doe" image={logo} imageClass="App-logo" css={this.state.banner2Css}/>
+        <Banner title="John Doe" image={logo} imageClass="App-logo" css={this.state.bannerCss}/>
         <Banner showBanner={true}>
         </Banner>
       </div>
