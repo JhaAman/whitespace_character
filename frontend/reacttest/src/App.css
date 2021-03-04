@@ -36,3 +36,62 @@
     transform: rotate(360deg);
   }
 }
+
+.menu-box {
+  width: 20%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: lightblue;
+}
+
+.team-logo-box {
+  width: 100%;
+  height: 10%;
+  border: 1px solid black;
+  background-color: lightgrey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.team-logo {
+  font-size: 30px;
+  color: black;
+}
+
+.menu-links-box {
+  width: 100%;
+  height: 80%;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-link {
+  font-size: 25px;
+  color: black;
+}
+
+.menu-link:hover {
+  text-decoration: underline;
+}
+
+.bottom-menu-box {
+  width: 100%;
+  height: 10%;
+  background-color: lightgrey;
+}
+
+.bottom-menu-button {
+  width: 100%;
+  height: 50%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+}
