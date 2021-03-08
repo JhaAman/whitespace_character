@@ -26,7 +26,7 @@ class App extends Component {
           arcWidth={0.3} 
           percent={0.37} 
         />
-          <h3 className="App-title">Who's the Rockstar Employee of the Week? Scroll down below!</h3>
+          <h3 className="App-title">Who's the Rockstar Employee of the Month? Scroll down below!</h3>
         </header>
         <Banner title="John Doe" image={logo} imageClass="App-logo" css={this.state.bannerCss}/>
         <Banner showBanner={true}>
