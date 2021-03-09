@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+  font-family: 'AlegreyaSans';
+  src:local('AlegreyaSans'), url("./typefaces/AlegreyaSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Faune';
+  src:local('Faune'), url("./typefaces/Faune-TextItalic.otf");
+}

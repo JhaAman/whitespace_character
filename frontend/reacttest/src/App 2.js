@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bannerCss: { color: "#FFF", backgroundColor: "#D3C4B7", fontSize: 40 }
+      bannerCss: { color: "#FFF", backgroundColor: "orange", fontSize: 40 }
     };
 
   }
@@ -19,7 +19,14 @@ class App extends Component {
       <div>
       <div className="App">
         <header className="App-header">
-          <h3 className="App-title">Who's the Rockstar Employee of the Month? See below!</h3>
+        <h1 className="App-title">Group Goal Meter</h1>
+        <GaugeChart id="gauge-chart" 
+          nrOfLevels={100} 
+          color={["#EE3426"]} 
+          arcWidth={0.3} 
+          percent={0.37} 
+        />
+          <h3 className="App-title">Who's the Rockstar Employee of the Month? Scroll down below!</h3>
         </header>
         <Banner title="John Doe" image={logo} imageClass="App-logo" css={this.state.bannerCss}/>
         <Banner showBanner={true}>
@@ -29,13 +36,6 @@ class App extends Component {
             <div className='team-logo-box'>
                 <h1 className='team-logo'>Team </h1>
             </div>
-            <h1 className="App-title">Group Goal Meter</h1>
-            <GaugeChart id="gauge-chart" 
-              nrOfLevels={10} 
-              color={["#fde9e7"]} 
-              arcWidth={0.45} 
-              percent={1} 
-            />
             <div className='menu-links-box'>
                 <h1 className='menu-link'>Homepage</h1>
                 <h1 className='menu-link'>My Recognitions</h1>
