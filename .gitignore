@@ -103,7 +103,7 @@ ipython_config.py
 
 # pyenv
 .python-version
-backend/pyvenv.cfg
+pyvenv.cfg
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
@@ -157,3 +157,7 @@ dmypy.json
 .prof
 
 # End of https://www.toptal.com/developers/gitignore/api/django
+
+.idea
+.vscode
+.DS_Store
