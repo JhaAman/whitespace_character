@@ -48,6 +48,16 @@ def create_vote(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
+@api_view(["GET"])
+def get_votes(request):
+    try:
+        votes = Vote.objects.all()
+        to_return = []
+        for vote in votes:
+            to_return.append({"vid": vote.vid, "tags": vote.tags})
+        return JsonResponse({"all_votes": to_return})
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
 @api_view(["GET"])
 def get_users(request):

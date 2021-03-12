@@ -1,0 +1,1 @@
+locust -f locust_get_requests.py --host http://localhost:8000 --headless -u 20 -r 2 -t 10s
