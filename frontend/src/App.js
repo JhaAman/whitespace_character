@@ -1,4 +1,5 @@
 import './App.css';
+import Banner from 'react-js-banner'
 
 function App() {
   return (
