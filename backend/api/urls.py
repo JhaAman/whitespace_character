@@ -1,11 +1,12 @@
 from django.urls import path
 
-from . import api
+import api.services.user as api_user
+import api.services.vote as api_vote
 
 urlpatterns = [
-    path('dummy_api/', api.dummy_api),
-    path('get_users/', api.get_users),
-    path('create_user/', api.create_user),
-    path('create_users/', api.create_users),
-    path('create_vote/', api.create_vote),
+    # path('dummy_api/', api.dummy_api),
+    path('get_users/', api_user.get_users),
+    path('create_user/', api_user.create_user),
+    path('create_users/', api_user.create_users),
+    path('create_vote/', api_vote.create_vote),
 ]
