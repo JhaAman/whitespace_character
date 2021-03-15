@@ -20,6 +20,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     volumes:
-      - ./frontend:/app
+      - ./frontend/src:/app/src
     ports:
       - 3000:3000
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true

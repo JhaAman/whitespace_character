@@ -1,7 +1,9 @@
-FROM node:alpine
-WORKDIR './app'
+FROM node:12.14.0-alpine
 
-COPY package.json .
-COPY package-lock.json .
+WORKDIR /app/
+
 COPY . .
-CMD ["npm", "start"]
+
+RUN npm install
+
+CMD [ "npm", "start" ]
