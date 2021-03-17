@@ -19,8 +19,20 @@ function Networkprofile(props){
 function Award(props){
   return(
     <Col className="award">
+      <h2>🏆</h2>
       {props.award}
     </Col>
+  )
+}
+function DevColors(){
+  return(
+<div>
+        <div style={{backgroundColor:"#fef2e6"}}>fef2e6</div>
+        <div style={{backgroundColor:"#68321a"}}>68321a</div>
+        <div style={{backgroundColor:"#fff1e5"}}>fff1e5</div>
+        <div style={{backgroundColor:"#d3c4b7"}}>d3c4b7</div>
+        <div style={{backgroundColor:"#fde9e7"}}>fde9e7</div>
+      </div>
   )
 }
 function App() {
@@ -48,16 +60,18 @@ function App() {
       </div>
       
       {page===0?(
-      <Jumbotron style={{backgroundColor:"#fde9e7"}}>
+      <div className="contentpanel">
+        <br/>
         <Row>
           <Award award="Awesome guy award"/>
           <Award award="Best dressed award"/>
           <Award award="Rockstar of the month in Jan 2019"/>
           <Award award="95%&lt; on time"/>
         </Row>
-      </Jumbotron >
+      </div>
       ):(
-      <Jumbotron style={{backgroundColor:"#fde9e7"}}>
+      <div className="contentpanel">
+        <br/>
         <Row>
         <Col xs={6}><Networkprofile name="Barry Johnson" picture={profilepic}/></Col>
         <Col xs={6}><Networkprofile name="Lewis Brindley" picture={profilepic}/></Col>
@@ -70,17 +84,11 @@ function App() {
         <Col xs={6}><Networkprofile name="Arnold Schwarzenegger" picture={profilepic}/></Col>
         <Col xs={6}><Networkprofile name="Naomi Satou" picture={profilepic}/></Col>
         </Row>
-      </Jumbotron>
+      </div>
       )}
 
-      <br/>
-      <div>
-        <div style={{backgroundColor:"#fef2e6"}}>fef2e6</div>
-        <div style={{backgroundColor:"#68321a"}}>68321a</div>
-        <div style={{backgroundColor:"#fff1e5"}}>fff1e5</div>
-        <div style={{backgroundColor:"#d3c4b7"}}>d3c4b7</div>
-        <div style={{backgroundColor:"#fde9e7"}}>fde9e7</div>
-      </div>
+      
+      {/*<DevColors/>**/}
 
     </div>
   );

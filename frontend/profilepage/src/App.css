@@ -85,3 +85,7 @@ col{
   height:100px!important;
   width:100px!important;
 }
+.contentpanel{
+  background-color:#fde9e7;
+  height: 400px;
+}
