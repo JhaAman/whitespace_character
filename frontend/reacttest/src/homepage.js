@@ -1,40 +1,29 @@
 import React, { Component } from 'react';
+import Banner from 'react-js-banner';
 import './App.css';
+import logo from './logo.jpg';
 import GaugeChart from 'react-gauge-chart'
-import {Button} from 'react';
-
-class UpgradedButton extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      buttonText: "Upload JSON Data",
-      buttonCss: { color: "#FFF", backgroundColor: "#D3C4B7" }
-    };
-  }
-
-  handleClick = () => {
-    console.log("Button clicked")
-    let buttonText = this.state.buttonText === "Upload" ? "Uploading" : "Upload"
-    this.setState({buttonText: buttonText})
-  }
-}
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      bannerCss: { color: "#FFF", backgroundColor: "#D3C4B7", fontSize: 40 }
+    };
+
+  }
+  
   render() {
     return (
       <div>
       <div className="App">
         <header className="App-header">
-          <h3 className="App-title">Administrator Upload Page</h3>
+          <h3 className="App-title">Who's the Rockstar Employee of the Month? See below!</h3>
         </header>
-        <Button
-        title="Upload JSON Data"
-        background-color="#D3C4B7"
-        color= "#FFF"
-        css={this.state.buttonCss}
-        onClick={this.handleClick}>{this.state.buttonText}
-        </Button>
+        <Banner title="John Doe" image={logo} imageClass="App-logo" css={this.state.bannerCss}/>
+        <Banner showBanner={true}>
+        </Banner>
       </div>
         <div className='menu-box'>
             <div className='team-logo-box'>
@@ -69,5 +58,3 @@ class App extends Component {
 }
 
 export default App;
-export {UpgradedButton};
-
