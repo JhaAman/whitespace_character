@@ -1,40 +1,22 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import GaugeChart from 'react-gauge-chart'
 import {Button} from 'react';
 
-class UpgradedButton extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      buttonText: "Upload JSON Data",
-      buttonCss: { color: "#FFF", backgroundColor: "#D3C4B7" }
-    };
+function App() {
+  const [ buttonText, setButtonText ] = useState('Upload');
+
+  const handleClick = () => {
+    console.log("Button clicked");
   }
 
-  handleClick = () => {
-    console.log("Button clicked")
-    let buttonText = this.state.buttonText === "Upload" ? "Uploading" : "Upload"
-    this.setState({buttonText: buttonText})
-  }
-}
-
-class App extends Component {
-
-  render() {
-    return (
+  return (
       <div>
       <div className="App">
         <header className="App-header">
           <h3 className="App-title">Administrator Upload Page</h3>
+          <button style={{color: 'black', backgroundColor: '#D3C4B7t'}} onClick={handleClick}>Upload JSON Data</button>n
         </header>
-        <Button
-        title="Upload JSON Data"
-        background-color="#D3C4B7"
-        color= "#FFF"
-        css={this.state.buttonCss}
-        onClick={this.handleClick}>{this.state.buttonText}
-        </Button>
       </div>
         <div className='menu-box'>
             <div className='team-logo-box'>
@@ -65,9 +47,7 @@ class App extends Component {
         </div>
         </div>
     );
-  }
 }
 
 export default App;
-export {UpgradedButton};
 
