@@ -1,10 +1,9 @@
-from django.db import models
+from django.db import models\
 
 class User(models.Model):
-    uid = models.CharField(max_length=8, default='00000000')
+    uid = models.CharField(primary_key= True,max_length= 100, default="0",auto_created=True,editable=False)
     tid = models.CharField(max_length=8, default='00000000')
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    email = models.EmailField(max_length = 70, default='BlankSpace@gmail.com')
-    password = models.CharField(max_length=9, default= '000000000')
-    manager_status = models.BooleanField(null= False)
+    email = models.EmailField(max_length = 70, null= True, blank=False,unique=True)
+    password = models.CharField(max_length=20, default= 'TeamBlankSpace')
