@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import GaugeChart from 'react-gauge-chart'
 import {Button} from 'react';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 function App() {
   const [ buttonText, setButtonText ] = useState('Upload');
@@ -15,7 +17,10 @@ function App() {
       <div className="App">
         <header className="App-header">
           <h3 className="App-title">Administrator Upload Page</h3>
-          <button style={{color: 'black', backgroundColor: '#D3C4B7t'}} onClick={handleClick}>Upload JSON Data</button>n
+          <Popup trigger={<button>Upload JSON Data</button>} position="right center">
+          <div>Upload and Submit Data Below</div>
+          <button>Submit</button>
+          </Popup>
         </header>
       </div>
         <div className='menu-box'>
