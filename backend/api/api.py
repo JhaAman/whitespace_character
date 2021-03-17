@@ -35,7 +35,7 @@ def create_users(request):
     try:
         users = json.loads(request.body)['users']
         for user in users:
-            User.objects.create(first_name=user['first_name'], last_name=user['last_name'])
+            User.objects.create(first_name=user['first_name'], last_name=user['last_name'],email = user['email'])
         return Response(None, status.HTTP_201_CREATED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
@@ -57,7 +57,7 @@ def get_users(request):
         users = User.objects.all()
         to_return = []
         for user in users:
-            to_return.append({"first_name": user.first_name, "last_name": user.last_name})
+            to_return.append({"first_name": user.First_name, "last_name": user.Last_name})
         return JsonResponse({"all_users": to_return})
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
