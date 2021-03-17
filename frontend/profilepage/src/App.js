@@ -19,7 +19,7 @@ function Networkprofile(props){
 function Award(props){
   return(
     <Col className="award">
-      <h2>🏆</h2>
+      <h2>🏆</h2><br/>
       {props.award}
     </Col>
   )

@@ -2,7 +2,7 @@ import './App.css';
 import React, {useState} from 'react';
 import axios from 'axios';
 
-let loginApi = "";
+let loginApi = "http://localhost:8000/api/log_in/";
 
 function App() {
   const[email, setEmail] = useState("");
