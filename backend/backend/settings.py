@@ -82,22 +82,22 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'iaplital',
-        'USER': 'iaplital',
-        'PASSWORD': 's7UgITMAJt3IYnP2_qCG9jfad5v7oVTz',
-        'HOST': 'rosie.db.elephantsql.com',
-        'PORT': 5432,
-    }
-    #     'default': {
+    # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'appdata',
-    #     'USER': 'khainguyen',
-    #     'PASSWORD': '12345',
-    #     'HOST': 'localhost',
+    #     'NAME': 'iaplital',
+    #     'USER': 'iaplital',
+    #     'PASSWORD': 's7UgITMAJt3IYnP2_qCG9jfad5v7oVTz',
+    #     'HOST': 'rosie.db.elephantsql.com',
     #     'PORT': 5432,
     # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'appdata',
+        'USER': 'khainguyen',
+        'PASSWORD': '12345',
+        'HOST': 'localhost',
+        'PORT': 5432,
+    }
 }
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import JsonResponse
 from api.models.User import User
-from api.models.Vote import Vote
+from api.models.Recognition import Recognition
 import json
 
 
