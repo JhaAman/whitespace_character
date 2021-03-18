@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import api.services.constant as const
 from api.models.Company import Company
 import api.services.utility as utils
+from rest_framework import serializers
 
 
 """
@@ -10,7 +11,7 @@ Team Manager
 """
 class TeamManager(models.Manager):
     def create(self, *args, **kwargs):
-        
+
         # create template
         instance = Team(**kwargs)
 
@@ -23,14 +24,14 @@ class TeamManager(models.Manager):
         instance.company = companyRef
 
         # Auto-generated fields
-        
-        ## tid
+
+        # tid
         while True:
             instance.tid = utils.create_unique_id(len=const.ID_LEN)
             if not Team.objects.filter(tid=instance.tid).exists():
                 break
 
-        ## values_scores
+        # values_scores
         valuesList = companyRef.values
         instance.values_scores = dict().fromkeys(valuesList, 0)
 
@@ -54,6 +55,8 @@ Optional field
     tid
     values_scores
 """
+
+
 class Team(models.Model):
 
     objects = TeamManager()
@@ -100,3 +103,9 @@ class Team(models.Model):
 
     class Meta:
         verbose_name = "Team"
+
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = '__all__'

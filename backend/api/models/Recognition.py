@@ -2,6 +2,7 @@ from django.db import models
 from api.models.User import User
 import api.services.constant as const
 import api.services.utility as utils
+from rest_framework import serializers
 
 
 """
@@ -25,8 +26,8 @@ class RecognitionManager(models.Manager):
         instance.user_to = User.objects.get(uid=instance.uid_to)
 
         # Auto-generated fields
-        
-        ## rid
+
+        # rid
         while True:
             instance.rid = utils.create_unique_id(len=const.ID_LEN)
             if not Recognition.objects.filter(rid=instance.rid).exists():
@@ -96,3 +97,9 @@ class Recognition(models.Model):
 
     class Meta:
         verbose_name = "Vote"
+
+
+class RecognitionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recognition
+        fields = '__all__'

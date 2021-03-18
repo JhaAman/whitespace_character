@@ -3,7 +3,7 @@ import api.services.constant as const
 from api.models.Company import Company
 from api.models.Team import Team
 import api.services.utility as utils
-import uuid
+from rest_framework import serializers
 
 
 """
@@ -24,14 +24,14 @@ class UserManager(models.Manager):
         instance.team = teamRef
 
         # Auto-generated fields
-        
-        ## uid
+
+        # uid
         while True:
             instance.uid = utils.create_unique_id(len=const.ID_LEN)
             if not User.objects.filter(uid=instance.uid).exists():
                 break
 
-        ## values_scores
+        # values_scores
         companyRef = Company.objects.filter(cid=teamRef.cid).get()
         valuesList = companyRef.values
         instance.values_scores = dict().fromkeys(valuesList, 0)
@@ -59,6 +59,8 @@ Optional fields:
     user_role
     values_scores
 """
+
+
 class User(models.Model):
 
     objects = UserManager()
@@ -132,3 +134,9 @@ class User(models.Model):
 
     class Meta:
         verbose_name = "User"
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'

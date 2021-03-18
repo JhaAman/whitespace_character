@@ -11,10 +11,10 @@ class CompanyManager(models.Manager):
     def create(self, *args, **kwargs):
         # create template
         instance = Company(**kwargs)
-        
+
         # Auto-generated fields
-        
-        ## cid
+
+        # cid
         while True:
             instance.cid = utils.create_unique_id(len=const.ID_LEN)
             if not Company.objects.filter(cid=instance.cid).exists():
@@ -63,3 +63,9 @@ class Company(models.Model):
 
     class Meta:
         verbose_name = "Company"
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = '__all__'
