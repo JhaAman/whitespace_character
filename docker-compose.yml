@@ -6,6 +6,8 @@ services:
       context: ./backend
     volumes:
       - ./backend:/code
+    env_file:
+      - ./backend/.env
     ports:
       - 8000:8000
     command:
