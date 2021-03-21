@@ -1,5 +1,5 @@
 import profilepic from './arnold.jpg';
-import './App.css';
+import './Profile.css';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
@@ -35,7 +35,7 @@ function DevColors(){
       </div>
   )
 }
-function App() {
+function Profile() {
   const [page, setPage] = useState(0);
   
   return (
@@ -94,4 +94,4 @@ function App() {
   );
 }
 
-export default App;
+export default Profile;
