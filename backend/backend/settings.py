@@ -94,6 +94,17 @@ DATABASES = {
         }
     }
 }
+if 'WHITESPACE_LOCAL' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'whitespace',
+            'USER': 'admin',
+            'PASSWORD': 'password',
+            'HOST': 'db',
+            'PORT': 5432,
+        }
+    }
 
 if 'test' in sys.argv:
     DATABASES['default'] = {
