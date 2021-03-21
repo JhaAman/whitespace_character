@@ -3,7 +3,7 @@ import Login from './Login.js';
 import EmployeeHomepage from './EmployeeHomepage.js';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-
+import Profile from './Profile.js';
 //import React, {useState} from 'react';
 import axios from 'axios';
 
@@ -19,6 +19,9 @@ function App() {
         </Route>
         <Route path='/homepage'>
           <EmployeeHomepage />
+        </Route>
+        <Route path='/profile'>
+          <Profile/>
         </Route>
       </Switch>
     </Router>
