@@ -59,6 +59,7 @@ class Recognition(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         auto_created=True,
+        related_name="userid_from"
     )
 
     user_to = models.ForeignKey(
@@ -66,6 +67,7 @@ class Recognition(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         auto_created=True,
+        related_name="userid_to"
     )
 
     uid_from = models.CharField(
