@@ -1,12 +1,15 @@
 import React from 'react';
 import './Toolbar.css';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Toolbar({isOpen, setIsOpen}) {
     return (
-        <div className='toolbar-box'>
-            <h1 style={{color: 'white', position: 'fixed', left: '20px', margin: '0'}}>Peer Recognition Interface</h1>
-            <button onClick={() => setIsOpen(!isOpen)} style={{position: 'fixed', right: '20px'}}>Open</button>
-        </div>
+        <Row>
+            <Col xs={11}><h1 style={{color: 'white'}}>Peer Recognition Interface</h1></Col>
+            <Col xs={1}><button className="HamburgerMenu" onClick={() => setIsOpen(!isOpen)} >≡</button></Col>
+        </Row>
     );
 }
 

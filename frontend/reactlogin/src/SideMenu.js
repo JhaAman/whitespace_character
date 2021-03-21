@@ -11,10 +11,10 @@ function SideMenu({isOpen, setIsOpen}) {
             </div>
             <div className='menu-links-box'>
                 <Link className='menu-link' to='/homepage'>Homepage</Link>
-                <Link className='menu-link'>My Recognitions</Link>
-                <Link className='menu-link'>Sent Recognitions</Link>
-                <Link className='menu-link'>Send Message</Link>
-                <Link className='menu-link'>Send Recognition</Link>
+                <Link className='menu-link' to=''>My Recognitions</Link>
+                <Link className='menu-link' to=''>Sent Recognitions</Link>
+                <Link className='menu-link' to=''>Send Message</Link>
+                <Link className='menu-link' to=''>Send Recognition</Link>
             </div>
             <div className='bottom-menu-box'>
                 <div className='bottom-menu-button'>
