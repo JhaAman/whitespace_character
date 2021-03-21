@@ -3,10 +3,11 @@
 
 ## Backend
 
-## How to run
-1. clone the repo
-2. change directory to the backend folder
-3. run `docker-compose up --build` to build and run the backend server
+There is a Swagger document at `http://localhost:8000/api/swagger/`
 
-=======
-For App.js, run commands 'npm install react-gauge-chart' and 'npm install react-js-banner'. 
+## How to run the APIs server
+1. run `docker-compose up --build` to build and run the backend server
+
+## How to test
+1. run `./test.sh` to test the backend server
+
