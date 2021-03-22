@@ -7,6 +7,8 @@ from drf_yasg import openapi
 import api.services.user as apiUser
 import api.services.recognition as apiRecognition
 import api.services.profile as apiProfile
+import api.services.company as apiCompany
+import api.services.team as apiTeam
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -23,6 +25,8 @@ urlpatterns = [
     path('create_user/', apiUser.create_user),
     path('create_users/', apiUser.create_users),
     path('create_vote/', apiRecognition.create_vote),
+    path('create_company/', apiCompany.create_company),
+    path('create_team/', apiTeam.create_team),
     path('get_profile/', apiProfile.get_profile),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]

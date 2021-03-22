@@ -58,7 +58,6 @@ Optional field
 
 
 class Team(models.Model):
-
     objects = TeamManager()
 
     # refer to Company object model as primary key
@@ -87,6 +86,7 @@ class Team(models.Model):
     name = models.CharField(
         max_length=const.CHARFIELD_SHORT_LEN,
         unique=True,
+        blank=False,
     )
 
     # scores on company corporate values
@@ -106,6 +106,11 @@ class Team(models.Model):
 
 
 class TeamSerializer(serializers.ModelSerializer):
+
+    def validate_cid(self, value):
+        if not Company.objects.filter(cid=value).exists():
+            raise serializers.ValidationError("Company id not found")
+        return value
     class Meta:
         model = Team
         fields = '__all__'

@@ -46,12 +46,12 @@ class Company(models.Model):
 
     name = models.CharField(
         max_length=const.CHARFIELD_SHORT_LEN,
-        default='',
         unique=True,
+        blank=False
     )
 
     values = models.JSONField(
-        default=list,
+        blank=False
     )
 
     # date object was created

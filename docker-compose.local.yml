@@ -3,6 +3,8 @@ version: '3.7'
 services:
   db:
     image: postgres
+    ports:
+      - 5432:5432
     environment:
       - POSTGRES_DB=whitespace
       - POSTGRES_USER=admin

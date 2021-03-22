@@ -72,12 +72,12 @@ class Recognition(models.Model):
 
     uid_from = models.CharField(
         max_length=const.ID_LEN,
-        default='0',
+        blank=False,
     )
 
     uid_to = models.CharField(
         max_length=const.ID_LEN,
-        default='0',
+        blank=False,
     )
 
     tags = models.JSONField(
@@ -102,6 +102,26 @@ class Recognition(models.Model):
 
 
 class RecognitionSerializer(serializers.ModelSerializer):
+    def validate_uid_from(self, value):
+        if not User.objects.filter(uid=value).exists():
+            raise serializers.ValidationError("User from not found")
+        return value
+
+
+    def validate_uid_to(self, value):
+        if not User.objects.filter(uid=value).exists():
+            raise serializers.ValidationError("User to not found")
+        return value
+
+
+    def validate(self, data):
+        """
+        Check uid_from is different from uid_to
+        """
+        if data['uid_from'] == data['uid_to']:
+            raise serializers.ValidationError("Users must be different")
+        return data
+
     class Meta:
         model = Recognition
         fields = '__all__'

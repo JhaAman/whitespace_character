@@ -50,5 +50,3 @@ def dummy_api(request):
         return JsonResponse({"sum": n1 + n2})
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
-    except Exception as e:
-        return Response(e.args[0], status.HTTP_500_INTERNAL_SERVER_ERROR)
