@@ -41,11 +41,45 @@ def create_users(request):
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(["PUT"])
+def parsing_values(request):
+    try:
+        users = User.objects.all()
+        values = json.loads(request.body)['values']
+        ret = {}
+        for value in values:
+            ret[value] = 0
+        ret = json.dumps(ret)
+        for user in users:
+            user.values_score = ret
+            user.save()
+        return Response(None, status.HTTP_201_CREATED)
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(["POST"])
 def create_vote(request):
     try:
         vote = json.loads(request.body)
-        Vote.objects.create(vid=vote['vid'], tags=vote['tags'])
+        current_votes = Vote.objects.all()
+        current_emps = User.objects.all()
+        uid_from = vote['uid_from']
+        uid_to = vote['uid_to']
+        tags = vote['tags']
+        for curr in current_votes:
+            if curr.uid_from == uid_from:
+                if curr.uid_to == uid_to:
+                    if curr.tags == tags:
+                        return Response(None, status.HTTP_405_METHOD_NOT_ALLOWED)
+        Vote.objects.create(uid_from = uid_from, uid_to = uid_to, tags=tags)
+        for curr in current_emps:
+            if curr.uid == uid_to:
+                temp = curr.values_score
+                temp = json.loads(temp)
+                temp[tags] += 1
+                curr.values_score = temp
+                curr.save()
         return Response(None, status.HTTP_201_CREATED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
@@ -57,7 +91,7 @@ def get_users(request):
         users = User.objects.all()
         to_return = []
         for user in users:
-            to_return.append({"first_name": user.First_name, "last_name": user.Last_name})
+            to_return.append({"first_name": user.first_name, "last_name": user.last_name})
         return JsonResponse({"all_users": to_return})
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
