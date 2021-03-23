@@ -59,8 +59,6 @@ Optional fields:
     user_role
     values_scores
 """
-
-
 class User(models.Model):
 
     objects = UserManager()
@@ -108,6 +106,12 @@ class User(models.Model):
         max_length=const.CHARFIELD_LONG_LEN,
     )
 
+    # job title (required)
+    job_title = models.CharField(
+        max_length=const.CHARFIELD_SHORT_LEN,
+        default = '',
+    )
+
     # user role ('manager', 'employee', 'dev')
     # default = 'employee'
     user_role = models.CharField(
@@ -129,6 +133,16 @@ class User(models.Model):
 
     # scores on corporate values
     values_scores = models.JSONField(
+        default=list,
+    )
+
+    # badeges
+    badges = models.JSONField(
+        default=list,
+    )
+
+    # network
+    network = models.JSONField(
         default=list,
     )
 
