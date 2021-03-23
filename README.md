@@ -3,7 +3,7 @@
 
 ##Frontend 
 
-For App.js, run commands 'npm install react-gauge-chart', 'npm install --save typefaces', 'npm install reactjs-popup', and 'npm install react-js-banner'. 
+For App.js, run commands 'npm install react-gauge-chart', 'npm install --save typefaces', 'npm install reactjs-popup', 'npm install @material-ui/core', and 'npm install react-js-banner'. 
 
 ## Backend
 

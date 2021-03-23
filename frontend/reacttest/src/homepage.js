@@ -3,6 +3,8 @@ import Banner from 'react-js-banner';
 import './App.css';
 import logo from './logo.jpg';
 import GaugeChart from 'react-gauge-chart'
+import Box from '@material-ui/core/Box';
+import {Button} from 'react';
 
 class App extends Component {
 
@@ -24,6 +26,29 @@ class App extends Component {
         <Banner title="John Doe" image={logo} imageClass="App-logo" css={this.state.bannerCss}/>
         <Banner showBanner={true}>
         </Banner>
+        <Box color="green">
+          <h1 className="App-title">Recognitions</h1>
+          <h3 className="App-title">Recognition 1: John Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 2: Jane Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 3: John Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 4: Jane Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 5: John Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 6: Jane Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 7: John Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 8: Jane Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 9: John Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 10: Jane Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 11: John Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 12: Jane Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 13: John Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 14: Jane Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 15: John Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 16: Jane Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 17: John Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 18: Jane Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 19: John Doe became recognized for exceptional achievement!</h3>
+          <h3 className="App-title">Recognition 20: Jane Doe became recognized for exceptional achievement!</h3>
+        </Box>
       </div>
         <div className='menu-box'>
             <div className='team-logo-box'>
