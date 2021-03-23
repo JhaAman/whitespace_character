@@ -6,7 +6,7 @@ function App() {
   return (
     <div className = 'App'>
       <h1>Recognitions and Such</h1>
-      <Recog name = "Kenny G" message = "Keeping it saxy."/>
+      <Recog name = "Kenny G" message = "Keeping it light."/>
       <Recog name = "Black Betty" message = "Whoa, Black Betty (Bam-ba-lam)
 Whoa, Black Betty (Bam-ba-lam)
 Black Betty had a child (Bam-ba-lam)
