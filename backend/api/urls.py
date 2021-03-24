@@ -1,8 +1,8 @@
 from django.urls import path
 from django.conf.urls import url
 from rest_framework import permissions
-#from drf_yasg.views import get_schema_view
-#from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 import api.services.user as apiUser
 import api.services.recognition as apiRecognition
@@ -26,6 +26,6 @@ urlpatterns = [
     path('create_vote/', apiRecognition.create_vote),
     path('get_profile/', apiProfile.get_profile),
     path('log_in/', apiAuth.log_in),
-    path('log_out/', apiAuth.log_out)
-    #url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
+    path('log_out/', apiAuth.log_out),
+    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]
