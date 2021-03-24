@@ -1,11 +1,9 @@
 import './App.css';
-import Banner from 'react-js-banner'
+import Post from './Components/Post/Post.js';
 
 function App() {
   return (
-    <div>
-      Hello, world!
-    </div>
+    <Post />
   );
 }
 
