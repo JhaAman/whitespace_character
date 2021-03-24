@@ -58,6 +58,7 @@ Optional field
 
 
 class Team(models.Model):
+
     objects = TeamManager()
 
     # refer to Company object model as primary key
