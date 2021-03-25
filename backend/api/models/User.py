@@ -110,6 +110,7 @@ class User(models.Model):
         max_length=const.CHARFIELD_LONG_LEN,
         blank=False
     )
+    
 
     # user role ('manager', 'employee', 'dev')
     # default = 'employee'
