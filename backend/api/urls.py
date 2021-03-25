@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from django.conf.urls import url
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -20,12 +20,11 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     # path('dummy_api/', api.dummy_api),
+    path('log_in/', apiAuth.log_in),
     path('get_users/', apiUser.get_users),
     path('create_user/', apiUser.create_user),
     path('create_users/', apiUser.create_users),
     path('create_vote/', apiRecognition.create_vote),
     path('get_profile/', apiProfile.get_profile),
-    path('log_in/', apiAuth.log_in),
-    path('log_out/', apiAuth.log_out),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]
