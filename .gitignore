@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/django
-# Edit at https://www.toptal.com/developers/gitignore?templates=django
+# Created by https://www.toptal.com/developers/gitignore/api/react,django
+# Edit at https://www.toptal.com/developers/gitignore?templates=react,django
 
 ### Django ###
 *.log
@@ -23,12 +23,6 @@ media
 # C extensions
 *.so
 
-#binaries
-backend/bin
-
-#dependencies
-backend/include
-
 # Distribution / packaging
 .Python
 build/
@@ -37,8 +31,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
 parts/
 sdist/
 var/
@@ -103,7 +95,6 @@ ipython_config.py
 
 # pyenv
 .python-version
-pyvenv.cfg
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
@@ -111,6 +102,9 @@ pyvenv.cfg
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
 #Pipfile.lock
+
+# poetry
+#poetry.lock
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
@@ -123,7 +117,9 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.venv
+# .env
+.env/
+.venv/
 env/
 venv/
 ENV/
@@ -152,12 +148,27 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
+# operating system-related files
+*.DS_Store #file properties cache/storage on macOS
+Thumbs.db #thumbnail cache on Windows
+
 # profiling data
 .prof
 
-# End of https://www.toptal.com/developers/gitignore/api/django
 
-.idea
-.vscode
-.DS_Store
+### react ###
+.DS_*
+logs
+**/*.backup.*
+**/*.back.*
+
 node_modules
+bower_components
+
+*.sublime*
+
+psd
+thumb
+sketch
+
+# End of https://www.toptal.com/developers/gitignore/api/react,django
