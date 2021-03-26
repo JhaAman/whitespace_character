@@ -8,5 +8,5 @@ from api.services.JWTModifier import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path('api/log_in/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/get_token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
 ]
