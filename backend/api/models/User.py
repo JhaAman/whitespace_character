@@ -128,6 +128,12 @@ class User(models.Model):
         blank=True,
         default=''
     )
+    
+    badges = models.JSONField(
+        blank=False,
+        null=False,
+        default=list
+    )
 
     profile_picutre = models.ImageField(
         null=True,

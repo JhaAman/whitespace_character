@@ -14,13 +14,7 @@ class RecognitionManager(models.Manager):
         instance = Recognition(**kwargs)
 
         # referencing User by Recognition.uid_{from/to}
-
-        # first, check if User objects with id=Recognition.uid_{from/to} exists
-        # if doesn't, raise ObjectDoesNotExist()
-        cond = models.Q(uid=instance.uid_from) | models.Q(uid=instance.uid_to)
-        if not User.objects.filter(cond).exists():
-            raise ObjectDoesNotExist()
-        # if does, add reference to User objects
+        # add reference to User objects
         instance.user_from = User.objects.get(uid=instance.uid_from)
         instance.user_to = User.objects.get(uid=instance.uid_to)
 
@@ -31,6 +25,11 @@ class RecognitionManager(models.Manager):
             instance.rid = create_unique_id(len=ID_LEN)
             if not Recognition.objects.filter(rid=instance.rid).exists():
                 break
+
+        # update user_to score
+        for key in kwargs['tags']:
+            instance.user_to.values_scores[key] += 1
+        instance.user_to.save()
 
         # validate fields
         instance.full_clean()

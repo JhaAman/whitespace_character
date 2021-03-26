@@ -51,7 +51,14 @@ class Company(models.Model):
     )
 
     values = models.JSONField(
-        blank=False
+        blank=False,
+        null=False
+    )
+
+    badges = models.JSONField(
+        blank=False,
+        null=False,
+        default=list
     )
 
     # date object was created

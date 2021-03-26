@@ -34,6 +34,9 @@ class TeamManager(models.Manager):
         # values_scores
         valuesList = companyRef.values
         instance.values_scores = dict().fromkeys(valuesList, 0)
+        
+        # badges
+        badgesList = list()
 
         # validate fields
         instance.full_clean()
@@ -92,6 +95,12 @@ class Team(models.Model):
     # scores on company corporate values
     values_scores = models.JSONField(
         default=list,
+    )
+
+    badges = models.JSONField(
+        blank=False,
+        null=False,
+        default=list
     )
 
     # date object was created
