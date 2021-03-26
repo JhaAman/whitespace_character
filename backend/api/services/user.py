@@ -42,7 +42,7 @@ def get_users(request):
     try:
         qs = User.objects.all()
         serializer = UserSerializer(qs, many=True)
-        return Response(data=erializer.data, status=status.HTTP_200_OK)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
@@ -65,7 +65,31 @@ def get_user(request):
             stream = io.BytesIO(json)
             data = JSONParser().parse(stream)[0]
             return Response(data=data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+        return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
         
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+def get_user_network(request):
+
+    class GetUserSerializer(serializers.Serializer):
+        uid = serializers.CharField(max_length=8)
+        def validate_uid(self, value):
+            if not User.objects.filter(uid=value).exists():
+                raise serializers.ValidationError("{id} user id does not exist".format(id=value))
+            return value
+
+    try:
+        serializer = GetUserSerializer(data=request.data)
+        if serializer.is_valid():
+            userRef = User.objects.get(uid=serializer.data['uid'])
+            network = User.objects.filter(tid=userRef.tid)
+            json = JSONRenderer().render(network.values())
+            stream = io.BytesIO(json)
+            data = JSONParser().parse(stream)
+            return Response(data=data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

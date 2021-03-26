@@ -130,7 +130,7 @@ class User(models.Model):
     )
     
     badges = models.JSONField(
-        blank=False,
+        blank=True,
         null=False,
         default=list
     )
