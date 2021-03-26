@@ -7,6 +7,13 @@ import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
 import profilepic from './arnold.jpg';
 import Button from 'react-bootstrap/Button';
+
+import axios from 'axios';
+
+let apiURL = "";
+function getData(){
+
+}
 function RecognitionBanner(){
   return(
     <div className="ProfileBanner rounded">
