@@ -26,6 +26,7 @@ urlpatterns = [
     path('create_users/', apiUser.create_users),
     path('create_recognition/', apiRecognition.create_recognition),
     path('get_user_recognitions/', apiRecognition.get_user_recognitions),
+    path('put_flag_recognition/', apiRecognition.put_flag_recognition),
     path('create_company/', apiCompany.create_company),
     path('create_team/', apiTeam.create_team),
     path('get_profile/', apiProfile.get_profile),

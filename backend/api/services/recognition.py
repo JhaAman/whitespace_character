@@ -44,3 +44,27 @@ def get_user_recognitions(request):
         return Response(status=status.HTTP_404_NOT_FOUND)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["PUT"])
+def put_flag_recognition(request):
+
+    class PutFlagRecognitionSerializer(serializers.Serializer):
+        
+        rid = serializers.CharField(required=True)
+
+        def validate_rid(self, value):
+            if not Recognition.objects.filter(rid=value).exists():
+                raise serializers.ValidationError("{id} recognition id does not exist".format(id=value))
+            return value
+
+    try:
+        serializer = PutFlagRecognitionSerializer(data=request.data)
+        if serializer.is_valid():
+            recognitionRef = Recognition.objects.get(rid=serializer.data['rid'])
+            recognitionRef.flag_count += 1
+            recognitionRef.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

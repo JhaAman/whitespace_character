@@ -84,6 +84,10 @@ class Recognition(models.Model):
         blank=True,
     )
 
+    flag_count = models.IntegerField(
+        default=0
+    )
+
     comments = models.CharField(
         max_length=CHARFIELD_LONG_LEN,
         default='',
