@@ -102,6 +102,7 @@ class User(models.Model):
     # email (required)
     email = models.EmailField(
         max_length=CHARFIELD_SHORT_LEN,
+        unique=True,
         blank=False
     )
 
