@@ -27,7 +27,7 @@ class TeamManager(models.Manager):
 
         # tid
         while True:
-            instance.tid = utils.create_unique_id(len=ID_LEN)
+            instance.tid = create_unique_id(len=ID_LEN)
             if not Team.objects.filter(tid=instance.tid).exists():
                 break
 

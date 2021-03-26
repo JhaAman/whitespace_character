@@ -23,6 +23,13 @@ urlpatterns = [
     path('create_user/', apiUser.create_user),
     path('create_users/', apiUser.create_users),
     path('create_vote/', apiRecognition.create_vote),
+    path('get_received_votes/', apiRecognition.get_received_votes),
+    path('delete_vote/', apiRecognition.delete_vote),
     path('get_profile/', apiProfile.get_profile),
+    path('get_companies/', apiCompany.get_companies),
+    path('create_company/', apiCompany.create_company),
+    path('get_teams/', apiTeam.get_teams),
+    path('create_team/', apiTeam.create_team),
+
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]
