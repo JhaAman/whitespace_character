@@ -10,7 +10,7 @@ import json
 def get_profile(request):
     try:
         profile_data = {}
- 
+
         user_id = json.loads(request.body)['uid']
         user = User.objects.get(pk = user_id)
         serializer = UserSerializer(user)
@@ -25,3 +25,5 @@ def get_profile(request):
                 serialized_data['network'].append(user)    
                 
         return Response(serialized_data)
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
