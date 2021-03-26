@@ -101,13 +101,13 @@ class Recognition(models.Model):
 class RecognitionSerializer(serializers.ModelSerializer):
     def validate_uid_from(self, value):
         if not User.objects.filter(uid=value).exists():
-            raise serializers.ValidationError("User from not found")
+            raise serializers.ValidationError("uid_from not found")
         return value
 
 
     def validate_uid_to(self, value):
         if not User.objects.filter(uid=value).exists():
-            raise serializers.ValidationError("User to not found")
+            raise serializers.ValidationError("uid_to not found")
         return value
 
 
@@ -116,11 +116,11 @@ class RecognitionSerializer(serializers.ModelSerializer):
         Check uid_from is different from uid_to
         """
         if data['uid_from'] == data['uid_to']:
-            raise serializers.ValidationError("Users must be different")
+            raise serializers.ValidationError("uid_from and uid_to must be different")
         return data
 
     class Meta:
         model = Recognition
-        fields = '__all__'
+        fields = ['uid_from', 'uid_to', 'tags', 'comments']
 
 
