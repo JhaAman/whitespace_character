@@ -31,8 +31,9 @@ def create_users(request):
             serializer = UserSerializer(data=user)
             if serializer.is_valid():
                 serializer.save()
-                return Response(None, status.HTTP_201_CREATED)
-        return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            else:
+                return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
+        return Response(None, status.HTTP_201_CREATED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
