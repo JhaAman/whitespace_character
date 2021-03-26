@@ -42,7 +42,7 @@ def get_users(request):
     try:
         qs = User.objects.all()
         serializer = UserSerializer(qs, many=True)
-        return Response(None, serializer.data)
+        return Response(data=erializer.data, status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 

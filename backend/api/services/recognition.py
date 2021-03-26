@@ -41,7 +41,7 @@ def get_user_recognitions(request):
             stream = io.BytesIO(json)
             data = JSONParser().parse(stream)
             return Response(data=data, status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
@@ -65,6 +65,16 @@ def put_flag_recognition(request):
             recognitionRef.flag_count += 1
             recognitionRef.save()
             return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+def get_all_recognitions(request):
+    try:
+        recognitions = Recognition.objects.all()
+        serializer = RecognitionSerializer(recognitions, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
