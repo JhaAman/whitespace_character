@@ -1,5 +1,5 @@
 from django.db import models
-from api.models.User import User
+from api.models.User import User, Team, Company
 from api.services.constant import *
 from api.services.utility import create_unique_id
 from rest_framework import serializers
@@ -104,19 +104,25 @@ class RecognitionSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("uid_from not found")
         return value
 
-
     def validate_uid_to(self, value):
         if not User.objects.filter(uid=value).exists():
             raise serializers.ValidationError("uid_to not found")
         return value
 
-
     def validate(self, data):
-        """
-        Check uid_from is different from uid_to
-        """
+        # Check uid_from is different from uid_to
         if data['uid_from'] == data['uid_to']:
             raise serializers.ValidationError("uid_from and uid_to must be different")
+
+        # Check valid tags
+        userRef = User.objects.get(uid=data['uid_from'])
+        teamRef = Team.objects.get(tid=userRef.tid)
+        companyRef = Company.objects.get(cid=teamRef.cid)
+        tagsActual = companyRef.values
+        for key in data['tags']:
+            if key not in tagsActual:
+                raise serializers.ValidationError("{key} tag is not specified by organization".format(key=key))
+
         return data
 
     class Meta:

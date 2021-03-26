@@ -24,7 +24,7 @@ urlpatterns = [
     path('get_users/', apiUser.get_users),
     path('create_user/', apiUser.create_user),
     path('create_users/', apiUser.create_users),
-    path('create_vote/', apiRecognition.create_vote),
+    path('create_recognition/', apiRecognition.create_recognition),
     path('create_company/', apiCompany.create_company),
     path('create_team/', apiTeam.create_team),
     path('get_profile/', apiProfile.get_profile),
