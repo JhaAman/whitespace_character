@@ -21,6 +21,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     # path('dummy_api/', api.dummy_api),
+    path('get_user/', apiUser.get_user),
     path('get_users/', apiUser.get_users),
     path('create_user/', apiUser.create_user),
     path('create_users/', apiUser.create_users),
