@@ -1,6 +1,6 @@
 from django.db import models
-import api.services.constant as const
-import api.services.utility as utils
+from api.services.constant import *
+from api.services.utility import create_unique_id
 from rest_framework import serializers
 
 
@@ -16,7 +16,7 @@ class CompanyManager(models.Manager):
 
         # cid
         while True:
-            instance.cid = utils.create_unique_id(len=const.ID_LEN)
+            instance.cid = create_unique_id(len=ID_LEN)
             if not Company.objects.filter(cid=instance.cid).exists():
                 break
 
@@ -38,14 +38,14 @@ class Company(models.Model):
     cid = models.CharField(
         primary_key=True,
         unique=True,
-        max_length=const.ID_LEN,
+        max_length=ID_LEN,
         default='0',
         editable=False,
         auto_created=True,
     )
 
     name = models.CharField(
-        max_length=const.CHARFIELD_SHORT_LEN,
+        max_length=CHARFIELD_SHORT_LEN,
         default='',
         unique=True,
     )
