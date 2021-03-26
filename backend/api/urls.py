@@ -7,7 +7,6 @@ from drf_yasg import openapi
 import api.services.user as apiUser
 import api.services.recognition as apiRecognition
 import api.services.profile as apiProfile
-import api.services.auth as apiAuth
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -20,7 +19,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     # path('dummy_api/', api.dummy_api),
-    path('log_in/', apiAuth.log_in),
+    
     path('get_users/', apiUser.get_users),
     path('create_user/', apiUser.create_user),
     path('create_users/', apiUser.create_users),
