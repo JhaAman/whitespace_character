@@ -1,5 +1,7 @@
 from django.db import models
-from api.models.User import User, Team, Company
+from api.models.User import *
+from api.models.Team import *
+from api.models.Company import *
 from api.services.constant import *
 from api.services.utility import create_unique_id
 from rest_framework import serializers
