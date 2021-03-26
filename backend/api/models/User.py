@@ -1,8 +1,8 @@
 from django.db import models
-import api.services.constant as const
+from api.services.constant import *
 from api.models.Company import Company
 from api.models.Team import Team
-import api.services.utility as utils
+from api.services.utility import create_unique_id
 from rest_framework import serializers
 
 
@@ -27,7 +27,7 @@ class UserManager(models.Manager):
 
         # uid
         while True:
-            instance.uid = utils.create_unique_id(len=const.ID_LEN)
+            instance.uid = create_unique_id(len=ID_LEN)
             if not User.objects.filter(uid=instance.uid).exists():
                 break
 
@@ -74,7 +74,7 @@ class User(models.Model):
     )
 
     tid = models.CharField(
-        max_length=const.ID_LEN,
+        max_length=ID_LEN,
         blank=False
     )
 
@@ -82,35 +82,34 @@ class User(models.Model):
     uid = models.CharField(
         primary_key=True,
         unique=True,
-        max_length=const.ID_LEN,
+        max_length=ID_LEN,
         default='0',
         auto_created=True,
     )
 
     # first name (required)
     first_name = models.CharField(
-        max_length=const.CHARFIELD_SHORT_LEN,
+        max_length=CHARFIELD_SHORT_LEN,
         blank=False
     )
 
     # last name (required)
     last_name = models.CharField(
-        max_length=const.CHARFIELD_SHORT_LEN,
+        max_length=CHARFIELD_SHORT_LEN,
         blank=False
     )
 
     # email (required)
     email = models.EmailField(
-        max_length=const.CHARFIELD_SHORT_LEN,
+        max_length=CHARFIELD_SHORT_LEN,
         blank=False
     )
 
     # password (required)
     password = models.CharField(
-        max_length=const.CHARFIELD_LONG_LEN,
+        max_length=CHARFIELD_LONG_LEN,
         blank=False
     )
-    
 
     # user role ('manager', 'employee', 'dev')
     # default = 'employee'
@@ -124,8 +123,20 @@ class User(models.Model):
         default='emp'
     )
 
+    title = models.CharField(
+        max_length=CHARFIELD_SHORT_LEN,
+        blank=True,
+        default=''
+    )
+
+    profile_picutre = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to="images/",
+    )
+
     # date object was created
-    created_date = models.DateTimeField(
+    date_created = models.DateTimeField(
         auto_now_add=True,
         auto_created=True,
         null=True
@@ -145,6 +156,7 @@ class UserSerializer(serializers.ModelSerializer):
         if not Team.objects.filter(tid=value).exists():
             raise serializers.ValidationError("Team id not found")
         return value
+    
     class Meta:
         model = User
         fields = '__all__'

@@ -1,13 +1,10 @@
 from django.db import models
 from api.models.User import User
-import api.services.constant as const
-import api.services.utility as utils
+from api.services.constant import *
+from api.services.utility import create_unique_id
 from rest_framework import serializers
 
 
-"""
-Recognition Manager
-"""
 class RecognitionManager(models.Manager):
     def create(self, *args, **kwargs):
 
@@ -29,7 +26,7 @@ class RecognitionManager(models.Manager):
 
         # rid
         while True:
-            instance.rid = utils.create_unique_id(len=const.ID_LEN)
+            instance.rid = create_unique_id(len=ID_LEN)
             if not Recognition.objects.filter(rid=instance.rid).exists():
                 break
 
@@ -49,7 +46,7 @@ class Recognition(models.Model):
     rid = models.CharField(
         primary_key=True,
         unique=True,
-        max_length=const.ID_LEN,
+        max_length=ID_LEN,
         default='0',
         auto_created=True,
     )
@@ -71,12 +68,12 @@ class Recognition(models.Model):
     )
 
     uid_from = models.CharField(
-        max_length=const.ID_LEN,
+        max_length=ID_LEN,
         blank=False,
     )
 
     uid_to = models.CharField(
-        max_length=const.ID_LEN,
+        max_length=ID_LEN,
         blank=False,
     )
 
@@ -86,19 +83,19 @@ class Recognition(models.Model):
     )
 
     comments = models.CharField(
-        max_length=const.CHARFIELD_LONG_LEN,
+        max_length=CHARFIELD_LONG_LEN,
         default='',
         blank=True
     )
 
     # date object was created
-    created_date = models.DateTimeField(
+    date_created = models.DateTimeField(
         auto_now_add=True,
         auto_created=True,
     )
 
     class Meta:
-        verbose_name = "Vote"
+        verbose_name = "Recognition"
 
 
 class RecognitionSerializer(serializers.ModelSerializer):
@@ -125,3 +122,5 @@ class RecognitionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recognition
         fields = '__all__'
+
+
