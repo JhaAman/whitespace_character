@@ -1,45 +1,29 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext, AuthProvider } from './../../AuthContext.js';
 import axios from 'axios'
 
-let loginApi = "";
-
 function Login() {
-    const[ email, setEmail ] = useState("");
+    const[ username, setUsername ] = useState("");
     const[ password, setPassword ] = useState("");
     
     function validate(){
-        return email.length > 0 && password.length > 0;
+        return username.length > 0 && password.length > 0;
     }
 
     const submit = (e) => {
-        e.preventDefault();
-        axios.post(loginApi,{
-            email: email,
+        e.preventDefault()
+        axios.post("http://localhost:8000/api/get_token/", {
+            username: username,
             password: password
       
-        },{
+        }, {
             validateStatus: false
-        }).then(function (res) {
-            if(res.status === 200){
-                console.log("Success!")
-            } else if(res.status === 400){
-                console.error("Bad request")
-            } else if(res.status === 401){
-                console.log("Incorrect login")
-            } else if(res.status === 404){
-                console.error("API not found")
-            }
+        }).then((res) => {
             console.log(res);
-        }).catch(function (res) {
-            if(res.status === 400){
-                console.error("Bad request")
-            } else if(res.status === 401){
-                console.log("Incorrect login")
-            } else if(res.statue === 404){
-                console.error("API not found")
-            }
-            console.log(res);
+            AuthProvider().setAuthInfo({token: res.data.access, userInfo: {userID: res.data.user_id, username: username, password: password, role: 'employee'}})
+        }).catch((err) => {
+            console.log(err);
         })
     }
     
@@ -56,8 +40,8 @@ function Login() {
                         <input
                             type="text"
                             placeholder="Email"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            value={username}
+                            onChange={e => setUsername(e.target.value)}
                         />
                     </label>
                     <br/>
@@ -76,9 +60,7 @@ function Login() {
                     <br/>
                     <br/>
                     <br/>
-                    <Link to='/homepage'>
                         <input type="submit" value="Submit" hidden={!validate()}/>
-                    </Link>
                 </form>
             </div>
     );
