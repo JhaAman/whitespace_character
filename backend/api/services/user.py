@@ -19,9 +19,7 @@ def create_user(request):
             user = serializer["email"].value
             first_name = serializer["first_name"].value
             last_name = serializer["last_name"].value
-            check = False
-            if serializer["user_role"].value == "mng" or serializer["user_role"].value == "manager":
-                check = True
+            check =  serializer["user_role"].value == "mng" or serializer["user_role"].value == "manager":
             uid = serializer["uid"].value
             AuthUser.objects.create(id = uid, first_name = first_name, last_name = last_name, is_staff = check, username = user, password = password,email = user)
             return Response(None, status.HTTP_201_CREATED)
