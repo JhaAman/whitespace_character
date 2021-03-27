@@ -136,6 +136,12 @@ class User(models.Model):
         default=list
     )
 
+    network = models.JSONField(
+        blank=True,
+        null=False,
+        default=list
+    )
+
     profile_picutre = models.ImageField(
         null=True,
         blank=True,

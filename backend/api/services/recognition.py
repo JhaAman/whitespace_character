@@ -36,7 +36,7 @@ def get_user_recognitions(request):
         serializer = GetUserRecognitionSerializer(data=request.data)
         if serializer.is_valid():
             userRef = User.objects.get(uid=serializer.data['uid'])
-            recognitions = Recognition.objects.filter(uid_from=serializer.data['uid'])
+            recognitions = Recognition.objects.filter(uid_to=serializer.data['uid'])
             json = JSONRenderer().render(recognitions.values())
             stream = io.BytesIO(json)
             data = JSONParser().parse(stream)
