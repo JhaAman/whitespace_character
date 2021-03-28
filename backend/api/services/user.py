@@ -6,10 +6,12 @@ from api.models.User import User
 from api.models.User import UserSerializer
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.hashers import make_password
+from rest_framework.decorators import authentication_classes, permission_classes
 import json
 
-
 @api_view(["POST"])
+@authentication_classes([])
+@permission_classes([])
 def create_user(request):
     try:
         serializer = UserSerializer(data=request.data)
