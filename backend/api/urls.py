@@ -4,6 +4,8 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from api.api import dummy_api
+
 import api.services.user as apiUser
 import api.services.recognition as apiRecognition
 import api.services.profile as apiProfile
@@ -18,7 +20,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    # path('dummy_api/', api.dummy_api),
+    path('dummy_api/', dummy_api),
     
     path('get_users/', apiUser.get_users),
     path('create_user/', apiUser.create_user),
