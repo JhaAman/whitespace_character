@@ -9,9 +9,8 @@ from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import authentication_classes, permission_classes
 import json
 
+# TODO only superuser has the permission to create new account
 @api_view(["POST"])
-@authentication_classes([])
-@permission_classes([])
 def create_user(request):
     try:
         serializer = UserSerializer(data=request.data)
@@ -29,6 +28,7 @@ def create_user(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["POST"])
 def create_users(request):
     try:
@@ -40,6 +40,7 @@ def create_users(request):
         return Response(None, status.HTTP_201_CREATED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(["GET"])
 def get_users(request):

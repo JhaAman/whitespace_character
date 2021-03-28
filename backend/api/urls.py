@@ -1,14 +1,16 @@
-from django.urls import include, path
+from django.urls import path
 from django.conf.urls import url
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from api.api import dummy_api
-
 import api.services.user as apiUser
 import api.services.recognition as apiRecognition
 import api.services.profile as apiProfile
+import api.services.company as apiCompany
+import api.services.team as apiTeam
+
+from api.api import dummy_api
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -21,11 +23,17 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('dummy_api/', dummy_api),
-    
     path('get_users/', apiUser.get_users),
     path('create_user/', apiUser.create_user),
     path('create_users/', apiUser.create_users),
+
     path('create_vote/', apiRecognition.create_vote),
+    path('get_all_vote_from/', apiRecognition.get_all_vote_from),
+    path('get_all_vote_to/', apiRecognition.get_all_vote_to),
+    path('delete_vote/', apiRecognition.delete_vote),
+
+    path('create_company/', apiCompany.create_company),
+    path('create_team/', apiTeam.create_team),
     path('get_profile/', apiProfile.get_profile),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]
