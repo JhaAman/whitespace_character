@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Networkprofile(props){
   return(
@@ -35,8 +36,57 @@ function DevColors(){
       </div>
   )
 }
+let profileAPI = "http://localhost:8000/api/get_profile/";
+
+
 function Profile() {
+  const [awards,setAwards] = useState();
+  const [people,setPeople] = useState();
+  const [data, setData] = useState('');
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
+  
+  useEffect(() => {
+    getData();
+  }, []);
+  
+  let getData = () => {
+    axios.get(profileAPI)
+    .then(function(res){
+      if(res.status === 200){
+        console.log("Success!");
+        
+        setData(res);
+        setLoading(false);
+        let a = res.data.badges;
+        let b = []
+        for(let i=0;i<a.length;i++){
+          
+          //console.log(a[i]);
+          b.push(<Award key={i} award={a[i]}/>);
+        }
+        setAwards(b);
+        let dpeople = res.data.network;
+        let p = [];
+        for(let i=0;i<dpeople.length;i++){
+          //console.log(dpeople[i]);
+          let name = dpeople[i].first_name+" "+dpeople[i].last_name;
+          p.push(<Networkprofile key={i} name={name} picture={profilepic}/>)
+        }
+        setPeople(p);
+    }
+    })
+    .catch(error => console.error(error));
+  }
+
+
+  if(loading){
+    return <div className="App">Loading</div>
+  }
+
+
+  console.log(data);
+  
   
   return (
     <div className="App">
@@ -45,10 +95,10 @@ function Profile() {
           <img src={profilepic} className="rounded-circle" width="150px" height="auto"></img>
         </div>
         <div className="row justify-content-md-center">
-          John Smith
+          {data.data.user.first_name} {data.data.user.last_name}
         </div>
         <div className="row justify-content-md-center">
-          Team Whitespace Character
+          {data.data.user.email}
         </div>
         <br/>
         <div className="row justify-content-md-center">
@@ -63,27 +113,16 @@ function Profile() {
       <div className="contentpanel">
         <br/>
         <Row>
-          <Award award="Awesome guy award"/>
-          <Award award="Best dressed award"/>
-          <Award award="Rockstar of the month in Jan 2019"/>
-          <Award award="95%&lt; on time"/>
+          
+          {awards}
+
         </Row>
       </div>
       ):(
       <div className="contentpanel">
         <br/>
-        <Row>
-        <Col xs={6}><Networkprofile name="Barry Johnson" picture={profilepic}/></Col>
-        <Col xs={6}><Networkprofile name="Lewis Brindley" picture={profilepic}/></Col>
-        </Row>
-        <Row>
-        <Col xs={6}><Networkprofile name="Ashley Smith" picture={profilepic}/></Col>
-        <Col xs={6}><Networkprofile name="Julia Andrews" picture={profilepic}/></Col>
-        </Row>
-        <Row>
-        <Col xs={6}><Networkprofile name="Arnold Schwarzenegger" picture={profilepic}/></Col>
-        <Col xs={6}><Networkprofile name="Naomi Satou" picture={profilepic}/></Col>
-        </Row>
+        {people}
+        
       </div>
       )}
 
