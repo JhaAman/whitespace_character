@@ -1,29 +1,28 @@
 import React, { useState, createContext } from 'react';
 
-const AuthContext = createContext();
-const { Provider } = AuthContext;
+const AuthenticationContext = createContext();
 
-const AuthProvider = () => {
-    const token = localStorage.getItem('token') ? localStorage.getItem('token')  : '';
+const AuthenticationProvider = ({children}) => {
+    const token = localStorage.getItem('token') ? localStorage.getItem('token') : '';
     const userInfo = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : {};
     const expiresAt = localStorage.getItem('expiresAt') ? localStorage.getItem('expiresAt') : '';
 
-    const [ authState, setAuthState ] = useState({token: token, userInfo: userInfo});
+    const [ authenticationState, setAuthenticationState ] = useState({token: token, userInfo: userInfo});
 
-    const setAuthInfo = ({token, userInfo}) => {
+    const setAuthenticationInfo = ({token, userInfo}) => {
         localStorage.setItem('token', token);
-        localStorage.setItems('userInfo', JSON.stringify(userInfo));
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
     }
 
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userInfo');
         localStorage.removeItem('expiresAt');
-        setAuthState({token: '', userInfo: {}, expiresAt: ''});
+        setAuthenticationState({token: '', userInfo: {}, expiresAt: ''});
     }
 
     const isAuthenticated = () => {
-        if (authState.token === '') {
+        if (authenticationState.token === '') {
             return false;
         } else if (expiresAt > 'Current Date') {
             return false;
@@ -31,6 +30,19 @@ const AuthProvider = () => {
             return true;
         }
     }
+
+    return (
+        <AuthenticationContext.Provider
+            value={{
+                authenticationState,
+                setAuthenticationState: authInfo => setAuthenticationInfo(authInfo),
+                isAuthenticated,
+                logout
+            }}
+        >
+            {children}
+        </AuthenticationContext.Provider>
+    );
 }
 
-export { AuthContext, AuthProvider };
+export { AuthenticationContext, AuthenticationProvider };

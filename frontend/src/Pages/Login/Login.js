@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext, AuthProvider } from './../../AuthContext.js';
+import { AuthenticationContext } from './../../AuthContext.js';
 import axios from 'axios'
 
 function Login() {
     const[ username, setUsername ] = useState("");
     const[ password, setPassword ] = useState("");
+    const value = useContext(AuthenticationContext);
     
     function validate(){
         return username.length > 0 && password.length > 0;
@@ -21,7 +22,9 @@ function Login() {
             validateStatus: false
         }).then((res) => {
             console.log(res);
-            AuthProvider().setAuthInfo({token: res.data.access, userInfo: {userID: res.data.user_id, username: username, password: password, role: 'employee'}})
+            if (res.status === 200) {
+                value.setAuthenticationState({token: res.data.access, userInfo: {userID: res.data.user_id, username: username, password: password, role: 'employee'}})
+            }
         }).catch((err) => {
             console.log(err);
         })
