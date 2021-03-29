@@ -4,6 +4,7 @@ from rest_framework import status
 from django.http import JsonResponse
 from api.models.Recognition import Recognition
 from api.models.Recognition import RecognitionSerializer
+from api.helpers.badges import updateBadges
 import json
 
 @api_view(["POST"])
@@ -12,6 +13,7 @@ def create_vote(request):
         serializer = RecognitionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            updateBadges(request.data['uid_to'], request.data['uid_from'])
             return Response(serializer.data)
         return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
     except ValueError as e:

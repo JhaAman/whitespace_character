@@ -20,8 +20,8 @@ function App() {
         <Route path='/homepage'>
           <EmployeeHomepage />
         </Route>
-        <Route path='/profile'>
-          <Profile/>
+        <Route path='/profile/:userid'>
+          <Profile />
         </Route>
       </Switch>
     </Router>
