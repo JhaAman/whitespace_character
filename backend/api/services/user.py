@@ -5,8 +5,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from django.http import JsonResponse
 
-from api.models.User import User
-from api.models.User import UserSerializer
+from api.models.User import *
+from api.models.ApiSerializers import UidFormSerializer
 
 import io, json
 
@@ -50,16 +50,8 @@ def get_users(request):
 
 @api_view(["GET"])
 def get_user(request):
-
-    class GetUserSerializer(serializers.Serializer):
-        uid = serializers.CharField(max_length=8)
-        def validate_uid(self, value):
-            if not User.objects.filter(uid=value).exists():
-                raise serializers.ValidationError("{id} user id does not exist".format(id=value))
-            return value
-
     try:
-        serializer = GetUserSerializer(data=request.data)
+        serializer = UidFormSerializer(data=request.data)
         if serializer.is_valid():
             userRef = User.objects.filter(uid=serializer.data['uid'])
             json = JSONRenderer().render(userRef.values())
@@ -74,16 +66,8 @@ def get_user(request):
 
 @api_view(["GET"])
 def get_user_network(request):
-
-    class GetUserSerializer(serializers.Serializer):
-        uid = serializers.CharField(max_length=8)
-        def validate_uid(self, value):
-            if not User.objects.filter(uid=value).exists():
-                raise serializers.ValidationError("{id} user id does not exist".format(id=value))
-            return value
-
     try:
-        serializer = GetUserSerializer(data=request.data)
+        serializer = UidFormSerializer(data=request.data)
         if serializer.is_valid():
             userRef = User.objects.get(uid=serializer.data['uid'])
             network = User.objects.filter(tid=userRef.tid)
