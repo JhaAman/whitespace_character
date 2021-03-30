@@ -4,4 +4,4 @@ from rest_framework import status
 from django.http import JsonResponse
 from api.models.User import User
 from api.models.Vote import Vote
-import json 
+import json

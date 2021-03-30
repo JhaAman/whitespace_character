@@ -7,8 +7,6 @@ from drf_yasg import openapi
 import api.services.user as apiUser
 import api.services.recognition as apiRecognition
 import api.services.profile as apiProfile
-import api.services.company as apiCompany
-import api.services.team as apiTeam
 
 schema_view = get_schema_view(
     openapi.Info(
