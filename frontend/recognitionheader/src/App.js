@@ -30,8 +30,8 @@ function App() {
 
   function RecognitionBanner(){
     let awards = [];
-    for(let i=0;i<data.data[0].badges.length;i++){
-      awards.push(<AwardDisplay awardtitle={data.data[0].badges[i]} key={i}/>);
+    for(let i=0;i<data.data[1].badges.length;i++){
+      awards.push(<AwardDisplay awardtitle={data.data[1].badges[i]} key={i}/>);
     }
     return(
       <div className="ProfileBanner rounded">

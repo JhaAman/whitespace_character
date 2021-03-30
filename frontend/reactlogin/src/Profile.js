@@ -1,9 +1,9 @@
 import profilepic from './arnold.jpg';
 import './Profile.css';
-import Jumbotron from 'react-bootstrap/Jumbotron';
+//import Jumbotron from 'react-bootstrap/Jumbotron';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
+//import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
@@ -25,6 +25,7 @@ function Award(props){
     </Col>
   )
 }
+
 function DevColors(){
   return(
 <div>
@@ -92,7 +93,7 @@ function Profile() {
     <div className="App">
       <div className="top">
         <div className="row justify-content-md-center">
-          <img src={profilepic} className="rounded-circle" width="150px" height="auto"></img>
+          <img src={profilepic} alt="a guy" className="rounded-circle" width="150px" height="auto"></img>
         </div>
         <div className="row justify-content-md-center">
           {data.data.user.first_name} {data.data.user.last_name}
@@ -127,7 +128,7 @@ function Profile() {
       )}
 
       
-      {/*<DevColors/>**/}
+      <DevColors/>
 
     </div>
   );
