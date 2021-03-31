@@ -1,3 +1,18 @@
+// add this to App.css file to get the rows and columns working
+// .row {
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: wrap;
+//   width: 50%;
+// }
+
+// .column {
+//   display: flex;
+//   flex-direction: column;
+//   flex-basis: 100%;
+//   flex: 1;
+// }
+
 import React, { Component } from 'react';
 import Banner from 'react-js-banner';
 import './App.css';
@@ -15,12 +30,15 @@ class App extends Component {
     this.state = {
       bannerCss: { color: "#FFF", backgroundColor: "#D3C4B7", fontSize: 40 }
     };
-
   }
   
   render() {
     return (
       <div>
+             <div class='some-page-wrapper'>
+  <div class='row'>
+    <div class='column'>
+      <div class='blue-column'>
       <div className="App">
         <header className="App-header">
           <h3 className="App-title">Who's the Rockstar Employee of the Month? See below!</h3>
@@ -28,7 +46,11 @@ class App extends Component {
         <Banner title="John Doe" image={logo} imageClass="App-logo" css={this.state.bannerCss}/>
         <Banner showBanner={true}>
         </Banner>
-        <Box color="green">
+      </div>
+    </div>
+    <div class='column'>
+      <div class='green-column'>
+      <Box color="green">
           <h1 className="App-title">Recognitions</h1>
           <Popup trigger={<button>Report a Recognition</button>} position="right center">
           <div>Report a Recognition Below</div>
@@ -66,6 +88,10 @@ class App extends Component {
           <h3 className="App-title">Recognition 20: Jane Doe became recognized for exceptional achievement!</h3>
         </Box>
       </div>
+      </div>
+    </div>
+  </div>
+</div>
         <div className='menu-box'>
             <div className='team-logo-box'>
                 <h1 className='team-logo'>Team </h1>
