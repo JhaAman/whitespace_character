@@ -8,6 +8,7 @@ function Recog(props) {
             <h4></h4>
             <p>{props.message}</p>
         </div>
+        
     );
 }
 

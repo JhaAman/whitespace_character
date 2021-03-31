@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import Recog from './Recognition';
+import Textbox from './textbox';
 
 function App() {
   return (
@@ -11,7 +12,10 @@ function App() {
       <Recog name = "Robot Rock" message = "shoot shoot"/>
 
       <Recog name = "Mississippi Queen" message = "If you know what I mean."/>
+
     </div>
+
+
   );
 }
 
