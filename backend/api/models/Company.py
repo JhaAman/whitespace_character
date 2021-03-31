@@ -46,16 +46,23 @@ class Company(models.Model):
 
     name = models.CharField(
         max_length=CHARFIELD_SHORT_LEN,
-        default='',
         unique=True,
+        blank=False
     )
 
     values = models.JSONField(
-        default=list,
+        blank=False,
+        null=False
+    )
+
+    badges = models.JSONField(
+        blank=True,
+        null=False,
+        default=list
     )
 
     # date object was created
-    created_date = models.DateTimeField(
+    date_created = models.DateTimeField(
         auto_now_add=True,
         auto_created=True,
         null=True

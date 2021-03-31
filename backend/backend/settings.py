@@ -14,6 +14,13 @@ from pathlib import Path
 import os
 from datetime import timedelta
 
+import environ
+
+
+# Initialize environment variables
+env = environ.Env()
+environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,15 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1(f&1cy=jl)hjpv!l=ot_m6qi=l9_3!$ajp=_z3%e5139$(%v^'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
-
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', '0.0.0.0', '*']
 
 # Application definition
 
@@ -49,8 +53,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     # apps
     'api',
-
-
 
     # docs
     'drf_yasg',
@@ -104,26 +106,28 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if 'WHITESPACE_LOCAL' in os.environ:
+if DEBUG:
+    print("LOCAL_DB: whitespace")
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'whitespace',
-            'USER': 'admin',
-            'PASSWORD': 'password',
-            'HOST': 'db',
-            'PORT': 5432,
+            'NAME': env('POSTGRES_LOCAL_DATABASE_NAME'),
+            'USER': env('POSTGRES_LOCAL_USER'),
+            'PASSWORD': env('POSTGRES_LOCAL_PASSWORD'),
+            'HOST': env('POSTGRES_LOCAL_HOST'),
+            'PORT': env('POSTGRES_LOCAL_PORT'),
         }
     }
 else:
+    print("REMOTE_DB: " + env('POSTGRES_DATABASE_NAME'))
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'whitespace',
-            'USER': 'admin',
-            'PASSWORD': 'password',
-            'HOST': os.getenv('POSTGRES_HOST'),
-            'PORT': os.getenv('POSTGRES_PORT'),
+            'NAME': env('POSTGRES_DATABASE_NAME'),
+            'USER': env('POSTGRES_USER'),
+            'PASSWORD': env('POSTGRES_PASSWORD'),
+            'HOST': env('POSTGRES_HOST'),
+            'PORT': env('POSTGRES_PORT'),
             'TEST': {
                 'ENGINE': 'django.db.backends.sqlite3',
                 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), 
@@ -172,4 +176,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 SITE_ID = 1
+
