@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthenticationContext } from './AuthContext.js';
 import axios from 'axios'
+import Header from './Components/Header/Header.js'
 
 function Login() {
     const[ username, setUsername ] = useState("");
@@ -32,9 +33,7 @@ function Login() {
     
     return (
         <div className="app">
-            <div className="header">
-                <i>whitespaß</i>
-            </div>
+            <Header></Header>
             <div className="frontier"/>
                 <form onSubmit={submit}>
                     <br/>

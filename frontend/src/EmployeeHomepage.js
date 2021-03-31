@@ -5,23 +5,29 @@ import Recognition from './Components/Recognition/Recognition.js';
 /*import './EmployeeHomepage.css';*/
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Header from './Components/Header/Header.js'
+import TopMenu from './Components/TopMenu/TopMenu.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 function EmployeeHomepage() {
 
-    const [ isSideMenuOpen, setIsSideMenuOpen ] = useState(false);
+    /*const [ isSideMenuOpen, setIsSideMenuOpen ] = useState(false);*/
 
     return (
        
         <div className="app">
-            <div className="header"> whitespaß
-            {
-                isSideMenuOpen ? <SideMenu isOpen={isSideMenuOpen} setIsOpen={setIsSideMenuOpen} /> : undefined
-            }</div>
-            
-            <div className='main-content-box'>
-                <Recognition recipient="Reginald" recognizer="Gwen" message="Everyone is raving about your work on pantelic aristism."/>
-                <Recognition recipient="Edith" recognizer="Lancelot" message="I love your ideative reification!"/>
-                <Recognition recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
+            <Header></Header>
+            <TopMenu></TopMenu>
+            <div class='row'>
+                <div className='left-column'>
+                    <br></br>
+                    <b><i><div style={{fontSize:30}}>This month’s hero:</div></i></b>
+                    Charles Martel
+                </div>
+                <div className='right-column'>
+                    <Recognition recipient="Reginald" recognizer="Gwen" message="Everyone is raving about your work on pantelic aristism."/>
+                    <Recognition recipient="Edith" recognizer="Lancelot" message="I love your ideative reification!"/>
+                    <Recognition recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
+                </div>
             </div>
         </div>
         

@@ -7,9 +7,23 @@
   font-size: 70px;
   color: #bba38e;
   background-color: #774936;
-  background-image: url("./pics/lumber.png");
+  background-image: url("./pics/lumber.jpeg");
   background-repeat: repeat;
   text-align: center;
+}
+
+.right-column {
+  width: 77.8%;
+}
+
+.left-column {
+  width: 22.2%;
+  color: #774936;
+  font-size: 25px;
+}
+
+.row {
+  float: left;
 }
 
 form {
@@ -40,13 +54,25 @@ body {
   text-align: center;
 }
 
+.topmenu {
+  width:100%;
+  height:50px;
+  font-family: AlegreyaSans;
+  font-size: 30px;
+  color: #d1b297;
+  background-color: #774936;
+  background-image: url("./pics/under-lumber.png");
+  background-repeat: repeat;
+  text-align: center;
+}
+
 .recognition{
   margin: auto;
   background-color: #d1b297;
   color: #774936;
   height:auto;
   min-width:auto;
-  max-width: 500px;
+  max-width: 600px;
   padding: 1%;
   margin-top: 1%;
   font-size: 20px;
@@ -62,8 +88,26 @@ input {
 }
 
 .loading {
-  font-family: AlegreyaSans-BlackItalic;
+  font-family: AlegreyaSans;
   font-size: 50px;
+}
+
+.top-link {
+  font-family: AlegreyaSans;
+  color: #d1b297;
+  padding: 10px;
+}
+
+.top-link:hover {
+  font-family: AlegreyaSans;
+  color: #d1b297;
+  padding: 10px;
+}
+
+.top-link:active {
+  font-family: AlegreyaSans;
+  color: #fff1e5;
+  padding: 10px;
 }
 
 input:focus {
@@ -104,9 +148,27 @@ input:focus {
 @font-face {
   font-family: AlegreyaSans;
   src: url(./typefaces/AlegreyaSans-Regular.ttf);
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-  font-family: AlegreyaSans-BoldItalic;
+  font-family: AlegreyaSans;
+  src: url(./typefaces/AlegreyaSans-Italic.ttf);
+  font-style: italic;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: AlegreyaSans;
+  src: url(./typefaces/AlegreyaSans-Bold.ttf);
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: AlegreyaSans;
   src: url(./typefaces/AlegreyaSans-BoldItalic.ttf);
+  font-weight: bold;
+  font-style: italic;
 }
