@@ -5,8 +5,9 @@ function Recognition(props){
     return(
         <div className="recognition rounded">
             <div className="topline">
-                {props.recipient} got a recognition from {props.recognizer}
+                <i><b>{props.recognizer}</b> cherishes <b>{props.recipient}</b></i>
             </div>
+            <br></br>
             <div>
                 {props.message}
             </div>

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthenticationContext } from './../../AuthContext.js';
+import { AuthenticationContext } from './AuthContext.js';
 import axios from 'axios'
 
 function Login() {

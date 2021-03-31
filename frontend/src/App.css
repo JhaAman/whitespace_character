@@ -1,4 +1,6 @@
-header {
+
+
+.header {
   width:100%;
   height:110px;
   font-family: Faune;
@@ -34,7 +36,6 @@ body {
   display: block;
   width:100vw;
   height:2px;
-  background-color: white;
   color: #fff1e5;
   text-align: center;
 }
@@ -93,4 +94,19 @@ input:focus {
 :-ms-input-placeholder {
   color: #fff1e5;
   text-align: center;
+}
+
+@font-face {
+  font-family: Faune;
+  src: url(./typefaces/Faune-DisplayBoldItalic.otf);
+}
+
+@font-face {
+  font-family: AlegreyaSans;
+  src: url(./typefaces/AlegreyaSans-Regular.ttf);
+}
+
+@font-face {
+  font-family: AlegreyaSans-BoldItalic;
+  src: url(./typefaces/AlegreyaSans-BoldItalic.ttf);
 }

@@ -1,4 +1,4 @@
-import profilepic from './arnold.jpg';
+import profilepic from './pics/arnold.jpg';
 import './Profile.css';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Image from 'react-bootstrap/Image';
