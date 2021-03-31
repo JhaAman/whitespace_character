@@ -5,10 +5,17 @@ from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from django.http import JsonResponse
 
+
 from api.models.User import *
 from api.models.ApiSerializers import UidFormSerializer
 
 import io, json
+
+from api.models.User import User
+from api.models.User import UserSerializer
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.hashers import make_password
+
 
 
 @api_view(["POST"])
@@ -17,6 +24,15 @@ def create_user(request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            password = make_password(request.data["password"])
+            user = serializer["email"].value
+            first_name = serializer["first_name"].value
+            last_name = serializer["last_name"].value
+            check = False
+            if serializer["user_role"].value == "mng" or serializer["user_role"].value == "manager":
+                check = True
+            uid = serializer["uid"].value
+            AuthUser.objects.create(id = uid, first_name = first_name, last_name = last_name, is_staff = check, username = user, password = password,email = user)
             return Response(None, status.HTTP_201_CREATED)
         return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
     except ValueError as e:

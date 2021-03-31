@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from django.conf.urls import url
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
