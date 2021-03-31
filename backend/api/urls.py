@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 from django.conf.urls import url
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -19,6 +19,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     # path('dummy_api/', api.dummy_api),
+    
     path('get_users/', apiUser.get_users),
     path('create_user/', apiUser.create_user),
     path('create_users/', apiUser.create_users),
