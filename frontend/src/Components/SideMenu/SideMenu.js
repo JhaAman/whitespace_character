@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthenticationContext } from './../../AuthContext.js';
 import './SideMenu.css'
 
 function SideMenu({isOpen, setIsOpen}) {
+    const value = useContext(AuthenticationContext);
+
     return (
         <div className='menu-box'>
             <div className='team-logo-box'>
@@ -22,9 +25,9 @@ function SideMenu({isOpen, setIsOpen}) {
                     Settings
                 </div>
                 <Link to='/login'>
-                    <div className='bottom-menu-button' style={{color: 'red'}}>
+                    <button onClick={() => value.logout()} className='bottom-menu-button' style={{color: 'red'}}>
                         Logout
-                    </div>
+                    </button>
                 </Link>
             </div>
         </div>

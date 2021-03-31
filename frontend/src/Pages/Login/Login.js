@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { AuthenticationContext } from './../../AuthContext.js';
 import axios from 'axios'
 
@@ -7,6 +7,7 @@ function Login() {
     const[ username, setUsername ] = useState("");
     const[ password, setPassword ] = useState("");
     const value = useContext(AuthenticationContext);
+    let history = useHistory();
     
     function validate(){
         return username.length > 0 && password.length > 0;
@@ -23,7 +24,8 @@ function Login() {
         }).then((res) => {
             console.log(res);
             if (res.status === 200) {
-                value.setAuthenticationState({token: res.data.access, userInfo: {userID: res.data.user_id, username: username, password: password, role: 'employee'}})
+                value.setAuthenticationState({token: res.data.access, userInfo: {userID: res.data.id, username: username, password: password, role: 'employee'}});
+                history.push('/homepage')
             }
         }).catch((err) => {
             console.log(err);
@@ -63,7 +65,7 @@ function Login() {
                     <br/>
                     <br/>
                     <br/>
-                        <input type="submit" value="Submit" hidden={!validate()}/>
+                    <input type="submit" value="Submit" hidden={!validate()}/>
                 </form>
             </div>
     );
