@@ -1,12 +1,18 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
-from api.models.Recognition import Recognition, RecognitionSerializer
-import jwt
+from rest_framework import status, serializers
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
+
+from api.models.User import *
+from api.models.Recognition import *
+from api.models.ApiSerializers import UidFormSerializer, RidFormSerializer
+
+import io
 
 
 @api_view(["POST"])
-def create_vote(request):
+def create_recognition(request):
     try:
         serializer = RecognitionSerializer(data=request.data)
         if serializer.is_valid():
@@ -18,40 +24,40 @@ def create_vote(request):
 
 
 @api_view(["GET"])
-def get_all_vote_from(request):
+def get_user_recognitions(request):    
     try:
-        user_id = request.user.id
-        qs = Recognition.objects.filter(uid_from = user_id)
-        serializer = RecognitionSerializer(qs, many=True)
-        return Response(serializer.data)
+        serializer = UidFormSerializer(data=request.data)
+        if serializer.is_valid():
+            userRef = User.objects.get(uid=serializer.data['uid'])
+            recognitions = Recognition.objects.filter(uid_to=serializer.data['uid'])
+            json = JSONRenderer().render(recognitions.values())
+            stream = io.BytesIO(json)
+            data = JSONParser().parse(stream)
+            return Response(data=data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["PUT"])
+def put_flag_recognition(request):
+    try:
+        serializer = RidFormSerializer(data=request.data)
+        if serializer.is_valid():
+            recognitionRef = Recognition.objects.get(rid=serializer.data['rid'])
+            recognitionRef.flag_count += 1
+            recognitionRef.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])
-def get_all_vote_to(request):
+def get_all_recognitions(request):
     try:
-        user_id = request.user.id
-        qs = Recognition.objects.filter(uid_to=user_id)
-        serializer = RecognitionSerializer(qs, many=True)
-        return Response(serializer.data)
-    except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["DELETE"])
-def delete_vote(request):
-    try:
-        uid = request.user.id
-        rid = request.data["rid"]
-        r = Recognition.objects.filter(rid=rid).first()
-        if r is None:
-            return Response({"message": f"There is no recognition with rid {rid}"}, status.HTTP_404_NOT_FOUND)
-        
-        if int(r.uid_from) != uid and int(r.uid_to) != uid:
-            return Response({"message": f"User can only delete their recognition"}, status.HTTP_403_FORBIDDEN)
-
-        r.delete()
-        return Response({"message": f"Recognition {rid} deleted"})
+        recognitions = Recognition.objects.all()
+        serializer = RecognitionSerializer(recognitions, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

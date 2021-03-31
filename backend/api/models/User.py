@@ -1,9 +1,12 @@
 from django.db import models
-import api.services.constant as const
+from api.services.constant import *
 from api.models.Company import Company
 from api.models.Team import Team
-import api.services.utility as utils
+from api.services.utility import create_unique_id
 from rest_framework import serializers
+from django.core.exceptions import ObjectDoesNotExist
+
+
 
 
 """
@@ -27,7 +30,7 @@ class UserManager(models.Manager):
 
         # uid
         while True:
-            instance.uid = utils.create_unique_id(len=const.ID_LEN)
+            instance.uid = create_unique_id(len=ID_LEN)
             if not User.objects.filter(uid=instance.uid).exists():
                 break
 
@@ -47,18 +50,18 @@ class UserManager(models.Manager):
 
 """
 User model object
+
 Required fields:
     first_name
     last_name
     email
     password
+
 Optional fields:
     position
     user_role
     values_scores
 """
-
-
 class User(models.Model):
 
     objects = UserManager()
@@ -72,7 +75,7 @@ class User(models.Model):
     )
 
     tid = models.CharField(
-        max_length=const.ID_LEN,
+        max_length=ID_LEN,
         blank=False
     )
 
@@ -80,33 +83,40 @@ class User(models.Model):
     uid = models.CharField(
         primary_key=True,
         unique=True,
-        max_length=const.ID_LEN,
+        max_length=ID_LEN,
         default='0',
         auto_created=True,
     )
 
     # first name (required)
     first_name = models.CharField(
-        max_length=const.CHARFIELD_SHORT_LEN,
+        max_length=CHARFIELD_SHORT_LEN,
         blank=False
     )
 
     # last name (required)
     last_name = models.CharField(
-        max_length=const.CHARFIELD_SHORT_LEN,
+        max_length=CHARFIELD_SHORT_LEN,
         blank=False
     )
 
     # email (required)
     email = models.EmailField(
-        max_length=const.CHARFIELD_SHORT_LEN,
+        max_length=CHARFIELD_SHORT_LEN,
+        unique=True,
         blank=False
     )
 
     # password (required)
     password = models.CharField(
-        max_length=const.CHARFIELD_LONG_LEN,
+        max_length=CHARFIELD_LONG_LEN,
         blank=False
+    )
+
+    # job title (required)
+    job_title = models.CharField(
+        max_length=const.CHARFIELD_SHORT_LEN,
+        default = '',
     )
 
     # user role ('manager', 'employee', 'dev')
@@ -121,8 +131,32 @@ class User(models.Model):
         default='emp'
     )
 
+    title = models.CharField(
+        max_length=CHARFIELD_SHORT_LEN,
+        blank=True,
+        default=''
+    )
+    
+    badges = models.JSONField(
+        blank=True,
+        null=False,
+        default=list
+    )
+
+    network = models.JSONField(
+        blank=True,
+        null=False,
+        default=list
+    )
+
+    profile_picutre = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to="images/",
+    )
+
     # date object was created
-    created_date = models.DateTimeField(
+    date_created = models.DateTimeField(
         auto_now_add=True,
         auto_created=True,
         null=True
@@ -130,6 +164,16 @@ class User(models.Model):
 
     # scores on corporate values
     values_scores = models.JSONField(
+        default=list,
+    )
+
+    # badeges
+    badges = models.JSONField(
+        default=list,
+    )
+
+    # network
+    network = models.JSONField(
         default=list,
     )
 
@@ -142,6 +186,7 @@ class UserSerializer(serializers.ModelSerializer):
         if not Team.objects.filter(tid=value).exists():
             raise serializers.ValidationError("Team id not found")
         return value
+    
     class Meta:
         model = User
         fields = '__all__'
