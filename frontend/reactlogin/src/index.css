@@ -21,3 +21,8 @@ code {
   font-family: 'Faune';
   src:local('Faune'), url("./typefaces/Faune-TextItalic.otf");
 }
+
+@font-face {
+  font-family: 'AlegreyaSans-BlackItalic';
+  src:local('AlegreyaSans'), url("./typefaces/AlegreyaSans-BlackItalic.ttf");
+}
