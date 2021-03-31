@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  api-server:
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/code
+    env_file:
+      - ./backend/.env
+    ports:
+      - 8000:8000
+    command:
+      - bash
+      - -c
+      - |
+        python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000
+  
+  frontend-webpage:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    ports:
+      - 3000:3000
