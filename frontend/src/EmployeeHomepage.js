@@ -15,18 +15,17 @@ function EmployeeHomepage() {
     return (
        
         <div className="app">
-            <Header></Header>
             <TopMenu></TopMenu>
             <div class='row'>
                 <div className='left-column'>
-                    <br></br>
-                    <b><i><div style={{fontSize:30}}>This month’s hero:</div></i></b>
-                    Charles Martel
-                </div>
-                <div className='right-column'>
                     <Recognition recipient="Reginald" recognizer="Gwen" message="Everyone is raving about your work on pantelic aristism."/>
                     <Recognition recipient="Edith" recognizer="Lancelot" message="I love your ideative reification!"/>
                     <Recognition recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
+                </div>
+                <div className='right-column'>
+                    <br></br>
+                    <b><i><div style={{fontSize:30}}>This month’s hero:</div></i></b>
+                    Charles Martel
                 </div>
             </div>
         </div>

@@ -12,18 +12,20 @@
   text-align: center;
 }
 
-.right-column {
-  width: 77.8%;
+.left-column {
+  width: 66.7%;
 }
 
-.left-column {
-  width: 22.2%;
+.right-column {
+  width: 33.3%;
   color: #774936;
   font-size: 25px;
 }
 
 .row {
   float: left;
+  flex-direction: row;
+  flex: 1;
 }
 
 form {
@@ -56,14 +58,28 @@ body {
 
 .topmenu {
   width:100%;
-  height:50px;
+  height:60px;
   font-family: AlegreyaSans;
   font-size: 30px;
   color: #d1b297;
   background-color: #774936;
   background-image: url("./pics/under-lumber.png");
   background-repeat: repeat;
+}
+
+.menu-left {
+  text-align: left;
+  font-family: Faune;
+  padding: 5px;
+  padding-left: 40px;
+  padding-right: 20px;
+}
+
+.menu-center {
+  vertical-align: middle;
   text-align: center;
+  margin: 0 auto;
+  padding: 6px;
 }
 
 .recognition{
@@ -95,7 +111,7 @@ input {
 .top-link {
   font-family: AlegreyaSans;
   color: #d1b297;
-  padding: 10px;
+  padding: 20px;
 }
 
 .top-link:hover {
