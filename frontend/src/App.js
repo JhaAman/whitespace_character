@@ -1,24 +1,28 @@
+import React, { useContext } from 'react';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import Login from './Pages/Login/Login.js'
+import EmployeeHomepage from './Pages/EmployeeHomepage/EmployeeHomepage.js';
+import Profile from './Pages/Profile/Profile.js';
+import { AuthenticationProvider } from './AuthContext.js';
 import './App.css';
-import React from 'react';
-import Recog from './Recognition';
-import Textbox from './textbox';
-
 
 function App() {
   return (
-    <div className = 'App'>
-      <h1>Recognitions and Such</h1>
-      <Recog name = "Kenny S" message = "Keeping it light."/>
-      <Recog name = "Black Betty" message = "please please please"/>
-      <Recog name = "Robot Rock" message = "shoot shoot"/>
-
-      <Recog name = "Mississippi Squire" message = "If you know what I mean."/>
-
-      <Textbox></Textbox>
-
-    </div>
-
-
+    <Router>
+      <AuthenticationProvider>
+      <Switch>
+          <Route path='/login'>
+            <Login />
+          </Route>
+          <Route path='/homepage'>
+            <EmployeeHomepage />
+          </Route>
+          <Route path='/profile'>
+            <Profile />
+          </Route>
+        </Switch>
+      </AuthenticationProvider>
+    </Router>
   );
 }
 
