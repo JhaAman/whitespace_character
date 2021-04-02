@@ -1,0 +1,34 @@
+.App {
+  text-align: center;
+}
+
+.yes-notification{
+  background-color:lightskyblue;
+  height: auto;
+  width: 400px;
+}
+.no-notification{
+  background-color:rgb(238, 238, 238);
+  height: auto;
+  width: 400px;
+}
+
+.Notification-Message{
+  
+  display:flex;
+}
+.space{
+  margin-top:10px;
+}
+.dropdown-menu{
+  width:auto;
+  max-height:200px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style:none;
+}
+.dropdown-menu::-webkit-scrollbar{
+  width: 0 !important;
+  display: none;
+}
