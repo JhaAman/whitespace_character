@@ -23,9 +23,16 @@ function EmployeeHomepage() {
                     <Recognition recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
                 </div>
                 <div className='right-column'>
-                    <br></br>
-                    <b><i><div style={{fontSize:30}}>This month’s hero:</div></i></b>
-                    Charles Martel
+                    <div className='infobox rounded'>
+                        <br></br>
+                        <b><i><div style={{fontSize:30}}>This month’s hero:</div></i></b>
+                        Charles Martel
+                        <br></br><br></br>
+                        [other statistics can go here]
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                    </div>
                 </div>
             </div>
         </div>

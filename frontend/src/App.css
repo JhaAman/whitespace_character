@@ -12,14 +12,25 @@
   text-align: center;
 }
 
+.infobox {
+  background-color: #d1b297;
+  color: #774936;
+  min-height: 90%;
+  max-height: 100%;
+  position: relative;
+  margin-top: 10px;
+}
+
 .left-column {
   width: 66.7%;
+  padding: 10px;
 }
 
 .right-column {
   width: 33.3%;
-  color: #774936;
   font-size: 25px;
+  flex-direction: column;
+  padding: 10px;
 }
 
 .row {
@@ -60,7 +71,7 @@ body {
   width:100%;
   height:60px;
   font-family: AlegreyaSans;
-  font-size: 30px;
+  font-size: 25px;
   color: #d1b297;
   background-color: #774936;
   background-image: url("./pics/under-lumber.png");
@@ -70,6 +81,7 @@ body {
 .menu-left {
   text-align: left;
   font-family: Faune;
+  font-size: 28px;
   padding: 5px;
   padding-left: 40px;
   padding-right: 20px;
@@ -79,28 +91,19 @@ body {
   vertical-align: middle;
   text-align: center;
   margin: 0 auto;
-  padding: 6px;
+  padding: 10px;
 }
 
-.recognition{
+.recognition {
   margin: auto;
   background-color: #d1b297;
   color: #774936;
   height:auto;
   min-width:auto;
-  max-width: 600px;
-  padding: 1%;
-  margin-top: 1%;
+  max-width: 90%;
   font-size: 20px;
-}
-
-input {
-  font-family: AlegreyaSans;
-  font-size: 30px;
-  border: none;
-  color: #fff1e5;
-  background-color: #bba38e;
-  text-align: center;
+  margin-top: 10px;
+  padding: 2%;
 }
 
 .loading {
@@ -117,42 +120,65 @@ input {
 .top-link:hover {
   font-family: AlegreyaSans;
   color: #d1b297;
-  padding: 10px;
+  padding: 20px;
 }
 
 .top-link:active {
   font-family: AlegreyaSans;
   color: #fff1e5;
-  padding: 10px;
+  padding: 20px;
+}
+
+input {
+  border: none;
+  text-align: center;
+  background-color: #d1b297;
+  color: #774936;
+  border-bottom: 2px dotted #d1b297;
+  border-right: 2px dotted #d1b297;
+}
+
+.submit {
+  font-size: 25px;
+}
+
+.input {
+  font-family: AlegreyaSans;
+  font-size: 30px;
+  background-color: #d1b297;
+  color: #774936;
+  text-align: center;
+  width: 280px;
 }
 
 input:focus {
   outline: none;
-  border-bottom: 2px dotted #fff1e5;
+  border-bottom: 2px dotted #bba38e;
+  border-right: 2px dotted #bba38e;
 }
 
 ::-webkit-input-placeholder {
-  color: #fff1e5;
+  color: #774936;
   text-align: center;
 }
 
 :-moz-placeholder {
-  color: #fff1e5;
+  color: #774936;
   text-align: center;
 }
 
 ::-moz-placeholder {
-  color: #fff1e5;
+  color: #774936;
   text-align: center;
 }
 
 ::placeholder {
-  color: #fff1e5;
+  color: #774936;
   text-align: center;
 }
 
 :-ms-input-placeholder {
-  color: #fff1e5;
+  color: #774936;
   text-align: center;
 }
 

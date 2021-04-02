@@ -39,30 +39,30 @@ function Login() {
                     <br/>
                     <br/>
                     <label>
-                        <input
-                            type="text"
-                            placeholder="Email"
-                            value={username}
-                            onChange={e => setUsername(e.target.value)}
-                        />
+                        <div className='input rounded'>
+                            <input
+                                type="text"
+                                placeholder="email"
+                                value={username}
+                                onChange={e => setUsername(e.target.value)}
+                            />
+                        </div>
                     </label>
-                    <br/>
-                    <br/>
-                    <br/>
                     <br/>
                     <label>
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={e=>setPassword(e.target.value)}
-                        />
+                        <div className='input rounded'>
+                            <input
+                                type="password"
+                                placeholder="password"
+                                value={password}
+                                onChange={e=>setPassword(e.target.value)}
+                            />
+                        </div>
                     </label>
                     <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                        <input type="submit" value="Submit" hidden={!validate()}/>
+                    <div className='submit rounded'>
+                        <input type="Submit" value="submit" hidden={!validate()}/>
+                    </div>
                 </form>
             </div>
     );
