@@ -33,7 +33,6 @@ urlpatterns = [
     path('put_flag_recognition/', apiRecognition.put_flag_recognition),
     path('create_company/', apiCompany.create_company),
     path('create_team/', apiTeam.create_team),
-    path('create_notif/', apiNotification.create_notif),
     path('get_notif/', apiNotification.get_notif),
     path('get_profile/', apiProfile.get_profile),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
