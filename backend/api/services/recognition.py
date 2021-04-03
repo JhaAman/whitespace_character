@@ -1,11 +1,14 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.http import JsonResponse
+from api.helpers.badges import updateBadges
+import json
 from rest_framework import status, serializers
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
-
 from api.models.User import *
 from api.models.Recognition import *
+from api.models.ApiSerializers import UidFormSerializer, RidFormSerializer
 
 import io
 
@@ -16,6 +19,7 @@ def create_recognition(request):
         serializer = RecognitionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            updateBadges(request.data['uid_to'], request.data['uid_from'])
             return Response(serializer.data)
         return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
     except ValueError as e:
@@ -23,17 +27,9 @@ def create_recognition(request):
 
 
 @api_view(["GET"])
-def get_user_recognitions(request):
-
-    class GetUserRecognitionSerializer(serializers.Serializer):
-        uid = serializers.CharField(max_length=8)
-        def validate_uid(self, value):
-            if not User.objects.filter(uid=value).exists():
-                raise serializers.ValidationError("{id} user id does not exist".format(id=value))
-            return value
-    
+def get_user_recognitions(request):    
     try:
-        serializer = GetUserRecognitionSerializer(data=request.data)
+        serializer = UidFormSerializer(data=request.data)
         if serializer.is_valid():
             userRef = User.objects.get(uid=serializer.data['uid'])
             recognitions = Recognition.objects.filter(uid_to=serializer.data['uid'])
@@ -48,18 +44,8 @@ def get_user_recognitions(request):
 
 @api_view(["PUT"])
 def put_flag_recognition(request):
-
-    class PutFlagRecognitionSerializer(serializers.Serializer):
-        
-        rid = serializers.CharField(required=True)
-
-        def validate_rid(self, value):
-            if not Recognition.objects.filter(rid=value).exists():
-                raise serializers.ValidationError("{id} recognition id does not exist".format(id=value))
-            return value
-
     try:
-        serializer = PutFlagRecognitionSerializer(data=request.data)
+        serializer = RidFormSerializer(data=request.data)
         if serializer.is_valid():
             recognitionRef = Recognition.objects.get(rid=serializer.data['rid'])
             recognitionRef.flag_count += 1

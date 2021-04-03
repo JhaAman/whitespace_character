@@ -11,6 +11,8 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=password
       - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
     volumes:
       - whitespace-db-data:/var/lib/postgresql/data/pgdata
 
@@ -37,6 +39,8 @@ services:
         python manage.py loaddata teams.json 
         python manage.py loaddata users.json 
         python manage.py runserver 0.0.0.0:8000
+
+         
 
 volumes:
   whitespace-db-data:
