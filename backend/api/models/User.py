@@ -115,7 +115,7 @@ class User(models.Model):
 
     # job title (required)
     job_title = models.CharField(
-        max_length= CHARFIELD_SHORT_LEN,
+        max_length=CHARFIELD_SHORT_LEN,
         default = '',
     )
 
