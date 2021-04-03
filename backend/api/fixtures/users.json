@@ -1,0 +1,21 @@
+[
+  {
+    "model": "api.user",
+    "pk": "37798256",
+    "fields": {
+      "date_created": "2021-04-03T11:16:36.986Z",
+      "team": "75498409",
+      "tid": "75498409",
+      "first_name": "name1",
+      "last_name": "name2",
+      "email": "cunbidun@gmail.com",
+      "password": "hello",
+      "user_role": "emp",
+      "title": "",
+      "badges": [],
+      "network": [],
+      "profile_picutre": "",
+      "values_scores": { "v1": 0, "v2": 0 }
+    }
+  }
+]

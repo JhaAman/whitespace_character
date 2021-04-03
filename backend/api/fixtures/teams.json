@@ -1,0 +1,14 @@
+[
+  {
+    "model": "api.team",
+    "pk": "75498409",
+    "fields": {
+      "date_created": "2021-04-03T11:13:09.525Z",
+      "company": "20679275",
+      "cid": "20679275",
+      "name": "team1",
+      "values_scores": { "v1": 0, "v2": 0 },
+      "badges": []
+    }
+  }
+]
