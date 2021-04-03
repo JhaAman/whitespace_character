@@ -1,5 +1,5 @@
 from django.db import models
-from api.services.constant import *
+from api.services.constant import * 
 from api.models.Company import Company
 from api.models.Team import Team
 from api.services.utility import create_unique_id
