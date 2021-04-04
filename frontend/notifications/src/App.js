@@ -50,9 +50,10 @@ function App() {
       </DropdownItem>
     );
   }
-  let notifications = [];
-
+  //let notifications = [];
+  const [notifs,setNotifs] = useState([]);
   const [auth,setAuth] = useState();
+  const [newNotif,setNewNotif] = useState();
 
   function authenticate(){
     axios.post("http://localhost:8000/api/get_token/",{
@@ -75,18 +76,23 @@ function App() {
       }
     })
     .then(function(response){
+      let n = false;
       //console.log(Date.parse(response.data[0].date_created));
       //console.log(timesince(Date.parse(response.data[1].date_created)));
       for(let i=0;i<response.data.length;i++){
-        notifications.push(
-        <Notification key={i}
+        if(!response.data[i].seen)n=true;
+
+        setNotifs(notifs => [...notifs,
+        <Notification key={response.data[i].nid}
         message={response.data[i].notif_message}
         type={response.data[i].notif_type}
         time={timesince(Date.parse(response.data[i].date_created))}
         seen={response.data[i].seen}
-        nid={response.data[i].nid}/>)
+        nid={response.data[i].nid}/>
+        ]);
         console.log(response.data[i]);
       }
+      setNewNotif(n);
     });
   }
 
@@ -103,6 +109,7 @@ function App() {
         }
       })
     .then(function(response){
+      
       console.log(response);
     });
   }
@@ -133,8 +140,8 @@ function App() {
       <button onClick={getNotifications}>notif</button>
       <button onClick={authenticate}>auth</button>
       
-      <DropdownButton variant="light" title={<FontAwesomeIcon icon={faBell}/>} >
-        {notifications}
+      <DropdownButton variant="light" title={<FontAwesomeIcon icon={faBell} color={newNotif?"blue":"black"}/>} >
+        {notifs}
       </DropdownButton>
 
 
