@@ -3,12 +3,12 @@
 }
 
 .yes-notification{
-  background-color:lightskyblue;
+  color:blue;
+  
   height: auto;
   width: 400px;
 }
 .no-notification{
-  background-color:rgb(238, 238, 238);
   height: auto;
   width: 400px;
 }
@@ -32,3 +32,6 @@
   width: 0 !important;
   display: none;
 }
+
+
+
