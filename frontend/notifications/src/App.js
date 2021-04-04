@@ -17,39 +17,39 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
-function Notification(props){
-  return(
 
-    <DropdownItem onClick={() => console.log(props.time)}>
-    <div className={props.new+"-notification"}>
-        <Row>
-          <Col>{
-          props.type==="recognition_notif"
-          ?
-          "Recognition"
-          :
-          props.type==="recognition_badge"
-          ?
-          "Badge"
-          :
-          "unknown"
-          }</Col>
-          <Col xs={4}>{props.time}</Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col>
-            <div className="Notification-Message">{props.message}</div>
-          </Col>
-
-        </Row>
-    </div>
-    </DropdownItem>
-  );
-}
 
 
 function App() {
+  function Notification(props){
+    return(
+      <DropdownItem onClick={() => markSeen(props.nid)}>
+      <div className={props.seen+"-notification"}>
+          <Row>
+            <Col>{
+            props.type==="recognition_notif"
+            ?
+            "Recognition"
+            :
+            props.type==="recognition_badge"
+            ?
+            "Badge"
+            :
+            "unknown"
+            }</Col>
+            <Col xs={4}>{props.time}</Col>
+          </Row>
+          <br/>
+          <Row>
+            <Col>
+              <div className="Notification-Message">{props.message}</div>
+            </Col>
+  
+          </Row>
+      </div>
+      </DropdownItem>
+    );
+  }
   let notifications = [];
 
   const [auth,setAuth] = useState();
@@ -83,9 +83,27 @@ function App() {
         message={response.data[i].notif_message}
         type={response.data[i].notif_type}
         time={timesince(Date.parse(response.data[i].date_created))}
-        new={response.data[i].seen}/>)
+        seen={response.data[i].seen}
+        nid={response.data[i].nid}/>)
         console.log(response.data[i]);
       }
+    });
+  }
+
+  function markSeen(nid){
+    //console.log(nid);
+    axios.put(
+      "http://localhost:8000/api/update_notif/",
+      {
+        nid:nid,
+      },
+      {
+        headers:{
+          Authorization:"Bearer "+auth
+        }
+      })
+    .then(function(response){
+      console.log(response);
     });
   }
 

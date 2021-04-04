@@ -2,13 +2,13 @@
   text-align: center;
 }
 
-.yes-notification{
+.false-notification{
   color:blue;
   
   height: auto;
   width: 400px;
 }
-.no-notification{
+.true-notification{
   height: auto;
   width: 400px;
 }
