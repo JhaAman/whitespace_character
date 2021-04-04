@@ -11,6 +11,8 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=password
       - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
     volumes:
       - whitespace-db-data:/var/lib/postgresql/data/pgdata
 
@@ -31,7 +33,11 @@ services:
       - bash
       - -c
       - |
-        ./wait-for-it.sh db:5432 -- python manage.py migrate
+        ./wait-for-it.sh db:5432 -- python manage.py makemigrations
+        python manage.py migrate
+        python manage.py initadmin
+        python manage.py loaddata company.json 
+        python manage.py loaddata teams.json 
         python manage.py runserver 0.0.0.0:8000
 
 volumes:

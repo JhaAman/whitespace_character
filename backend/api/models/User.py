@@ -1,9 +1,12 @@
 from django.db import models
-from api.services.constant import *
+from api.services.constant import * 
 from api.models.Company import Company
 from api.models.Team import Team
 from api.services.utility import create_unique_id
 from rest_framework import serializers
+from django.core.exceptions import ObjectDoesNotExist
+
+
 
 
 """
@@ -59,8 +62,6 @@ Optional fields:
     user_role
     values_scores
 """
-
-
 class User(models.Model):
 
     objects = UserManager()
@@ -112,6 +113,13 @@ class User(models.Model):
         blank=False
     )
 
+    # job title (required)
+    job_title = models.CharField(
+        max_length=CHARFIELD_SHORT_LEN,
+        blank=True,
+        default = '',
+    )
+
     # user role ('manager', 'employee', 'dev')
     # default = 'employee'
     user_role = models.CharField(
@@ -132,13 +140,11 @@ class User(models.Model):
     
     badges = models.JSONField(
         blank=True,
-        null=False,
         default=list
     )
 
     network = models.JSONField(
         blank=True,
-        null=False,
         default=list
     )
 
