@@ -59,9 +59,18 @@ class Notification(models.Model):
         blank=True
     )
 
+    notif_type = models.CharField(
+        max_length=CHARFIELD_SHORT_LEN,
+        default='',
+        blank=True
+    )
+
+    seen = models.BooleanField(default=False)
+
     date_created = models.DateTimeField(
         auto_now_add=True,
         auto_created=True,
+        null=True
     )
 
     class Meta:
@@ -75,4 +84,4 @@ class NotificationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Notification
-        fields = ['notif_uid', 'notif_message']
+        fields = ['nid', 'notif_uid', 'notif_message', 'date_created', 'notif_type', 'seen']

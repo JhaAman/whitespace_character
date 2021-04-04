@@ -21,7 +21,7 @@ def create_recognition(request):
         if serializer.is_valid():
             serializer.save()
             updateBadges(serializer.data['uid_to'], serializer.data['uid_from'])
-            makeNotification("You received a recognition from " + User.objects.get(uid=serializer.data['uid_from']).first_name, serializer.data['uid_to'])
+            makeNotification("You received a recognition from " + User.objects.get(uid=serializer.data['uid_from']).first_name, serializer.data['uid_to'], "recognition_notif")
             return Response(serializer.data)
         return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
     except ValueError as e:
