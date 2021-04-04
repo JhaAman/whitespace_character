@@ -1,15 +1,12 @@
 import profilepic from './pics/arnold.jpg';
 import './Profile.css';
-//import Jumbotron from 'react-bootstrap/Jumbotron';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
-//import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Header from './Components/Header/Header.js'
 
 function Networkprofile(props) {
   return (

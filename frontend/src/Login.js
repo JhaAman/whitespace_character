@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { AuthenticationContext } from './AuthContext.js';
 import axios from 'axios'
-import Header from './Components/Header/Header.js'
+import { Header } from './Components.js'
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -33,38 +32,37 @@ function Login() {
 
     return (
         <div className="app">
-            <Header></Header>
-            <div className="frontier"/>
+            <Header/>
+            <div className="body">
                 <form onSubmit={submit}>
                     <br/>
                     <br/>
                     <label>
-                        <div className='input rounded'>
+                        <div className='loginput rounded'>
                             <input
                                 type="text"
                                 placeholder="email"
                                 value={username}
                                 onChange={e => setUsername(e.target.value)}
+                                class="loginput"
                             />
                         </div>
                     </label>
                     <br/>
                     <label>
-                        <div className='input rounded'>
-                            <input
-                                type="password"
-                                placeholder="password"
-                                value={password}
-                                onChange={e=>setPassword(e.target.value)}
-                            />
-                        </div>
+                        <input
+                            type="password"
+                            placeholder="password"
+                            value={password}
+                            onChange={e=>setPassword(e.target.value)}
+                            class="loginput"
+                        />
                     </label>
                     <br/>
-                    <div className='submit rounded'>
-                        <input type="Submit" value="submit" hidden={!validate()}/>
-                    </div>
+                    <input type="Submit" value="submit" hidden={!validate()} class="login-button"/>
                 </form>
             </div>
+        </div>
     );
 }
 

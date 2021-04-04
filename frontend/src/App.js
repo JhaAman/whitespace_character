@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Login from './Login.js'
 import EmployeeHomepage from './EmployeeHomepage.js';

@@ -1,4 +1,6 @@
-
+/* Our consolidated CSS file! For easy access to elements that should be shared. */
+/* My (Christopher’s) goal will be over the week of April 4 to organize this better and put some classes back into different CSS files.
+   Rename things, make the CSS easier to use, more consistent across pages, and suchlike. */
 
 .header {
   width:100%;
@@ -6,15 +8,15 @@
   font-family: Faune;
   font-size: 70px;
   color: #bba38e;
-  background-color: #774936;
+  background-color: #58453B;
   background-image: url("./pics/lumber.jpeg");
   background-repeat: repeat;
   text-align: center;
 }
 
 .infobox {
-  background-color: #d1b297;
-  color: #774936;
+  background-color: #d8b597;
+  color: #58453B;
   min-height: 95%;
   max-height: 100%;
   position: relative;
@@ -37,16 +39,7 @@
   float: left;
   flex-direction: row;
   flex: 1;
-}
-
-form {
-  display: block;
-  width:100vw;
-  height:100vh;
-  font-family: AlegreyaSans;
-  color: #fff1e5;
-  background-color: #bba38e;
-  text-align: center;
+  width: 100%;
 }
 
 body {
@@ -54,15 +47,26 @@ body {
   width:100vw;
   height:100vh;
   font-family: AlegreyaSans;
-  color: #fff1e5;
+  color: #58453B;
   background-color: #bba38e;
   text-align: center;
 }
 
+.body {
+  display: block;
+  width:100vw;
+  height:100vh;
+  font-family: AlegreyaSans;
+  color: #58453B;
+  background-color: #bba38e;
+  text-align: center;
+}
+
+/* deprecated class! */
 .frontier {
   display: block;
   width:100vw;
-  height:2px;
+  height:0px;
   color: #fff1e5;
   text-align: center;
 }
@@ -72,8 +76,8 @@ body {
   height:60px;
   font-family: AlegreyaSans;
   font-size: 25px;
-  color: #d1b297;
-  background-color: #774936;
+  color: #d8b597;
+  background-color: #58453B;
   background-image: url("./pics/under-lumber.png");
   background-repeat: repeat;
 }
@@ -96,14 +100,87 @@ body {
 
 .recognition {
   margin: auto;
-  background-color: #d1b297;
-  color: #774936;
+  background-color: #d8b597;
+  color: #58453B;
   height:auto;
   min-width:auto;
   max-width: 90%;
   font-size: 20px;
   margin-top: 10px;
   padding: 2%;
+}
+
+/* for reporting recognitions */
+.repbox {
+  text-align: center;
+  padding: 10px;
+  font-family: AlegreyaSans;
+  font-size: 20px;
+  background-color: #bba38e;
+}
+
+.rep-input {
+  font-family: AlegreyaSans;
+  font-size: 20px;
+  background-color: #58453B;
+  text-align: center;
+  width: 280px;
+  border: none;
+  text-align: center;
+  background-color: #58453B;
+  color: #bba38e;
+  border-bottom: 2px dotted #58453B;
+  border-right: 2px dotted #58453B;
+}
+
+.rep-input:focus {
+  outline: none;
+  border-bottom: 2px dotted #bba38e;
+  border-right: 2px dotted #bba38e;
+}
+
+.rep-button {
+  font-family: AlegreyaSans;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: lighter;
+  background-color: #58453B;
+  text-align: center;
+  width: 280px;
+  border: none;
+  text-align: center;
+  background-color: #58453B;
+  color: #bba38e;
+  border-bottom: 2px dotted #58453B;
+  border-right: 2px dotted #58453B;
+}
+
+.rep-button:active {
+  font-weight: bold;
+}
+
+.rep-button:hover {
+  font-weight: bold;
+}
+
+.rep-button:focus {
+  font-weight: bold;
+}
+
+button {
+  background-color: #d8b597;
+  color: #58453B;
+  border: none;
+  font-weight: lighter;
+  font-style: italic;
+}
+
+button:hover {
+  font-weight: bold;
+}
+
+button:active {
+  font-weight: bold;
 }
 
 .loading {
@@ -119,7 +196,7 @@ body {
 
 .top-link:hover {
   font-family: AlegreyaSans;
-  color: #d1b297;
+  color: #d8b597;
   padding: 20px;
 }
 
@@ -129,26 +206,50 @@ body {
   padding: 20px;
 }
 
-input {
+.loginput {
+  font-family: AlegreyaSans;
+  font-size: 30px;
+  background-color: #58453B;
+  text-align: center;
+  width: 280px;
   border: none;
   text-align: center;
-  background-color: #d1b297;
-  color: #774936;
-  border-bottom: 2px dotted #d1b297;
-  border-right: 2px dotted #d1b297;
+  background-color: #58453B;
+  color: #bba38e;
+  border-bottom: 2px dotted #58453B;
+  border-right: 2px dotted #58453B;
+}
+
+.login-button {
+  font-family: AlegreyaSans;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: lighter;
+  background-color: #58453B;
+  text-align: center;
+  width: 80px;
+  border: none;
+  text-align: center;
+  background-color: #58453B;
+  color: #bba38e;
+  border-bottom: 2px dotted #58453B;
+  border-right: 2px dotted #58453B;
+}
+
+.login-button:focus {
+  font-weight: bold;
+}
+
+.login-button:active {
+  font-weight: bold;
+}
+
+.login-button:hover {
+  font-weight: bold;
 }
 
 .submit {
   font-size: 25px;
-}
-
-.input {
-  font-family: AlegreyaSans;
-  font-size: 30px;
-  background-color: #d1b297;
-  color: #774936;
-  text-align: center;
-  width: 280px;
 }
 
 input:focus {
@@ -158,27 +259,27 @@ input:focus {
 }
 
 ::-webkit-input-placeholder {
-  color: #774936;
+  color: #bba38e;
   text-align: center;
 }
 
 :-moz-placeholder {
-  color: #774936;
+  color: #bba38e;
   text-align: center;
 }
 
 ::-moz-placeholder {
-  color: #774936;
+  color: #bba38e;
   text-align: center;
 }
 
 ::placeholder {
-  color: #774936;
+  color: #bba38e;
   text-align: center;
 }
 
 :-ms-input-placeholder {
-  color: #774936;
+  color: #bba38e;
   text-align: center;
 }
 
@@ -213,4 +314,18 @@ input:focus {
   src: url(./typefaces/AlegreyaSans-BoldItalic.ttf);
   font-weight: bold;
   font-style: italic;
+}
+
+@font-face {
+  font-family: AlegreyaSans;
+  src: url(./typefaces/AlegreyaSans-LightItalic.ttf);
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: AlegreyaSans;
+  src: url(./typefaces/AlegreyaSans-Light.ttf);
+  font-weight: 200;
+  font-style: normal;
 }
