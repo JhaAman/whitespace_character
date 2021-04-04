@@ -9,23 +9,15 @@ def updateBadges(useridto, useridfrom):
     uid_from_sent = Recognition.objects.filter(uid_from = useridfrom).count()
 
     if uid_to_received % 5 == 0:
-        user = User.objects.get(pk = useridto)
-        serializer = UserSerializer(user)
-        serialized_data = serializer.data
+        userRef = User.objects.get(pk = useridto)
         badgeTitle = str(uid_to_received) + " Recognitions Received"
-        serialized_data['badges'].append(badgeTitle)
-        serializer = UserSerializer(instance=user, data=serialized_data)
-        if serializer.is_valid():
-            serializer.save()
-            makeNotification("You received a badge for: " + badgeTitle, useridto)
+        userRef.badges.append(badgeTitle)
+        userRef.save()
+        makeNotification("You received a badge for: " + badgeTitle, useridto, "recognition_badge")
 
     if uid_from_sent % 5 == 0:
-        user = User.objects.get(pk = useridfrom)
-        serializer = UserSerializer(user)
-        serialized_data = serializer.data
+        userRef = User.objects.get(pk = useridfrom)
         badgeTitle = str(uid_from_sent) + " Recognitions Sent"
-        serialized_data['badges'].append(badgeTitle)
-        serializer = UserSerializer(instance=user, data=serialized_data)
-        if serializer.is_valid():
-            serializer.save()
-            makeNotification("You received a badge for: " + badgeTitle, useridfrom)
+        userRef.badges.append(badgeTitle)
+        userRef.save()
+        makeNotification("You received a badge for: " + badgeTitle, useridfrom, "recognition_badge")
