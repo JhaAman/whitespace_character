@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/DropdownItem';
-import Dropdown from 'react-bootstrap/Dropdown';
+//import Dropdown from 'react-bootstrap/Dropdown';
 //import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import {faBell} from '@fortawesome/free-solid-svg-icons';
@@ -68,18 +68,39 @@ function App() {
   function getNotifications(){
     axios.get("http://localhost:8000/api/get_notif/",{
       params:{
-        uid:"53893215"
+        uid:"78574359"
       },
       headers:{
         Authorization:"Bearer "+auth
       }
     })
     .then(function(response){
+      //console.log(Date.parse(response.data[0].date_created));
+      console.log(timesince(Date.parse(response.data[1].date_created)));
       for(let i=0;i<response.data.length;i++){
         notifications.push(<SimpleNotification key={i} message={response.data[i].notif_message}></SimpleNotification>)
         console.log(response.data[i]);
       }
     });
+  }
+
+  function timesince(m){
+    let a = new Date().getTime()-m;//difference in millis
+    if(a<60000){//less than one minute
+      return Math.floor(a/1000)+" seconds ago";
+    }
+    else if(a<3600000){//less than one hour
+      return Math.floor((a/1000)/60)+" minutes ago";
+    }
+    else if(a<86400000){//less than one day
+      return Math.floor(((a/1000)/60)/60)+" hours ago";
+    }
+    else if(a<604800000){//less than one week
+      return Math.floor((((a/1000)/60)/60)/24)+" days ago";
+    }
+    else{
+      return "More than 1 week ago"
+    }
   }
 
   return (
