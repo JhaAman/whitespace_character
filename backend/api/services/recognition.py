@@ -1,9 +1,11 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.http import JsonResponse
+from api.helpers.badges import updateBadges
+import json
 from rest_framework import status, serializers
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
-
 from api.models.User import *
 from api.models.Recognition import *
 from api.models.ApiSerializers import UidFormSerializer, RidFormSerializer
@@ -17,6 +19,7 @@ def create_recognition(request):
         serializer = RecognitionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            updateBadges(request.data['uid_to'], request.data['uid_from'])
             return Response(serializer.data)
         return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
     except ValueError as e:
