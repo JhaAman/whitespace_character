@@ -5,11 +5,11 @@ import axios from 'axios'
 import Header from './Components/Header/Header.js'
 
 function Login() {
-    const[ username, setUsername ] = useState("");
-    const[ password, setPassword ] = useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const value = useContext(AuthenticationContext);
-    
-    function validate(){
+
+    function validate() {
         return username.length > 0 && password.length > 0;
     }
 
@@ -18,19 +18,19 @@ function Login() {
         axios.post("http://localhost:8000/api/get_token/", {
             username: username,
             password: password
-      
+
         }, {
             validateStatus: false
         }).then((res) => {
             console.log(res);
             if (res.status === 200) {
-                value.setAuthenticationState({token: res.data.access, userInfo: {userID: res.data.user_id, username: username, password: password, role: 'employee'}})
+                value.setAuthenticationState({ token: res.data.access, userInfo: { userID: res.data.user_id, username: username, password: password, role: 'employee' } })
             }
         }).catch((err) => {
             console.log(err);
         })
     }
-    
+
     return (
         <div className="app">
             <Header></Header>

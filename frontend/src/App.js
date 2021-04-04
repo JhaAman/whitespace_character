@@ -10,14 +10,14 @@ function App() {
   return (
     <Router>
       <AuthenticationProvider>
-      <Switch>
+        <Switch>
           <Route path='/login'>
             <Login />
           </Route>
           <Route path='/home'>
             <EmployeeHomepage />
           </Route>
-          <Route path='/me'>
+          <Route path='/u/:userid'>
             <Profile />
           </Route>
         </Switch>
