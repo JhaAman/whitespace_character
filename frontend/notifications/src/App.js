@@ -19,10 +19,21 @@ import axios from 'axios';
 
 function Notification(props){
   return(
-    <DropdownItem>
+
+    <DropdownItem onClick={() => console.log(props.time)}>
     <div className={props.new+"-notification"}>
         <Row>
-          <Col>{props.type}</Col>
+          <Col>{
+          props.type==="recognition_notif"
+          ?
+          "Recognition"
+          :
+          props.type==="recognition_badge"
+          ?
+          "Badge"
+          :
+          "unknown"
+          }</Col>
           <Col xs={4}>{props.time}</Col>
         </Row>
         <br/>
@@ -30,24 +41,13 @@ function Notification(props){
           <Col>
             <div className="Notification-Message">{props.message}</div>
           </Col>
-          <Col xs={2}>
-          <Button size="sm">Ok</Button>
-          </Col>
+
         </Row>
     </div>
     </DropdownItem>
-    
   );
 }
-function SimpleNotification(props){
-  return(
-    <DropdownItem>
-      <div className="no-notification">
-        <div className="Notification-Message">{props.message}</div>
-      </div>
-    </DropdownItem>
-  );
-}
+
 
 function App() {
   let notifications = [];
@@ -76,9 +76,14 @@ function App() {
     })
     .then(function(response){
       //console.log(Date.parse(response.data[0].date_created));
-      console.log(timesince(Date.parse(response.data[1].date_created)));
+      //console.log(timesince(Date.parse(response.data[1].date_created)));
       for(let i=0;i<response.data.length;i++){
-        notifications.push(<SimpleNotification key={i} message={response.data[i].notif_message}></SimpleNotification>)
+        notifications.push(
+        <Notification key={i}
+        message={response.data[i].notif_message}
+        type={response.data[i].notif_type}
+        time={timesince(Date.parse(response.data[i].date_created))}
+        new={response.data[i].seen}/>)
         console.log(response.data[i]);
       }
     });
@@ -87,7 +92,8 @@ function App() {
   function timesince(m){
     let a = new Date().getTime()-m;//difference in millis
     if(a<60000){//less than one minute
-      return Math.floor(a/1000)+" seconds ago";
+      //return Math.floor(a/1000)+" seconds ago";
+      return "<1 minute ago";
     }
     else if(a<3600000){//less than one hour
       return Math.floor((a/1000)/60)+" minutes ago";
