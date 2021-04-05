@@ -14,13 +14,6 @@ from pathlib import Path
 import os
 from datetime import timedelta
 
-import environ
-
-
-# Initialize environment variables
-env = environ.Env()
-environ.Env.read_env()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -111,11 +104,11 @@ if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env('POSTGRES_LOCAL_DATABASE_NAME'),
-            'USER': env('POSTGRES_LOCAL_USER'),
-            'PASSWORD': env('POSTGRES_LOCAL_PASSWORD'),
-            'HOST': env('POSTGRES_LOCAL_HOST'),
-            'PORT': env('POSTGRES_LOCAL_PORT'),
+            'NAME': os.environ.get('POSTGRES_LOCAL_DATABASE_NAME'),
+            'USER': os.environ.get('POSTGRES_LOCAL_USER'),
+            'PASSWORD': os.environ.get('POSTGRES_LOCAL_PASSWORD'),
+            'HOST': os.environ.get('POSTGRES_LOCAL_HOST'),
+            'PORT': os.environ.get('POSTGRES_LOCAL_PORT'),
         }
     }
 else:
@@ -123,11 +116,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env('POSTGRES_DATABASE_NAME'),
-            'USER': env('POSTGRES_USER'),
-            'PASSWORD': env('POSTGRES_PASSWORD'),
-            'HOST': env('POSTGRES_HOST'),
-            'PORT': env('POSTGRES_PORT'),
+            'NAME': os.environ.get('POSTGRES_DATABASE_NAME'),
+            'USER': os.environ.get('POSTGRES_USER'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+            'HOST': os.environ.get('POSTGRES_HOST'),
+            'PORT': os.environ.get('POSTGRES_PORT'),
             'TEST': {
                 'ENGINE': 'django.db.backends.sqlite3',
                 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), 

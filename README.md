@@ -31,3 +31,17 @@ We need to create super for initialize the databases.
 ## How to test
 
 1. run `./test.sh` to test the backend server
+
+## How to run
+
+1. clone the repo
+2. change directory to the backend folder
+3. run `docker-compose up --build` to build and run the backend server
+
+## Default superuser credential:
+```
+{
+  "username": "root",
+  "password": "pwd"
+}
+```

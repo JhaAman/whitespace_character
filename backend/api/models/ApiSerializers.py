@@ -6,6 +6,7 @@ from api.models.Company import *
 from api.models.Team import *
 from api.models.User import *
 from api.models.Recognition import *
+from api.models.Notification import *
 
 
 """
@@ -61,4 +62,18 @@ class TeamFormSerializer(serializers.Serializer):
   def validate_rid(self, value):
     if not Team.objects.filter(tid=value).exists():
       raise serializers.ValidationError("{id} team id does not exist".format(id=value))
+    return value
+
+
+"""
+Accepts JSON of the form:
+  {
+    "nid": "12345678"
+  }
+"""
+class NidFormSerializer(serializers.Serializer):
+  nid = serializers.CharField(required=True)
+  def validate_nid(self, value):
+    if not Notification.objects.filter(nid=value).exists():
+      raise serializers.ValidationError("{id} notification id does not exist".format(id=value))
     return value
