@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import sys
 from pathlib import Path
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1(f&1cy=jl)hjpv!l=ot_m6qi=l9_3!$ajp=_z3%e5139$(%v^'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', '0.0.0.0', '*']
 
 # Application definition
 
@@ -36,20 +37,30 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # libraries
     'rest_framework',
     'corsheaders',
-
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     # apps
     'api',
-
-
 
     # docs
     'drf_yasg',
 
+    
+    
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -88,29 +99,31 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if 'WHITESPACE_LOCAL' in os.environ:
+if DEBUG:
+    print("LOCAL_DB: whitespace")
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'whitespace',
-            'USER': 'admin',
-            'PASSWORD': 'password',
-            'HOST': 'db',
-            'PORT': 5432,
+            'NAME': os.environ.get('POSTGRES_LOCAL_DATABASE_NAME'),
+            'USER': os.environ.get('POSTGRES_LOCAL_USER'),
+            'PASSWORD': os.environ.get('POSTGRES_LOCAL_PASSWORD'),
+            'HOST': os.environ.get('POSTGRES_LOCAL_HOST'),
+            'PORT': os.environ.get('POSTGRES_LOCAL_PORT'),
         }
     }
 else:
+    print("REMOTE_DB: " + env('POSTGRES_DATABASE_NAME'))
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('POSTGRES_DATABASE_NAME'),
-            'USER': os.getenv('POSTGRES_USER'),
-            'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-            'HOST': os.getenv('POSTGRES_HOST'),
-            'PORT': os.getenv('POSTGRES_PORT'),
+            'NAME': os.environ.get('POSTGRES_DATABASE_NAME'),
+            'USER': os.environ.get('POSTGRES_USER'),
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+            'HOST': os.environ.get('POSTGRES_HOST'),
+            'PORT': os.environ.get('POSTGRES_PORT'),
             'TEST': {
                 'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), 
             }
         }
     }
@@ -119,6 +132,7 @@ if 'test' in sys.argv:
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'test_db'
     }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -155,3 +169,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+SITE_ID = 1
+

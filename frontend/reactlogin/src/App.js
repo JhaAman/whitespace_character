@@ -5,9 +5,9 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 import Profile from './Profile.js';
 //import React, {useState} from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 
-let loginApi = "http://localhost:8000/api/log_in/";
+//let loginApi = "http://localhost:8000/api/log_in/";
 
 
 function App() {
@@ -20,8 +20,8 @@ function App() {
         <Route path='/homepage'>
           <EmployeeHomepage />
         </Route>
-        <Route path='/profile'>
-          <Profile/>
+        <Route path='/profile/:userid'>
+          <Profile />
         </Route>
       </Switch>
     </Router>
