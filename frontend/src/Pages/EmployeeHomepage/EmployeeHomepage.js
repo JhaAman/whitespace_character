@@ -21,7 +21,7 @@ function EmployeeHomepage() {
             }
             </div>
             <div className='main-content-box'>
-                <div style={{width: '25%', display: 'flex', justifyContent: 'center'}}>
+                <div style={{width: '30%', display: 'flex', justifyContent: 'center'}}>
                     <Rockstar />
                 </div>
                 <div style={{width: '60%'}}>
