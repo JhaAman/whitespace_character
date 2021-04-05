@@ -3,8 +3,8 @@ import SideMenu from './../../Components//SideMenu/SideMenu.js';
 import Toolbar from './../../Components/Toolbar/Toolbar.js';
 import Recognition from '../../Components/Recognition/Recognition.js';
 import './EmployeeHomepage.css';
-//import Col from 'react-bootstrap/Col';
-//import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import 'bootstrap/dist/css/bootstrap.min.css';
 function EmployeeHomepage() {
 
