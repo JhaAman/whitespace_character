@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import Login from './Pages/Login/Login.js'
-import EmployeeHomepage from './Pages/EmployeeHomepage/EmployeeHomepage.js';
-import Profile from './Pages/Profile/Profile.js';
+import Login from './Login.js'
+import EmployeeHomepage from './EmployeeHomepage.js';
+import Profile from './Profile.js';
 import { AuthenticationProvider } from './AuthContext.js';
 import './App.css';
 
@@ -14,10 +14,10 @@ function App() {
           <Route path='/login'>
             <Login />
           </Route>
-          <Route path='/homepage'>
+          <Route path='/home'>
             <EmployeeHomepage />
           </Route>
-          <Route path='/profile/:userid'>
+          <Route path='/u/:userid'>
             <Profile />
           </Route>
         </Switch>
