@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function EmployeeHomepage() {
 
     const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+    const rockstarsArray = [{value: 'Communications', firstName: 'Gary', lastName: 'Szekely'}, {value: 'Hard-Working', firstName: 'Reuben', lastName: 'Philip'}, {value: 'Inclusive', firstName: 'Khang', lastName: 'Nguyen'}]
 
     return (
 
@@ -21,8 +22,12 @@ function EmployeeHomepage() {
             }
             </div>
             <div className='main-content-box'>
-                <div style={{width: '30%', display: 'flex', justifyContent: 'center'}}>
-                    <Rockstar />
+                <div style={{height: '100%', width: '30%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', border: '1px solid red'}}>
+                    {
+                        rockstarsArray.map((e) => {
+                            return (<Rockstar value={e.value} firstName={e.firstName} lastName={e.lastName} />);
+                        })
+                    }
                 </div>
                 <div style={{width: '60%'}}>
                     <Recognition recipient="Dave" recognizer="Jerry" message="Nice work man"/>
