@@ -158,7 +158,8 @@ class User(models.Model):
 
     # scores on corporate values
     values_scores = models.JSONField(
-        default=list,
+        default=dict,
+        blank=True
     )
 
     class Meta:

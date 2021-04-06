@@ -51,7 +51,8 @@ class Company(models.Model):
     )
 
     values = models.JSONField(
-        blank=False,
+        default = dict,
+        blank=True,
         null=False
     )
 

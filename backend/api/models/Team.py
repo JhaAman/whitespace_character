@@ -94,7 +94,8 @@ class Team(models.Model):
 
     # scores on company corporate values
     values_scores = models.JSONField(
-        default=list,
+        default=dict,
+        blank=True
     )
 
     badges = models.JSONField(
