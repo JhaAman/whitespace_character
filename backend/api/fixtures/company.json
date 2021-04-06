@@ -1,0 +1,12 @@
+[
+  {
+    "model": "api.company",
+    "pk": "20679275",
+    "fields": {
+      "date_created": "2021-04-03T11:06:52.076Z",
+      "name": "company_1",
+      "values": ["v1", "v2"],
+      "badges": []
+    }
+  }
+]

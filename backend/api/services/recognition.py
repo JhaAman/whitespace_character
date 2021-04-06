@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 from api.helpers.badges import updateBadges
+from api.helpers.notifications import makeNotification
 import json
 from rest_framework import status, serializers
 from rest_framework.parsers import JSONParser
@@ -19,7 +20,8 @@ def create_recognition(request):
         serializer = RecognitionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            updateBadges(request.data['uid_to'], request.data['uid_from'])
+            updateBadges(serializer.data['uid_to'], serializer.data['uid_from'])
+            makeNotification("You received a recognition from " + User.objects.get(uid=serializer.data['uid_from']).first_name, serializer.data['uid_to'], "recognition_notif")
             return Response(serializer.data)
         return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
     except ValueError as e:

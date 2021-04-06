@@ -116,6 +116,7 @@ class User(models.Model):
     # job title (required)
     job_title = models.CharField(
         max_length=CHARFIELD_SHORT_LEN,
+        blank=True,
         default = '',
     )
 
@@ -139,13 +140,11 @@ class User(models.Model):
     
     badges = models.JSONField(
         blank=True,
-        null=False,
         default=list
     )
 
     network = models.JSONField(
         blank=True,
-        null=False,
         default=list
     )
 
@@ -164,16 +163,6 @@ class User(models.Model):
 
     # scores on corporate values
     values_scores = models.JSONField(
-        default=list,
-    )
-
-    # badeges
-    badges = models.JSONField(
-        default=list,
-    )
-
-    # network
-    network = models.JSONField(
         default=list,
     )
 
