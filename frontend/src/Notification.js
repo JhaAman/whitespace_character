@@ -21,7 +21,7 @@ import axios from 'axios';
 
 
 function Notification() {
-  function buildNotification(props){
+  function BuildNotification(props){
     return(
       <DropdownItem onClick={() => markSeen(props.nid)}>
       <div className={props.seen+"-notification"}>
@@ -65,16 +65,18 @@ function Notification() {
       setAuth(response.data.access);
       console.log("success");
       setAuthenticated(true);
-    });
+      getNotifications(response.data.access);
+    })
+
   }
 
-  function getNotifications(){
+  function getNotifications(a){
     axios.get("http://localhost:8000/api/get_notif/",{
       params:{
         uid:"78574359"
       },
       headers:{
-        Authorization:"Bearer "+auth
+        Authorization:"Bearer "+a
       }
     })
     .then(function(response){
@@ -85,7 +87,7 @@ function Notification() {
         if(!response.data[i].seen)n=true;
 
         setNotifs(notifs => [...notifs,
-        <buildNotification key={response.data[i].nid}
+        <BuildNotification key={response.data[i].nid}
         message={response.data[i].notif_message}
         type={response.data[i].notif_type}
         time={timesince(Date.parse(response.data[i].date_created))}
@@ -138,7 +140,7 @@ function Notification() {
   useEffect(()=>{
     authenticate();
     //while(!authenticated);
-    getNotifications();
+    //getNotifications();
     setLoading(false);
   },[]);//eslint-disable-line react-hooks/exhaustive-deps
   if(loading){
