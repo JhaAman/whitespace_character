@@ -9,8 +9,8 @@ function EmployeeHomepage() {
        
         <div className="app">
             <TopMenu/>
-            <div class="body">
-                <div class="row">
+            <div className="body">
+                <div className="row">
                     <div className='left-column'>
                         <Recognition recipient="Reginald" recognizer="Gwen" message="Everyone is raving about your work on pantelic aristism."/>
                         <Recognition recipient="Edith" recognizer="Lancelot" message="I love your ideative reification!"/>
