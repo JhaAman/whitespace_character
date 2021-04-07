@@ -24,7 +24,7 @@ def create_user(request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            password = make_password(request.data["password"])
+            password = make_password(serializer["password"].value)
             user = serializer["email"].value
             first_name = serializer["first_name"].value
             last_name = serializer["last_name"].value
@@ -45,8 +45,18 @@ def create_users(request):
         users = json.loads(request.body)['users']
         for user in users:
             serializer = UserSerializer(data=user)
+            print(user)
             if serializer.is_valid():
                 serializer.save()
+                password = make_password(serializer["password"].value)
+                user = serializer["email"].value
+                first_name = serializer["first_name"].value
+                last_name = serializer["last_name"].value
+                check = False
+                if serializer["user_role"].value == "mng" or serializer["user_role"].value == "manager":
+                    check = True
+                uid = serializer["uid"].value
+                AuthUser.objects.create(id = uid, first_name = first_name, last_name = last_name, is_staff = check, username = user, password = password,email = user)
             else:
                 return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
         return Response(None, status.HTTP_201_CREATED)
