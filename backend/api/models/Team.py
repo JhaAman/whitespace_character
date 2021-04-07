@@ -58,8 +58,6 @@ Optional field
     tid
     values_scores
 """
-
-
 class Team(models.Model):
     objects = TeamManager()
 

@@ -11,8 +11,7 @@ from api.models.ApiSerializers import UidFormSerializer
 
 import io, json
 
-from api.models.User import User
-from api.models.User import UserSerializer
+from api.models.User import *
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.hashers import make_password
 
@@ -69,28 +68,17 @@ def get_user(request):
     try:
         serializer = UidFormSerializer(data=request.data)
         if serializer.is_valid():
-            userRef = User.objects.filter(uid=serializer.data['uid'])
-            json = JSONRenderer().render(userRef.values())
-            stream = io.BytesIO(json)
-            data = JSONParser().parse(stream)[0]
-            return Response(data=data, status=status.HTTP_200_OK)
-        return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
+           userObj = User.objects.get(uid=serializer.data['uid'])
+
+           # update user network
+           network = [ UserSerializer(user).data['uid'] for user in User.objects.filter(tid=userObj.tid) ]
+           userObj.network=network
+           userObj.save()
+
+           # return user object
+           jsonUserObj = UserSerializer(userObj).data
+           return Response(data=jsonUserObj, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         
-    except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["GET"])
-def get_user_network(request):
-    try:
-        serializer = UidFormSerializer(data=request.data)
-        if serializer.is_valid():
-            userRef = User.objects.get(uid=serializer.data['uid'])
-            network = User.objects.filter(tid=userRef.tid)
-            json = JSONRenderer().render(network.values())
-            stream = io.BytesIO(json)
-            data = JSONParser().parse(stream)
-            return Response(data=data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

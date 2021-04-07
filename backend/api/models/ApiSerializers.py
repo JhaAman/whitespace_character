@@ -44,7 +44,7 @@ Accepts JSON of the form:
 """
 class CidFormSerializer(serializers.Serializer):
   cid = serializers.CharField(required=True)
-  def validate_rid(self, value):
+  def validate_cid(self, value):
     if not Company.objects.filter(cid=value).exists():
       raise serializers.ValidationError("{id} company id does not exist".format(id=value))
     return value
@@ -58,7 +58,13 @@ Accepts JSON of the form:
 """
 class TeamFormSerializer(serializers.Serializer):
   tid = serializers.CharField(required=True)
-  def validate_rid(self, value):
+  def validate_tid(self, value):
     if not Team.objects.filter(tid=value).exists():
       raise serializers.ValidationError("{id} team id does not exist".format(id=value))
     return value
+
+
+class ErrorReportSerializer(serializers.Serializer):
+  status = serializers.CharField(required=True)
+  msg = serializers.CharField(required=True)
+  errors =serializers.JSONField(required=True)

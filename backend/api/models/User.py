@@ -143,7 +143,7 @@ class User(models.Model):
         default=list
     )
 
-    profile_picutre = models.ImageField(
+    profile_picture = models.ImageField(
         null=True,
         blank=True,
         upload_to="images/",
@@ -174,4 +174,5 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['tid', 'uid', 'first_name', 'last_name', 'email', 'title'
+            , 'badges', 'network', 'values_scores', 'profile_picture']
