@@ -8,7 +8,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 
-
 """
 User Manager
 """
@@ -144,8 +143,8 @@ class User(models.Model):
     )
 
     profile_picture = models.ImageField(
-        null=True,
         blank=True,
+        null=True,
         upload_to="images/",
     )
 
@@ -169,7 +168,7 @@ class User(models.Model):
 class UserSerializer(serializers.ModelSerializer):
     def validate_tid(self, value):
         if not Team.objects.filter(tid=value).exists():
-            raise serializers.ValidationError("Team id not found")
+            raise serializers.ValidationError("Team ID not found")
         return value
     
     class Meta:

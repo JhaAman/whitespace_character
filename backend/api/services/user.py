@@ -27,9 +27,7 @@ def create_user(request):
             user = serializer["email"].value
             first_name = serializer["first_name"].value
             last_name = serializer["last_name"].value
-            check = False
-            if serializer["user_role"].value == "mng" or serializer["user_role"].value == "manager":
-                check = True
+            check = serializer["user_role"].value == "mng" or serializer["user_role"].value == "manager"
             uid = serializer["uid"].value
             AuthUser.objects.create(id = uid, first_name = first_name, last_name = last_name, is_staff = check, username = user, password = password,email = user)
             return Response(None, status.HTTP_201_CREATED)
@@ -68,16 +66,18 @@ def get_user(request):
     try:
         serializer = UidFormSerializer(data=request.data)
         if serializer.is_valid():
-           userObj = User.objects.get(uid=serializer.data['uid'])
+            userObj = User.objects.get(uid=serializer.data['uid'])
 
-           # update user network
-           network = [ UserSerializer(user).data['uid'] for user in User.objects.filter(tid=userObj.tid) ]
-           userObj.network=network
-           userObj.save()
+            # update user network
+            network = [ UserSerializer(user).data['uid'] for user in User.objects.filter(tid=userObj.tid) ]
+            userObj.network=network
+            userObj.save()
 
-           # return user object
-           jsonUserObj = UserSerializer(userObj).data
-           return Response(data=jsonUserObj, status=status.HTTP_200_OK)
+            # serialize user object
+            userJson = UserSerializer(instance=userObj).data
+
+            # return view
+            return Response(data=userJson, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         
     except ValueError as e:

@@ -76,4 +76,4 @@ class Company(models.Model):
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = '__all__'
+        fields = ['cid', 'name', 'values', 'badges']
