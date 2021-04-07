@@ -1,20 +1,28 @@
 import React from 'react';
-import { Recognition, TopMenu } from './Components.js';
+import { TopMenu } from './Components.js';
+import Recognition from './Components/Recognition/Recognition.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
 function EmployeeHomepage() {
 
+    let recogArray =[
+        {recognizer: {firstName: 'Gary', lastName: 'Szekely'}, recognizee: {firstName: 'Reuben', lastName: 'Philip'}, comment: 'hk fk hksadhfk has khasgkjhas  gkshgkjlsd kjhgk afgs khjgk hasgf  jaklshg kajshfg aksjhfg kjahsfg kjadshk jg hgh sfk kj sgkhd kjsh kgj kshdfg kjhsdk kshdf kgjh fs kj dskfgh'},
+        {recognizer: {firstName: 'Gary', lastName: 'Szekely'}, recognizee: {firstName: 'Reuben', lastName: 'Philip'}, comment: 'hk fk hksadhfk has khasgkjhas  gkshgkjlsd kjhgk afgs khjgk hasgf  jaklshg kajshfg aksjhfg kjahsfg kjadshk jg hgh sfk kj sgkhd kjsh kgj kshdfg kjhsdk kshdf kgjh fs kj dskfgh'},
+        {recognizer: {firstName: 'Gary', lastName: 'Szekely'}, recognizee: {firstName: 'Reuben', lastName: 'Philip'}, comment: 'hk fk hksadhfk has khasgkjhas  gkshgkjlsd kjhgk afgs khjgk hasgf  jaklshg kajshfg aksjhfg kjahsfg kjadshk jg hgh sfk kj sgkhd kjsh kgj kshdfg kjhsdk kshdf kgjh fs kj dskfgh'},
+        {recognizer: {firstName: 'Gary', lastName: 'Szekely'}, recognizee: {firstName: 'Reuben', lastName: 'Philip'}, comment: 'hk fk hksadhfk has khasgkjhas  gkshgkjlsd kjhgk afgs khjgk hasgf  jaklshg kajshfg aksjhfg kjahsfg kjadshk jg hgh sfk kj sgkhd kjsh kgj kshdfg kjhsdk kshdf kgjh fs kj dskfgh'}
+    ]
     return (
-       
         <div className="app">
             <TopMenu/>
             <div class="body">
                 <div class="row">
                     <div className='left-column'>
-                        <Recognition recipient="Reginald" recognizer="Gwen" message="Everyone is raving about your work on pantelic aristism."/>
-                        <Recognition recipient="Edith" recognizer="Lancelot" message="I love your ideative reification!"/>
-                        <Recognition recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
+                        {
+                            recogArray.map((e) => {
+                                return (<Recognition recognizer={e.recognizer} recognizee={e.recognizee} comment={e.comment} />);
+                            })
+                        }
                     </div>
                     <div className='right-column'>
                         <div className='infobox rounded'>

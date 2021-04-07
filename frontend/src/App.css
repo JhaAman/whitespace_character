@@ -24,8 +24,13 @@
 }
 
 .left-column {
+  height: 95vh;
   width: 66.7%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: scroll;
 }
 
 .right-column {
