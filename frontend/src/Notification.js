@@ -52,7 +52,7 @@ function Notification() {
   }
   //let notifications = [];
   const [notifs,setNotifs] = useState([]);
-  const [authenticated,setAuthenticated] = useState(false);
+  //const [authenticated,setAuthenticated] = useState(false);
   const [auth,setAuth] = useState();
   const [newNotif,setNewNotif] = useState();
   const [loading,setLoading] = useState(true);
@@ -63,8 +63,8 @@ function Notification() {
     })
     .then(function(response){
       setAuth(response.data.access);
-      console.log("success");
-      setAuthenticated(true);
+      //console.log("success");
+      //setAuthenticated(true);
       getNotifications(response.data.access);
     })
 
@@ -94,7 +94,7 @@ function Notification() {
         seen={response.data[i].seen}
         nid={response.data[i].nid}/>
         ]);
-        console.log(response.data[i]);
+        //console.log(response.data[i]);
       }
       setNewNotif(n);
     });

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Recognition, TopMenu } from './Components.js';
+//import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-
+import ManagerComp from './ManagerComponent.js';
 function EmployeeHomepage() {
 
     return (
@@ -26,6 +27,9 @@ function EmployeeHomepage() {
                             <br></br>
                             <br></br>
                             <br></br>
+                        </div>
+                        <div className='infobox rounded'>
+                            <ManagerComp/>
                         </div>
                     </div>
                 </div>
