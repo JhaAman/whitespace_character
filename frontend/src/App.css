@@ -110,6 +110,63 @@ body {
   padding: 2%;
 }
 
+/* for uploading JSON Data */
+.uploadbox {
+  text-align: center;
+  padding: 10px;
+  font-family: AlegreyaSans;
+  font-size: 20px;
+  background-color: #bba38e;
+}
+
+.upload-input {
+  font-family: AlegreyaSans;
+  font-size: 20px;
+  background-color: #58453B;
+  text-align: center;
+  width: 150px;
+  border: none;
+  text-align: center;
+  background-color: #58453B;
+  color: #bba38e;
+  border-bottom: 2px dotted #58453B;
+  border-right: 2px dotted #58453B;
+}
+
+.upload-input:focus {
+  outline: none;
+  border-bottom: 2px dotted #bba38e;
+  border-right: 2px dotted #bba38e;
+}
+
+.upload-button {
+  font-family: AlegreyaSans;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: lighter;
+  background-color: #58453B;
+  text-align: center;
+  width: 150px;
+  border: none;
+  text-align: center;
+  background-color: #58453B;
+  color: #bba38e;
+  border-bottom: 2px dotted #58453B;
+  border-right: 2px dotted #58453B;
+}
+
+.upload-button:active {
+  font-weight: bold;
+}
+
+.upload-button:hover {
+  font-weight: bold;
+}
+
+.upload-button:focus {
+  font-weight: bold;
+}
+
 /* for reporting recognitions */
 .repbox {
   text-align: center;
