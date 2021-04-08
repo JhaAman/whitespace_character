@@ -13,3 +13,10 @@
     max-height:75px;
     width:auto;
 }
+.graphtext{
+    position: relative;
+    top: -11.5vw;
+    left: 7.5vw;
+    font-size: 2.5vw;
+    width: 20%;
+}

@@ -18,10 +18,10 @@ function EmployeeHomepage() {
                         <Recognition recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
                     </div>
                     <div className='right-column'>
-                        <div className='infobox rounded'>
+                        <div className='autoinfobox rounded' style={{height:'auto'}}>
                             <ManagerComp/>
                         </div>
-                        <div className='infobox rounded'>
+                        <div className='infobox rounded' >
                             <br></br>
                             <b><i><div style={{fontSize:30}}>This month’s hero:</div></i></b>
                             Charles Martel

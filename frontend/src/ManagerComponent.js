@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react';
-import Doughnut from 'react-chartjs-2';
+import Pie from 'react-chartjs-2';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Image from 'react-bootstrap/Image';
@@ -43,17 +43,17 @@ function ManagerComp(){
                 '#0000cc'
             ],
         }],
-        text: 'testasdkjlf'
     };
     const options = {
         legend:{
             display: true,
-            position: 'bottom'
-        }
+            position: 'right'
+        },
+        maintainAspectRatio: false,
     }
     return(
         <div>
-        <Col>
+        <div>
             <div/>
             <div className="title rounded" style={{marginBottom:'10px'}}>Your Team Dashboard</div>
             
@@ -61,10 +61,12 @@ function ManagerComp(){
                 a=>{setFeed(!feed);
                 }}
                 >{feed?"Show Normal Feed":"Show Your Team Only"}</Button><br/>
-            <Doughnut data={data} options={options}/><br/>
-            <div style={{marginBottom:'1px'}}>Total Recognitions: 42</div>
+            <div style={{height:"200px"}}>
             
-            <div>Employee Stats</div>
+            <Pie data={data} options={options} />
+            <div className="graphtext">123 Total</div>
+            </div>
+            <div className="title rounded" >Employee Stats
             <div style={{overflowY: 'scroll', height:'200px'}}>
             <EmployeeDisplay name="Dave Davidson"/>
             <EmployeeDisplay name="Dave Davidson"/>
@@ -74,10 +76,11 @@ function ManagerComp(){
             <EmployeeDisplay name="Dave Davidson"/>
             <EmployeeDisplay name="Dave Davidson"/>
             </div>
-            
+            </div>
+            <br/>
             
 
-        </Col>
+        </div>
         </div>
     );
 }
