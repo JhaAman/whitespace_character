@@ -1,0 +1,15 @@
+.title{
+    background-color: rgb(255, 178, 89);
+}
+.employee_display{
+    height:75px;
+    width:auto;
+    background-color: rgb(255, 220, 167);
+    font-size: 15px;
+    border-radius: 37.5px;
+    margin:1%;
+}
+.employee_display_image{
+    max-height:75px;
+    width:auto;
+}

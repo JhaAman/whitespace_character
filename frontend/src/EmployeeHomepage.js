@@ -19,6 +19,9 @@ function EmployeeHomepage() {
                     </div>
                     <div className='right-column'>
                         <div className='infobox rounded'>
+                            <ManagerComp/>
+                        </div>
+                        <div className='infobox rounded'>
                             <br></br>
                             <b><i><div style={{fontSize:30}}>This month’s hero:</div></i></b>
                             Charles Martel
@@ -28,9 +31,7 @@ function EmployeeHomepage() {
                             <br></br>
                             <br></br>
                         </div>
-                        <div className='infobox rounded'>
-                            <ManagerComp/>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
