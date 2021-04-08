@@ -251,17 +251,19 @@ class TeamFormSerializer(serializers.Serializer):
         return value
 
 
-class ApiReportSerializer(serializers.Serializer):
+class ApiResponseSerializer(serializers.Serializer):
     """API Report Form
 
     Contains the following fields:
-        'http_status' : HTTP status of error
+        'status' : HTTP status of error
         'msg'    : Short description of error (string)
+        'data'   : Retrieved data on success call
         'trace'  : Stack trace for error report
     """
 
-    http_status = serializers.CharField(required=True)
+    status = serializers.CharField(required=True)
     msg = serializers.CharField(required=True)
+    data = serializers.JSONField(allow_null=True)
     trace = serializers.JSONField(allow_null=True)
 
 

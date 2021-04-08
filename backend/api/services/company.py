@@ -15,27 +15,27 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-import api.db.models
-from api.db.serializers import CompanySerializer, ApiReportSerializer
+from api.db.serializers \
+    import CompanySerializer, ApiResponseSerializer
 
 
 @api_view(["POST"])
 def create_company(request):
     try:
         # Serialize incoming request
-        companySrl = CompanySerializer(data=request.data)
+        requestSrl = CompanySerializer(data=request.data)
 
-        # If data fields are valid
-        if companySrl.is_valid():
+        # If request data fields are valid
+        if requestSrl.is_valid():
             # Save object to Company database
-            companySrl.save()
+            requestSrl.save()
             # Return success report
             return \
                 Response(
                     data=
-                        ApiReportSerializer({
-                            'http_status': status.HTTP_200_OK,
-                            'msg': "Company object created"
+                        ApiResponseSerializer({
+                            'status': status.HTTP_200_OK,
+                            'msg': "Created Company object"
                         }).data,
                     status=status.HTTP_201_CREATED)
 
@@ -43,10 +43,10 @@ def create_company(request):
         return \
             Response(
                 data=
-                    ApiReportSerializer({
-                        'http_status': status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    ApiResponseSerializer({
+                        'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
                         'msg': "Cannot create Company object: Invalid field",
-                        'trace': companySrl.errors
+                        'trace': requestSrl.errors
                     }).data,
                 status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -55,9 +55,9 @@ def create_company(request):
         return \
             Response(
                 data=
-                    ApiReportSerializer({
-                        'http_status': status.HTTP_400_BAD_REQUEST,
-                        'msg': "Cannot create Company object: Invalid field",
+                    ApiResponseSerializer({
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'msg': "Cannot create Company object: Exception ocurred",
                         'trace': e.args[0]
                     }).data,
                 status=status.HTTP_400_BAD_REQUEST)

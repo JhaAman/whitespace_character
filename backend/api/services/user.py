@@ -1,20 +1,3 @@
-import io
-import json
-
-from django.http import JsonResponse
-from django.contrib.auth.models import User as AuthUser
-from django.contrib.auth.hashers import make_password
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status, serializers
-from rest_framework.parsers import JSONParser
-from rest_framework.renderers import JSONRenderer
-
-from api.db.models import *
-from api.db.serializers import UidFormSerializer
-
-
 """User Endpoints
 
 Org: Team Whitespace Character
@@ -28,38 +11,87 @@ Created: April 4th, 2021
 API endpoints in service of User model object
 """
 
+import io
+import json
+
+from django.http import JsonResponse
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.hashers import make_password
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status, serializers
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
+
+from api.db.models import User
+from api.db.serializers \
+    import UserSerializer, UidFormSerializer, ApiResponseSerializer
+
 
 @api_view(["POST"])
 def create_user(request):
     try:
         # Serialize incoming request data
-        userSrl = UserSerializer(data=request.data)
+        requestSrl = UserSerializer(data=request.data)
 
         # If request data fields are valid:
-        if userSrl.is_valid():
+        if requestSrl.is_valid():
             # Save object to User database
-            userSrl.save()
+            requestSrl.save()
 
-            userJson = userSrl.validated_data
+            requestJson = requestSrl.validated_data
 
             # Creating fields for Auth object
-            authObjFields  = {
-                'id': userJson["uid"],
-                'first_name': userJson["first_name"],
-                'last_name': userJson["last_name"],
-                'is_staff': userJson["user_role"] == "mng" 
-                    or userJson["user_role"] == "manager",
-                'password': make_password(userJson["password"]),
-                'email': userJson["email"],
+            authObjFields = {
+                'id':
+                    requestJson["uid"],
+                'first_name':
+                    requestJson["first_name"],
+                'last_name':
+                    requestJson["last_name"],
+                'is_staff':
+                    requestJson["user_role"] == "mng"
+                    or requestJson["user_role"] == "manager",
+                'password':
+                    make_password(requestJson["password"]),
+                'email':
+                    requestJson["email"],
             }
             AuthUser.objects.create(**authObjFields)
 
-            return Response(None, status.HTTP_201_CREATED)
+            # Return success report
+            return \
+                Response(
+                    data=
+                        ApiResponseSerializer({
+                            'status': status.HTTP_200_OK,
+                            'msg': "Created User object"
+                        }).data,
+                    status=status.HTTP_201_CREATED)
 
-        return Response(userJson.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
+        # If data fields are invalid, return error report
+        return \
+            Response(
+                data=
+                    ApiResponseSerializer({
+                        'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
+                        'msg': "Cannot create User object: Invalid field",
+                        'trace': requestSrl.errors
+                    }).data,
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
     except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+        # If Exception occurs, return error report
+        return \
+            Response(
+                data=
+                    ApiResponseSerializer({
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'msg': "Cannot create User object: Exception ocurred",
+                        'trace': e.args[0]
+                    }).data,
+                status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["POST"])
@@ -71,7 +103,8 @@ def create_users(request):
             if serializer.is_valid():
                 serializer.save()
             else:
-                return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
+                return Response(serializer.errors,
+                                status.HTTP_422_UNPROCESSABLE_ENTITY)
         return Response(None, status.HTTP_201_CREATED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
@@ -95,8 +128,11 @@ def get_user(request):
             userObj = User.objects.get(uid=serializer.data['uid'])
 
             # update user network
-            network = [ UserSerializer(user).data['uid'] for user in User.objects.filter(tid=userObj.tid) ]
-            userObj.network=network
+            network = [
+                UserSerializer(user).data['uid']
+                for user in User.objects.filter(tid=userObj.tid)
+            ]
+            userObj.network = network
             userObj.save()
 
             # serialize user object
@@ -105,6 +141,6 @@ def get_user(request):
             # return view
             return Response(data=userJson, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        
+
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

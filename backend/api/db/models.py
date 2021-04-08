@@ -13,12 +13,12 @@ Detailed data schema can be found at:
 
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.postgres import fields
 
 from rest_framework import serializers
 
 from api.db.constant import *
 from api.db.utils import create_unique_id
-import api.db.serializers as srl
 
 
 class CompanyManager(models.Manager):
@@ -32,8 +32,8 @@ class CompanyManager(models.Manager):
 
         - Create Company model object and save to database.
         - Overriding from default method.
-        - Returns created Company object on success.
         - Generate initial 'date_created' to current UTC time.
+        - Returns created Company object on success.
         """
 
         # Create template
@@ -111,10 +111,20 @@ class Company(models.Model):
         blank=False)
 
     # Cultural values (blank, default = [])
-    values = models.JSONField(default=list, blank=True, null=False)
+    values = \
+        fields.ArrayField(
+            base_field=models.CharField(max_length=CHARFIELD_SHORT_LEN), 
+            default=list, 
+            blank=True, 
+            null=False)
 
     # Badges names (blank, default = [])
-    badges = models.JSONField(default=list, blank=True, null=False)
+    badges = \
+        fields.ArrayField(
+            base_field=models.CharField(max_length=CHARFIELD_SHORT_LEN), 
+            default=list, 
+            blank=True, 
+            null=False)
 
     # Date object was created (auto, default = datetime.now() UTC time)
     date_created = models.DateTimeField(
@@ -144,13 +154,13 @@ class TeamManager(models.Manager):
         - Generate initial empty list 'badges'.
         - Generate initial 'date_created' to current UTC time.
         """
+
         # Create template:
         teamObj = Team(**kwargs)
 
         # Add primary key reference to parent Company:
-        companyQs = Company.objects.get(cid=teamObj.cid)
-        companyJson = srl.CompanySerializer(companyQs).data
-        teamObj.company = Company(**companyJson)
+        companyObj = Company.objects.get(cid=teamObj.cid)
+        teamObj.company = companyObj
 
         # Generate random 'tid':
         while True:
@@ -161,7 +171,7 @@ class TeamManager(models.Manager):
                 break
 
         # Generate initial 'values_scores'
-        valueList = companyJson['values']
+        valueList = companyObj.values
         teamObj.values_scores = dict().fromkeys(valueList, 0)
 
         # Generate initial 'badges'
@@ -248,7 +258,12 @@ class Team(models.Model):
     values_scores = models.JSONField(default=dict, blank=True)
 
     # Badges names earned by Team (blank, default = [])
-    badges = models.JSONField(blank=True, null=False, default=list)
+    badges = \
+        fields.ArrayField(
+            base_field=models.CharField(max_length=CHARFIELD_SHORT_LEN), 
+            default=list, 
+            blank=True, 
+            null=False)
 
     # Date object was created (auto, default = datetime.now() UTC time)
     date_created = models.DateTimeField(
@@ -283,9 +298,8 @@ class UserManager(models.Manager):
         userObj = User(**kwargs)
 
         # Add primary key reference to Team object
-        teamQs = Team.objects.get(tid=userObj.tid)
-        teamJson = srl.TeamSerializer(instance=teamQs).data
-        userObj.team = Team(**teamJson)
+        teamObj = Team.objects.get(tid=userObj.tid)
+        userObj.team = teamObj
 
         # Generate unique 'uid'
         while True:
@@ -296,9 +310,8 @@ class UserManager(models.Manager):
                 break
 
         # Generate initial 'values_scores'
-        companyQs = Company.objects.filter(cid=teamJson['cid']).get()
-        companyObj = srl.CompanySerializer(instance=companyQs).data
-        valueList = companyObj['values']
+        companyObj = Company.objects.get(cid=teamObj.cid)
+        valueList = companyObj.values
         userObj.values_scores = dict().fromkeys(valueList, 0)
 
         # Generate initial list 'badges'
@@ -306,7 +319,7 @@ class UserManager(models.Manager):
 
         # Generate initial list 'network'
         networkQsList = User.objects.filter(tid=userObj.tid)
-        networkObjList = srl.UserSerializer(instance=networkQsList, many=True).data
+        networkObjList = list(networkQsList)
         userObj.network = networkObjList
 
         # Create object in database
@@ -442,11 +455,21 @@ class User(models.Model):
     values_scores = models.JSONField(default=dict, blank=True)
 
     # Badges names earned by Team (blank, default = [])
-    badges = models.JSONField(blank=True, default=list)
+    badges = \
+        fields.ArrayField(
+            base_field=models.CharField(max_length=CHARFIELD_SHORT_LEN), 
+            default=list, 
+            blank=True, 
+            null=False)
 
     # List of references to other Users in the same Team
     #       (blank, default = [])
-    network = models.JSONField(blank=True, default=list, auto_created=True)
+    network = \
+        fields.ArrayField(
+            base_field=models.CharField(max_length=ID_LEN), 
+            default=list, 
+            blank=True, 
+            null=False)
 
     # Date object was created (auto, default = datetime.now() UTC time)
     date_created = models.DateTimeField(auto_now_add=True,
@@ -483,12 +506,10 @@ class RecognitionManager(models.Manager):
 
         # Referencing User by Recognition.uid_{from/to}
         # Add reference to User objects
-        userFromQs = User.objects.get(uid=recogObj.uid_from)
-        userFromJson = srl.UserSerializer(instance=userFromQs).data
-        userToQs = User.objects.get(uid=recogObj.uid_to)
-        userToJson = srl.UserSerializer(instance=userToQs).data
-        recogObj.user_from = User(**userFromJson)
-        recogObj.user_to = User(**userToJson)
+        userFromObj = User.objects.get(uid=recogObj.uid_from)
+        userToObj = User.objects.get(uid=recogObj.uid_to)
+        recogObj.user_from = userFromObj
+        recogObj.user_to = userToObj
 
         # Generate random 'rid'
         while True:
@@ -593,10 +614,12 @@ class Recognition(models.Model):
     uid_to = models.CharField(max_length=ID_LEN, )
 
     # Tags chosen by sender to receiver (blank, default = [])
-    tags = models.JSONField(
-        default=dict,
-        blank=True,
-    )
+    tags = \
+        fields.ArrayField(
+            base_field=models.CharField(max_length=CHARFIELD_SHORT_LEN), 
+            default=list, 
+            blank=True, 
+            null=False)
 
     # Count number of reports by Users (default = 0)
     flag_count = models.IntegerField(default=0, )
