@@ -1,37 +1,63 @@
+import io
+import json
+
+from django.http import JsonResponse
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.hashers import make_password
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status, serializers
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
-from django.http import JsonResponse
+
+from api.db.models import *
+from api.db.serializers import UidFormSerializer
 
 
-from api.models.User import *
-from api.models.ApiSerializers import UidFormSerializer
+"""User Endpoints
 
-import io, json
+Org: Team Whitespace Character
+Authors: 
+    Khai Nguyen, khainguyen@umass.edu
+    Myron Lacey, 
+    Duy Pham,
+    Khang Nguyen, 
+Created: April 4th, 2021
 
-from api.models.User import *
-from django.contrib.auth.models import User as AuthUser
-from django.contrib.auth.hashers import make_password
-
+API endpoints in service of User model object
+"""
 
 
 @api_view(["POST"])
 def create_user(request):
     try:
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            password = make_password(request.data["password"])
-            user = serializer["email"].value
-            first_name = serializer["first_name"].value
-            last_name = serializer["last_name"].value
-            check = serializer["user_role"].value == "mng" or serializer["user_role"].value == "manager"
-            uid = serializer["uid"].value
-            AuthUser.objects.create(id = uid, first_name = first_name, last_name = last_name, is_staff = check, username = user, password = password,email = user)
+        # Serialize incoming request data
+        userSrl = UserSerializer(data=request.data)
+
+        # If request data fields are valid:
+        if userSrl.is_valid():
+            # Save object to User database
+            userSrl.save()
+
+            userJson = userSrl.validated_data
+
+            # Creating fields for Auth object
+            authObjFields  = {
+                'id': userJson["uid"],
+                'first_name': userJson["first_name"],
+                'last_name': userJson["last_name"],
+                'is_staff': userJson["user_role"] == "mng" 
+                    or userJson["user_role"] == "manager",
+                'password': make_password(userJson["password"]),
+                'email': userJson["email"],
+            }
+            AuthUser.objects.create(**authObjFields)
+
             return Response(None, status.HTTP_201_CREATED)
-        return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+        return Response(userJson.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
+
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 

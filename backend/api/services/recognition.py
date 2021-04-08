@@ -1,14 +1,27 @@
+import io
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status, serializers
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 
-from api.models.User import *
-from api.models.Recognition import *
-from api.models.ApiSerializers import UidFormSerializer, RidFormSerializer
+from api.db.models import User, Recognition
+from api.db.serializers import UidFormSerializer, RidFormSerializer
 
-import io
+
+"""Recognition Endpoints
+
+Org: Team Whitespace Character
+Authors: 
+    Khai Nguyen, khainguyen@umass.edu
+    Myron Lacey, 
+    Duy Pham,
+    Khang Nguyen, 
+Created: April 4th, 2021
+
+API endpoints in service of Recognition model object
+"""
 
 
 @api_view(["POST"])
