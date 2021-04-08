@@ -1,12 +1,3 @@
-from django.db import models
-from django.core.exceptions import ObjectDoesNotExist
-
-from rest_framework import serializers
-
-from api.services.constant import *
-from api.services.utility import create_unique_id
-
-
 """ Model Object Classes
 
 Org: Team Whitespace Character
@@ -20,13 +11,22 @@ Detailed data schema can be found at:
         https://dbdiagram.io/d/60516c4becb54e10c33bc840
 """
 
+from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
+
+from rest_framework import serializers
+
+from api.db.constant import *
+from api.db.utils import create_unique_id
+import api.db.serializers as srl
+
 
 class CompanyManager(models.Manager):
     """Company Manager
 
     Manager class for Company model object.
     """
-
+    
     def create(self, *args, **kwargs):
         """Company.objects.create
 
@@ -91,46 +91,36 @@ class Company(models.Model):
                     - Datetime
     """
 
-# Self-defined Manager
+    # Self-defined Manager
     objects = CompanyManager()
 
-# Company ID (*, unique, auto)
+    # Company ID (*, unique, auto)
     cid = models.CharField(
-    primary_key=True,
-    unique=True,
-    max_length=ID_LEN,
-    default='0',
-    editable=False,
-    auto_created=True,
-)
+        primary_key=True,
+        unique=True,
+        max_length=ID_LEN,
+        default='0',
+        editable=False,
+        auto_created=True,
+    )
 
     # Formal organization name (*, unique)
     name = models.CharField(
-    max_length=CHARFIELD_LONG_LEN,
-    unique=True,
-    blank=False
-)
+        max_length=CHARFIELD_LONG_LEN,
+        unique=True,
+        blank=False)
 
     # Cultural values (blank, default = [])
-    values = models.JSONField(
-    default = dict,
-    blank=True,
-    null=False
-)
+    values = models.JSONField(default=list, blank=True, null=False)
 
     # Badges names (blank, default = [])
-    badges = models.JSONField(
-    blank=True,
-    null=False,
-    default=list
-)
+    badges = models.JSONField(default=list, blank=True, null=False)
 
-# Date object was created (auto, default = datetime.now() UTC time)
+    # Date object was created (auto, default = datetime.now() UTC time)
     date_created = models.DateTimeField(
-    auto_now_add=True,
-    auto_created=True,
-    null=True
-)
+        auto_now_add=True,
+        auto_created=True,
+        null=True)
 
     class Meta:
         verbose_name = "Company"
@@ -154,15 +144,15 @@ class TeamManager(models.Manager):
         - Generate initial empty list 'badges'.
         - Generate initial 'date_created' to current UTC time.
         """
-    # Create template:
+        # Create template:
         teamObj = Team(**kwargs)
 
-    # Add primary key reference to parent Company:
+        # Add primary key reference to parent Company:
         companyQs = Company.objects.get(cid=teamObj.cid)
-        companyJson = CompanySerializer(companyQs).data
+        companyJson = srl.CompanySerializer(companyQs).data
         teamObj.company = Company(**companyJson)
 
-    # Generate random 'tid':
+        # Generate random 'tid':
         while True:
             # Generate a random 8-digit 'cid' until it is unique
             # Pr(collision) = 1/10^8, good enough for MVP
@@ -170,14 +160,14 @@ class TeamManager(models.Manager):
             if not Team.objects.filter(tid=teamObj.tid).exists():
                 break
 
-    # Generate initial 'values_scores'
-        valueList = companyObj['values']
+        # Generate initial 'values_scores'
+        valueList = companyJson['values']
         teamObj.values_scores = dict().fromkeys(valueList, 0)
 
-    # Generate initial 'badges'
+        # Generate initial 'badges'
         teamObj.badges = list()
 
-    # Create object in database
+        # Create object in database
         teamObj.save()
 
         return teamObj
@@ -226,56 +216,45 @@ class Team(models.Model):
     # Self-defined Manager
     objects = TeamManager()
 
-# Object reference to parent Company object (auto)
+    # Object reference to parent Company object (auto)
     # Implement-as-specified by Django, not used in APIs
     company = models.ForeignKey(
-    Company,
-    on_delete=models.SET_NULL,
-    null=True,
-    auto_created=True
-)
+        to=Company,
+        on_delete=models.SET_NULL,
+        null=True,
+        auto_created=True)
 
     # Reference to parent Company object (*, FK)
     cid = models.CharField(
-    blank=False,
-    max_length=ID_LEN,
-)
+        blank=False,
+        max_length=ID_LEN,
+    )
 
-# Team ID (P, *, unique, auto, default = '0')
+    # Team ID (P, *, unique, auto, default = '0')
     tid = models.CharField(
-    primary_key=True,
-    unique=True,
-    default='0',
-    max_length=ID_LEN,
-    auto_created=True,
-)
+        primary_key=True,
+        unique=True,
+        default='0',
+        max_length=ID_LEN,
+        auto_created=True)
 
-# Formal Team name (*, unique)
+    # Formal Team name (*, unique)
     name = models.CharField(
-    max_length=CHARFIELD_SHORT_LEN,
-    unique=True,
-    blank=False,
-)
+        max_length=CHARFIELD_SHORT_LEN,
+        unique=True,
+        blank=False)
 
-# Scores on Company corporate values (blank, default = {})
-    values_scores = models.JSONField(
-    default=dict,
-    blank=True
-)
+    # Scores on Company corporate values (blank, default = {})
+    values_scores = models.JSONField(default=dict, blank=True)
 
     # Badges names earned by Team (blank, default = [])
-    badges = models.JSONField(
-    blank=True,
-    null=False,
-    default=list
-)
+    badges = models.JSONField(blank=True, null=False, default=list)
 
-# Date object was created (auto, default = datetime.now() UTC time)
+    # Date object was created (auto, default = datetime.now() UTC time)
     date_created = models.DateTimeField(
-    auto_now_add=True,
-    auto_created=True,
-    null=True
-)
+        auto_now_add=True,
+        auto_created=True,
+        null=True)
 
     class Meta:
         verbose_name = "Team"
@@ -300,12 +279,12 @@ class UserManager(models.Manager):
         - Generate initial 'date_created' to current UTC time.
         """
 
-    # Create template
+        # Create template
         userObj = User(**kwargs)
 
-    # Add primary key reference to Team object
+        # Add primary key reference to Team object
         teamQs = Team.objects.get(tid=userObj.tid)
-        teamJson = TeamSerializer(instance=teamObj).data
+        teamJson = srl.TeamSerializer(instance=teamQs).data
         userObj.team = Team(**teamJson)
 
         # Generate unique 'uid'
@@ -316,21 +295,21 @@ class UserManager(models.Manager):
             if not User.objects.filter(uid=userObj.uid).exists():
                 break
 
-    	# Generate initial 'values_scores'
-        companyQs = Company.objects.filter(cid=teamObj.cid).get()
-        companyObj = CompanySerializer(instance=companyQs).data
+        # Generate initial 'values_scores'
+        companyQs = Company.objects.filter(cid=teamJson['cid']).get()
+        companyObj = srl.CompanySerializer(instance=companyQs).data
         valueList = companyObj['values']
-        teamObj.values_scores = dict().fromkeys(valueList, 0)
+        userObj.values_scores = dict().fromkeys(valueList, 0)
 
         # Generate initial list 'badges'
-        teamObj.badges = list()
+        userObj.badges = list()
 
         # Generate initial list 'network'
         networkQsList = User.objects.filter(tid=userObj.tid)
-        networkObjList = UserSerializer(instance=networkQsList, many=True).data
-        teamObj.network = networkObjList
+        networkObjList = srl.UserSerializer(instance=networkQsList, many=True).data
+        userObj.network = networkObjList
 
-    	# Create object in database
+        # Create object in database
         userObj.save()
 
         return userObj
@@ -405,99 +384,74 @@ class User(models.Model):
     # Object reference to parent Company object (auto)
     # Implement-as-specified by Django, not used in APIs
     team = models.ForeignKey(
-            to=Team,
-            on_delete=models.SET_NULL,
-            null=True,
-            auto_created=True,
+        to=Team,
+        on_delete=models.SET_NULL,
+        null=True,
+        auto_created=True,
     )
 
     # Reference to parent Team object (*, FK)
-    tid = models.CharField(
-            max_length=ID_LEN,
-            blank=False
-    )
+    tid = models.CharField(max_length=ID_LEN, blank=False)
 
     # User ID (P, *, unique, auto, default = '0')
     uid = models.CharField(
-            primary_key=True,
-            unique=True,
-            max_length=ID_LEN,
-            default='0',
-            auto_created=True,
+        primary_key=True,
+        unique=True,
+        max_length=ID_LEN,
+        default='0',
+        auto_created=True,
     )
 
     # Legal first name (*)
-    first_name = models.CharField(
-            max_length=CHARFIELD_SHORT_LEN,
-    )
+    first_name = models.CharField(max_length=CHARFIELD_SHORT_LEN, )
 
     # Legal last name (*)
-    last_name = models.CharField(
-            max_length=CHARFIELD_SHORT_LEN,
-    )
+    last_name = models.CharField(max_length=CHARFIELD_SHORT_LEN, )
 
     # Account email (*)
     email = models.EmailField(
-            max_length=CHARFIELD_SHORT_LEN,
-            unique=True,
+        max_length=CHARFIELD_SHORT_LEN,
+        unique=True,
     )
 
     # Account password (*)
-    password = models.CharField(
-            max_length=CHARFIELD_LONG_LEN,
-    )
+    password = models.CharField(max_length=CHARFIELD_LONG_LEN, )
 
     # User role (choices =["emp", "mng", "adm"], default = "emp")
     user_role = models.CharField(
-            max_length=3,
-            choices=[
-                    ("emp", "employee"),
-                    ("mng", "manager"),
-                    ("adm", "administrator")
-            ],
-            default='emp'
-    )
+        max_length=3,
+        choices=[("emp", "employee"),
+                ("mng", "manager"),
+                ("adm", "administrator")],
+        default='emp')
 
     # Formal work title (blank, default = '')
     title = models.CharField(
-            max_length=CHARFIELD_SHORT_LEN,
-            blank=True,
-            default=''
-    )
+        max_length=CHARFIELD_SHORT_LEN,
+        blank=True,
+        default='')
 
     # Account profile picture (null, blank)
     profile_picture = models.ImageField(
-            blank=True,
-            null=True,
-            upload_to="images/",
+        blank=True,
+        null=True,
+        upload_to="images/",
     )
 
     # Scores on corporate values (blank, default = {})
-    values_scores = models.JSONField(
-            default=dict,
-            blank=True
-    )
+    values_scores = models.JSONField(default=dict, blank=True)
 
     # Badges names earned by Team (blank, default = [])
-    badges = models.JSONField(
-            blank=True,
-            default=list
-    )
+    badges = models.JSONField(blank=True, default=list)
 
     # List of references to other Users in the same Team
     #       (blank, default = [])
-    network = models.JSONField(
-            blank=True,
-            default=list,
-            auto_created=True
-    )
+    network = models.JSONField(blank=True, default=list, auto_created=True)
 
     # Date object was created (auto, default = datetime.now() UTC time)
-    date_created = models.DateTimeField(
-            auto_now_add=True,
-            auto_created=True,
-            null=True
-    )
+    date_created = models.DateTimeField(auto_now_add=True,
+                                        auto_created=True,
+                                        null=True)
 
     class Meta:
         verbose_name = "User"
@@ -529,10 +483,10 @@ class RecognitionManager(models.Manager):
 
         # Referencing User by Recognition.uid_{from/to}
         # Add reference to User objects
-        userFromQs = User.objects.get(uid=instance.uid_from)
-        userFromJson = UserSerializer(instance=userFromQs).data
-        userToQs = User.objects.get(uid=instance.uid_to)
-        userFromJson = UserSerializer(instance=userToQs).data
+        userFromQs = User.objects.get(uid=recogObj.uid_from)
+        userFromJson = srl.UserSerializer(instance=userFromQs).data
+        userToQs = User.objects.get(uid=recogObj.uid_to)
+        userToJson = srl.UserSerializer(instance=userToQs).data
         recogObj.user_from = User(**userFromJson)
         recogObj.user_to = User(**userToJson)
 
@@ -541,7 +495,7 @@ class RecognitionManager(models.Manager):
             # Generate a random 8-digit 'cid' until it is unique
             # Pr(collision) = 1/10^8, good enough for MVP
             recogObj.rid = create_unique_id(len=ID_LEN)
-            if not Recognition.objects.filter(rid=instance.rid).exists():
+            if not Recognition.objects.filter(rid=recogObj.rid).exists():
                 break
 
         # Update scoreboard for User with uid=request.uid_to
@@ -604,66 +558,59 @@ class Recognition(models.Model):
 
     # Recognition ID (P, *, unique, auto, default = '0')
     rid = models.CharField(
-            primary_key=True,
-            unique=True,
-            max_length=ID_LEN,
-            default='0',
-            auto_created=True,
+        primary_key=True,
+        unique=True,
+        max_length=ID_LEN,
+        default='0',
+        auto_created=True,
     )
 
     # Object reference to User sender object (auto)
     # Implement-as-specified by Django, not used in APIs
     user_from = models.ForeignKey(
-            to=User,
-            on_delete=models.CASCADE,
-            null=True,
-            auto_created=True,
-            related_name="userid_from"
-    )
+        to=User,
+        on_delete=models.CASCADE,
+        null=True,
+        auto_created=True,
+        related_name="userid_from")
 
     # Object reference to User receiver object (auto)
     # Implement-as-specified by Django, not used in APIs
     user_to = models.ForeignKey(
-            to=User,
-            on_delete=models.CASCADE,
-            null=True,
-            auto_created=True,
-            related_name="userid_to"
-    )
+        to=User,
+        on_delete=models.CASCADE,
+        null=True,
+        auto_created=True,
+        related_name="userid_to")
 
     # Object reference to User sender object (*)
     uid_from = models.CharField(
-            max_length=ID_LEN,
-            blank=False,
+        max_length=ID_LEN,
+        blank=False,
     )
 
     # Object reference to User receiver object (*)
-    uid_to = models.CharField(
-            max_length=ID_LEN,
-    )
+    uid_to = models.CharField(max_length=ID_LEN, )
 
     # Tags chosen by sender to receiver (blank, default = [])
     tags = models.JSONField(
-            default=dict,
-            blank=True,
+        default=dict,
+        blank=True,
     )
 
     # Count number of reports by Users (default = 0)
-    flag_count = models.IntegerField(
-            default=0,
-    )
+    flag_count = models.IntegerField(default=0, )
 
     # Comments from sender to receiver (blank, default = '')
     comments = models.CharField(
-            max_length=CHARFIELD_LONG_LEN,
-            default='',
-            blank=True
-    )
+        max_length=CHARFIELD_LONG_LEN,
+        default='',
+        blank=True)
 
     # Date object was created (auto, default = datetime.now() UTC time)
     date_created = models.DateTimeField(
-            auto_now_add=True,
-            auto_created=True,
+        auto_now_add=True,
+        auto_created=True,
     )
 
     class Meta:

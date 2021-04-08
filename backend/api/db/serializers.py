@@ -1,6 +1,6 @@
 from rest_framework import serializers, status
 
-from api.db.models import *
+import api.db.models as models
 
 
 """ Serializer Classes
@@ -36,7 +36,7 @@ class CompanySerializer(serializers.ModelSerializer):
     """
 
     class Meta:
-        model = Company
+        model = models.Company
         fields = ['cid', 'name', 'values', 'badges']
 
 
@@ -55,15 +55,14 @@ class TeamSerializer(serializers.ModelSerializer):
         - Check if Company object with 'cid'=request.cid
         - On failure, raise ValidationError.
         """
-        if not Company.objects.get(cid=value):
+        if not models.Company.objects.get(cid=value):
             raise serializers.ValidationError(
-                    "Company ID not found"
-                    , code="not found")
+                "Company ID not found", code="not found")
 
         return value
 
     class Meta:
-        model = Team
+        model = models.Team
         fields = ['cid', 'tid', 'name', 'values_scores', 'badges']
 
 
@@ -84,16 +83,16 @@ class UserSerializer(serializers.ModelSerializer):
         - On failure, raise ValidationError.
         """
 
-        if not Team.objects.filter(tid=value).exists():
+        if not models.Team.objects.filter(tid=value).exists():
             raise serializers.ValidationError(
                 "Team ID not found",
                 code="not found")
         return value
 
-        class Meta:
-            model = User
-            fields = ['tid', 'uid', 'first_name', 'last_name', 'email', 'title'
-                , 'badges', 'network', 'values_scores', 'profile_picture']
+    class Meta:
+        model = models.User
+        fields = ['tid', 'uid', 'first_name', 'last_name', 'email', 'title', 
+                'badges', 'network', 'values_scores', 'profile_picture']
 
 
 class RecognitionSerializer(serializers.ModelSerializer):
@@ -112,7 +111,7 @@ class RecognitionSerializer(serializers.ModelSerializer):
         - On failure, raise ValidationError.
         """
 
-        if not User.objects.filter(uid=value).exists():
+        if not models.User.objects.filter(uid=value).exists():
             raise serializers.ValidationError(
                 "uid_from not found",
                 code="not found")
@@ -124,7 +123,7 @@ class RecognitionSerializer(serializers.ModelSerializer):
         - Check if User object with 'uid'=request.uid_to
         - On failure, raise ValidationError.
         """
-        if not User.objects.filter(uid=value).exists():
+        if not models.User.objects.filter(uid=value).exists():
             raise serializers.ValidationError(
                 "uid_to not found",
                 code="not found")
@@ -146,10 +145,10 @@ class RecognitionSerializer(serializers.ModelSerializer):
                 "uid_from and uid_to must be different",
                 code="invalid")
 
-		# Check valid tags
-        userRef = User.objects.get(uid=data['uid_from'])
-        teamRef = Team.objects.get(tid=userRef.tid)
-        companyRef = Company.objects.get(cid=teamRef.cid)
+        # Check valid tags
+        userRef = models.User.objects.get(uid=data['uid_from'])
+        teamRef = models.Team.objects.get(tid=userRef.tid)
+        companyRef = models.Company.objects.get(cid=teamRef.cid)
         tagsActual = companyRef.values
         for key in data['tags']:
             if key not in tagsActual:
@@ -159,10 +158,10 @@ class RecognitionSerializer(serializers.ModelSerializer):
 
         return data
 
-        class Meta:
-            model = Recognition
-            fields = ['rid', 'uid_from', 'uid_to', 'tags', 'comments'
-                , 'date_created']
+    class Meta:
+        model = models.Recognition
+        fields = ['rid', 'uid_from', 'uid_to',
+                    'tags', 'comments', 'date_created']
 
 
 class UidFormSerializer(serializers.Serializer):
@@ -180,7 +179,7 @@ class UidFormSerializer(serializers.Serializer):
         - Check if User object with 'uid'=request.uid
         - On failure, raise ValidationError.
         """
-        if not User.objects.filter(uid=value).exists():
+        if not models.User.objects.filter(uid=value).exists():
             raise serializers.ValidationError(
                 "{id} user id does not exist".format(id=value))
         return value
@@ -202,7 +201,7 @@ class RidFormSerializer(serializers.Serializer):
         - On failure, raise ValidationError.
         """
 
-        if not Recognition.objects.filter(rid=value).exists():
+        if not models.Recognition.objects.filter(rid=value).exists():
             raise serializers.ValidationError(
                 "{id} recognition id does not exist".format(id=value))
         return value
@@ -224,7 +223,7 @@ class CidFormSerializer(serializers.Serializer):
         - On failure, raise ValidationError.
         """
 
-        if not Company.objects.filter(cid=value).exists():
+        if not models.Company.objects.filter(cid=value).exists():
             raise serializers.ValidationError(
                 "{id} Company ID does not exist".format(id=value))
         return value
@@ -246,7 +245,7 @@ class TeamFormSerializer(serializers.Serializer):
         - On failure, raise ValidationError.
         """
 
-        if not Team.objects.filter(tid=value).exists():
+        if not models.Team.objects.filter(tid=value).exists():
             raise serializers.ValidationError(
                 "{id} Team ID does not exist".format(id=value))
         return value
@@ -275,4 +274,5 @@ class HomePostSerializer(serializers.Serializer):
     """
 
     user = serializers.JSONField(required=True)
-    recogs = serializers.ListField(child=serializers.JSONField(), allow_null=True)
+    recogs = serializers.ListField(
+        child=serializers.JSONField(), allow_null=True)
