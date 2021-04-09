@@ -15,47 +15,47 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from api.db.serializers \
-    import TeamSerializer, ApiResponseSerializer
+from api.db.serializers import \
+    TeamSerializer as TeamSrl, \
+    ApiResponseSerializer as ApiRespSrl
 
 
 @api_view(["POST"])
 def create_team(request):
     try:
         # Serialize incoming request
-        requestSrl = TeamSerializer(data=request.data)
+        requestSrl = TeamSrl(data=request.data)
 
-        # If request data fields are valid
-        if requestSrl.is_valid():
-            # Save object to Company database
-            requestSrl.save()
-            # Return success report
+        # If data fields are invalid, return error report
+        if not requestSrl.is_valid():
             return \
                 Response(
                     data=
-                        ApiResponseSerializer({
-                            'status': status.HTTP_200_OK,
-                            'msg': "Created Team object"
+                        ApiRespSrl({
+                            'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
+                            'msg': "Cannot create Team object: Invalid field",
+                            'trace': requestSrl.errors
                         }).data,
-                    status=status.HTTP_201_CREATED)
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-        # If data fields are invalid, return error report
+        # Save object to Company database
+        requestSrl.save()
+        # Return success report
         return \
             Response(
                 data=
-                    ApiResponseSerializer({
-                        'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
-                        'msg': "Cannot create Team object: Invalid field",
-                        'trace': requestSrl.errors
+                    ApiRespSrl({
+                        'status': status.HTTP_201_CREATED,
+                        'msg': "Created Team object"
                     }).data,
-                status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+                status=status.HTTP_201_CREATED)
 
     except ValueError as e:
         # If Exception occurs, return error report
         return \
             Response(
                 data=
-                    ApiResponseSerializer({
+                    ApiRespSrl({
                         'status': status.HTTP_400_BAD_REQUEST,
                         'msg': "Cannot create Team object: Exception ocurred",
                         'trace': e.args[0]

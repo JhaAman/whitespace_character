@@ -29,6 +29,7 @@ urlpatterns = [
     path('get_users/', apiUser.get_users, name='get_users'),
     path('create_user/', apiUser.create_user, name='create_user'),
     path('create_users/', apiUser.create_users, name='create_users'),
+    path('get_mng_stats/', apiUser.get_mng_stats, name='get_mng_stats'),
 
     # services/recognition endpoints
     path('create_recognition/', apiRecognition.create_recognition, name='create_recognition'),

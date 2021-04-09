@@ -1,14 +1,10 @@
-from rest_framework import serializers, status
-
-import api.db.models as models
-
-
 """ Serializer Classes
 
 Org: Team Whitespace Character
 Authors:
     Khai Nguyen, khainguyen@umass.edu
     Duy Pham,
+    Myron Lacey,
 Created: April 4th, 2021
 
 There are 5 model serializers:
@@ -24,6 +20,11 @@ Serializer classes to handle views:
 Detailed data schema can be found at:
     https://dbdiagram.io/d/60516c4becb54e10c33bc840
 """
+
+from rest_framework import serializers, status
+
+import api.db.models as models
+import api.db.constant as const
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -56,9 +57,10 @@ class TeamSerializer(serializers.ModelSerializer):
         - On failure, raise ValidationError.
         """
         if not models.Company.objects.get(cid=value):
-            raise serializers.ValidationError(
-                "Company ID not found", code="not found")
-
+            raise \
+                serializers.ValidationError(\
+                    "Company ID not found",
+                    code="not found")
         return value
 
     class Meta:
@@ -84,15 +86,17 @@ class UserSerializer(serializers.ModelSerializer):
         """
 
         if not models.Team.objects.filter(tid=value).exists():
-            raise serializers.ValidationError(
-                "Team ID not found",
-                code="not found")
+            raise \
+                serializers.ValidationError(\
+                    "Team ID not found",
+                    code="not found")
         return value
 
     class Meta:
         model = models.User
-        fields = ['tid', 'uid', 'first_name', 'last_name', 'email', 'title', 
-                'badges', 'network', 'values_scores', 'profile_picture']
+        fields = [
+            'tid', 'uid', 'first_name', 'last_name', 'email', 'title', 'badges'
+            , 'network', 'values_scores', 'profile_picture']
 
 
 class RecognitionSerializer(serializers.ModelSerializer):
@@ -112,9 +116,10 @@ class RecognitionSerializer(serializers.ModelSerializer):
         """
 
         if not models.User.objects.filter(uid=value).exists():
-            raise serializers.ValidationError(
-                "uid_from not found",
-                code="not found")
+            raise \
+                serializers.ValidationError(
+                    "uid_from not found",
+                    code="not found")
         return value
 
     def validate_uid_to(self, value):
@@ -124,9 +129,10 @@ class RecognitionSerializer(serializers.ModelSerializer):
         - On failure, raise ValidationError.
         """
         if not models.User.objects.filter(uid=value).exists():
-            raise serializers.ValidationError(
-                "uid_to not found",
-                code="not found")
+            raise \
+                serializers.ValidationError(
+                    "uid_to not found",
+                    code="not found")
         return value
 
     def validate(self, data):
@@ -141,9 +147,10 @@ class RecognitionSerializer(serializers.ModelSerializer):
 
         # Check uid_from is different from uid_to
         if data['uid_from'] == data['uid_to']:
-            raise serializers.ValidationError(
-                "uid_from and uid_to must be different",
-                code="invalid")
+            raise \
+                serializers.ValidationError(
+                    "uid_from and uid_to must be different", 
+                    code="invalid")
 
         # Check valid tags
         userRef = models.User.objects.get(uid=data['uid_from'])
@@ -152,26 +159,32 @@ class RecognitionSerializer(serializers.ModelSerializer):
         tagsActual = companyRef.values
         for key in data['tags']:
             if key not in tagsActual:
-                raise serializers.ValidationError(
-                    "{key} tag is not specified by organization".format(key=key),
-                    code="invalid")
-
+                raise \
+                    serializers.ValidationError(
+                        detail=\
+                            "\'{key}\' tag is not specified by organization".format(key=key),
+                        code="invalid")
         return data
+
 
     class Meta:
         model = models.Recognition
-        fields = ['rid', 'uid_from', 'uid_to',
-                    'tags', 'comments', 'date_created']
+        fields = ['rid', 'uid_from', 'uid_to', 'tags', 'comments'
+        , 'date_created']
 
 
 class UidFormSerializer(serializers.Serializer):
     """UID Form Serializer
 
-    Accepts JSON request with the following fields:
-        'uid' : 8-digit ID
+    Contains the following fields:
+        'uid' (string): 
+            8-digit ID
     """
 
-    uid = serializers.CharField(max_length=8)
+    uid = serializers.CharField(
+        required=True, 
+        min_length=8, 
+        max_length=8)
 
     def validate_uid(self, value):
         """Validator for User.uid
@@ -188,11 +201,15 @@ class UidFormSerializer(serializers.Serializer):
 class RidFormSerializer(serializers.Serializer):
     """RID Form Serializer
 
-    Accepts JSON request with the following fields:
-        'rid' : 8-digit ID
+    Contains the following fields:
+        'rid' (string): 
+            8-digit ID
     """
 
-    rid = serializers.CharField(required=True)
+    rid = serializers.CharField(
+        required=True, 
+        min_length=8, 
+        max_length=8)
 
     def validate_rid(self, value):
         """Validator for Recognition.rid
@@ -202,19 +219,26 @@ class RidFormSerializer(serializers.Serializer):
         """
 
         if not models.Recognition.objects.filter(rid=value).exists():
-            raise serializers.ValidationError(
-                "{id} recognition id does not exist".format(id=value))
+            raise \
+                serializers.ValidationError(
+                    detail=\
+                        "\'{id}\' Recognition ID does not exist".format(id=value), 
+                    code="invalid")
         return value
 
 
 class CidFormSerializer(serializers.Serializer):
     """CID Form Serializer
 
-    Accepts JSON request with the following fields:
-        'cid' : 8-digit ID
+    Contains the following fields:
+        'cid' (string): 
+            8-digit ID
     """
 
-    cid = serializers.CharField(required=True)
+    cid = serializers.CharField(
+        required=True, 
+        min_length=8, 
+        max_length=8)
 
     def validate_cid(self, value):
         """Validator for Company.cid
@@ -224,19 +248,25 @@ class CidFormSerializer(serializers.Serializer):
         """
 
         if not models.Company.objects.filter(cid=value).exists():
-            raise serializers.ValidationError(
-                "{id} Company ID does not exist".format(id=value))
+            raise \
+                serializers.ValidationError(
+                    detail="\'{id}\' Company ID does not exist".format(id=value), 
+                    code="invalid")
         return value
 
 
 class TeamFormSerializer(serializers.Serializer):
     """TID Form Serializer
 
-    Accepts JSON request with the following fields:
-        'tid' : 8-digit ID
+    Contains the following fields:
+        'tid' (string): 
+            8-digit ID
     """
 
-    tid = serializers.CharField(required=True)
+    tid = serializers.CharField(
+        required=True, 
+        min_length=8, 
+        max_length=8)
 
     def validate_tid(self, value):
         """Validator for Team.tid
@@ -246,19 +276,77 @@ class TeamFormSerializer(serializers.Serializer):
         """
 
         if not models.Team.objects.filter(tid=value).exists():
-            raise serializers.ValidationError(
-                "{id} Team ID does not exist".format(id=value))
+            raise \
+                serializers.ValidationError(
+                    detail="\'{id}\' Team ID does not exist".format(id=value), 
+                    code="invalid")
         return value
+
+
+class ManagerStatisticsSerializer(serializers.Serializer):
+    """Team Statistics Serializer
+
+    Contains the following fields:
+        'recogTotal' (number): 
+            Number of recognitions in past 30 days.
+        'tagDistr' (dict): 
+            Distribution of tags used in past 30 days sorted by 
+            decreasing count. 
+        'empls' (User): 
+            List of employees under a manager ranked by number of of 
+            recogitions made in past 30 days.
+    """
+
+    recogTotal = serializers.IntegerField(
+        required=True, 
+        min_value=0)
+    tagDistr = serializers.DictField(
+        child=serializers.CharField(),
+        allow_null=True)
+    empls = serializers.ListField(
+        child=serializers.JSONField(),
+        allow_null=True)
+
+
+class EmployeeStatisticsSerializer(serializers.Serializer):
+    """Employee Statistics Serializer
+    
+    Contains the following fields:
+        'first_name' (string): 
+            First name.
+        'last_name' (string): 
+            Last name.
+        'profile_picture' (image): 
+            Profile picture
+        'recogInCount' (number): 
+            # of recognitions made by this Employee for last 30 days.
+        'recogOutCount' (number): 
+            # of recognitions received by this Employee for last 30 days.
+        'best_tag' (string): 
+            Tag that this Employee was most recognized for. If multiple 
+            tags fits the description, a random one will be chosen. 
+    """
+
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    profile_picture = serializers.ImageField(allow_empty_file=True)
+    recogInCount = serializers.IntegerField(required=True, min_value=0)
+    recogOutCount = serializers.IntegerField(required=True, min_value=0)
+    best_tag = serializers.CharField(required=True)
 
 
 class ApiResponseSerializer(serializers.Serializer):
     """API Report Form
 
     Contains the following fields:
-        'status' : HTTP status of error
-        'msg'    : Short description of error (string)
-        'data'   : Retrieved data on success call
-        'trace'  : Stack trace for error report
+        'status' (number): 
+            HTTP status of error
+        'msg' (string): 
+            Short description of error (string)
+        'data' (JSON): 
+            Retrieved data on success call
+        'trace' (JSON): 
+            Stack trace for error report
     """
 
     status = serializers.CharField(required=True)
@@ -271,10 +359,13 @@ class HomePostSerializer(serializers.Serializer):
     """Home Post Form
 
     Contains the following fields:
-        'user'   : User object (=> see User model)
-        'recogs' : List of all Recognitions objects for User object
+        'user' (JSON): 
+            Deserialized User object (=> see User model)
+        'recogs': 
+            List of all Recognitions objects for User
     """
 
     user = serializers.JSONField(required=True)
     recogs = serializers.ListField(
-        child=serializers.JSONField(), allow_null=True)
+        child=serializers.JSONField(),
+        allow_null=True)
