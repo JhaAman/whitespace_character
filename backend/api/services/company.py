@@ -15,10 +15,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from rest_framework import status
-<<<<<<< HEAD
-from django.http import JsonResponse
-from api.models.Company import CompanySerializer
-=======
 
 from api.db.models import \
     Company as Comp
@@ -27,7 +23,6 @@ from api.db.serializers import \
     CompanySerializer as CompSrl, \
     ApiResponseSerializer as ApiRespSrl, \
     CidFormSerializer as CidFormSrl
->>>>>>> origin/feat/feed
 
 
 @api_view(["POST"])
@@ -61,9 +56,6 @@ def create(request):
                 status=status.HTTP_201_CREATED)
 
     except ValueError as e:
-<<<<<<< HEAD
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
-=======
         # If Exception occurs, return error report
         return \
             Response(
@@ -157,4 +149,3 @@ def get(request):
 #                     'datat': compDict
 #                 }).data,
 #             status=status.HTTP_200_OK)
->>>>>>> origin/feat/feed
