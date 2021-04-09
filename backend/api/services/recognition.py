@@ -192,7 +192,8 @@ def get_all_recognitions(request):
                 data=
                     ApiResponseSerializer({
                         'status': status.HTTP_400_BAD_REQUEST,
-                        'msg': "Cannot fetch all recognitions in database: Exception ocurred",
+                        'msg': "Cannot fetch all recognitions in \
+                            database: Exception ocurred",
                         'trace': e.args[0]
                     }).data,
                 status=status.HTTP_400_BAD_REQUEST)

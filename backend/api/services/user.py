@@ -15,8 +15,6 @@ import io
 import json
 
 from django.http import JsonResponse
-from django.contrib.auth.models import User as AuthUser
-from django.contrib.auth.hashers import make_password
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -39,27 +37,6 @@ def create_user(request):
         if requestSrl.is_valid():
             # Save object to User database
             requestSrl.save()
-
-            requestJson = requestSrl.validated_data
-
-            # Creating fields for Auth object
-            authObjFields = {
-                'id':
-                    requestJson["uid"],
-                'first_name':
-                    requestJson["first_name"],
-                'last_name':
-                    requestJson["last_name"],
-                'is_staff':
-                    requestJson["user_role"] == "mng"
-                    or requestJson["user_role"] == "manager",
-                'password':
-                    make_password(requestJson["password"]),
-                'email':
-                    requestJson["email"],
-            }
-            AuthUser.objects.create(**authObjFields)
-
             # Return success report
             return \
                 Response(
@@ -97,50 +74,122 @@ def create_user(request):
 @api_view(["POST"])
 def create_users(request):
     try:
-        users = json.loads(request.body)['users']
-        for user in users:
-            serializer = UserSerializer(data=user)
-            if serializer.is_valid():
-                serializer.save()
-            else:
-                return Response(serializer.errors,
-                                status.HTTP_422_UNPROCESSABLE_ENTITY)
-        return Response(None, status.HTTP_201_CREATED)
+        # Serialize incoming request data
+        requestSrl = UserSerializer(data=request.data, many=True)
+        # If request data fields are valid
+        if requestSrl.is_valid():
+            # Get validated data
+            requestJson = requestSrl.validated_data
+            # Create new User for each requested object
+            for userObj in requestJson:
+                userObj.save()
+            # Return success report
+            return \
+                Response(
+                    data=
+                        ApiResponseSerializer({
+                            'status': status.HTTP_200_OK,
+                            'msg': "Created batch User objects"
+                        }).data,
+                    status=status.HTTP_201_CREATED)
+
+        # If data fields are invalid, return error report
+        return \
+            Response(
+                data=
+                    ApiResponseSerializer({
+                        'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
+                        'msg': "Cannot create batch User objects: Invalid field",
+                        'trace': requestSrl.errors
+                    }).data,
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
     except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+        # If Exception occurs, return error report
+        return \
+            Response(
+                data=
+                    ApiResponseSerializer({
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'msg': "Cannot batch User objects: Exception ocurred",
+                        'trace': e.args[0]
+                    }).data,
+                status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])
 def get_users(request):
     try:
-        qs = User.objects.all()
-        serializer = UserSerializer(qs, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        # Fetch User objects from database
+        userObjList = User.objects.all()
+        # Deserialize User objects to be send through API
+        userJsonList = UserSerializer(userObjList, many=True).data
+        # Return success report
+        return \
+            Response(
+                data= \
+                    ApiResponseSerializer({
+                        'status': status.HTTP_201_CREATED,
+                        'msg': "Fetched all users in database",
+                        'data': userJsonList
+                    }),
+                status=status.HTTP_201_CREATED)
+
     except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+        # If Exception occurs, return error report
+        return \
+            Response(
+                data=
+                    ApiResponseSerializer({
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'msg': "Cannot fetch all users in \
+                            database: Exception ocurred",
+                        'trace': e.args[0]
+                    }).data,
+                status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["GET"])
 def get_user(request):
     try:
-        serializer = UidFormSerializer(data=request.data)
-        if serializer.is_valid():
-            userObj = User.objects.get(uid=serializer.data['uid'])
+        requestSrl = UidFormSerializer(data=request.data)
+        if requestSrl.is_valid():
+            # Get validated request data
+            requestJson = requestSrl.validated_data
+            # Fetch User objects from database
+            userObj = User.objects.get(requestJson['uid'])
+            # Deserialize User objects to be send through API
+            userJson = UserSerializer(userObj).data
+            # Return success report
+            return \
+                Response(
+                    data= \
+                        ApiResponseSerializer({
+                            'status': status.HTTP_200_OK,
+                            'msg': "Fetched requested user",
+                            'data': userJson
+                        }),
+                    status=status.HTTP_200_OK)
 
-            # update user network
-            network = [
-                UserSerializer(user).data['uid']
-                for user in User.objects.filter(tid=userObj.tid)
-            ]
-            userObj.network = network
-            userObj.save()
-
-            # serialize user object
-            userJson = UserSerializer(instance=userObj).data
-
-            # return view
-            return Response(data=userJson, status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        # If data fields are invalid, return error report
+        return \
+            Response(
+                data=
+                    ApiResponseSerializer({
+                        'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
+                        'msg': "Cannot fetch requested user: Invalid field",
+                        'trace': requestSrl.errors
+                    }).data,
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
     except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+        # If Exception occurs, return error report
+        return \
+            Response(
+                data=
+                    ApiResponseSerializer({
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'msg': "Cannot fetch requested user: Exception ocurred",
+                        'trace': e.args[0]
+                    }).data,
+                status=status.HTTP_400_BAD_REQUEST)

@@ -14,6 +14,8 @@ Detailed data schema can be found at:
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.postgres import fields
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.hashers import make_password
 
 from rest_framework import serializers
 
@@ -230,7 +232,7 @@ class Team(models.Model):
     # Implement-as-specified by Django, not used in APIs
     company = models.ForeignKey(
         to=Company,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True,
         auto_created=True)
 
@@ -322,6 +324,25 @@ class UserManager(models.Manager):
         networkObjList = list(networkQsList)
         userObj.network = networkObjList
 
+        # Creating fields for Auth object
+        authObjFields = {
+        'id':
+                userObj.uid,
+        'first_name':
+                userObj.first_name,
+        'last_name':
+                userObj.last_name,
+        'is_staff':
+                userObj.user_role == "mng"
+                or userObj.user_role == "manager",
+        'password':
+                make_password(userObj.password),
+        'email':
+                userObj.email,
+        }
+        # Regiser Authenticated User
+        AuthUser.objects.create(**authObjFields)
+
         # Create object in database
         userObj.save()
 
@@ -348,6 +369,10 @@ class User(models.Model):
 
             'tid' (*, FK):
                     - Reference to parent Team object
+                    - Foreign key
+            'mid' (*, null, FK):
+                    - Reference to manager of this user
+                    - Nullable: Some employees can have no managers
                     - Foreign key
             'uid' (P, *, unique, auto, default = '0'):
                     - Unique 8-digit identifier for each User object.
@@ -398,13 +423,25 @@ class User(models.Model):
     # Implement-as-specified by Django, not used in APIs
     team = models.ForeignKey(
         to=Team,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
+        null=True,
+        auto_created=True,
+    )
+
+    # Object reference to manager of this user(auto)
+    # Implement-as-specified by Django, not used in APIs
+    manager = models.ForeignKey(
+        to='self',
+        on_delete=models.CASCADE,
         null=True,
         auto_created=True,
     )
 
     # Reference to parent Team object (*, FK)
-    tid = models.CharField(max_length=ID_LEN, blank=False)
+    tid = models.CharField(max_length=ID_LEN)
+
+    # Reference to manager of this user
+    mid = models.CharField(max_length=ID_LEN, null=True)
 
     # User ID (P, *, unique, auto, default = '0')
     uid = models.CharField(
@@ -459,8 +496,7 @@ class User(models.Model):
         fields.ArrayField(
             base_field=models.CharField(max_length=CHARFIELD_SHORT_LEN), 
             default=list, 
-            blank=True, 
-            null=False)
+            blank=True)
 
     # List of references to other Users in the same Team
     #       (blank, default = [])
@@ -468,13 +504,13 @@ class User(models.Model):
         fields.ArrayField(
             base_field=models.CharField(max_length=ID_LEN), 
             default=list, 
-            blank=True, 
-            null=False)
+            blank=True)
 
     # Date object was created (auto, default = datetime.now() UTC time)
-    date_created = models.DateTimeField(auto_now_add=True,
-                                        auto_created=True,
-                                        null=True)
+    date_created = models.DateTimeField(
+        auto_now_add=True,
+        auto_created=True,
+        null=True)
 
     class Meta:
         verbose_name = "User"
@@ -605,21 +641,17 @@ class Recognition(models.Model):
         related_name="userid_to")
 
     # Object reference to User sender object (*)
-    uid_from = models.CharField(
-        max_length=ID_LEN,
-        blank=False,
-    )
+    uid_from = models.CharField(max_length=ID_LEN)
 
     # Object reference to User receiver object (*)
-    uid_to = models.CharField(max_length=ID_LEN, )
+    uid_to = models.CharField(max_length=ID_LEN)
 
     # Tags chosen by sender to receiver (blank, default = [])
     tags = \
         fields.ArrayField(
             base_field=models.CharField(max_length=CHARFIELD_SHORT_LEN), 
             default=list, 
-            blank=True, 
-            null=False)
+            blank=True)
 
     # Count number of reports by Users (default = 0)
     flag_count = models.IntegerField(default=0, )
