@@ -369,3 +369,14 @@ class HomePostSerializer(serializers.Serializer):
     recogs = serializers.ListField(
         child=serializers.JSONField(),
         allow_null=True)
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    def validate_notif_uid(self, value):
+        if not User.objects.filter(uid=value).exists():
+            raise serializers.ValidationError("uid_notif not found")
+        return value
+    
+    class Meta:
+        model = Notification
+        fields = ['nid', 'notif_uid', 'notif_message', 'date_created', 'notif_type', 'seen']
