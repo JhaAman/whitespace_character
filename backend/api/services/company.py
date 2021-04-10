@@ -22,7 +22,7 @@ from api.db.serializers import \
 
 
 @api_view(["POST"])
-def create_company(request):
+def create(request):
     try:
         # Serialize incoming request
         requestSrl = CompSrl(data=request.data)

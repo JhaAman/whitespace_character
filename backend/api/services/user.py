@@ -38,7 +38,7 @@ from api.db.utils import to_json
 
 
 @api_view(["POST"])
-def create_user(request):
+def create(request):
     try:
         # Serialize incoming request data
         requestSrl = UserSrl(data=request.data)
@@ -81,7 +81,7 @@ def create_user(request):
 
 
 @api_view(["POST"])
-def create_users(request):
+def create_batch(request):
     try:
         # Serialize incoming request data
         requestSrl = UserSrl(data=request.data, many=True)
@@ -127,7 +127,7 @@ def create_users(request):
 
 
 @api_view(["GET"])
-def get_users(request):
+def all(request):
     try:
         # Fetch User objects from database
         userQsList = User.objects.all()
@@ -159,7 +159,7 @@ def get_users(request):
 
 
 @api_view(["GET"])
-def get_user(request):
+def get(request):
     try:
         # Serialize incoming request data
         requestSrl = UidFormSrl(data=request.data)
@@ -208,7 +208,7 @@ def get_user(request):
 
 
 @api_view(["GET"])
-def get_mng_stats(request):
+def mng_stats(request):
     try:
         # Serializer incoming request data
         requestSrl = UidFormSrl(data=request.data)

@@ -21,7 +21,7 @@ from api.db.serializers import \
 
 
 @api_view(["POST"])
-def create_team(request):
+def create(request):
     try:
         # Serialize incoming request
         requestSrl = TeamSrl(data=request.data)

@@ -11,31 +11,66 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
 
 from api.db.models import User, Recognition
-from api.db.serializers \
-    import UserSerializer, RecognitionSerializer, HomePostSerializer
+from api.db.serializers import \
+    UserSerializer as UserSrl, \
+    UidFormSerializer as UidFormSrl, \
+    RecognitionSerializer as RecogSrl, \
+    HomePostSerializer as HomePostSrl \
+    
 
 
 class HomePageView(generics.ListAPIView):
 
-    serializer_class = HomePostSerializer
+    serializer_class = HomePostSrl
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
         # get all users and their received recognitions
         userObjList = User.objects.all()
-        userJsonList = UserSerializer(instance=userObjList, many=True).data
-        recogJsonListList = list()
+        userDictList = UserSrl(userObjList, many=True).data
+        recogDictListList = list()
         for userObj in userObjList:
             recogObjList = Recognition.objects.filter(uid_to=userObj.uid)
-            recogJsonList = RecognitionSerializer(instance=recogObjList, many=True).data
-            recogJsonListList.append(recogJsonList)
+            recogDictList = RecogSrl(recogObjList, many=True).data
+            recogDictListList.append(recogDictList)
 
         dataset = []
 
-        for i in range(len(userJsonList)):
+        for i in range(len(userDictList)):
             dataset.append({
-              'user': userJsonList[i],
-              'recogs': [ recogJson['rid'] for recogJson in recogJsonListList[i] ]
+              'user': userDictList[i],
+              'recogs': [ recogDict['rid'] for recogDict in recogDictListList[i] ]
+            })
+
+        #return queryset
+        return dataset
+
+
+class ManagerDigestView(generics.ListAPIView):
+
+    serializer_class = HomePostSrl
+    pagination_class = PageNumberPagination
+
+    def get_queryset(self):
+        # Serialize incoming request data
+        requestSrl = UidFormSrl(data=self.request.data)
+        lc = requestSrl.is_valid(raise_exception=True)
+        # Get all employees under the manager
+        requestDict = requestSrl.validated_data
+        userQsList = User.objects.filter(mid=requestDict['mid'])
+        userDictList = UserSrl(userQsList, many=True).data
+        recogDictListList = list()
+        for userDict in userDictList:
+            recogObjList = Recognition.objects.filter(uid_to=userDict['uid'])
+            recogDictList = RecogSrl(recogObjList, many=True).data
+            recogDictListList.append(recogDictList)
+
+        dataset = []
+
+        for i in range(len(userDictList)):
+            dataset.append({
+              'user': userDictList[i],
+              'recogs': [recogDict['rid'] for recogDict in recogDictListList[i]]
             })
 
         #return queryset

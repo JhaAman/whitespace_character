@@ -31,7 +31,7 @@ from api.db.serializers import \
 
 
 @api_view(["POST"])
-def create_recognition(request):
+def create(request):
     try:
         # Serializer incoming request data
         requestSrl = RecogSrl(data=request.data)
@@ -74,7 +74,7 @@ def create_recognition(request):
 
 
 @api_view(["GET"])
-def get_user_recognitions(request):
+def get_batch(request):
     try:
         # Serialize incoming request data
         requestSrl = UidFormSrl(data=request.data)
@@ -128,7 +128,7 @@ def get_user_recognitions(request):
 
 
 @api_view(["PUT"])
-def put_flag_recognition(request):
+def put_flag(request):
     try:
         # Serializing incoming request data
         requestSrl = RidFormSrl(data=request.data)
@@ -175,7 +175,7 @@ def put_flag_recognition(request):
 
 
 @api_view(["GET"])
-def get_all_recognitions(request):
+def all(request):
     try:
         recogObjList = Recog.objects.all()
         recogDictList = RecogSrl(recogObjList, many=True).data
