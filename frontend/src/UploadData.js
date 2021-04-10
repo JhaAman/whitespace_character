@@ -3,34 +3,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import React, { useState, useContext } from 'react';
-import { AuthenticationContext } from './AuthContext.js';
+//import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+//import { AuthenticationContext } from './AuthContext.js';
+import axios from 'axios'
 
+// eslint-disable-next-line
 function UploadData() {
     ////when I set input type to File in line 29, clicking the button only crashes the page.
     return (
         <div className="App">
-            <TopMenu/>
+            <TopMenu />
             <header className="body">
-            <h3 className="App-title">Administrator Upload Page</h3>
-            <br/> <br/> <br/> <br/> <br/>
-            <div style={{textAlign: 'center'}}>
-            <Popup trigger={<button>Upload JSON Data</button>} position="center">
-                <form>
-                    <div class="uploadbox">
-                        <label>
-                            <textarea rows="3" columns="20" placeholder="employee data" class="upload-input"/>
-                        </label>
-                        <br/>
-                        <label>
-                            <textarea rows="3" columns="20" placeholder="company values" class="upload-input"/>
-                        </label>
-                        <br/>
-                        <input type="Submit" value="submit" class="upload-button"/>
-                    </div>
-                </form>
-            </Popup>
-            </div>
+                <h3 className="App-title">Administrator Upload Page</h3>
+                <br /> <br /> <br /> <br /> <br />
+                <div style={{ textAlign: 'center' }}>
+                    <Popup trigger={<button>Upload JSON Data</button>} position="center">
+                        <form>
+                            <div class="uploadbox">
+                                <label>
+                                    <textarea rows="3" columns="20" placeholder="employee data" class="upload-input" />
+                                </label>
+                                <br />
+                                <label>
+                                    <textarea rows="3" columns="20" placeholder="company values" class="upload-input" />
+                                </label>
+                                <br />
+                                <input type="Submit" value="submit" class="upload-button" />
+                            </div>
+                        </form>
+                    </Popup>
+                </div>
             </header>
         </div>
     );
@@ -42,64 +45,153 @@ function UploadData() {
 function UploadData2() {
     const [employee, setEmployee] = useState("");
     const [company, setCompany] = useState("");
-    //const value = useContext(AuthenticationContext);
+    const [auth, setAuth] = useState();
+    // const value = useContext(AuthenticationContext);
 
-    function validate() {
-        return employee.length > 0 && company.length > 0;
+    function authenticate() {
+        axios.post("http://localhost:8000/api/get_token/", {
+            "username": "root",
+            "password": "pwd"
+        })
+            .then(function (response) {
+                setAuth(response.data.access);
+                console.log("success");
+            });
+    }
+
+    function handleUpload(e) {
+        let file = e.target.files[0];
+        this.setState({})
     }
 
     const submit = (e) => {
         e.preventDefault()
-        //below, fill in URL for database
-        // axios.post("http://localhost:8000/api/", { 
-        //     employee: employee,
-        //     company: company
-        // }, {
-    //         validateStatus: false
-    //     }).then((res) => {
-    //         console.log(res);
-    //         if (res.status === 200) {
-    //             value.setAuthenticationState({ token: res.data.access, employeeInfo: { employeeID: res.data.employee_id, employee: employee, company: company, role: 'employee' } })
-    //         }
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     })
+        const formData = new FormData();
+        formData.append('values', company);
+        formData.append('users', employee);
+        // below, fill in URL for database
+        axios.post("http://localhost:8000/api/upload_data/", formData,
+            {
+                headers: {
+                    "Authorization": "Bearer " + auth,
+                    "Content-Type": "multipart/form-data"
+                }
+            }).then((res) => {
+                console.log(res);
+            }).catch((err) => {
+                console.log(err);
+            })
     }
 
     return (
         <div className="app">
-            <Header/>
+            <button onClick={authenticate}>auth</button>
+            <Header />
             <div className="body">
-                <form onSubmit={submit}>
-                    <br/>
-                    <br/>
+                <form onSubmit={submit} encType="multipart/form-data">
+                    <br />
+                    <br />
                     <label>
+                        <h3>Company Values</h3>
                         <div className='uploadinput rounded'>
                             <input
-                                type="text"
-                                placeholder="employee"
-                                //value={employee}
-                                //onChange={e => setEmployee(e.target.value)}
+                                type="file"
+                                accept=".json"
+                                value={company}
+                                onChange={e => setCompany(e.target.value)}
                                 class="uploadinput"
                             />
                         </div>
                     </label>
-                    <br/>
+                    <br />
                     <label>
+                        <h3>Employee Data</h3>
                         <input
-                            type="company"
-                            placeholder="company"
-                            //value={company}
-                            //onChange={e=>setCompany(e.target.value)}
+                            type="file"
+                            accept=".json"
+                            value={employee}
+                            onChange={e => setEmployee(e.target.value)}
                             class="uploadinput"
                         />
                     </label>
-                    <br/>
-                    <input type="File" value="" hidden={!validate()} class="upload-button"/>
+                    <br />
+                    <input type="Submit" value="submit" class="upload-button" />
                 </form>
             </div>
         </div>
     );
 }
 
-export default UploadData;
+const UploadData3 = () => {
+    const [files, setFiles] = useState([]);
+    const [auth, setAuth] = useState();
+
+    function authenticate() {
+        axios.post("http://localhost:8000/api/get_token/", {
+            "username": "root",
+            "password": "pwd"
+        })
+            .then(function (response) {
+                setAuth(response.data.access);
+                console.log("success");
+            });
+    }
+
+    function onFileUpload(event) {
+        event.preventDefault();
+        let id = event.target.id;
+        let file_reader = new FileReader();
+        let file = event.target.files[0];
+        file_reader.onload = () => {
+            setFiles([...files, { file_id: id, uploaded_file: file_reader.result }]);
+        };
+        file_reader.readAsDataURL(file);
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        axios.post("http://localhost:8000/api/upload_data/", files,
+            {
+                headers: {
+                    "Authorization": "Bearer " + auth,
+                }
+            }).then((res) => {
+                console.log(res);
+            }).catch((err) => {
+                console.log(err);
+            })
+        console.log(files);
+    }
+
+    return (
+        <div className="app">
+            <button onClick={authenticate}>auth</button>
+            <Header />
+            <div className="body">
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <h3>Company Value Data</h3>
+                        <input
+                            onChange={onFileUpload}
+                            id={1}
+                            accept=".json"
+                            type="file"
+                        />
+                    </div>
+                    <div>
+                        <h3>Employee Data</h3>
+                        <input
+                            onChange={onFileUpload}
+                            id={2}
+                            accept=".json"
+                            type="file"
+                        />
+                    </div>
+                    <button type="submit" className="upload-button">Submit</button>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default UploadData3;
