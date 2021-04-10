@@ -162,7 +162,7 @@ class TeamManager(models.Manager):
 
         # Add primary key reference to parent Company:
         companyObj = Company.objects.get(cid=kwargs['cid'])
-        kwargs.company = companyObj
+        kwargs['company'] = companyObj
 
         # Generate random 'tid':
         while True:
@@ -292,7 +292,7 @@ class UserManager(models.Manager):
         while True:
             # Generate a random 8-digit 'cid' until it is unique
             # Pr(collision) = 1/10^8, good enough for MVP
-            kwargs.uid = create_unique_id(len=ID_LEN)
+            kwargs['uid'] = create_unique_id(len=ID_LEN)
             if not User.objects.filter(uid=kwargs['uid']).exists():
                 break
 
