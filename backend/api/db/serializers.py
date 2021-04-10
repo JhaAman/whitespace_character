@@ -76,7 +76,7 @@ class UserSerializer(serializers.ModelSerializer):
     Practical fields are as follows:
         'tid', 'uid', 'first_name', 'last_name', 'email', 'title'
         , 'badges', 'network', 'values_scores', 'profile_picture'
-        , 'user_role', 'date_created'
+        , 'user_role', 'date_created', 'password'
     """
 
     def validate_tid(self, value):
@@ -98,7 +98,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'tid', 'uid', 'first_name', 'last_name', 'email', 'title', 'badges'
             , 'network', 'values_scores', 'profile_picture', 'user_role'
-            , 'date_created']
+            , 'date_created', 'password']
 
 
 class RecognitionSerializer(serializers.ModelSerializer):
