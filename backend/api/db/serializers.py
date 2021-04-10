@@ -255,6 +255,34 @@ class CidFormSerializer(serializers.Serializer):
         return value
 
 
+class NidFormSerializer(serializers.Serializer):
+    """NID Form Serializer
+
+    Contains the following fields:
+        'nid' (string): 
+            8-digit ID
+    """
+
+    nid = serializers.CharField(
+        required=True, 
+        min_length=8, 
+        max_length=8)
+
+    def validate_nid(self, value):
+        """Validator for Company.cid
+
+        - Check if Company object with 'cid'=request.cid
+        - On failure, raise ValidationError.
+        """
+
+        if not models.Notification.objects.filter(nid=value).exists():
+            raise \
+                serializers.ValidationError(
+                    detail="\'{id}\' Notification ID does not exist".format(id=value), 
+                    code="invalid")
+        return value
+
+
 class TeamFormSerializer(serializers.Serializer):
     """TID Form Serializer
 
@@ -378,5 +406,5 @@ class NotificationSerializer(serializers.ModelSerializer):
         return value
     
     class Meta:
-        model = Notification
+        model = models.Notification
         fields = ['nid', 'notif_uid', 'notif_message', 'date_created', 'notif_type', 'seen']
