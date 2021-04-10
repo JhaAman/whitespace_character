@@ -76,6 +76,7 @@ class UserSerializer(serializers.ModelSerializer):
     Practical fields are as follows:
         'tid', 'uid', 'first_name', 'last_name', 'email', 'title'
         , 'badges', 'network', 'values_scores', 'profile_picture'
+        , 'user_role', 'date_created'
     """
 
     def validate_tid(self, value):
@@ -96,7 +97,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = models.User
         fields = [
             'tid', 'uid', 'first_name', 'last_name', 'email', 'title', 'badges'
-            , 'network', 'values_scores', 'profile_picture']
+            , 'network', 'values_scores', 'profile_picture', 'user_role'
+            , 'date_created']
 
 
 class RecognitionSerializer(serializers.ModelSerializer):
@@ -401,7 +403,7 @@ class HomePostSerializer(serializers.Serializer):
 
 class NotificationSerializer(serializers.ModelSerializer):
     def validate_notif_uid(self, value):
-        if not User.objects.filter(uid=value).exists():
+        if not models.User.objects.filter(uid=value).exists():
             raise serializers.ValidationError("uid_notif not found")
         return value
     

@@ -472,7 +472,7 @@ class User(models.Model):
         choices=[("emp", "employee"),
                 ("mng", "manager"),
                 ("adm", "administrator")],
-        default='emp')
+        default="emp")
 
     # Formal work title (blank, default = '')
     title = models.CharField(
