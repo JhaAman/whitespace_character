@@ -3,10 +3,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/feat/feed
 from api.services.JWTModifier import (
 
     MyTokenObtainPairView,
