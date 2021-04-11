@@ -44,8 +44,7 @@ function Profile() {
   const [awards, setAwards] = useState();
   const [people, setPeople] = useState();
   const [data, setData] = useState('');
-  // const [loading, setLoading] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const { userid } = useParams();
 
@@ -106,12 +105,12 @@ function Profile() {
           </div>
           <div class="row button-row">
             <div className="firstname">
-              {/*{data.data.first_name} {data.data.last_name}*/} Charles Martel
+              {data.data.first_name} {data.data.last_name}
             </div>
           </div>
           <div className="row button-row">
             <div className="lastname">
-              {/*{data.data.job_title}*/} Duke and Prince of the Franks
+              {data.data.job_title}
             </div>
           </div>
           <br />
