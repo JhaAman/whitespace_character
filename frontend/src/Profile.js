@@ -1,5 +1,6 @@
 import profilepic from './pics/arnold.jpg';
 import './Profile.css';
+import './App.css';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -7,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { TopMenu } from './Components.js';
 
 function Networkprofile(props) {
   return (
@@ -42,7 +44,8 @@ function Profile() {
   const [awards, setAwards] = useState();
   const [people, setPeople] = useState();
   const [data, setData] = useState('');
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const { userid } = useParams();
 
@@ -95,25 +98,32 @@ function Profile() {
 
   return (
     <div className="App">
-      <div className="top">
-        <div className="row justify-content-md-center">
-          <img src={profilepic} className="rounded-circle" width="150px" height="auto" alt="Smiling guy"></img>
+      <TopMenu/>
+      <div class="body">
+        <div className="column header-box rounded">
+          <div className="row profile-avatar">
+            <img style={{border: "10px solid #58453B"}} src={profilepic} className="rounded-circle" width="150px" alt="Smiling guy"></img>
+          </div>
+          <div class="row button-row">
+            <div className="firstname">
+              {/*{data.data.first_name} {data.data.last_name}*/} Charles Martel
+            </div>
+          </div>
+          <div className="row button-row">
+            <div className="lastname">
+              {/*{data.data.job_title}*/} Duke and Prince of the Franks
+            </div>
+          </div>
+          <br />
+          <div className="row button-row">
+            <div className="row button-row-inside">
+              <button className="button topbutton" onClick={() => setPage(0)}>badges</button>
+              <Col xs={1}></Col>
+              <button className="button topbutton" onClick={() => setPage(1)}>network</button>
+            </div>
+          </div>
         </div>
-        <div className="row justify-content-md-center">
-          {data.data.first_name} {data.data.last_name}
-        </div>
-        <div className="row justify-content-md-center">
-          {data.data.job_title}
-        </div>
-        <br />
-        <div className="row justify-content-md-center">
-          <button className="button topbutton" onClick={() => setPage(0)}>Badges</button>
-          <Col xs={1}></Col>
-          <button className="button topbutton" onClick={() => setPage(1)}>Network</button>
-        </div>
-        <br />
       </div>
-
       {page === 0 ? (
         <div className="contentpanel">
           <br />

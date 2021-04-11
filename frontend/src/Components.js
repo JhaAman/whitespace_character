@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
+import './Components.css';
 import Popup from 'reactjs-popup';
 import ProfilePicture from './pics/arnold.jpg'
 
@@ -69,6 +70,7 @@ function TopMenu({isOpen, setIsOpen}) {
                     <Link className='top-link' to='/me'>self</Link>
                     <Link className='top-link' to='/login'>logout</Link>
                 </div>
+                <div className='menu-left'/>
             </div>
         </div>
     );
@@ -79,16 +81,14 @@ export { TopMenu }
 /* This will be part of my April 4 week CSS cleanup ~ Christopher */
 function Rockstar({value, firstName, lastName}) {
     return (
-        <div style={{height: '150px', width: '90%', border: '2px solid black', marginBottom: '5px'}}>
-            <div style={{width: '100%', height: '20%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', borderBottom: '2px solid black'}}>
-                <h1 style={{fontSize: '12pt', fontWeight: 'bold', margin: 0}}>ROCKSTAR OF THE MONTH: {value}</h1>
-            </div>
+        <div class="rockstar rounded">
             <div style={{width: '100%', height: '80%', display: 'flex', flexDirection: 'row'}}>
-                <div style={{width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <img src={ProfilePicture} style={{width: '100px', height: '100px', borderRadius: '50%', border: '2px solid black'}}/>
+                <div style={{width: '38%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <img src={ProfilePicture} style={{width: '100px', height: '100px', border: '5px solid #58453B'}} className="rounded-circle"/>
                 </div>
-                <div style={{width: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
-                    <h2 style={{fontSize: '15pt', margin: 0}}>{firstName} {lastName}</h2>
+                <div style={{width: '62%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
+                    <i>Rockstar of {value} : </i>
+                    <b>{firstName} {lastName}</b>
                 </div>
             </div>
         </div>
