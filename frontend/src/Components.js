@@ -2,7 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
 import Popup from 'reactjs-popup';
+import NotificationButton
+from './Notification';
 import ProfilePicture from './pics/arnold.jpg'
+
 
 /* Now storing objects here, so they have access to all the right directories and CSS and suchlike. If this upset anyone, let me know. ~ Christopher */
 /* To add an object here, though, one must add the line “// eslint-disable-next-line” to escape the wrath of the garbage fairy. */
@@ -31,12 +34,12 @@ function Recognition(props){
           <div style={{textAlign: 'right'}}>
             <Popup trigger={<button>report</button>} position="right center">
                 <form>
-                    <div class="repbox">
+                    <div className="repbox">
                         <label>
-                            <textarea rows="3" columns="20" placeholder="your worry" class="rep-input"/>
+                            <textarea rows="3" columns="20" placeholder="your worry" className="rep-input"/>
                         </label>
                         <br/>
-                        <input type="submit" value="submit" class="rep-button"/>
+                        <input type="submit" value="submit" className="rep-button"/>
                     </div>
                 </form>
             </Popup>
@@ -69,10 +72,16 @@ function TopMenu({isOpen, setIsOpen}) {
                     <Link className='top-link' to='/me'>self</Link>
                     <Link className='top-link' to='/login'>logout</Link>
                 </div>
+                <div className='menu-right'>
+                    <NotificationButton/>
+                </div>
             </div>
         </div>
     );
 }
+
+
+
 export { TopMenu }
 
 // eslint-disable-next-line
