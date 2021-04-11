@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './App.css';
 import './Components.css';
 import Popup from 'reactjs-popup';
-import Image from 'react-bootstrap/Image';
 
 import ProfilePicture from './pics/arnold.jpg'
 
@@ -38,9 +37,9 @@ function Recognition(props){
   return(
       <div className="recognition rounded">
           <div className="topline">
-          <Image src={props.recognizerpicture} className="rounded-circle" width="30px" height="auto"></Image>
+          <img src={props.recognizerpicture} className="rounded-circle" width="30px" height="auto" style={{border: "2px solid #58453B", margin: "5px"}}/>
               <i><b>{props.recognizer}</b> cherishes <b>{props.recipient}</b></i>
-          <Image src={props.recipientpicture} className="rounded-circle" width="30px" height="auto"></Image>
+          <img src={props.recipientpicture} className="rounded-circle" width="30px" height="auto" style={{border: "2px solid #58453B", margin: "5px"}}/>
           </div>
           <br></br>
           <div>
