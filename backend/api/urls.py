@@ -11,6 +11,7 @@ import api.services.company as apiCompany
 import api.services.team as apiTeam
 import api.services.notification as apiNotification
 import api.services.upload as apiUpload
+import api.services.badge as apiBadge
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -36,6 +37,7 @@ urlpatterns = [
     path('create_team/', apiTeam.create_team),
     path('get_notif/', apiNotification.get_notif),
     path('update_notif/', apiNotification.update_notif),
+    path('add_badge/', apiBadge.add_badge),
     path('get_profile/', apiProfile.get_profile),
     path('upload_data/', apiUpload.upload_data),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
