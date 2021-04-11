@@ -1,9 +1,10 @@
 import React from 'react';
-import { Recognition, TopMenu } from './Components.js';
+import { Recognition, TopMenu, Rockstar } from './Components.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
 function EmployeeHomepage() {
+    const rockstarsArray = [{value: 'Communications', firstName: 'Gary', lastName: 'Szekely'}, {value: 'Hard-Working', firstName: 'Reuben', lastName: 'Philip'}, {value: 'Inclusive', firstName: 'Khang', lastName: 'Nguyen'}]
 
     return (
        
@@ -18,14 +19,11 @@ function EmployeeHomepage() {
                     </div>
                     <div className='right-column'>
                         <div className='infobox rounded'>
-                            <br></br>
-                            <b><i><div style={{fontSize:30}}>This month’s hero:</div></i></b>
-                            Charles Martel
-                            <br></br><br></br>
-                            [other statistics can go here]
-                            <br></br>
-                            <br></br>
-                            <br></br>
+                            {
+                                rockstarsArray.map((e) => {
+                                    return (<Rockstar value={e.value} firstName={e.firstName} lastName={e.lastName} />);
+                                })
+                            }
                         </div>
                     </div>
                 </div>
