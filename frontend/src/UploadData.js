@@ -4,7 +4,7 @@ import './App.css'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 //import React, { useState, useContext } from 'react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 //import { AuthenticationContext } from './AuthContext.js';
 import axios from 'axios'
 
@@ -130,11 +130,10 @@ const UploadData3 = () => {
         axios.post("http://localhost:8000/api/get_token/", {
             "username": "root",
             "password": "pwd"
-        })
-            .then(function (response) {
-                setAuth(response.data.access);
-                console.log("success");
-            });
+        }).then(function (response) {
+            setAuth(response.data.access);
+            console.log("success");
+        });
     }
 
     function onFileUpload(event) {
@@ -163,9 +162,12 @@ const UploadData3 = () => {
         console.log(files);
     }
 
+    useEffect(() => {
+        authenticate();
+    }, []);
+
     return (
         <div className="app">
-            <button onClick={authenticate}>auth</button>
             <Header />
             <div className="body">
                 <form onSubmit={handleSubmit}>
