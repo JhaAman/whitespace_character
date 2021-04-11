@@ -56,6 +56,7 @@ function Notification() {
   const [auth,setAuth] = useState();
   const [newNotif,setNewNotif] = useState();
   const [loading,setLoading] = useState(true);
+  
   function authenticate(){
     axios.post("http://localhost:8000/api/get_token/",{
       "username":"root",
