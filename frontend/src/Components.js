@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
 import Popup from 'reactjs-popup';
+
 import NotificationButton
 from './Notification';
+
 import ProfilePicture from './pics/arnold.jpg'
 
 
