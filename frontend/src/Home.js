@@ -1,5 +1,7 @@
 import React from 'react';
 import { Recognition, TopMenu, Rockstar } from './Components.js';
+import profilepic from './pics/arnold.jpg';
+import profilepic2 from './pics/regina.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css'
 
@@ -13,9 +15,9 @@ function EmployeeHomepage() {
             <div className="body">
                 <div className="row">
                     <div className='left-column'>
-                        <Recognition recipient="Reginald" recognizer="Gwen" message="Everyone is raving about your work on pantelic aristism."/>
-                        <Recognition recipient="Edith" recognizer="Lancelot" message="I love your ideative reification!"/>
-                        <Recognition recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
+                        <Recognition recognizerpicture={profilepic2} recipientpicture={profilepic} recipient="Reginald" recognizer="Gwen" message="Everyone is raving about your work on pantelic aristism."/>
+                        <Recognition recognizerpicture={profilepic} recipientpicture={profilepic2} recipient="Edith" recognizer="Lancelot" message="I love your ideative reification!"/>
+                        <Recognition recognizerpicture={profilepic2} recipientpicture={profilepic} recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
                     </div>
                     <div className='right-column'>
                         <div class="rounded infobox">
