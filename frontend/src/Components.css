@@ -110,6 +110,14 @@
   width: 84px;
 }
 
+.menu-right {
+  text-align: right;
+  padding: 5px;
+  padding-left: 40px;
+  padding-right: 20px;
+  width: 84px;
+}
+
 .menu-center {
   vertical-align: middle;
   text-align: center;
@@ -119,7 +127,7 @@
 
 .top-link {
   font-family: AlegreyaSans;
-  color: #d1b297;
+  color: #d8b597;
   padding: 20px;
 }
 
@@ -133,4 +141,55 @@
   font-family: AlegreyaSans;
   color: #fff1e5;
   padding: 20px;
+}
+
+/* Notification CSS elements: */
+
+
+.false-notification{
+  color:blue;
+  
+  height: auto;
+  width: 400px;
+}
+.true-notification{
+  height: auto;
+  width: 400px;
+}
+
+.Notification-Message{
+  
+  display:flex;
+}
+.space{
+  margin-top:10px;
+}
+.dropdown-menu{
+  width:auto;
+  max-height:200px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style:none;
+}
+.dropdown-menu::-webkit-scrollbar{
+  width: 0 !important;
+  display: none;
+}
+
+.btn-notif {
+  background-color: transparent;
+  content: none !important;
+  border: none !important;
+  overflow: hidden !important;
+  color: #d8b597;
+}
+
+.btn-notif:after {
+  content: none !important;
+  border: none;
+}
+
+.btn-notif:focus {
+  outline: none !important;
 }
