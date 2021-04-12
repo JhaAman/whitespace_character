@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = '1(f&1cy=jl)hjpv!l=ot_m6qi=l9_3!$ajp=_z3%e5139$(%v^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django_crontab',
 
     # libraries
     'rest_framework',
@@ -134,7 +135,6 @@ if 'test' in sys.argv:
         'NAME': 'test_db'
     }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -185,3 +185,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=20),
 }
 
+CRONJOBS = [
+    ('41,42,43 * * * *', 'api.cron.reset_count')
+]
