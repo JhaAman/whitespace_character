@@ -207,7 +207,7 @@ def get(request):
                 status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 def mng_stats(request):
     try:
         # Serializer incoming request data
@@ -284,9 +284,10 @@ def mng_stats(request):
             best_tag = tagCounstSortDesc[0][0] # sorting dict -> tuple
             # Create Employee Stat object and check field validity
             emplStatDict = {
+                'uid': emplObj.uid,
                 'first_name': emplObj.first_name,
                 'last_name': emplObj.last_name,
-                'profile_picture': None,
+                'profile_picture': None, # TODO: Figure how to return profle pic
                 'recogInCount': recogInCount,
                 'recogOutCount': recogOutCount,
                 'best_tag': str(best_tag)

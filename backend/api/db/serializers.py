@@ -342,6 +342,8 @@ class EmployeeStatisticsSerializer(serializers.Serializer):
     """Employee Statistics Serializer
     
     Contains the following fields:
+        'uid' (string):
+            User ID
         'first_name' (string): 
             First name.
         'last_name' (string): 
@@ -357,6 +359,7 @@ class EmployeeStatisticsSerializer(serializers.Serializer):
             tags fits the description, a random one will be chosen. 
     """
 
+    uid = serializers.CharField(required=True)
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
     profile_picture = serializers.ImageField(allow_empty_file=True, allow_null=True)
@@ -394,6 +397,10 @@ class HomePostSerializer(serializers.Serializer):
         'recogs': 
             List of all Recognitions objects for User
     """
+
+    def save(self):
+        self.context['request']._method = 'POST'
+        views.edit(self.context['request'], self.instance.slug)
 
     user = serializers.JSONField(required=True)
     recogs = serializers.ListField(
