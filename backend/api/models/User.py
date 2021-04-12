@@ -148,7 +148,7 @@ class User(models.Model):
         default=list
     )
 
-    profile_picutre = models.ImageField(
+    profile_picture = models.ImageField(
         null=True,
         blank=True,
         upload_to="images/",
@@ -168,7 +168,6 @@ class User(models.Model):
 
     class Meta:
         verbose_name = "User"
-
 
 class UserSerializer(serializers.ModelSerializer):
     def validate_tid(self, value):
