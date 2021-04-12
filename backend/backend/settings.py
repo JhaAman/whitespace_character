@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'django_crontab',
-
     # libraries
     'rest_framework',
     'corsheaders',
@@ -107,8 +105,8 @@ if DEBUG:
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.environ.get('POSTGRES_LOCAL_DATABASE_NAME'),
-            'USER': os.environ.get('POSTGRES_LOCAL_USER'),
-            'PASSWORD': os.environ.get('POSTGRES_LOCAL_PASSWORD'),
+            'USER': "admin",
+            'PASSWORD': "password",
             'HOST': os.environ.get('POSTGRES_LOCAL_HOST'),
             'PORT': os.environ.get('POSTGRES_LOCAL_PORT'),
         }
@@ -119,8 +117,8 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.environ.get('POSTGRES_DATABASE_NAME'),
-            'USER': os.environ.get('POSTGRES_USER'),
-            'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+            'USER': "admin",
+            'PASSWORD': "password",
             'HOST': os.environ.get('POSTGRES_HOST'),
             'PORT': os.environ.get('POSTGRES_PORT'),
             'TEST': {
@@ -184,7 +182,3 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=20),
 }
-
-CRONJOBS = [
-    ('41,42,43 * * * *', 'api.cron.reset_count')
-]

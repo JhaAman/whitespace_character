@@ -11,4 +11,3 @@ PyJWT == 1.7.1
 djangorestframework-simplejwt == 4.4.0
 python-environ == 0.4.54
 pillow===8.1.2
-django-crontab == 0.7.1
