@@ -39,5 +39,6 @@ urlpatterns = [
     path('update_notif/', apiNotification.update_notif),
     path('get_profile/', apiProfile.get_profile),
     path('get_rockstars/',apiRockstars.get_rockstars),
+    path('reset/',apiRockstars.reset_count),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]
