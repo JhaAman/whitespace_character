@@ -1,6 +1,7 @@
 import React from 'react';
 import { TopMenu } from './Components.js';
 import Recognition from './Components/Recognition/Recognition.js';
+import SubmitRecog from './Components/SubmitRecog/SubmitRecog.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
@@ -18,6 +19,8 @@ function EmployeeHomepage() {
             <div class="body">
                 <div class="row">
                     <div className='left-column'>
+                        <SubmitRecog />
+                        <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
                         {
                             recogArray.map((e) => {
                                 return (<Recognition recognizer={e.recognizer} recognizee={e.recognizee} comment={e.comment} />);
