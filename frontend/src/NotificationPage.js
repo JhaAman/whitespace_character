@@ -1,11 +1,11 @@
-import './App.css';
+import './NotificationPage.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
+//import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 //import Dropdown from 'react-bootstrap/Dropdown';
@@ -13,7 +13,7 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import 'reactjs-popup/dist/index.css';
 import {faBell} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 

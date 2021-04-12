@@ -240,6 +240,11 @@ button:active {
   font-weight: bold;
 }
 
+.main-content-box {
+  display: flex;
+  flex-direction: row;
+}
+
 .login-button:active {
   font-weight: bold;
 }
