@@ -2,7 +2,7 @@ import React from 'react';
 import Arnold from '../../pics/arnold.jpg'
 import './Recognition.css'
 
-function Recognition({recognizer, recognizee, comment, profilePic}) {
+function FeedRecognition({recognizer, recognizee, comment, profilePic}) {
     return (
         <div className='main-container'>
             <div className='left-container'>
@@ -23,4 +23,4 @@ function Recognition({recognizer, recognizee, comment, profilePic}) {
     )
 }
 
-export default Recognition;
+export default FeedRecognition;
