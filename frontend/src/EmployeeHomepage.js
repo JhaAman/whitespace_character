@@ -1,5 +1,5 @@
 import React from 'react';
-import FeedRecognition from './Components/Recognition/FeedRecognition.js';
+import FeedRecognition from './Components/FeedRecognition/FeedRecognition.js';
 import SubmitRecog from './Components/SubmitRecog/SubmitRecog.js';
 import { Recognition, TopMenu, Rockstar } from './Components.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -24,7 +24,7 @@ function EmployeeHomepage() {
                         <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
                         {
                             recogArray.map((e) => {
-                                return (<Recognition recognizer={e.recognizer} recognizee={e.recognizee} comment={e.comment} />);
+                                return (<FeedRecognition recognizer={e.recognizer} recognizee={e.recognizee} comment={e.comment} />);
                             })
                         }
                     </div>

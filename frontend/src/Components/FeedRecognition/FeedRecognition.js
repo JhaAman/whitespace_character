@@ -1,6 +1,6 @@
 import React from 'react';
 import Arnold from '../../pics/arnold.jpg'
-import './Recognition.css'
+import './FeedRecognition.css'
 
 function FeedRecognition({recognizer, recognizee, comment, profilePic}) {
     return (
