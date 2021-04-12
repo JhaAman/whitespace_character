@@ -77,6 +77,52 @@ def create(request):
                 status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(["POST"])
+def create_batch(request):
+    try:
+        # Serializer incoming request data
+        requestSrl = RecogSrl(data=request.data, many=True)
+
+        # If request data fields are invalid, return error report
+        if not requestSrl.is_valid():
+            return \
+                Response(
+                    data= \
+                        ApiRespSrl({
+                            'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
+                            'msg': "Cannot create batch Recognition object: Invalid field",
+                            'trace': requestSrl.errors
+                        }).data,
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+        # Get validated data
+        recogDictList = requestSrl.validated_data
+        # Create new User for each requested object
+        for recogDict in recogDictList:
+            Recog.objects.create(**recogDict).save()
+        # Return success report
+        return \
+            Response(
+                data= \
+                    ApiRespSrl({
+                        'status': status.HTTP_201_CREATED,
+                        'msg': "Created batch Recognition object"
+                    }).data,
+                status=status.HTTP_201_CREATED)
+
+    except ValueError as e:
+        # If Exception occurs, return error report
+        return \
+            Response(
+                data=
+                    ApiRespSrl({
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'msg': "Cannot create batch Recognition object: Exception occured",
+                        'trace': e.args[0]
+                    }).data,
+                status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(["GET"])
 def get_batch(request):
     try:

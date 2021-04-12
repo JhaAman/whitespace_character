@@ -359,7 +359,7 @@ class EmployeeStatisticsSerializer(serializers.Serializer):
 
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
-    profile_picture = serializers.ImageField(allow_empty_file=True)
+    profile_picture = serializers.ImageField(allow_empty_file=True, allow_null=True)
     recogInCount = serializers.IntegerField(required=True, min_value=0)
     recogOutCount = serializers.IntegerField(required=True, min_value=0)
     best_tag = serializers.CharField(required=True)

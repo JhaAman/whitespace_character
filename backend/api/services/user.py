@@ -220,7 +220,7 @@ def mng_stats(request):
                     data=
                         ApiRespSrl({
                             'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
-                            'msg': "Cannot create Company object: Invalid field",
+                            'msg': "Cannot get Manager statistics: Invalid field",
                             'trace': requestSrl.errors
                         }).data,
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -234,85 +234,75 @@ def mng_stats(request):
         #   (3) Employees ranked by # of recognitions given
 
         # (1)
-        # Get # of recognitions made by employees in last 30 days
-        # Employees are User with 'mid' = request.data['uid']
+
         last_30_days = datetime.datetime.now()-datetime.timedelta(days=30)
-        recogQsList = \
-            Recog.objects.filter(\
-                Q(date_created__gt=last_30_days) | Q(mid=requestDict['uid']))
+        managerObj = User.objects.get(uid=requestDict['uid'])
+
+        # Get Recognitions in past 30 days that involves a team member 
+        #   managed by the manager
+        # recogQsList = Recog.objects.get_recog_team(
+        #     tid=managerObj.tid,
+        #     time_after=last_30_days)   
+        recogQsList = Recog.objects.get_recog_team(
+            tid=managerObj.tid,
+            time_after = last_30_days)
+
+        # Get Recogition count
         recogTotal = len(recogQsList)
-        # Get scoresheet template from manager
-        userObj = User.objects.get(uid=requestDict['uid'])
-        tagDistr = dict().fromkeys(userObj.values_scores, 0)
 
         # (2)
-        # Tally up tag counts
-        recogObjList = RecogSrl(recogQsList, many=True).data
-        for recogObj in recogObjList:
+
+        # Get tag count distribution
+        tagDistr = dict().fromkeys(managerObj.values_scores, 0)
+        for recogObj in recogQsList:
             for key in recogObj.tags:
                 tagDistr[key] += 1
 
         # (3)
-        # Get Employee statistics
-        userQsList = User.objects.filter(mid=requestDict['uid'])
-        userDictList = UserSrl(userQsList).data
+
+        emplQsList = User.objects.filter(tid=managerObj.tid)
+
+        # Generate Employee Stat Objects
         emplStatDictList = list()
-        for userDict in userDictList:
-            # Get # of recognitions received
+        for emplObj in emplQsList:
+            # Number of recogs this user receives
             recogInCount = \
-                len(Recog.objects.filter(uid_to=userDict.uid))
-            # Get $ of recognitions sent
+                len(list(filter(\
+                    lambda recog: recog.uid_to == emplObj.uid, \
+                    recogQsList)))
+            # Number of recogs this user gets
             recogOutCount = \
-                len(Recog.objects.filter(uid_from=userDict.uid))
-            # Sort desc 'values_scores' to get most voted tags
+                len(list(filter(\
+                    lambda recog: recog.uid_from == emplObj.uid, \
+                    recogQsList)))
+            # Sort tag count to get tag this user was most voted for
             tagCounstSortDesc = \
                 sorted(
-                    userDict.values_scores.items(),
+                    emplObj.values_scores.items(),
                     key=lambda kv:(kv[1], kv[0]),
                     reverse=True)
-            # Get first item to be 'best_key'
-            best_key = tagCounstSortDesc.keys()[0]
-            # Build Employee Stat JSON
-            emplStatDict = \
-                {
-                    'first_name': userDict.first_name,
-                    'last_name': userDict.last_name,
-                    'profile_picture': userDict.profile_picture,
-                    'recogInCount': recogInCount,
-                    'recogOutCount': recogOutCount,
-                    'best_tag': best_key
-                }
-            # Insert to list
-            emplStatDictList.append(emplStatDict)
-        # Sort Employee statistics by 'recogInCount'
-        emplStatDictList = \
-            sorted(
-                emplStatDictList,
-                key=lambda emplStatObj: emplStatObj['recogInCount'],
-                reverse=True)      
-        # Serialize Employee Stat data
-        emplStatSrl = EmplStatSrl(data=emplStatDictList)
-        # Check if Employee Stat list is valid
-        # If not, raise ValidationError      
-        lc = emplStatSrl.is_valid(raise_exception=True) # assigns to supress print
-        emplStatDictList = emplStatSrl.validated_data
-
-        # Build Manager Stat JSON
-        mngStatDict = \
-            {
-                'recogTotal': recogTotal,
-                'tagDistr': tagDistr,
-                'empls': emplStatDictList
+            best_tag = tagCounstSortDesc[0][0] # sorting dict -> tuple
+            # Create Employee Stat object and check field validity
+            emplStatDict = {
+                'first_name': emplObj.first_name,
+                'last_name': emplObj.last_name,
+                'profile_picture': None,
+                'recogInCount': recogInCount,
+                'recogOutCount': recogOutCount,
+                'best_tag': str(best_tag)
             }
+            emplStatSrl = EmplStatSrl(data=emplStatDict)
+            lc = emplStatSrl.is_valid(raise_exception=True)
+            emplStatDict = emplStatSrl.validated_data
+            # Add Employee Stat object to list
+            emplStatDictList.append(emplStatDict)
 
-        # Serialize Manager Stat data
-        mngStatSrl = MngStatSrl(data=mngStatDict)
-        # Check if Employee Stat list is valid
-        # If not, raise ValidationError  
-        lc = mngStatSrl.is_valid(raise_exception=True) # assigns to supress print
+        mngStatSrl = MngStatSrl(data={
+            'recogTotal': recogTotal,
+            'tagDistr': tagDistr,
+            'empls': emplStatDictList})
+        lc = mngStatSrl.is_valid(raise_exception=True)
         mngStatDict = mngStatSrl.validated_data
-        # Deserialize Manager Stat data
-        mngStatJson = to_json(mngStatDict)
 
         # Return success report
         return \
@@ -332,7 +322,7 @@ def mng_stats(request):
                 data=
                     ApiRespSrl({
                         'status': status.HTTP_400_BAD_REQUEST,
-                        'msg': "Cannot fetch requested user: Exception ocurred",
+                        'msg': "Cannot get Manager statistics: Exception ocurred",
                         'trace': e.args[0]
                     }).data,
                 status=status.HTTP_400_BAD_REQUEST)

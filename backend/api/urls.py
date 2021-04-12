@@ -26,15 +26,16 @@ schema_view = get_schema_view(
 urlpatterns = [
 
     # services/user endpoints
-    path('user/get/', apiUser.get, name='get_user'),
-    path('user/all/', apiUser.all, name='get_all_user'),
     path('user/create/', apiUser.create, name='create_user'),
     path('user/create_batch/', apiUser.create_batch, name='create_batch_user'),
-    path('user/mng_stats/', apiUser.mng_stats, name='get_mng_stats'),
+    path('user/get/', apiUser.get, name='get_user'),
+    path('user/all/', apiUser.all, name='get_all_user'),
+    path('user/mng/stats/', apiUser.mng_stats, name='get_mng_stats'),
 
     # services/recognition endpoints
     path('recog/create/', apiRecog.create, name='create_recognition'),
-    path('recog/get_batch/', apiRecog.get_batch, name='get_user_recogntions'),
+    path('recog/create_batch/', apiRecog.create_batch, name='create_recognition'),
+    path('recog/get/user/', apiRecog.get_batch, name='get_user_recogntions'),
     path('recog/all/', apiRecog.all, name='get_all_recogntions'),
     path('recog/put_flag/', apiRecog.put_flag, name='put_flag_recogntion'),
 

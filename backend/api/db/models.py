@@ -11,7 +11,10 @@ Detailed data schema can be found at:
         https://dbdiagram.io/d/60516c4becb54e10c33bc840
 """
 
+import pytz
+
 from django.db import models
+from django.db.models import F, Q
 from django.utils import timezone, dateformat
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.postgres import fields
@@ -367,10 +370,6 @@ class User(models.Model):
     'tid' (*, FK):
         - Reference to parent Team object
         - Foreign key
-    'mid' (*, null, FK):
-        - Reference to manager of this user
-        - Nullable: Some employees can have no managers
-        - Foreign key
     'uid' (P, *, unique, auto, default = '0'):
         - Unique 8-digit identifier for each User object.
         - Primary key
@@ -427,20 +426,8 @@ class User(models.Model):
         auto_created=True,
     )
 
-    # Object reference to manager of this user(auto)
-    # Implement-as-specified by Django, not used in APIs
-    manager = models.ForeignKey(
-        to='self',
-        on_delete=models.CASCADE,
-        null=True,
-        auto_created=True,
-    )
-
     # Reference to parent Team object (*, FK)
     tid = models.CharField(max_length=ID_LEN)
-
-    # Reference to manager of this user
-    mid = models.CharField(max_length=ID_LEN, null=True)
 
     # User ID (P, *, unique, auto, default = '0')
     uid = models.CharField(
@@ -562,6 +549,43 @@ class RecognitionManager(models.Manager):
 
         return recogObj
 
+    def get_recog_team(self, *args, **kwargs):
+        """Get Recognitions In Team
+
+        Get Recognitions that involves a Team member, either as sender
+        or receiver.
+
+        Input:
+            'tid' (string) -- 8-digit Team ID
+
+        Output:
+            'recogTeamList' (list) -- List of Recognition objects
+        """
+
+        recogTeamObjList = list()
+        recogQsList = Recognition.objects.all()
+        for recogObj in recogQsList:
+            # (Optional) Check Recognitions made after a time
+            utc = pytz.utc
+            recogObj.date_created = recogObj.date_created.replace(tzinfo=None)
+            kwargs['time_after'] = kwargs['time_after'].replace(tzinfo=None)
+            date_created = utc.localize(recogObj.date_created)
+            time_after = utc.localize(kwargs['time_after'])
+            condTime = \
+                date_created >= time_after \
+                if 'time_after' in kwargs \
+                else True
+            # Check involved party is part of team
+            condTeam = \
+                recogObj.user_from.tid == kwargs['tid'] \
+                or recogObj.user_to.tid == kwargs['tid']
+
+            # If conditions checkes out, append to list
+            if condTime and condTeam:
+                recogTeamObjList.append(recogObj)
+
+        return recogTeamObjList
+
 
 class Recognition(models.Model):
     """Recognition Model Object
@@ -614,7 +638,7 @@ class Recognition(models.Model):
         on_delete=models.CASCADE,
         null=True,
         auto_created=True,
-        related_name="userid_from")
+        related_name="uid_from")
 
     # Object reference to User receiver object (auto)
     # Implement-as-specified by Django, not used in APIs
@@ -623,7 +647,7 @@ class Recognition(models.Model):
         on_delete=models.CASCADE,
         null=True,
         auto_created=True,
-        related_name="userid_to")
+        related_name="uid_to")
 
     # Object reference to User sender object (*)
     uid_from = models.CharField(max_length=ID_LEN)
@@ -681,6 +705,7 @@ class NotificationManager(models.Manager):
         instance.save()
 
         return instance
+
 
 class Notification(models.Model):
 

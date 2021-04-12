@@ -55,9 +55,11 @@ class ManagerDigestView(generics.ListAPIView):
         # Serialize incoming request data
         requestSrl = UidFormSrl(data=self.request.data)
         lc = requestSrl.is_valid(raise_exception=True)
-        # Get all employees under the manager
+        # Get validated data
         requestDict = requestSrl.validated_data
-        userQsList = User.objects.filter(mid=requestDict['mid'])
+        # Get manager object
+        managerObj = User.objects.get(uid=requestDict['uid'])
+        userQsList = User.objects.filter(tid=managerObj.tid)
         userDictList = UserSrl(userQsList, many=True).data
         recogDictListList = list()
         for userDict in userDictList:
