@@ -112,7 +112,7 @@ if DEBUG:
         }
     }
 else:
-    print("REMOTE_DB: " + env('POSTGRES_DATABASE_NAME'))
+    print("REMOTE_DB: " + os.environ.get('POSTGRES_DATABASE_NAME'))
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',

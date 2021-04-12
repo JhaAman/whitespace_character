@@ -4,6 +4,7 @@ import Login from './Login.js'
 import EmployeeHomepage from './EmployeeHomepage.js';
 import Profile from './Profile.js';
 import { AuthenticationProvider } from './AuthContext.js';
+//import NotificationPage from './NotificationPage.js';
 import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path='/u/:userid'>
             <Profile />
           </Route>
+
         </Switch>
       </AuthenticationProvider>
     </Router>
