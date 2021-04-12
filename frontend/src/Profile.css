@@ -89,3 +89,11 @@
     background-color:#fde9e7;
     height: 400px;
   }
+
+  .optionbox{
+    background-color: chocolate;
+    border-radius: 10px;
+    height:250px;
+    width:50%;
+    overflow:auto;
+  }
