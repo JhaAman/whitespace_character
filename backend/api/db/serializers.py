@@ -398,10 +398,6 @@ class HomePostSerializer(serializers.Serializer):
             List of all Recognitions objects for User
     """
 
-    def save(self):
-        self.context['request']._method = 'POST'
-        views.edit(self.context['request'], self.instance.slug)
-
     user = serializers.JSONField(required=True)
     recogs = serializers.ListField(
         child=serializers.JSONField(),

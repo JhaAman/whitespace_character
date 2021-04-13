@@ -45,6 +45,9 @@ class HomePageView(generics.ListAPIView):
         #return queryset
         return dataset
 
+    def post(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
 
 class ManagerDigestView(generics.ListAPIView):
 
