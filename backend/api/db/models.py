@@ -316,10 +316,6 @@ class UserManager(models.Manager):
                 kwargs['uid'],
             'username':
                 kwargs['email'],
-            'first_name':
-                kwargs['first_name'],
-            'last_name':
-                kwargs['last_name'],
             'last_login':
                 dateformat.format(timezone.now(), 'Y-m-d H:i:s'),
             'is_staff':

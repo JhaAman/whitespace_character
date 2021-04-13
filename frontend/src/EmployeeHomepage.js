@@ -1,10 +1,10 @@
 import React from 'react';
-import { Recognition, TopMenu } from './Components.js';
-//import Button from 'react-bootstrap/Button';
+import { Recognition, TopMenu, Rockstar } from './Components.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import ManagerComp from './ManagerComponent.js';
 function EmployeeHomepage() {
+    const rockstarsArray = [{value: 'Communications', firstName: 'Gary', lastName: 'Szekely'}, {value: 'Hard-Working', firstName: 'Reuben', lastName: 'Philip'}, {value: 'Inclusive', firstName: 'Khang', lastName: 'Nguyen'}]
 
     return (
        
@@ -21,17 +21,13 @@ function EmployeeHomepage() {
                         <div className='autoinfobox rounded' style={{height:'auto'}}>
                             <ManagerComp/>
                         </div>
-                        <div className='infobox rounded' >
-                            <br></br>
-                            <b><i><div style={{fontSize:30}}>This month’s hero:</div></i></b>
-                            Charles Martel
-                            <br></br><br></br>
-                            [other statistics can go here]
-                            <br></br>
-                            <br></br>
-                            <br></br>
+                        <div className='infobox rounded'>
+                            {
+                                rockstarsArray.map((e) => {
+                                    return (<Rockstar value={e.value} firstName={e.firstName} lastName={e.lastName} />);
+                                })
+                            }
                         </div>
-                        
                     </div>
                 </div>
             </div>

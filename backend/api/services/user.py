@@ -17,12 +17,15 @@ import datetime
 
 from django.db.models import Q
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.serializers import ValidationError
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser, MultiPartParser, FileUploadParser
 from rest_framework.renderers import JSONRenderer
+
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 
 from api.db.models import \
     User, \
@@ -37,7 +40,55 @@ from api.db.serializers import \
 from api.db.utils import to_json
 
 
+@swagger_auto_schema(method='post', 
+    manual_parameters=[
+        openapi.Parameter(
+            name='first_name', in_=openapi.IN_FORM,
+            type=openapi.TYPE_STRING,
+            description="user's first name",
+            required=True
+        ),
+        openapi.Parameter(
+            name='last_name', in_=openapi.IN_FORM,
+            type=openapi.TYPE_STRING,
+            description="user's last name",
+            required=True
+        ),
+        openapi.Parameter(
+            name='email', in_=openapi.IN_FORM,
+            type=openapi.TYPE_STRING,
+            description="user's email",
+            required=True
+        ),
+        openapi.Parameter(
+            name='password', in_=openapi.IN_FORM,
+            type=openapi.TYPE_STRING,
+            description="user's password",
+            required=True
+        ),
+        openapi.Parameter(
+            name='tid', in_=openapi.IN_FORM,
+            type=openapi.TYPE_STRING,
+            description="user's valid team id",
+            required=True
+        ),
+        openapi.Parameter(
+            name='profile_picture', in_=openapi.IN_FORM,
+            type=openapi.TYPE_FILE,
+            description="user's profile picture"
+        )
+    ], 
+    responses={
+        status.HTTP_422_UNPROCESSABLE_ENTITY: openapi.Response(
+            description="If one of the required field is missing or there are conflict/invalid information"
+        ),
+        status.HTTP_201_CREATED: openapi.Response(
+            description="When user created successfully",
+        )
+    }
+)
 @api_view(["POST"])
+@parser_classes([MultiPartParser, FileUploadParser])
 def create(request):
     try:
         # Serialize incoming request data
@@ -327,3 +378,35 @@ def mng_stats(request):
                         'trace': e.args[0]
                     }).data,
                 status=status.HTTP_400_BAD_REQUEST)
+
+
+@swagger_auto_schema(method='put', 
+    manual_parameters=[
+        openapi.Parameter(
+            name='profile_picture', in_=openapi.IN_FORM,
+            type=openapi.TYPE_FILE,
+            description="user's profile picture"
+        )
+    ], 
+    responses={
+        status.HTTP_422_UNPROCESSABLE_ENTITY: openapi.Response(
+            description="If one of the required field is missing or there are conflict/invalid information"
+        ),
+        status.HTTP_201_CREATED: openapi.Response(
+            description="When user created successfully",
+        )
+    }
+)
+@api_view(["PUT"])
+@parser_classes([MultiPartParser, FileUploadParser])
+def update_user_profile_picture(request):
+    try:
+        if 'profile_picture' not in request.data:
+            return Response({"error": "profile picture is empty"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        uid = request.user.id
+        userRef = User.objects.get(uid=uid)
+        userRef.profile_picture = request.data['profile_picture']
+        userRef.save()
+        return Response(status=status.HTTP_200_OK)
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

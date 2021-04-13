@@ -45,6 +45,10 @@ urlpatterns = [
     # services/team endpoints
     path('team/create/', apiTeam.create, name='create_team'),
 
+    # services/notification endpoints
+    path('get_notif/', apiNotification.get_notif),
+    path('update_notif/', apiNotification.update_notif),
+
     # services/profile endpoints
     path('get_profile/', apiProfile.get_profile, name='get_profile'),
 
