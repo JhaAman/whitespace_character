@@ -1,11 +1,11 @@
-import './NotificationPage.css';
+import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
-//import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 //import Dropdown from 'react-bootstrap/Dropdown';
@@ -20,8 +20,8 @@ import axios from 'axios';
 
 
 
-function Notification() {
-  function BuildNotification(props){
+function App() {
+  function Notification(props){
     return(
       <DropdownItem onClick={() => markSeen(props.nid)}>
       <div className={props.seen+"-notification"}>
@@ -52,11 +52,9 @@ function Notification() {
   }
   //let notifications = [];
   const [notifs,setNotifs] = useState([]);
-  //const [authenticated,setAuthenticated] = useState(false);
   const [auth,setAuth] = useState();
   const [newNotif,setNewNotif] = useState();
-  const [loading,setLoading] = useState(true);
-  
+
   function authenticate(){
     axios.post("http://localhost:8000/api/get_token/",{
       "username":"root",
@@ -64,20 +62,17 @@ function Notification() {
     })
     .then(function(response){
       setAuth(response.data.access);
-      //console.log("success");
-      //setAuthenticated(true);
-      getNotifications(response.data.access);
-    })
-
+      console.log("success");
+    });
   }
 
-  function getNotifications(a){
+  function getNotifications(){
     axios.get("http://localhost:8000/api/get_notif/",{
       params:{
         uid:"78574359"
       },
       headers:{
-        Authorization:"Bearer "+a
+        Authorization:"Bearer "+auth
       }
     })
     .then(function(response){
@@ -88,14 +83,14 @@ function Notification() {
         if(!response.data[i].seen)n=true;
 
         setNotifs(notifs => [...notifs,
-        <BuildNotification key={response.data[i].nid}
+        <Notification key={response.data[i].nid}
         message={response.data[i].notif_message}
         type={response.data[i].notif_type}
         time={timesince(Date.parse(response.data[i].date_created))}
         seen={response.data[i].seen}
         nid={response.data[i].nid}/>
         ]);
-        //console.log(response.data[i]);
+        console.log(response.data[i]);
       }
       setNewNotif(n);
     });
@@ -138,24 +133,34 @@ function Notification() {
       return "More than 1 week ago"
     }
   }
-  useEffect(()=>{
-    authenticate();
-    //while(!authenticated);
-    //getNotifications();
-    setLoading(false);
-  },[]);//eslint-disable-line react-hooks/exhaustive-deps
-  if(loading){
-      return(
-          <div>
-              ...
-          </div>
-      )
-  }
-  return (   
+
+  return (
+    <div className="App">
+      
+      <button onClick={getNotifications}>notif</button>
+      <button onClick={authenticate}>auth</button>
+      
       <DropdownButton variant="light" title={<FontAwesomeIcon icon={faBell} color={newNotif?"blue":"black"}/>} >
         {notifs}
       </DropdownButton>
+
+
+
+
+
+      {/**<Notification message="You got a new recognition from Gary" type="Recognition" time="5 hours ago" new="yes"/>
+          <Dropdown.Divider/>
+          <Notification message="You got a new recognition from Sally" type="Recognition" time="8 hours ago" new="yes"/>
+          <Dropdown.Divider/>
+          <Notification message="You received a new badge" type="Badge" time="12 hours ago" new="no"/>
+          <Dropdown.Divider/>
+  <Notification message="Steve has been declared the Rockstar of the Month" type="Global" time="Yesterday" new="no"/>**/}
+
+
+
+    </div>
+    
   );
 }
 
-export default Notification
+export default App;
