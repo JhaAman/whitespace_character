@@ -84,7 +84,6 @@ function Profile() {
       .catch(error => console.error(error));
   }
 
-
   if (loading) {
     return <div className="App">Loading</div>
   }
