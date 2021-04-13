@@ -8,6 +8,8 @@ from './Notification';
 
 import ProfilePicture from './pics/arnold.jpg'
 
+import axios from 'axios';
+
 
 /* Now storing objects here, so they have access to all the right directories and CSS and suchlike. If this upset anyone, let me know. ~ Christopher */
 /* To add an object here, though, one must add the line “// eslint-disable-next-line” to escape the wrath of the garbage fairy. */
@@ -89,6 +91,17 @@ export { TopMenu }
 // eslint-disable-next-line
 /* This will be part of my April 4 week CSS cleanup ~ Christopher */
 function Rockstar({value, firstName, lastName}) {
+    axios.get('http://localhost:8000/api/get_rockstars/', {
+        params: {
+            uid: '32637950'
+        },
+        headers: {
+            Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjE4Njg4NjM4LCJqdGkiOiJkOTBlZGM4YmVmNjk0NjU0OWEyYTFkMmRjNzYxNWM0MCIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.rhvLo4mOoSYlXCStODIf3syAu71vc3KWmuMEvg1SKvE'
+        }
+    }).then((res) => {
+        console.log(res);
+    });
+
     return (
         <div style={{height: '150px', width: '90%', border: '2px solid black', marginBottom: '5px'}}>
             <div style={{width: '100%', height: '20%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', borderBottom: '2px solid black'}}>
