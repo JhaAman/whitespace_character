@@ -245,6 +245,12 @@ button:active {
   font-size: 50px;
 }
 
+.link {
+  font-family: AlegreyaSans;
+  color: #58453B;
+  padding: 20px;
+}
+
 .top-link {
   font-family: AlegreyaSans;
   color: #d1b297;

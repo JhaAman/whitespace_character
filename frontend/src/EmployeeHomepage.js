@@ -2,10 +2,33 @@ import React from 'react';
 import profilepic from './pics/arnold.jpg';
 import profilepic2 from './pics/regina.png';
 import { Recognition, TopMenu } from './Components.js';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import axios from 'axios'
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Profile } from './Profile.js';
+
+let profileAPI = "http://localhost:8000/api/get_profile/";
 
 function EmployeeHomepage() {
+    const { userid } = useParams();
+    const [ setData ] = useState();
+
+      useEffect(() => {
+        getData();
+      }, []);
+    
+      let getData = () => {
+        axios.get(profileAPI, {
+          params: {
+            uid: userid
+          }
+        })
+        .then(function (res) {
+            setData(res);
+        })}
 
     return (
        
@@ -24,7 +47,7 @@ function EmployeeHomepage() {
                             <b><i><div style={{fontSize:30}}>This month’s hero:</div></i></b>
                             <img src={profilepic} className="rounded-circle" width="150px" height="auto" alt="Smiling guy"></img>
                             <br></br><br></br>
-                            Charles Martel
+                            <Link className='link' to='/u/'getData>Charles Martel</Link>
                             <br></br><br></br>
                             [other statistics can go here]
                             <br></br>

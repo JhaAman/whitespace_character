@@ -19,7 +19,7 @@ function Pass() {
 
 // eslint-disable-next-line
 function Recognition(props){
-  return(
+  return (
       <div className="recognition rounded">
           <div className="topline">
           <Image src={props.recognizerpicture} className="rounded-circle" width="30px" height="auto"></Image>
