@@ -197,7 +197,10 @@ def change_password(request):
 def personal_information(request):
     try:
         uid = jwt.decode(request.data["token"], os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
-        role = User.objects.get(uid = uid).user_role
+        if not uid == 1:
+            role = User.objects.get(uid = uid).user_role
+        else:
+            role = "SuperUser"
         Ret = {"uid": uid, "role": role}
         return Response(Ret,status=status.HTTP_200_OK)
     except ValueError as e:
