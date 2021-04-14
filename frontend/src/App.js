@@ -3,14 +3,14 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Login from './Login.js'
 import EmployeeHomepage from './EmployeeHomepage.js';
 import Profile from './Profile.js';
-import { AuthenticationProvider } from './AuthContext.js';
+import { AuthProvider } from './AuthContext.js';
 //import NotificationPage from './NotificationPage.js';
 import './App.css';
 
 function App() {
   return (
     <Router>
-      <AuthenticationProvider>
+      <AuthProvider>
         <Switch>
           <Route path='/login'>
             <Login />
@@ -23,7 +23,7 @@ function App() {
           </Route>
 
         </Switch>
-      </AuthenticationProvider>
+      </AuthProvider>
     </Router>
   );
 }

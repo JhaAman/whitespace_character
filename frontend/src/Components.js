@@ -90,7 +90,7 @@ export { TopMenu }
 /* This will be part of my April 4 week CSS cleanup ~ Christopher */
 function Rockstar({value, firstName, lastName}) {
     return (
-        <div style={{height: '150px', width: '90%', border: '2px solid black', marginBottom: '5px'}}>
+        <div style={{height: '150px', width: '100%', border: '2px solid black', marginBottom: '5px'}}>
             <div style={{width: '100%', height: '20%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', borderBottom: '2px solid black'}}>
                 <h1 style={{fontSize: '12pt', fontWeight: 'bold', margin: 0}}>ROCKSTAR OF THE MONTH: {value}</h1>
             </div>

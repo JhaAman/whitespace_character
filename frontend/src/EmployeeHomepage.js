@@ -1,5 +1,6 @@
 import React from 'react';
 import { Recognition, TopMenu, Rockstar } from './Components.js';
+import AdminDashboard from './Components/AdminDashboard/AdminDashboard.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
@@ -18,6 +19,7 @@ function EmployeeHomepage() {
                         <Recognition recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
                     </div>
                     <div className='right-column'>
+                        <AdminDashboard />
                         <div className='infobox rounded'>
                             {
                                 rockstarsArray.map((e) => {
