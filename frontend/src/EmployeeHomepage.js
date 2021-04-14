@@ -1,5 +1,6 @@
 import React from 'react';
-import { Recognition, TopMenu, Rockstar } from './Components.js';
+import Rockstar from './Components/Rockstar/Rockstar.js'
+import { Recognition, TopMenu } from './Components.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
