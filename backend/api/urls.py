@@ -10,6 +10,7 @@ import api.services.profile as apiProfile
 import api.services.company as apiCompany
 import api.services.team as apiTeam
 import api.services.notification as apiNotification
+import api.services.report as apiReport
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -37,5 +38,7 @@ urlpatterns = [
     path('get_notif/', apiNotification.get_notif),
     path('update_notif/', apiNotification.update_notif),
     path('get_profile/', apiProfile.get_profile),
+    path('get_reported_recognitions/', apiReport.get_reported_recognitions),
+    path('approve_recognitions/', apiReport.approve_recognitions),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]
