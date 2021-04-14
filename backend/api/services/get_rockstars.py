@@ -53,12 +53,12 @@ def get_rockstars(request):
 @api_view(["POST"])
 def reset_count(request):
     try:
-        if request.data["is_staff"]:
+        if request.data["role"] == "mng" :
             all_users = User.objects.all()
             for user in all_users:
                 user.values_scores = dict().fromkeys(user.values_scores, 0)
                 user.save()
-            return Response(None, status.HTTP_201_CREATED)
+            return Response(None, status.HTTP_200_OK)
         else:
             return Response(None, status.HTTP_401_UNAUTHORIZED)
     except ValueError as e:

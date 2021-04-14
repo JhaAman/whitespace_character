@@ -8,6 +8,8 @@ from api.models.User import *
 from api.models.ApiSerializers import UidFormSerializer
 
 import io, json
+import jwt
+import os
 
 from api.models.User import User
 from api.models.User import UserSerializer
@@ -183,3 +185,20 @@ def update_user_profile_picture(request):
         return Response(status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+'''@api_view(["POST"])
+def change_password(request):
+    try:
+        token = jwt
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)'''
+
+@api_view(["GET"])
+def personal_information(request):
+    try:
+        uid = jwt.decode(request.data["token"], os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+        role = User.objects.get(uid = uid).user_role
+        Ret = {"uid": uid, "role": role}
+        return Response(Ret,status=status.HTTP_200_OK)
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)  
