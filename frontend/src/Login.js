@@ -22,6 +22,7 @@ function Login() {
             validateStatus: false
         }).then((res) => {
             console.log(res);
+            localStorage.setItem('userToken', res.data.access)
             if (res.status === 200) {
                 context.setToken(res.data.access)
             }
@@ -32,11 +33,11 @@ function Login() {
 
     return (
         <div className="app">
-            <Header/>
+            <Header />
             <div className="body">
                 <form onSubmit={submit}>
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     <label>
                         <div className='loginput rounded'>
                             <input
@@ -48,18 +49,18 @@ function Login() {
                             />
                         </div>
                     </label>
-                    <br/>
+                    <br />
                     <label>
                         <input
                             type="password"
                             placeholder="password"
                             value={password}
-                            onChange={e=>setPassword(e.target.value)}
+                            onChange={e => setPassword(e.target.value)}
                             class="loginput"
                         />
                     </label>
-                    <br/>
-                    <input type="Submit" value="submit" hidden={!validate()} class="login-button"/>
+                    <br />
+                    <input type="Submit" value="submit" hidden={!validate()} class="login-button" />
                 </form>
             </div>
         </div>

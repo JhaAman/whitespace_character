@@ -35,7 +35,6 @@ function Award(props) {
 //       </div>
 //   )
 // }
-let profileAPI = "http://localhost:8000/api/get_profile/";
 
 
 function Profile() {
@@ -52,11 +51,12 @@ function Profile() {
   }, []);
 
   let getData = () => {
-    axios.get(profileAPI, {
-      params: {
-        uid: userid
-      }
-    })
+    axios.get('http://127.0.0.1:8000/api/get_profile/?uid=' + userid,
+      {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+        }
+      })
       .then(function (res) {
         if (res.status === 200) {
           console.log("Success!");
