@@ -236,6 +236,12 @@ button:active {
   border-right: 2px dotted #58453B;
 }
 
+.forgot-password-button {
+  color: blue;
+  background-color: transparent;
+  border-color: transparent;
+}
+
 .login-button:focus {
   font-weight: bold;
 }

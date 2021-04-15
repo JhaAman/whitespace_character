@@ -60,6 +60,8 @@ function Login() {
                     </label>
                     <br/>
                     <input type="Submit" value="submit" hidden={!validate()} class="login-button"/>
+                    <br/>
+                    <input type="Submit" value="forgot password" class="forgot-password-button"/>
                 </form>
             </div>
         </div>
