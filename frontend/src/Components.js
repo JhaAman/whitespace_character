@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import './App.css';
 import Popup from 'reactjs-popup';
 
-import NotificationButton
-from './Notification';
+import NotificationButton from './Notification';
 
 import ProfilePicture from './pics/arnold.jpg'
 
@@ -81,7 +80,6 @@ function TopMenu({isOpen, setIsOpen}) {
         </div>
     );
 }
-
 
 
 export { TopMenu }
