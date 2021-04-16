@@ -186,17 +186,27 @@ def update_user_profile_picture(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
-'''@api_view(["POST"])
+@api_view(["POST"])
 def change_password(request):
     try:
-        token = jwt
+        uid = request.data["uid"]
+        old_password = request.data["old"]
+        new_pasword = request.data["new"]
+        user = User.objects.get(uid = uid)
+        if old_password == user.password:
+            user.password = new_pasword
+            user.save()
+            return Response(None,status=status.HTTP_200_OK)
+        else:
+            return Response(None, status.HTTP_401_UNAUTHORIZED)
     except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)'''
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
 @api_view(["GET"])
 def personal_information(request):
     try:
-        uid = jwt.decode(request.data["token"], os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+        token = request.query_params['token']
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
         if not uid == 1:
             role = User.objects.get(uid = uid).user_role
         else:

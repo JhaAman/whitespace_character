@@ -26,6 +26,7 @@ urlpatterns = [
     path('get_user/', apiUser.get_user),
     path('get_users/', apiUser.get_users),
     path('personal_information/', apiUser.personal_information),
+    path('change_password/', apiUser.change_password),
     path('create_user/', apiUser.create_user),
     path('create_users/', apiUser.create_users),
     path('get_user_network/', apiUser.get_user_network),
