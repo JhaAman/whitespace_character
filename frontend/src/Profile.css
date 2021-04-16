@@ -94,6 +94,6 @@
     background-color: chocolate;
     border-radius: 10px;
     height:250px;
-    width:50%;
     overflow:auto;
+    padding:5%;
   }

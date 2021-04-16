@@ -3,6 +3,7 @@ import './Profile.css';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
@@ -29,9 +30,9 @@ function Award(props) {
 
 function ProfilePictureChoice(props) {
   return (
-    <Col className="profilepicturechoice">
+    <div className="profilepicturechoice col">
       <Image src={props.src} style={{height:"100px",width:"100px"}} roundedCircle/>
-    </Col>
+    </div>
   )
 }
 
@@ -46,7 +47,7 @@ function ProfilePictureChoice(props) {
 //       </div>
 //   )
 // }
-let profileAPI = "http://localhost:8000/api/user/get/";
+let profileAPI = "http://localhost:8000/api/get_profile/"
 
 
 function Profile() {
@@ -58,7 +59,9 @@ function Profile() {
   const { userid } = useParams();
   const value = useContext(AuthenticationContext);
   const [pictures,setPictures] = useState([]);
-  
+  const [oldpass,setOldPass] = useState("");
+  const [newpass,setNewPass] = useState("");
+  const [newpassagain,setNewPassAgain] = useState("");
   useEffect(() => {
     MakePictureComponent();
     getData();
@@ -82,7 +85,7 @@ function Profile() {
 
           setData(res);
           setLoading(false);
-          let a = res.data.data.badges;
+          let a = res.data.badges;
           let b = []
           for (let i = 0; i < a.length; i++) {
 
@@ -90,7 +93,7 @@ function Profile() {
             b.push(<Award key={i} award={a[i]} />);
           }
           setAwards(b);
-          let dpeople = res.data.data.network;
+          let dpeople = res.data.network;
           let p = [];
           for (let i = 0; i < dpeople.length; i++) {
             //console.log(dpeople[i]);
@@ -158,9 +161,15 @@ function Profile() {
   function MakePictureComponent(){
     let r = []
     for(let a in images){
-      r.push(<ProfilePictureChoice src={images[a]} alt="profile picture"/>)
+      r.push(<ProfilePictureChoice src={images[a]} key={a} alt="profile picture"/>)
     }
     setPictures(r);
+  }
+
+  function changePassword(){
+    console.log(oldpass);
+    console.log(newpass);
+    console.log(newpassagain);
   }
 
   if (loading) {
@@ -181,7 +190,7 @@ function Profile() {
           {data.data.first_name} {data.data.last_name}
         </div>
         <div className="row justify-content-md-center">
-          {data.data.job_title}
+          {data.data.title}
         </div>
         <br />
         <div className="row justify-content-md-center">
@@ -213,13 +222,56 @@ function Profile() {
       <div className="contentpanel">
         <br/>
         <div>
-          Profile Settings
+          <Container>
+          <Row>
+          <Col>
+          <div className="optionbox">
+            <form >
+              <label>
+                <input
+                type="password"
+                placeholder="Old Password"
+                value={oldpass}
+                onChange={e=>setOldPass(e.target.value)}
+                />
+              </label>
+              <br/>
+              <label>
+                <input
+                type="password"
+                placeholder="New Password"
+                value={newpass}
+                onChange={e=>setNewPass(e.target.value)}
+                />
+              </label>
+              <br/>
+              <label>
+                <input
+                type="password"
+                placeholder="New Password Again"
+                value={newpassagain}
+                onChange={e=>setNewPassAgain(e.target.value)}
+                />
+              </label>
+              <br/>
+              
+            </form>
+            <button onClick={e=>changePassword()}>
+              Change Password
+            </button>
+          </div>
+          </Col>
+            <Col>
           <div className="optionbox">
             Select a profile picture
             <div className="picturescroll">
               <Row>{pictures}</Row>
             </div>
           </div>
+          </Col>
+          
+          </Row>
+          </Container>
         </div>
 
 

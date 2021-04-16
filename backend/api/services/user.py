@@ -14,6 +14,8 @@ API endpoints in service of User model object
 import io
 import json
 import datetime
+import jwt
+import os
 
 from django.db.models import Q
 
@@ -408,5 +410,19 @@ def update_user_profile_picture(request):
         userRef.profile_picture = request.data['profile_picture']
         userRef.save()
         return Response(status=status.HTTP_200_OK)
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+def personal_information(request):
+    try:
+        token = request.query_params['token']
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+        if not uid == 1:
+            role = User.objects.get(uid = uid).user_role
+        else:
+            role = "SuperUser"
+        Ret = {"uid": uid, "role": role}
+        return Response(Ret,status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

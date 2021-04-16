@@ -12,6 +12,7 @@ import api.services.team as apiTeam
 import api.services.notification as apiNotification
 
 import api.views as views
+import jwt
 
 
 schema_view = get_schema_view(
@@ -31,6 +32,7 @@ urlpatterns = [
     path('user/get/', apiUser.get, name='get_user'),
     path('user/all/', apiUser.all, name='get_all_user'),
     path('user/mng/stats/', apiUser.mng_stats, name='get_mng_stats'),
+    path('user/uid/',apiUser.personal_information, name='get_personal_info'),
 
     # services/recognition endpoints
     path('recog/create/', apiRecog.create, name='create_recognition'),
