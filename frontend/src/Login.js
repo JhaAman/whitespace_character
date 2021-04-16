@@ -25,6 +25,7 @@ function Login() {
             localStorage.setItem('userToken', res.data.access)
             if (res.status === 200) {
                 context.setToken(res.data.access)
+                console.log(context.token)
             }
         }).catch((err) => {
             console.log(err);

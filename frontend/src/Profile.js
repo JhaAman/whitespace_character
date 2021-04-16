@@ -4,9 +4,10 @@ import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from './AuthContext.js';
 
 function Networkprofile(props) {
   return (
@@ -44,6 +45,7 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const { userid } = useParams();
+  const context = useContext(AuthContext);
 
   useEffect(() => {
     getData();
@@ -54,7 +56,7 @@ function Profile() {
     axios.get('http://127.0.0.1:8000/api/get_profile/?uid=' + userid,
       {
         headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+          'Authorization': 'Bearer ' + context.token
         }
       })
       .then(function (res) {

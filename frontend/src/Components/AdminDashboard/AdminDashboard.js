@@ -4,8 +4,8 @@ import axios from 'axios';
 import ReportedRecog from './ReportedRecog/ReportedRecog.js'
 import './AdminDashboard.css';
 
-function AdminDashboard({rID}) {
-    const [ reportedRecogs, setReportedRecogs ] = useState([]);
+function AdminDashboard({ rID }) {
+    const [reportedRecogs, setReportedRecogs] = useState([]);
     const context = useContext(AuthContext);
 
     const onStartup = () => {
@@ -25,10 +25,10 @@ function AdminDashboard({rID}) {
 
     return (
         <div className='adminDashboard-main-container'>
-            <h1 style={{fontSize: '20pt'}}>Administration Dashboard</h1>
+            <h1 style={{ fontSize: '20pt' }}>Administration Dashboard</h1>
             {
                 reportedRecogs.map((recog) => {
-                    return <ReportedRecog rID={recog.rid} recognizer={recog.recognizer} recognizee={recog.recognizee} recognition={recog.recognition} />;
+                    return <ReportedRecog rID={recog.rid} recognizer={recog.uid_from} recognizee={recog.uid_to} recognition={recog.comments} />;
                 })
             }
         </div>
