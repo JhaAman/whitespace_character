@@ -7,12 +7,13 @@ function ReportedRecogs({rID, recognizer, recognizee, recognition}) {
     const context = useContext(AuthContext);
 
     const onIgnore = () => {
-        axios.post("", {
-            "rid": rID,
-            "ignored": true
+        axios.post("http://127.0.0.1:8000/api/approve_recognitions/", {
+                "rid": rID,
+                "ignored": true
         }, {
             headers: {
-                "Authorization": "Bearer" + context.token
+                "Authorization": "Bearer" + context.token,
+                "Content-Type": "application/json"
             }
         }).then((res) => {
             console.log(res);
@@ -22,7 +23,7 @@ function ReportedRecogs({rID, recognizer, recognizee, recognition}) {
     }
 
     const onDelete = () => {
-        axios.post("", {
+        axios.post("http://127.0.0.1:8000/api/approve_recognitions/", {
             "rid": rID,
             "ignored": false
         }, {
