@@ -196,6 +196,8 @@ def change_password(request):
 @api_view(["GET"])
 def personal_information(request):
     try:
+        if not 'token' in request.query_params:
+            return Response("Missing token", status.HTTP_400_BAD_REQUEST)
         token = request.query_params['token']
         uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
         if not uid == 1:

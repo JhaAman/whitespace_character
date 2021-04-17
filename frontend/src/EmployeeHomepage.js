@@ -1,11 +1,35 @@
-import React from 'react';
-import Rockstar from './Components/Rockstar/Rockstar.js'
+import React, { useState, useContext } from 'react';
+import Rockstar from './Components/Rockstar/Rockstar.js';
+import { AuthContext } from './AuthContext.js';
 import { Recognition, TopMenu } from './Components.js';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 
 function EmployeeHomepage() {
-    const rockstarsArray = [{value: 'Communications', firstName: 'Gary', lastName: 'Szekely'}, {value: 'Hard-Working', firstName: 'Reuben', lastName: 'Philip'}, {value: 'Inclusive', firstName: 'Khang', lastName: 'Nguyen'}]
+    const context = useContext(AuthContext);
+    const [ rockstarValues, setRockstarValues ] = useState([]);
+    const [ rockstars , setRockstars ] = useState({})
+
+    const onSubmit = () => {
+        axios.get("http://127.0.0.1:8000/api/get_rockstars/", {
+            params: {
+                "uid": context.uID
+            },
+            headers: {
+                "Authorization": "Bearer " + context.token
+            }
+        }
+        ).then((res) => {
+            console.log(res);
+            setRockstarValues(res.data[0]["values"])
+            setRockstars(res.data[1])
+        }).catch((err) => {
+            console.log(context.token);
+            console.log(err);
+        });
+    }
+
 
     return (
        
@@ -21,10 +45,11 @@ function EmployeeHomepage() {
                     <div className='right-column'>
                         <div className='infobox rounded'>
                             {
-                                rockstarsArray.map((e) => {
-                                    return (<Rockstar value={e.value} firstName={e.firstName} lastName={e.lastName} />);
+                                rockstarValues.map((e) => {
+                                    return (<Rockstar value={e} name={rockstars[e]} />);
                                 })
                             }
+                            <button onClick={onSubmit}>Click me</button>
                         </div>
                     </div>
                 </div>

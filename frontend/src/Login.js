@@ -17,12 +17,9 @@ function Login() {
         axios.post("http://127.0.0.1:8000/api/get_token/", {
             username: username,
             password: password
-
-        }, {
-            validateStatus: false
         }).then((res) => {
             console.log(res);
-            context.token = res.data.acess
+            context.setToken(res.data.access)
         }).catch((err) => {
             console.log(err);
         })
@@ -36,7 +33,7 @@ function Login() {
             }
         }).then((res) => {
             console.log(res);
-            context.setAuthInfo(res.data.uid, username, password, res.data)
+            context.setAuthInfo(res.data.uid, username, password, res.data.role);
         }).catch((err) => {
             console.log(err);
         })

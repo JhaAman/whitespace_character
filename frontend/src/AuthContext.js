@@ -10,8 +10,8 @@ const AuthProvider = ({ children }) => {
     const role = localStorage.getItem('role') ? localStorage.getItem('role') : '';
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const setToken = ({token}) => {
-        localStorage.setItem('token', token);
+    const setToken = (t) => {
+        localStorage.setItem('token', t);
     }
 
     const setAuthInfo = (u, e, p, r) => {
