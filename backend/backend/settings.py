@@ -26,7 +26,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', '0.0.0.0', '*']
+# SECURITY WARNING: restrict allowed host to trusted entities in production
+if not DEBUG:
+    ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', '0.0.0.0']
+else:
+    ALLOWED_HOSTS = ['*']    
 
 # Application definition
 
@@ -60,6 +64,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 1,
+    'DATETIME_FORMAT': '%Y-%m-%d %H:%M %Z',
 }
 
 MIDDLEWARE = [
@@ -112,7 +119,7 @@ if DEBUG:
         }
     }
 else:
-    print("REMOTE_DB: " + env('POSTGRES_DATABASE_NAME'))
+    print("REMOTE_DB: " + os.environ.get('POSTGRES_DATABASE_NAME'))
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -180,3 +187,7 @@ STATICFILES_DIRS = [
 
 SITE_ID = 1
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=100),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=100),
+}
