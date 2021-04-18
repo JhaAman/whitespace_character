@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from './../../AuthContext.js'
 import './SubmitRecog.css'
 import axios from 'axios';
 
 function SubmitRecog() {
+    const context = useContext(AuthContext);
     const [ name, setName ] = useState("")
     const [ recognition, setRecognition ] = useState("");
     const [ onSuccess, setOnSuccess ] = useState(false);
 
     const onSubmit = () => {
-        axios.post('http://localhost:8000/api/create_recognition/', {
-            name: name,
-            recogniton: recognition
+        axios.post('http://localhost:8000/api/create_recognition/', {}, {
+            headers: {
+                "Authorization": "Bearer " + context.token
+            }
         }).then((res) => {
             if (res.status === 200) {
                 setOnSuccess(true);

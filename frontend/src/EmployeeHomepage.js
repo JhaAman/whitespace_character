@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import FeedRecognition from './Components/FeedRecognition/FeedRecognition.js';
 import SubmitRecog from './Components/SubmitRecog/SubmitRecog.js';
 import { Recognition, TopMenu, Rockstar } from './Components.js';
+import { AuthContext } from './AuthContext.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import axios from 'axios';
 
 function EmployeeHomepage() {
+    const context = useContext(AuthContext);
+
     const rockstarsArray = [{value: 'Communications', firstName: 'Gary', lastName: 'Szekely'}, {value: 'Hard-Working', firstName: 'Reuben', lastName: 'Philip'}, {value: 'Inclusive', firstName: 'Khang', lastName: 'Nguyen'}]
 
     let recogArray =[
@@ -14,6 +18,21 @@ function EmployeeHomepage() {
         {recognizer: {firstName: 'Gary', lastName: 'Szekely'}, recognizee: {firstName: 'Reuben', lastName: 'Philip'}, comment: 'hk fk hksadhfk has khasgkjhas  gkshgkjlsd kjhgk afgs khjgk hasgf  jaklshg kajshfg aksjhfg kjahsfg kjadshk jg hgh sfk kj sgkhd kjsh kgj kshdfg kjhsdk kshdf kgjh fs kj dskfgh'},
         {recognizer: {firstName: 'Gary', lastName: 'Szekely'}, recognizee: {firstName: 'Reuben', lastName: 'Philip'}, comment: 'hk fk hksadhfk has khasgkjhas  gkshgkjlsd kjhgk afgs khjgk hasgf  jaklshg kajshfg aksjhfg kjahsfg kjadshk jg hgh sfk kj sgkhd kjsh kgj kshdfg kjhsdk kshdf kgjh fs kj dskfgh'}
     ]
+
+    useEffect(() => {
+        axios.get("", {
+            params: {
+
+            },
+            headers: {
+                "Authorization": "Bearer " + context.token
+            }
+        }).then((res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }, []);
     return (
         <div className="app">
             <TopMenu/>
