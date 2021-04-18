@@ -127,7 +127,8 @@ def create_batch(request):
 def get_batch(request):
     try:
         # Serialize incoming request data
-        requestSrl = UidFormSrl(data=request.data)
+        uid = request.query_params["uid"]
+        requestSrl = UidFormSrl(data=uid)
 
         # If request data fields are invalid, return error report
         if not requestSrl.is_valid():

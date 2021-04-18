@@ -24,21 +24,6 @@ from rest_framework.serializers import ValidationError
 from rest_framework.parsers import JSONParser, MultiPartParser, FileUploadParser
 from rest_framework.renderers import JSONRenderer
 
-<<<<<<< HEAD
-from api.models.User import *
-from api.models.ApiSerializers import UidFormSerializer
-
-import io, json
-import jwt
-import os
-
-from api.models.User import User
-from api.models.User import UserSerializer
-from django.contrib.auth.models import User as AuthUser
-from django.contrib.auth.hashers import make_password
-
-=======
->>>>>>> main
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 
@@ -53,6 +38,9 @@ from api.db.serializers import \
     EmployeeStatisticsSerializer as EmplStatSrl, \
     ManagerStatisticsSerializer as MngStatSrl
 from api.db.utils import to_json
+import jwt
+import os
+import base64
 
 
 @swagger_auto_schema(method='post', 
@@ -106,22 +94,6 @@ from api.db.utils import to_json
 @parser_classes([MultiPartParser, FileUploadParser])
 def create(request):
     try:
-<<<<<<< HEAD
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            password = make_password(serializer["password"].value)
-            user = serializer["email"].value
-            first_name = serializer["first_name"].value
-            last_name = serializer["last_name"].value
-            check = False
-            if serializer["user_role"].value == "mng" or serializer["user_role"].value == "manager":
-                check = True
-            uid = serializer["uid"].value
-            AuthUser.objects.create(id = uid, first_name = first_name, last_name = last_name, is_staff = check, username = user, password = password,email = user)
-            return Response(None, status.HTTP_201_CREATED)
-        return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
-=======
         # Serialize incoming request data
         requestSrl = UserSrl(data=request.data)
 
@@ -148,8 +120,6 @@ def create(request):
                         'msg': "Created User object"
                     }).data,
                 status=status.HTTP_201_CREATED)
-
->>>>>>> main
     except ValueError as e:
         # If Exception occurs, return error report
         return \
@@ -166,27 +136,6 @@ def create(request):
 @api_view(["POST"])
 def create_batch(request):
     try:
-<<<<<<< HEAD
-        users = json.loads(request.body)['users']
-        for user in users:
-            serializer = UserSerializer(data=user)
-            print(user)
-            if serializer.is_valid():
-                serializer.save()
-                password = make_password(serializer["password"].value)
-                user = serializer["email"].value
-                first_name = serializer["first_name"].value
-                last_name = serializer["last_name"].value
-                check = False
-                if serializer["user_role"].value == "mng" or serializer["user_role"].value == "manager":
-                    check = True
-                uid = serializer["uid"].value
-                AuthUser.objects.create(id = uid, first_name = first_name, last_name = last_name, is_staff = check, username = user, password = password,email = user)
-            else:
-                return Response(serializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
-        return Response(None, status.HTTP_201_CREATED)
-=======
-        # Serialize incoming request data
         requestSrl = UserSrl(data=request.data, many=True)
 
         # If data fields are invalid, return error report
@@ -216,7 +165,6 @@ def create_batch(request):
                     }).data,
                 status=status.HTTP_201_CREATED)
 
->>>>>>> main
     except ValueError as e:
         # If Exception occurs, return error report
         return \
@@ -463,7 +411,7 @@ def update_user_profile_picture(request):
         return Response(status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
-<<<<<<< HEAD
+
 
 @api_view(["POST"])
 def change_password(request):
@@ -484,7 +432,7 @@ def change_password(request):
 @api_view(["GET"])
 def personal_information(request):
     try:
-        token = request.query_params['token']
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
         uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
         if not uid == 1:
             role = User.objects.get(uid = uid).user_role
@@ -494,5 +442,14 @@ def personal_information(request):
         return Response(Ret,status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)  
-=======
->>>>>>> main
+
+@api_view(["GET"])
+def get_Image(request):
+    try:
+        if not 'uid' in request.query_params:
+            return Response("Missing uid", status.HTTP_400_BAD_REQUEST)
+        uid = request.query_params["uid"]
+        Image_path = User.objects.get(uid = uid).profile_picture.url
+        return Response(Image_path,status=status.HTTP_200_OK)
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)  
