@@ -1,5 +1,8 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import React from 'react';
+=======
+>>>>>>> Stashed changes
 import profilepic from './pics/arnold.jpg';
 import profilepic2 from './pics/regina.png';
 import { Recognition, TopMenu } from './Components.js';
@@ -7,9 +10,10 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import axios from 'axios'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Profile } from './Profile.js';
+<<<<<<< Updated upstream
 =======
 import { Recognition, TopMenu, Rockstar } from './Components.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,6 +25,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios'
 import React, { useEffect, useContext } from 'react';
 import { Profile } from './Profile.js';
+import { AuthenticationContext } from './AuthContext.js';
+>>>>>>> Stashed changes
+=======
 import { AuthenticationContext } from './AuthContext.js';
 >>>>>>> Stashed changes
 
@@ -35,11 +42,14 @@ function EmployeeHomepage() {
     const value = useContext(AuthenticationContext);
 >>>>>>> Stashed changes
 
+    const value = useContext(AuthenticationContext);
+
       useEffect(() => {
         getData();
       }, []);
 <<<<<<< Updated upstream
     
+<<<<<<< Updated upstream
       let getData = () => {
         axios.get(profileAPI, {
           params: {
@@ -69,6 +79,31 @@ function EmployeeHomepage() {
     }
 
     const rockstarsArray = [{value: 'Communications', firstName: 'Gary', lastName: 'Szekely'}, {value: 'Hard-Working', firstName: 'Reuben', lastName: 'Philip'}, {value: 'Inclusive', firstName: 'Khang', lastName: 'Nguyen'}]
+>>>>>>> Stashed changes
+=======
+    //   let getData = () => {
+    //     axios.get(profileAPI, {
+    //       params: {
+    //         uid: userid
+    //       }
+    //     })
+    //     .then(function (res) {
+    //         setData(res);
+    //     })}
+
+        function getData(){
+            axios.post("http://localhost:8000/u/",
+                    {uID:57940164},
+                    {
+                        headers:{
+                            Authorization:"Bearer "+value.uID
+                        }
+                    }
+                    )
+                    .then(function(response){
+                        console.log(value.uID);
+                    });
+        }
 >>>>>>> Stashed changes
 
     return (
