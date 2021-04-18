@@ -5,8 +5,7 @@ import { Recognition, TopMenu, Rockstar } from './Components.js';
 import { AuthContext } from './AuthContext.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import axios from 'axios';
-
+import ManagerComp from './ManagerComponent.js';
 function EmployeeHomepage() {
     const context = useContext(AuthContext);
 
@@ -48,6 +47,9 @@ function EmployeeHomepage() {
                         }
                     </div>
                     <div className='right-column'>
+                        <div className='autoinfobox rounded' style={{height:'auto'}}>
+                            <ManagerComp/>
+                        </div>
                         <div className='infobox rounded'>
                             {
                                 rockstarsArray.map((e) => {
