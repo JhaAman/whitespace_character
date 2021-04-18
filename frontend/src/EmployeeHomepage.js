@@ -12,14 +12,16 @@ import { AuthenticationContext } from './AuthContext.js';
 
 function EmployeeHomepage() {
 
-    const value = useContext(AuthenticationContext);
-
       useEffect(() => {
         const getData = () => {
-            axios.post("http://127.0.0.1:8000/api/create_user/", {
-                params: {
-                  uID: value.uID
-                }
+            axios.post("http://localhost:8000/api/create_user/", {
+                    "tid": "37965959",
+                    "first_name": "Peter",
+                    "last_name": "Dent",
+                    "email": "pd@apple.com",
+                    "password": "elephant",
+                    "title": "Quality Engineer",
+                    "user_role": "emp"
               })
             .then(function(res){
                 console.log(res);
