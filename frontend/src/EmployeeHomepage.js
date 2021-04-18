@@ -19,20 +19,17 @@ function EmployeeHomepage() {
             headers: {
                 "Authorization": "Bearer " + context.token
             }
-        }
-        ).then((res) => {
+        }).then((res) => {
             console.log(res);
             setRockstarValues(res.data[0]["values"])
             setRockstars(res.data[1])
         }).catch((err) => {
-            console.log(context.token);
             console.log(err);
         });
     }
 
 
     return (
-       
         <div className="app">
             <TopMenu/>
             <div className="body">

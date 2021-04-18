@@ -4,16 +4,17 @@ import axios from 'axios'
 import { Header } from './Components.js'
 
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [ username, setUsername ] = useState("");
+    const [ password, setPassword ] = useState("");
     const context = useContext(AuthContext);
 
     function validate() {
         return username.length > 0 && password.length > 0;
     }
 
-    const submit = (e) => {
-        e.preventDefault()
+    const onSubmit = (e) => {
+        e.preventDefault();
+        
         axios.post("http://127.0.0.1:8000/api/get_token/", {
             username: username,
             password: password
@@ -43,7 +44,7 @@ function Login() {
         <div className="app">
             <Header/>
             <div className="body">
-                <form onSubmit={submit}>
+                <form onSubmit={onSubmit}>
                     <br/>
                     <br/>
                     <label>
