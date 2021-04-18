@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom';
 import './App.css';
 import Popup from 'reactjs-popup';
 import Image from 'react-bootstrap/Image';
+<<<<<<< Updated upstream
+=======
+
+import NotificationButton from './Notification';
+
+import ProfilePicture from './pics/arnold.jpg'
+
+>>>>>>> Stashed changes
 
 /* Now storing objects here, so they have access to all the right directories and CSS and suchlike. If this upset anyone, let me know. ~ Christopher */
 /* To add an object here, though, one must add the line “// eslint-disable-next-line” to escape the wrath of the garbage fairy. */
@@ -17,14 +25,22 @@ function Pass() {
     </div>);
 }
 
-// eslint-disable-next-line
 function Recognition(props){
+<<<<<<< Updated upstream
   return (
       <div className="recognition rounded">
           <div className="topline">
           <Image src={props.recognizerpicture} className="rounded-circle" width="30px" height="auto"></Image>
               <i><b>{props.recognizer}</b> cherishes <b>{props.recipient}</b></i>
           <Image src={props.recipientpicture} className="rounded-circle" width="30px" height="auto"></Image>
+=======
+    return (
+        <div className="recognition rounded">
+            <div className="topline">
+            <Image src={props.recognizerpicture} className="rounded-circle" width="30px" height="auto"></Image>
+            <Link className='link' to={props.recognizerlink}><i><b>{props.recognizer}</b></i></Link> cherishes <Link className='link' to={props.recipientlink}><i><b>{props.recipient}</b></i></Link>
+            <Image src={props.recipientpicture} className="rounded-circle" width="30px" height="auto"></Image>
+>>>>>>> Stashed changes
           </div>
           <br></br>
           <div>
