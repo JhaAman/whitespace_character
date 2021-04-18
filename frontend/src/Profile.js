@@ -62,6 +62,23 @@ function Profile() {
   const [oldpass,setOldPass] = useState("");
   const [newpass,setNewPass] = useState("");
   const [newpassagain,setNewPassAgain] = useState("");
+  const [uploadexists,setUploadExists] = useState(false);
+  const [ufile,setUFile] = useState("");
+  const upload = React.useRef(null);
+  const handleImageUpload = e =>{
+    const [file] = e.target.files;
+    setUploadExists(true);
+    if(file){
+      const reader = new FileReader();
+      const {current} = upload;
+      current.file = file;
+      reader.onload = (e) => {
+        current.src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+      setUFile(file);
+    }
+  }
   useEffect(() => {
     MakePictureComponent();
     getData();
@@ -219,13 +236,16 @@ function Profile() {
 
         </div>
       ) :
-      <div className="contentpanel">
+      <div className="contentpanel" >
         <br/>
         <div>
           <Container>
+          
           <Row>
           <Col>
           <div className="optionbox">
+            <div>Change password</div>
+            <br/>
             <form >
               <label>
                 <input
@@ -263,9 +283,46 @@ function Profile() {
           </Col>
             <Col>
           <div className="optionbox">
-            Select a profile picture
-            <div className="picturescroll">
-              <Row>{pictures}</Row>
+            <div>Upload a profile picture</div>
+            <br/>
+            <div className="picture">
+              <form>
+                <input
+                type="file"
+                accept="image/*"
+                multiple={false}
+                onChange={handleImageUpload}
+                hidden = {uploadexists}
+                />
+                <div >
+                <img ref={upload} style={{width:"150px",height:"auto"}} hidden={!uploadexists}className="rounded-circle"/></div>
+                <div>
+                <input type="button"
+                value="Set Image" 
+                hidden={!uploadexists}
+                onClick={e=>{
+                  const data = new FormData();
+                  //console.log(ufile);
+                  data.append('profile_picture',ufile)
+                  axios.put("http://localhost:8000/api/update_user_profile_picture/",
+                    data
+                ,
+                  {
+                    headers:{
+                      'Content-Type': 'multipart/form-data',
+                      Authorization:"Bearer "+value.authenticationState.token
+                    }
+                  }).then(console.log("uploaded"))
+                }}/>
+                <input type="button"
+                value="Choose Another"
+                onClick={
+                  e=>{setUploadExists(false);
+                    
+                  }} hidden={!uploadexists}/>
+                </div>
+              </form>
+              
             </div>
           </div>
           </Col>
