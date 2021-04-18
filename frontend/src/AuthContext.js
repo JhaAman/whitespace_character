@@ -1,48 +1,52 @@
 import React, { useState, createContext } from 'react';
 
-const AuthenticationContext = createContext();
+const AuthContext = createContext();
 
-const AuthenticationProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token') ? localStorage.getItem('token') : '';
-    const userInfo = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : {};
-    const expiresAt = localStorage.getItem('expiresAt') ? localStorage.getItem('expiresAt') : '';
+    const uID = localStorage.getItem('uID') ? localStorage.getItem('uID') : '';
+    const email = localStorage.getItem('email') ? localStorage.getItem('email') : '';
+    const password = localStorage.getItem('password') ? localStorage.getItem('password') : '';
+    const role = localStorage.getItem('role') ? localStorage.getItem('role') : '';
+    const [ isAuthenticated, setIsAuthenticated ] = useState(false);
 
-    const [ authenticationState, setAuthenticationState ] = useState({token: token, userInfo: userInfo});
+    const setToken = (t) => {
+        localStorage.setItem('token', t);
+    }
 
-    const setAuthenticationInfo = ({token, userInfo}) => {
-        localStorage.setItem('token', token);
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+    const setAuthInfo = (u, e, p, r) => {
+        localStorage.setItem('uID', u);
+        localStorage.setItem('email', e);
+        localStorage.setItem('password', p);
+        localStorage.setItem('role', r);
     }
 
     const logout = () => {
         localStorage.removeItem('token');
-        localStorage.removeItem('userInfo');
-        localStorage.removeItem('expiresAt');
-        setAuthenticationState({token: '', userInfo: {}, expiresAt: ''});
-    }
-
-    const isAuthenticated = () => {
-        if (authenticationState.token === '') {
-            return false;
-        } else if (expiresAt > 'Current Date') {
-            return false;
-        } else {
-            return true;
-        }
+        localStorage.removeItem('uID');
+        localStorage.removeItem('email');
+        localStorage.removeItem('password');
+        localStorage.removeItem('role');
     }
 
     return (
-        <AuthenticationContext.Provider
+        <AuthContext.Provider
             value={{
-                authenticationState,
-                setAuthenticationState: authInfo => setAuthenticationInfo(authInfo),
+                token,
+                uID,
+                email,
+                password,
+                role,
                 isAuthenticated,
+                setIsAuthenticated,
+                setToken,
+                setAuthInfo,
                 logout
             }}
         >
             {children}
-        </AuthenticationContext.Provider>
+        </AuthContext.Provider>
     );
 }
 
-export { AuthenticationContext, AuthenticationProvider };
+export { AuthContext, AuthProvider };

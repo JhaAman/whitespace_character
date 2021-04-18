@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
     # libraries
     'rest_framework',
     'corsheaders',
@@ -89,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -105,8 +105,8 @@ if DEBUG:
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.environ.get('POSTGRES_LOCAL_DATABASE_NAME'),
-            'USER': os.environ.get('POSTGRES_LOCAL_USER'),
-            'PASSWORD': os.environ.get('POSTGRES_LOCAL_PASSWORD'),
+            'USER': "admin",
+            'PASSWORD': "password",
             'HOST': os.environ.get('POSTGRES_LOCAL_HOST'),
             'PORT': os.environ.get('POSTGRES_LOCAL_PORT'),
         }
@@ -117,8 +117,8 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.environ.get('POSTGRES_DATABASE_NAME'),
-            'USER': os.environ.get('POSTGRES_USER'),
-            'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+            'USER': "admin",
+            'PASSWORD': "password",
             'HOST': os.environ.get('POSTGRES_HOST'),
             'PORT': os.environ.get('POSTGRES_PORT'),
             'TEST': {
@@ -132,7 +132,6 @@ if 'test' in sys.argv:
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'test_db'
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -179,4 +178,8 @@ STATICFILES_DIRS = [
 ]
 
 SITE_ID = 1
-
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=20),
+    'SIGNING_KEY': SECRET_KEY,
+}
