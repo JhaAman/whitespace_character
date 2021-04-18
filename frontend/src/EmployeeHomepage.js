@@ -1,4 +1,3 @@
-
 import { Recognition, TopMenu, Rockstar } from './Components.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
@@ -11,32 +10,26 @@ import React, { useEffect, useContext } from 'react';
 import { Profile } from './Profile.js';
 import { AuthenticationContext } from './AuthContext.js';
 
-let profileAPI = "http://localhost:8000/api/get_profile/";
-
 function EmployeeHomepage() {
 
     const value = useContext(AuthenticationContext);
 
       useEffect(() => {
+        const getData = () => {
+            axios.post("http://127.0.0.1:8000/api/create_user/", {
+                params: {
+                  uID: value.uID
+                }
+              })
+            .then(function(res){
+                console.log(res);
+            })
+            .catch(error => {
+                console.error(error)
+            });
+        }
         getData();
       }, []);
-
-      const getData = () => {
-        axios.get("http://localhost:8000/api/swagger/" + value.uID,
-                {uID:57940164},
-                {
-                    headers:{
-                        Authorization:"Bearer "+ value.uID
-                    }
-                }
-                )
-                .then(function(response){
-                    console.log(value.uID);
-                })
-                .catch(error => {
-                    console.error(error)
-                });
-    }
 
     const rockstarsArray = [{value: 'Communications', firstName: 'Gary', lastName: 'Szekely'}, {value: 'Hard-Working', firstName: 'Reuben', lastName: 'Philip'}, {value: 'Inclusive', firstName: 'Khang', lastName: 'Nguyen'}]
 
@@ -47,15 +40,15 @@ function EmployeeHomepage() {
             <div className="body">
                 <div className="row">
                 <div className='left-column'>
-                        <Recognition recognizerpicture={profilepic2} recognizerlink='/u/'getData recipientpicture={profilepic} recipientlink='/u/'getData recipient="Reginald" recognizer="Gwen" message="Everyone is raving about your work on pantelic aristism."/>
-                        <Recognition recognizerpicture={profilepic} recognizerlink='/u/'getData recipientpicture={profilepic2} recipientlink='/u/'getData recipient="Edith" recognizer="Lancelot" message="I love your ideative reification!"/>
-                        <Recognition recognizerpicture={profilepic2} recognizerlink='/u/'getData recipientpicture={profilepic} recipientlink='/u/'getData recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
+                        <Recognition recognizerpicture={profilepic2} recognizerlink='/u/'useEffect recipientpicture={profilepic} recipientlink='/u/'useEffect recipient="Reginald" recognizer="Gwen" message="Everyone is raving about your work on pantelic aristism."/>
+                        <Recognition recognizerpicture={profilepic} recognizerlink='/u/'useEffect recipientpicture={profilepic2} recipientlink='/u/'useEffect recipient="Edith" recognizer="Lancelot" message="I love your ideative reification!"/>
+                        <Recognition recognizerpicture={profilepic2} recognizerlink='/u/'useEffect recipientpicture={profilepic} recipientlink='/u/'useEffect recipient="Millard" recognizer="Eleanor" message="2τ/10 withstandingship at the weekly witenagemot"/>
                     </div>
                     <div className='right-column'>
                         <div className='infobox rounded'>
                             {
                                 rockstarsArray.map((e) => {
-                                    return (<Link className='link' to='/u/'getData><Rockstar value={e.value} firstName={e.firstName} lastName={e.lastName}/></Link>);
+                                    return (<Link className='link' to='/u/'useEffect><Rockstar value={e.value} firstName={e.firstName} lastName={e.lastName}/></Link>);
                                 })
                             }
                         </div>
