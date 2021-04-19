@@ -5,7 +5,7 @@ import ReportedRecog from './ReportedRecog/ReportedRecog.js'
 import './AdminDashboard.css';
 
 function AdminDashboard({ rID }) {
-    const [reportedRecogs, setReportedRecogs] = useState([]);
+    const [ reportedRecogs, setReportedRecogs ] = useState([]);
     const context = useContext(AuthContext);
 
     const onStartup = () => {
