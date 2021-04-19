@@ -42,6 +42,7 @@ function UploadData() {
 //this version of UploadData function is modelled after the login function and involves a lot more backend details. 
 //A lot of its detials are commented out because I'm not sure of the backend implementation.
 //To use it, change export statement at the end of this file to export default UploadData2.
+//eslint-disable-next-line
 function UploadData2() {
     const [employee, setEmployee] = useState("");
     const [company, setCompany] = useState("");
@@ -58,8 +59,9 @@ function UploadData2() {
                 console.log("success");
             });
     }
-
+//eslint-disable-next-line
     function handleUpload(e) {
+        //eslint-disable-next-line
         let file = e.target.files[0];
         this.setState({})
     }

@@ -7,7 +7,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
 
         # ADD CUSTOM FIELD HERE
+
         token['is_staff'] = user.is_staff
+        
         # ...
         return token
 

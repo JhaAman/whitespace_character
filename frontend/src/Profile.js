@@ -13,7 +13,7 @@ import axios from 'axios';
 import {AuthenticationContext} from './AuthContext.js';
 import images from './Images.js';
 
-import { TopMenu } from './Components.js';
+//import { TopMenu } from './Components.js';
 
 
 function Networkprofile(props) {
@@ -173,8 +173,9 @@ function Profile() {
 
   //console.log(data);
 
-
+  //console.log(value);
   return (
+    
     <div className="App">
 
       <div className="top">
