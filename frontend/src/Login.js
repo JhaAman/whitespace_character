@@ -1,30 +1,39 @@
 import React, { useState, useContext } from 'react';
-import { AuthenticationContext } from './AuthContext.js';
+import { AuthContext } from './AuthContext.js';
 import axios from 'axios'
 import { Header } from './Components.js'
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const value = useContext(AuthenticationContext);
+    const context = useContext(AuthContext);
 
     function validate() {
         return username.length > 0 && password.length > 0;
     }
 
     const submit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        
         axios.post("http://localhost:8000/api/get_token/", {
             username: username,
             password: password
-
-        }, {
-            validateStatus: false
         }).then((res) => {
             console.log(res);
-            if (res.status === 200) {
-                value.setAuthenticationState({ token: res.data.access, userInfo: { userID: res.data.user_id, username: username, password: password, role: 'employee' } })
-            }
+            context.setToken(res.data.access);
+            axios.get("http://localhost:8000/api/personal_information/", {
+                params: {
+                    "token": context.token,
+                },
+                headers: {
+                    "Authorization": "Bearer " + context.token
+                }
+            }).then((res) => {
+                console.log(res);
+                context.setAuthInfo(res.data.uid, username, password, res.data.role);
+            }).catch((err) => {
+                console.log(err);
+            })
         }).catch((err) => {
             console.log(err);
         })

@@ -10,6 +10,7 @@ import api.services.profile as apiProfile
 import api.services.company as apiCompany
 import api.services.team as apiTeam
 import api.services.notification as apiNotification
+import api.services.get_rockstars as apiRockstars
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -24,6 +25,7 @@ urlpatterns = [
     # path('dummy_api/', api.dummy_api),
     path('get_user/', apiUser.get_user),
     path('get_users/', apiUser.get_users),
+    path('personal_information/', apiUser.personal_information),
     path('create_user/', apiUser.create_user),
     path('create_users/', apiUser.create_users),
     path('get_user_network/', apiUser.get_user_network),
@@ -37,5 +39,7 @@ urlpatterns = [
     path('get_notif/', apiNotification.get_notif),
     path('update_notif/', apiNotification.update_notif),
     path('get_profile/', apiProfile.get_profile),
+    path('get_rockstars/',apiRockstars.get_rockstars),
+    path('reset/',apiRockstars.reset_count),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]
