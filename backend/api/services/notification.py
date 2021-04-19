@@ -6,7 +6,8 @@ from api.db.models import Notification as Notif
 from api.db.serializers import \
     NidFormSerializer as NidFormSrl, \
     NotificationSerializer as NotifSrl
-
+import jwt
+import os
 
 #Rather than you have to passed the UID to the param, the backend will read the uid from the token
 #How to call it: use it without the params
