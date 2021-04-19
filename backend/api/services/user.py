@@ -43,7 +43,7 @@ from api.db.serializers import \
 from api.db.utils import to_json
 import jwt
 import os
-import base64
+
 
 
 @swagger_auto_schema(method='post', 
