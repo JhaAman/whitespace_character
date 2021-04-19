@@ -413,3 +413,40 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Notification
         fields = ['nid', 'notif_uid', 'notif_message', 'date_created', 'notif_type', 'seen']
+
+
+class SearchUserSerializer(serializers.Serializer):
+    """Search User Form
+
+    Contains the following fields:
+        'query' (string):
+            The query string to search for
+    """
+
+    query = serializers.CharField(required=True)
+
+    class Meta:
+        fields = ['query']
+
+
+class SearchUserPostSerializer(serializers.Serializer):
+    """Search User View Form
+
+    Contains the following fields:
+        'profile_picture' (Image):
+            Profile picture
+        'first_name' (string):
+            First name
+        'last_name' (string):
+            Last name
+        'title' (string):
+            Job title
+    """
+
+    profile_picture = serializers.ImageField(allow_empty_file=True, allow_null=True)
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    title = serializers.CharField(required=True)
+
+    class Meta:
+        fields = ['profile_picture', 'first_name', 'last_name', 'title']
