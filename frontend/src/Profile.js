@@ -104,7 +104,7 @@ function Profile() {
 
           setData(res);
           setLoading(false);
-          let a = res.data.badges;
+          let a = res.data.data.badges;
           let b = []
           for (let i = 0; i < a.length; i++) {
 
@@ -112,7 +112,7 @@ function Profile() {
             b.push(<Award key={i} award={a[i]} />);
           }
           setAwards(b);
-          let dpeople = res.data.network;
+          let dpeople = res.data.data.network;
           let p = [];
           for (let i = 0; i < dpeople.length; i++) {
             //console.log(dpeople[i]);

@@ -10,6 +10,10 @@ import api.services.profile as apiProfile
 import api.services.company as apiComp
 import api.services.team as apiTeam
 import api.services.notification as apiNotification
+import api.services.get_rockstars as apiRockstars
+
+import api.views as views
+
 
 import api.views as views
 import jwt
@@ -61,6 +65,14 @@ urlpatterns = [
     path('home/posts/', views.HomePageView.as_view(), name='get_home_posts'),
     path('home/mng_digest/', views.ManagerDigestView.as_view(), name='get_mng_digest'),
 
+    # rockstars
+    path('get_rockstar/',apiRockstars.get_rockstars),
+
+    # personal information
+    path('user/get_perInfo/',apiUser.personal_information),
+    path('user/get_Image/',apiUser.get_Image),
+    
+    
     # swagger endpoints
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]

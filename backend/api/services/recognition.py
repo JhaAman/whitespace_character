@@ -127,8 +127,10 @@ def create_batch(request):
 def get_batch(request):
     try:
         # Serialize incoming request data
-        requestSrl = UidFormSrl(data=request.data)
-
+        uid = request.query_params["uid"]
+        data = {"uid":uid}
+        requestSrl = UidFormSrl(data=data)
+        
         # If request data fields are invalid, return error report
         if not requestSrl.is_valid():
             return \
@@ -142,8 +144,10 @@ def get_batch(request):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)
             
         # Get User object with 'uid'
+        
         requestDict = requestSrl.validated_data
-        userQs = User.objects.get(uid=requestDict['uid'])
+        userQs = User.objects.get(uid=uid)
+        password = userQs.password
         userDict = UserSrl(userQs).data
         # Get recognitions for requested user
         recogQsList = Recog.objects.filter(
