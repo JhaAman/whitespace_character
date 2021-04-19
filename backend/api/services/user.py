@@ -464,6 +464,17 @@ def get_Image(request):
         Image_path = User.objects.get(uid = uid).profile_picture.url
         return Response(Image_path,status=status.HTTP_200_OK)
     except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+def get_name(request):
+    try:
+        if not 'uid' in request.query_params:
+            return Response("Missing uid", status.HTTP_400_BAD_REQUEST)
+        uid =  request.query_params["uid"]
+        user = User.objects.get(uid = uid)
+        return Response(user.first_name + " " +  user.last_name,status=status.HTTP_200_OK)
+    except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST) 
 
  
