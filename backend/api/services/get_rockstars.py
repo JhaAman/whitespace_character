@@ -7,15 +7,17 @@ from api.db.models import User
 from api.db.serializers import UserSerializer
 from api.db.serializers import UidFormSerializer
 import json
+import jwt
+import os 
 import random
 
 #get rockstar
+#How to call this API: basically just call this api with the jwt token, no params.
 @api_view(["GET"])
 def get_rockstars(request):
     try:
-        if not 'uid' in request.query_params:
-            return Response("Missing uid", status.HTTP_400_BAD_REQUEST)
-        uid = request.query_params['uid']
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
         all_users = User.objects.all()
         user = User.objects.get(uid=uid)
         cid_current = Team.objects.get(tid=user.tid).cid
@@ -48,6 +50,7 @@ def get_rockstars(request):
         return Response((vals,Ret) ,status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
 
 #reset in case the automatic reset fail.
 @api_view(["POST"])

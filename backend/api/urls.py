@@ -13,7 +13,6 @@ import api.services.notification as apiNotification
 import api.services.get_rockstars as apiRockstars
 import api.services.search as apiSearch
 
-
 import api.views as views
 
 
@@ -77,6 +76,9 @@ urlpatterns = [
     path('user/change_password/',apiUser.change_password),
     path('user/get_perInfo/',apiUser.personal_information),
     path('user/get_Image/',apiUser.get_Image),
+    path('user/change_password/',apiUser.change_password),
+    path('user/get_name/',apiUser.get_name),
+
     
     
     # swagger endpoints
