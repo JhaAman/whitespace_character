@@ -1,5 +1,6 @@
 import defprofilepic from './pics/arnold.jpg';
 import './Profile.css';
+import './App.css';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -8,8 +9,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+
 import {AuthenticationContext} from './AuthContext.js';
 import images from './Images.js';
+
+import { TopMenu } from './Components.js';
+
 
 function Networkprofile(props) {
   return (
@@ -171,6 +176,7 @@ function Profile() {
 
   return (
     <div className="App">
+
       <div className="top">
         <div className="row justify-content-md-center">
           <img src={"http://localhost:8000"+profilepic} className="rounded-circle" width="150px" height="150px" alt="Smiling guy"></img>
@@ -188,10 +194,9 @@ function Profile() {
           <button className="button topbutton" onClick={() => setPage(1)}>Network</button>
           <Col xs={1}></Col>
           <button className="button topbutton" onClick={() => setPage(2)}>Settings</button>
-        </div>
-        <br />
-      </div>
 
+        </div>
+      </div>
       {page === 0 ? (
         <div className="contentpanel">
           <br />
