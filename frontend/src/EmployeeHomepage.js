@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import FeedRecognition from './Components/FeedRecognition/FeedRecognition.js';
 import SubmitRecog from './Components/SubmitRecog/SubmitRecog.js';
 import { Recognition, TopMenu, Rockstar } from './Components.js';
@@ -6,32 +6,31 @@ import { AuthContext } from './AuthContext.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import ManagerComp from './ManagerComponent.js';
+import axios from 'axios';
+
 function EmployeeHomepage() {
     const context = useContext(AuthContext);
 
     const rockstarsArray = [{value: 'Communications', firstName: 'Gary', lastName: 'Szekely'}, {value: 'Hard-Working', firstName: 'Reuben', lastName: 'Philip'}, {value: 'Inclusive', firstName: 'Khang', lastName: 'Nguyen'}]
 
-    let recogArray =[
-        {recognizer: {firstName: 'Gary', lastName: 'Szekely'}, recognizee: {firstName: 'Reuben', lastName: 'Philip'}, comment: 'hk fk hksadhfk has khasgkjhas  gkshgkjlsd kjhgk afgs khjgk hasgf  jaklshg kajshfg aksjhfg kjahsfg kjadshk jg hgh sfk kj sgkhd kjsh kgj kshdfg kjhsdk kshdf kgjh fs kj dskfgh'},
-        {recognizer: {firstName: 'Gary', lastName: 'Szekely'}, recognizee: {firstName: 'Reuben', lastName: 'Philip'}, comment: 'hk fk hksadhfk has khasgkjhas  gkshgkjlsd kjhgk afgs khjgk hasgf  jaklshg kajshfg aksjhfg kjahsfg kjadshk jg hgh sfk kj sgkhd kjsh kgj kshdfg kjhsdk kshdf kgjh fs kj dskfgh'},
-        {recognizer: {firstName: 'Gary', lastName: 'Szekely'}, recognizee: {firstName: 'Reuben', lastName: 'Philip'}, comment: 'hk fk hksadhfk has khasgkjhas  gkshgkjlsd kjhgk afgs khjgk hasgf  jaklshg kajshfg aksjhfg kjahsfg kjadshk jg hgh sfk kj sgkhd kjsh kgj kshdfg kjhsdk kshdf kgjh fs kj dskfgh'},
-        {recognizer: {firstName: 'Gary', lastName: 'Szekely'}, recognizee: {firstName: 'Reuben', lastName: 'Philip'}, comment: 'hk fk hksadhfk has khasgkjhas  gkshgkjlsd kjhgk afgs khjgk hasgf  jaklshg kajshfg aksjhfg kjahsfg kjadshk jg hgh sfk kj sgkhd kjsh kgj kshdfg kjhsdk kshdf kgjh fs kj dskfgh'}
-    ]
+    const [ recognitions, setRecognitions ] = useState([]);
 
     useEffect(() => {
-        axios.get("", {
+        axios.get("http://localhost:8000/api/recog/get/user/", {
             params: {
-
+                "uid": context.uID
             },
             headers: {
                 "Authorization": "Bearer " + context.token
             }
         }).then((res) => {
             console.log(res);
+            setRecognitions(res.data.data);
         }).catch((err) => {
             console.log(err);
         })
     }, []);
+
     return (
         <div className="app">
             <TopMenu/>
@@ -41,8 +40,8 @@ function EmployeeHomepage() {
                         <SubmitRecog />
                         <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
                         {
-                            recogArray.map((e) => {
-                                return (<FeedRecognition recognizer={e.recognizer} recognizee={e.recognizee} comment={e.comment} />);
+                            recognitions.map((e) => {
+                                return (<FeedRecognition recognizer={e.uid_from} recognizee={e.uid_to} comment={e.comments} />);
                             })
                         }
                     </div>

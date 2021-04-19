@@ -2,7 +2,7 @@ import React from 'react';
 import Arnold from '../../pics/arnold.jpg'
 import './FeedRecognition.css'
 
-function FeedRecognition({recognizer, recognizee, comment, profilePic}) {
+function FeedRecognition({recognizer, recognizee, comment}) {
     return (
         <div className='main-container'>
             <div className='left-container'>
@@ -13,7 +13,7 @@ function FeedRecognition({recognizer, recognizee, comment, profilePic}) {
             </div>
             <div className='right-container'>
                 <div className='name-container'>
-                    <h1 style={{fontSize: '20pt'}}>{recognizer ? recognizer.firstName : ''} {recognizer ? recognizer.lastName: ''} recognized {recognizee ? recognizee.firstName: ''} {recognizee ? recognizee.lastName: ''}</h1>
+                    <h1 style={{fontSize: '20pt'}}>{recognizer} recognized {recognizee}</h1>
                 </div>
                 <div className='comment-container'>
                     <p style={{textAlign: 'left'}}>{comment}</p>

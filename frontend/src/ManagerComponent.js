@@ -7,13 +7,13 @@ import Image from 'react-bootstrap/Image';
 import profilepic from './pics/arnold.jpg';
 import axios from 'axios';
 import './ManagerComponent.css';
-import { AuthenticationContext } from './AuthContext.js';
+import { AuthContext } from './AuthContext.js';
 
 
 function ManagerComp(){
     
 
-    const value = useContext(AuthenticationContext);
+    const value = useContext(AuthContext);
     
     function EmployeeDisplay(props){
         return(
@@ -54,7 +54,7 @@ function ManagerComp(){
                 {uid:57940164},
                 {
                     headers:{
-                        Authorization:"Bearer "+value.authenticationState.token
+                        Authorization:"Bearer "+ value.token
                     }
                 }
                 )
