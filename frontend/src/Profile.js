@@ -104,7 +104,7 @@ function Profile() {
 
           setData(res);
           setLoading(false);
-          let a = res.data.data.badges;
+          let a = res.data.badges;
           let b = []
           for (let i = 0; i < a.length; i++) {
 
@@ -112,7 +112,7 @@ function Profile() {
             b.push(<Award key={i} award={a[i]} />);
           }
           setAwards(b);
-          let dpeople = res.data.data.network;
+          let dpeople = res.data.network;
           let p = [];
           for (let i = 0; i < dpeople.length; i++) {
             //console.log(dpeople[i]);
@@ -137,9 +137,28 @@ function Profile() {
   }
 
   function changePassword(){
-    console.log(oldpass);
-    console.log(newpass);
-    console.log(newpassagain);
+    axios.post("http://localhost:8000/api/user/change_password/",
+    {
+      uid:80917506,
+      old:oldpass,
+      new:newpass,
+    },
+    {
+    headers:{
+      Authentication:"Bearer "+value.authenticationState.token
+    }},
+    ).then(function(res){
+      if(res.status===200){
+        console.log("successfully changed password");
+      }
+      else{
+        console.log("something went wrong");
+      }
+    })
+    .catch(e=>console.log(e));
+    //console.log(oldpass);
+    //console.log(newpass);
+    //console.log(newpassagain);
   }
 
   if (loading) {
