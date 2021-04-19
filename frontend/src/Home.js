@@ -28,7 +28,7 @@ function EmployeeHomepage() {
                         <div className='infobox rounded'>
                             {
                                 rockstarsArray.map((e) => {
-                                    return (<Rockstar value={e.value} firstName={e.firstName} lastName={e.lastName} />);
+                                    return (<Rockstar value={e.value} firstName={e.firstName} lastName={e.lastName} key={'rock'+e.value}/>);
                                 })
                             }
                         </div>

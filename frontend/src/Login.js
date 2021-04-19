@@ -29,15 +29,17 @@ function Login() {
                 setToken(res.data.access);
             }
         }).then(function(){
-            while(token==="");
-            axios.get("http://localhost:8000/api/user/get_perInfo/",
+            function sleep(ms){
+                return new Promise(resolve => setTimeout(resolve,ms));
+            }
+            sleep(1000).then(()=>{axios.get("http://localhost:8000/api/user/get_perInfo/",
                     {headers:{
                         Authorization:"Bearer "+token
                     }}).then((res)=>{
                         console.log(res);
                         value.setAuthenticationState({token:token,userInfo:{userID:res.data.uid, username:username, password:password, role:res.data.role}})
                     });
-        })
+        });})
         .catch((err) => {
             console.log(err);
         })
