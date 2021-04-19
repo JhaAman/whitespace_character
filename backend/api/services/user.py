@@ -16,6 +16,9 @@ import json
 import datetime
 
 from django.db.models import Q
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.hashers import make_password
+
 
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
@@ -413,22 +416,30 @@ def update_user_profile_picture(request):
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
 
+#Call this API to change the password of the user
+#How to use: call the api without params
 @api_view(["POST"])
 def change_password(request):
     try:
-        uid = request.data["uid"]
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
         old_password = request.data["old"]
-        new_pasword = request.data["new"]
+        new_password = request.data["new"]
         user = User.objects.get(uid = uid)
+        auth_user = AuthUser.objects.get(id=uid)
         if old_password == user.password:
-            user.password = new_pasword
+            user.password = new_password
+            auth_user.password = make_password(new_password)
             user.save()
+            auth_user.save()
             return Response(None,status=status.HTTP_200_OK)
         else:
             return Response(None, status.HTTP_401_UNAUTHORIZED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
+#Call this API for the uid and role of the currently loggin in. 
+#How to use: call the api without params
 @api_view(["GET"])
 def personal_information(request):
     try:
@@ -443,6 +454,8 @@ def personal_information(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)  
 
+
+#For a given uid, this api will send back the URL to the place we store image that you can render
 @api_view(["GET"])
 def get_Image(request):
     try:
@@ -452,4 +465,6 @@ def get_Image(request):
         Image_path = User.objects.get(uid = uid).profile_picture.url
         return Response(Image_path,status=status.HTTP_200_OK)
     except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)  
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST) 
+
+ 

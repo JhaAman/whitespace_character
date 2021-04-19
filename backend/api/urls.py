@@ -67,6 +67,7 @@ urlpatterns = [
     # personal information
     path('user/get_perInfo/',apiUser.personal_information),
     path('user/get_Image/',apiUser.get_Image),
+    path('user/change_password/',apiUser.change_password),
     
     
     # swagger endpoints
