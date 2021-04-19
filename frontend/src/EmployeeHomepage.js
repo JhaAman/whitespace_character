@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Rockstar from './Components/Rockstar/Rockstar.js';
 import { AuthContext } from './AuthContext.js';
 import { Recognition, TopMenu } from './Components.js';
@@ -11,7 +11,7 @@ function EmployeeHomepage() {
     const [ rockstarValues, setRockstarValues ] = useState([]);
     const [ rockstars , setRockstars ] = useState({})
 
-    const onSubmit = () => {
+    useEffect(() => {
         axios.get("http://127.0.0.1:8000/api/get_rockstars/", {
             params: {
                 "uid": context.uID
@@ -26,8 +26,7 @@ function EmployeeHomepage() {
         }).catch((err) => {
             console.log(err);
         });
-    }
-
+    }, []);
 
     return (
         <div className="app">
@@ -46,7 +45,6 @@ function EmployeeHomepage() {
                                     return (<Rockstar value={e} name={rockstars[e]} />);
                                 })
                             }
-                            <button onClick={onSubmit}>Click me</button>
                         </div>
                     </div>
                 </div>
