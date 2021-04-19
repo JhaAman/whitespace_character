@@ -8,6 +8,8 @@ from api.db.serializers import \
     NotificationSerializer as NotifSrl
 
 
+#Rather than you have to passed the UID to the param, the backend will read the uid from the token
+#How to call it: use it without the params
 @api_view(["GET"])
 def get_notif(request):
     try:

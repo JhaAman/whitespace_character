@@ -188,7 +188,6 @@ def all(request):
         userQsList = User.objects.all()
         # Deserialize User objects to be send through API
         userDictList = UserSrl(userQsList, many=True).data
-        userJsonList = to_json(userDictList)
         # Return success report
         return \
             Response(

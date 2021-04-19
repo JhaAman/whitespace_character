@@ -11,6 +11,7 @@ import api.services.company as apiComp
 import api.services.team as apiTeam
 import api.services.notification as apiNotification
 import api.services.get_rockstars as apiRockstars
+import api.services.search as apiSearch
 
 import api.views as views
 
@@ -25,7 +26,6 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-
 
     # services/user endpoints
     path('user/create/', apiUser.create, name='create_user'),
@@ -50,6 +50,9 @@ urlpatterns = [
     # services/notification endpoints
     path('get_notif/', apiNotification.get_notif),
     path('update_notif/', apiNotification.update_notif),
+
+    # services/search endpoints
+    path('search/user/', apiSearch.search_user, name='search'),
 
     # services/profile endpoints
     path('get_profile/', apiProfile.get_profile, name='get_profile'),

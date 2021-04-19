@@ -12,6 +12,7 @@ import os
 import random
 
 #get rockstar
+#How to call this API: basically just call this api with the jwt token, no params.
 @api_view(["GET"])
 def get_rockstars(request):
     try:
@@ -49,6 +50,7 @@ def get_rockstars(request):
         return Response((vals,Ret) ,status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
 
 #reset in case the automatic reset fail.
 @api_view(["POST"])

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import Login from './Login.js'
-import EmployeeHomepage from './EmployeeHomepage.js';
+import Home from './Home.js';
 import Profile from './Profile.js';
+import UploadData from './UploadData.js';
 import { AuthenticationProvider } from './AuthContext.js';
 //import NotificationPage from './NotificationPage.js';
 import './App.css';
@@ -16,8 +17,11 @@ function App() {
             <Login />
           </Route>
           <Route path='/home'>
-            <EmployeeHomepage />
+            <Home />
           </Route>
+          <Route path='/upload'>
+            <UploadData />
+            </Route>
           <Route path='/u/:userid'>
             <Profile />
           </Route>
