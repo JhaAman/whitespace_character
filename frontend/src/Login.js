@@ -7,6 +7,7 @@ import './Login.css'
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [token,setToken] = useState("");
     const value = useContext(AuthenticationContext);
 
     function validate() {
@@ -25,13 +26,16 @@ function Login() {
             console.log(res);
             if (res.status === 200) {
                 value.setAuthenticationState({ token: res.data.access, userInfo: { userID: res.data.user_id, username: username, password: password, role: 'employee' } })
+                setToken(res.data.access);
             }
         }).then(function(){
+            while(token==="");
             axios.get("http://localhost:8000/api/user/get_perInfo/",
                     {headers:{
-                        Authorization:"Bearer "+value.authenticationState.token
+                        Authorization:"Bearer "+token
                     }}).then((res)=>{
-                        value.setAuthenticationState({token:value.authenticationState.token,userInfo:{userID:res.data.uid, username:username, password:password, role:res.data.role}})
+                        console.log(res);
+                        value.setAuthenticationState({token:token,userInfo:{userID:res.data.uid, username:username, password:password, role:res.data.role}})
                     });
         })
         .catch((err) => {
