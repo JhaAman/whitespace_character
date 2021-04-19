@@ -1,4 +1,4 @@
-import profilepic from './pics/arnold.jpg';
+import defprofilepic from './pics/arnold.jpg';
 import './Profile.css';
 import Image from 'react-bootstrap/Image';
 import Col from 'react-bootstrap/Col';
@@ -58,12 +58,13 @@ function Profile() {
   const [page, setPage] = useState(0);
   const { userid } = useParams();
   const value = useContext(AuthenticationContext);
-  const [pictures,setPictures] = useState([]);
+  //const [pictures,setPictures] = useState([]);
   const [oldpass,setOldPass] = useState("");
   const [newpass,setNewPass] = useState("");
   const [newpassagain,setNewPassAgain] = useState("");
   const [uploadexists,setUploadExists] = useState(false);
   const [ufile,setUFile] = useState("");
+  const [profilepic,setProfilePic] = useState(defprofilepic);
   const upload = React.useRef(null);
   const handleImageUpload = e =>{
     const [file] = e.target.files;
@@ -77,6 +78,7 @@ function Profile() {
       }
       reader.readAsDataURL(file);
       setUFile(file);
+      
     }
   }
   useEffect(() => {
@@ -119,59 +121,10 @@ function Profile() {
           }
           setPeople(p);
         }
+        setProfilePic(res.data.profile_picture);
       })
       .catch(error => {
         console.error(error);
-        console.error("debug");
-        
-        let sample = {
-          "status": "200",
-          "msg": "Fetched requested user",
-          "data": {
-              "tid": "36590184",
-              "uid": "52793423",
-              "first_name": "Brett",
-              "last_name": "Harrison",
-              "email": "bh@apple.com",
-              "job_title": "Project Manager",
-              "badges": [],
-              "network": [
-                  "99723579",
-                  "52793423",
-                  "23747122"
-              ],
-              "values_scores": {
-                  "caring": 0,
-                  "succint": 0,
-                  "leadership": 0
-              },
-              "profile_picture": null,
-              "user_role": "mng",
-              "date_created": "2021-04-11 05:43 UTC",
-              "password": "fruits"
-          },
-          "trace": null
-      };
-        setData(sample);
-        setLoading(false);
-
-        let a = sample.data.badges;
-          let b = []
-          for (let i = 0; i < a.length; i++) {
-
-            //console.log(a[i]);
-            b.push(<Award key={i} award={a[i]} />);
-          }
-          setAwards(b);
-          let dpeople = sample.data.network;
-          let p = [];
-          for (let i = 0; i < dpeople.length; i++) {
-            //console.log(dpeople[i]);
-            let name = dpeople[i].first_name + " " + dpeople[i].last_name;
-            p.push(<Networkprofile key={i} name={name} picture={profilepic} />)
-          }
-          setPeople(p);
-
       });
   }
 
@@ -180,7 +133,7 @@ function Profile() {
     for(let a in images){
       r.push(<ProfilePictureChoice src={images[a]} key={a} alt="profile picture"/>)
     }
-    setPictures(r);
+    //setPictures(r);
   }
 
   function changePassword(){
@@ -201,7 +154,7 @@ function Profile() {
     <div className="App">
       <div className="top">
         <div className="row justify-content-md-center">
-          <img src={profilepic} className="rounded-circle" width="150px" height="auto" alt="Smiling guy"></img>
+          <img src={"http://localhost:8000"+profilepic} className="rounded-circle" width="150px" height="150px" alt="Smiling guy"></img>
         </div>
         <div className="row justify-content-md-center">
           {data.data.first_name} {data.data.last_name}
@@ -295,12 +248,13 @@ function Profile() {
                 hidden = {uploadexists}
                 />
                 <div >
-                <img ref={upload} style={{width:"150px",height:"auto"}} hidden={!uploadexists}className="rounded-circle"/></div>
+                <img ref={upload} style={{width:"150px",height:"150px"}} hidden={!uploadexists}className="rounded-circle" alt=""/></div>
                 <div>
-                <input type="button"
+                <input type="submit"
                 value="Set Image" 
                 hidden={!uploadexists}
                 onClick={e=>{
+                  setProfilePic(ufile);
                   const data = new FormData();
                   //console.log(ufile);
                   data.append('profile_picture',ufile)
