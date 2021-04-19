@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
                 ('password', models.CharField(max_length=120)),
                 ('user_role', models.CharField(choices=[('emp', 'employee'), ('mng', 'manager'), ('adm', 'administrator')], default='emp', max_length=3)),
                 ('title', models.CharField(blank=True, default='', max_length=60)),
-                ('profile_picture', models.ImageField(blank=True, null=True, upload_to='images/')),
+                ('profile_picture', models.ImageField(blank=True, default='', null=True, upload_to='images/')),
                 ('values_scores', models.JSONField(blank=True, default=dict)),
                 ('badges', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=60), blank=True, default=list, size=None)),
                 ('network', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=8), blank=True, default=list, size=None)),
