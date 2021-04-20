@@ -3,6 +3,7 @@ import './Components.css';
 import Popup from 'reactjs-popup';
 
 import ProfilePicture from './pics/arnold.jpg'
+import defprofilepic from './pics/arnold.jpg';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,8 +18,13 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import 'reactjs-popup/dist/index.css';
 import {faBell} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import {AuthenticationContext} from './AuthContext.js';
+import images from './Images.js';
+import { useParams } from 'react-router-dom';
+
+let profileAPI = "http://localhost:8000/api/get_profile/"
 
 
 /* Now storing objects here, so they have access to all the right directories and CSS and suchlike. If this upset anyone, let me know. ~ Christopher */
@@ -36,10 +42,44 @@ function Pass() {
 
 // eslint-disable-next-line
 function Recognition(props){
+  const [people, setPeople] = useState();
+  const [data, setData] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(0);
+  const value = useContext(AuthenticationContext);
+  //const [pictures,setPictures] = useState([]);
+  const [oldpass,setOldPass] = useState("");
+  const [newpass,setNewPass] = useState("");
+  const [newpassagain,setNewPassAgain] = useState("");
+  const [uploadexists,setUploadExists] = useState(false);
+  const [ufile,setUFile] = useState("");
+  const [profilepic1,setProfilePic1] = useState(defprofilepic);
+  const [profilepic2,setProfilePic2] = useState(defprofilepic);
+  const upload = React.useRef(null);
+  let getData = (setProfilePic, userid) => {
+    axios.get(profileAPI, {
+      params: {
+        uid: userid
+      },
+      headers:{
+        Authorization:"Bearer "+value.authenticationState.token
+      },
+    })
+      .then(function (res) {
+        setProfilePic(res.data.profile_picture);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+  getData(setProfilePic1, props.recognizer)
+  getData(setProfilePic2, props.recipient)
   return(
       <div className="recognition rounded">
           <div className="topline">
-              <i><b>{props.recognizer}</b> cherishes <b>{props.recipient}</b></i>
+              <i><b> <img src={"http://localhost:8000"+profilepic1} className="rounded-circle" width="50px" height="50px" alt=""></img>
+              {props.recognizer}</b> cherishes <b>{props.recipient}
+              <img src={"http://localhost:8000"+profilepic2} className="rounded-circle" width="50px" height="50px" alt=""></img></b></i>
           </div>
           <br></br>
           <div>
@@ -98,7 +138,37 @@ function TopMenu({isOpen, setIsOpen}) {
 export { TopMenu }
 
 // eslint-disable-next-line
-function Rockstar({value, firstName, lastName}) {
+function Rockstar({buzz, firstName, lastName}) {
+  const [people, setPeople] = useState();
+  const [data, setData] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(0);
+  const value = useContext(AuthenticationContext);
+  //const [pictures,setPictures] = useState([]);
+  const [oldpass,setOldPass] = useState("");
+  const [newpass,setNewPass] = useState("");
+  const [newpassagain,setNewPassAgain] = useState("");
+  const [uploadexists,setUploadExists] = useState(false);
+  const [ufile,setUFile] = useState("");
+  const [profilepic,setProfilePic] = useState(defprofilepic);
+  const upload = React.useRef(null);
+  let getData = (setProfilePic, userid) => {
+    axios.get(profileAPI, {
+      params: {
+        uid: userid
+      },
+      headers:{
+        Authorization:"Bearer "+value.authenticationState.token
+      },
+    })
+      .then(function (res) {
+        setProfilePic(res.data.profile_picture);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+  getData()
   return (
       <div class="rockstar rounded">
           <div style={{width: '100%', height: '80%', display: 'flex', flexDirection: 'row'}}>
@@ -106,7 +176,7 @@ function Rockstar({value, firstName, lastName}) {
                   <img src={ProfilePicture} style={{width: '100px', height: '100px', border: '5px solid #58453B'}} className="rounded-circle"/>
               </div>
               <div style={{width: '62%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
-                  <i>Rockstar of {value} : </i>
+                  <i>Rockstar of {buzz} : </i>
                   <b>{firstName} {lastName}</b>
               </div>
           </div>

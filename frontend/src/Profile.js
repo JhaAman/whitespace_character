@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import {AuthenticationContext} from './AuthContext.js';
 import images from './Images.js';
+import { TopMenu } from './Components.js'
 
 function Networkprofile(props) {
   return (
@@ -172,23 +173,28 @@ function Profile() {
 
   return (
     <div className="App">
-      <div className="top">
-        <div className="row justify-content-md-center">
-          <img src={"http://localhost:8000"+profilepic} className="rounded-circle" width="150px" height="150px" alt="Smiling guy"></img>
+      <TopMenu/>
+      <div className="column header-box rounded">
+        <div className="row profile-avatar">
+          <img style={{border: "10px solid #58453B"}} src={"http://localhost:8000"+profilepic} className="rounded-circle" width="150px" height="150px" alt="Smiling guy"></img>
         </div>
-        <div className="row justify-content-md-center">
-          {data.data.first_name} {data.data.last_name}
+        <div class="row button-row">
+          <div className="firstname">
+            {data.data.first_name} {data.data.last_name}
+          </div>
         </div>
-        <div className="row justify-content-md-center">
-          {data.data.title}
+        <div className="row button-row">
+          <div className="lastname">
+            {data.data.job_title}
+          </div>
         </div>
         <br />
-        <div className="row justify-content-md-center">
-          <button className="button topbutton" onClick={() => setPage(0)}>Badges</button>
+        <div className="row button-row">
+        <button className="button topbutton" onClick={() => setPage(0)}>badges</button>
           <Col xs={1}></Col>
-          <button className="button topbutton" onClick={() => setPage(1)}>Network</button>
+          <button className="button topbutton" onClick={() => setPage(1)}>network</button>
           <Col xs={1}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)}>Settings</button>
+          <button className="button topbutton" onClick={() => setPage(2)}>settings</button>
         </div>
       </div>
       {page === 0 ? (
