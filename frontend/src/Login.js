@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from './AuthContext.js';
 import axios from 'axios'
 import { Header } from './Components.js'
+import './Login.css'
 
 function Login() {
     const [ username, setUsername ] = useState("");
@@ -21,11 +22,7 @@ function Login() {
         }).then((res) => {
             console.log(res);
             context.setToken(res.data.access);
-            context.setIsAuthenticated(true);
-            axios.get("http://localhost:8000/api/personal_information/", {
-                params: {
-                    token: context.token
-                },
+            axios.get("http://127.0.0.1:8000/api/user/get_perInfo/", {
                 headers: {
                     "Authorization": "Bearer " + context.token
                 }

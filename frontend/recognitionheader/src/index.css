@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'AlegreyaSans';
+  src:local('AlegreyaSans'), url("./typefaces/AlegreyaSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: 'Faune';
+  src:local('Faune'), url("./typefaces/Faune-TextItalic.otf");
+}
