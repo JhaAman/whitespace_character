@@ -458,7 +458,7 @@ def personal_information(request):
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)  
 
 
-#For a given uid, this api will send back the URL to the place we store image that you can render
+#For a list uid, this api will send back the URL to the place we store image that you can render
 @api_view(["GET"])
 def get_Image(request):
     try:
@@ -476,6 +476,7 @@ def get_Image(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
+#Given back the name for a list of uid
 @api_view(["GET"])
 def get_name(request):
     try:
