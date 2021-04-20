@@ -11,6 +11,7 @@ import api.services.company as apiCompany
 import api.services.team as apiTeam
 import api.services.notification as apiNotification
 import api.services.report as apiReport
+import api.services.get_rockstars as apiRockstars
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -41,5 +42,7 @@ urlpatterns = [
     path('get_profile/', apiProfile.get_profile),
     path('get_reported_recognitions/', apiReport.get_reported_recognitions),
     path('approve_recognitions/', apiReport.approve_recognitions),
+    path('get_rockstars/',apiRockstars.get_rockstars),
+    path('reset/',apiRockstars.reset_count),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]
