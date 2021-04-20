@@ -1,6 +1,7 @@
 .title{
     background-color: rgb(255, 178, 89);
 }
+
 .employee_display{
     height:75px;
     width:auto;
@@ -9,10 +10,12 @@
     border-radius: 37.5px;
     margin:1%;
 }
+
 .employee_display_image{
     max-height:75px;
     width:auto;
 }
+
 .graphtext{
     position: relative;
     top: -11.5vw;
@@ -20,6 +23,7 @@
     font-size: 2.5vw;
     width: 20%;
 }
+
 .f{
     width:30%;
     left:35%;

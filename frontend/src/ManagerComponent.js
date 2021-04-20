@@ -7,7 +7,7 @@ import Image from 'react-bootstrap/Image';
 import profilepic from './pics/arnold.jpg';
 import axios from 'axios';
 import './ManagerComponent.css';
-import { AuthContext } from './AuthContext.js';
+import { AuthenticationContext } from './AuthContext.js';
 
 
 function ManagerComp(){
@@ -62,9 +62,7 @@ function ManagerComp(){
                     console.log(value.authenticationState);
                     //========================SET UP GRAPH=========================================
                     let len = 0;//number of elements in tagDistr, for some reason I couldnt use .length
-                    // eslint-disable-next-line
                     for(const a in response.data.data.tagDistr){
-                        
                         len++;
                     }
                     let lb = [];//labels in graph

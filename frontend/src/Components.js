@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
-import { AuthContext } from './AuthContext.js';
 import Popup from 'reactjs-popup';
+import Image from 'react-bootstrap/Image';
+import SearchField from "react-search-field";
 
 import NotificationButton from './Notification';
 
-import ProfilePicture from './pics/arnold.jpg'
+import ProfilePicture from './pics/arnold.jpg';
 
 
 /* Now storing objects here, so they have access to all the right directories and CSS and suchlike. If this upset anyone, let me know. ~ Christopher */
@@ -22,12 +23,13 @@ function Pass() {
     </div>);
 }
 
-// eslint-disable-next-line
 function Recognition(props){
-  return(
-      <div className="recognition rounded">
-          <div className="topline">
-              <i><b>{props.recognizer}</b> cherishes <b>{props.recipient}</b></i>
+    return (
+        <div className="recognition rounded">
+            <div className="topline">
+            <Image src={props.recognizerpicture} className="rounded-circle" width="30px" height="auto"></Image>
+            <Link className='link' to={props.recognizerlink}><i><b>{props.recognizer}</b></i></Link> cherishes <Link className='link' to={props.recipientlink}><i><b>{props.recipient}</b></i></Link>
+            <Image src={props.recipientpicture} className="rounded-circle" width="30px" height="auto"></Image>
           </div>
           <br></br>
           <div>
@@ -36,12 +38,12 @@ function Recognition(props){
           <div style={{textAlign: 'right'}}>
             <Popup trigger={<button>report</button>} position="right center">
                 <form>
-                    <div className="repbox">
+                    <div class="repbox">
                         <label>
-                            <textarea rows="3" columns="20" placeholder="your worry" className="rep-input"/>
+                            <textarea rows="3" columns="20" placeholder="your worry" class="rep-input"/>
                         </label>
                         <br/>
-                        <input type="submit" value="submit" className="rep-button"/>
+                        <input type="submit" value="submit" class="rep-button"/>
                     </div>
                 </form>
             </Popup>
@@ -63,8 +65,6 @@ export { Header }
 
 // eslint-disable-next-line
 function TopMenu({isOpen, setIsOpen}) {
-    const context = useContext(AuthContext);
-
     return (
         <div className='topmenu'>
             <div className="row">
@@ -74,17 +74,17 @@ function TopMenu({isOpen, setIsOpen}) {
                 <div className='menu-center'>
                     <Link className='top-link' to='/home'>home</Link>
                     <Link className='top-link' to='/me'>self</Link>
-                    <Link onClick={() => context.logout()}className='top-link' to='/login'>logout</Link>
+                    <Link className='top-link' to='/login'>logout</Link>
                 </div>
-                <div className='menu-right'>
-                    <NotificationButton/>
-                </div>
+                <Link className='top-link'>search</Link>
+                <SearchField
+                    placeholder="Search for a user"
+                />
             </div>
         </div>
+        
     );
 }
-
-
 export { TopMenu }
 
 // eslint-disable-next-line
@@ -97,7 +97,7 @@ function Rockstar({value, firstName, lastName}) {
             </div>
             <div style={{width: '100%', height: '80%', display: 'flex', flexDirection: 'row'}}>
                 <div style={{width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <img src={ProfilePicture} alt="but a lad" style={{width: '100px', height: '100px', borderRadius: '50%', border: '2px solid black'}}/>
+                    <img src={ProfilePicture} style={{width: '100px', height: '100px', borderRadius: '50%', border: '2px solid black'}}/>
                 </div>
                 <div style={{width: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
                     <h2 style={{fontSize: '15pt', margin: 0}}>{firstName} {lastName}</h2>
