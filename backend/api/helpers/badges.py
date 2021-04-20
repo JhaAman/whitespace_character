@@ -1,4 +1,4 @@
-from api.helpers.notifications import makeNotification
+from api.helpers.notifications import make_notification
 from api.db.models import \
     User as User, \
     Recognition as Recog

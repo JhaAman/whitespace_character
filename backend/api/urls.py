@@ -13,6 +13,7 @@ import api.services.notification as apiNotification
 import api.services.get_rockstars as apiRockstars
 import api.services.search as apiSearch
 import api.services.upload as apiUpload
+import api.services.badge as apiBadge
 
 import api.views as views
 
@@ -56,6 +57,9 @@ urlpatterns = [
     # services/notification endpoints
     path('get_notif/', apiNotification.get_notif),
     path('update_notif/', apiNotification.update_notif),
+
+    # services/badge endpoints
+    path('badge/put_badge/', apiBadge.put_badge, name='put_badge'),
 
     # services/upload endpoints
     path('upload/create/', apiUpload.create, name='upload_data'),

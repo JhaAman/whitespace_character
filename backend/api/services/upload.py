@@ -13,6 +13,7 @@ import json
 @api_view(["POST"])
 def create(request):
     try:
+        # Decode the passed in JSON files
         companyValueData = json.loads(b64decode(request.data[0]['uploaded_file'].replace('data:application/json;base64,', '')))
         employeeData = json.loads(b64decode(request.data[1]['uploaded_file'].replace('data:application/json;base64,', '')))
 
@@ -25,7 +26,7 @@ def create(request):
         companyName = companyValueData['companyName']
         companyID = Company.objects.get(name=companyValueData['companyName']).cid
 
-        # Create teams
+        # Create teams and users
         for user in employeeData:
             userData = {
                 'first_name': user['firstName'],
@@ -34,10 +35,8 @@ def create(request):
                 'password': user['password'],
                 'title': user['positionTitle']
             }
-            check = False;
             if user['isManager']:
                 userData['user_role'] = "mng"
-                check = True;
 
             # Creates the initial team with the CEO
             if user['positionTitle'] == 'CEO':
@@ -46,6 +45,7 @@ def create(request):
                     teamSerializer.save()
                 else:
                     return Response(teamSerializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
+                # Adds the CEO to the initial team
                 userData['tid'] = Team.objects.get(name='{compName} 1'.format(compName=companyName)).tid
                 userSerializer = UserSerializer(data=userData)
                 if userSerializer.is_valid():
@@ -53,7 +53,7 @@ def create(request):
                 else:
                     return Response(userSerializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
                 continue
-            # If the team exists, add the user to that team
+            # If a user's team exists, add the user to that team
             if Team.objects.filter(name='{compName} {mngId}'.format(compName=companyName, mngId=str(user['managerId']))).exists():
                 userData['tid'] = Team.objects.get(name='{compName} {mngId}'.format(compName=companyName, mngId=str(user['managerId']))).tid
                 userSerializer = UserSerializer(data=userData)
@@ -61,7 +61,7 @@ def create(request):
                     userSerializer.save()
                 else:
                     return Response(userSerializer.errors, status.HTTP_422_UNPROCESSABLE_ENTITY)
-            # If the team does not exist, create the team and add the user        
+            # If a user's team does not exist, create the team and add the user        
             else:
                 teamSerializer = TeamSerializer(data={'cid': companyID, 'name': '{compName} {mngId}'.format(compName=companyName, mngId=str(user['managerId']))})
                 if teamSerializer.is_valid():
