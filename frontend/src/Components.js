@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import './App.css';
 import Popup from 'reactjs-popup';
 import Image from 'react-bootstrap/Image';
+import SearchField from "react-search-field";
 
 import NotificationButton from './Notification';
 
-import ProfilePicture from './pics/arnold.jpg'
+import ProfilePicture from './pics/arnold.jpg';
 
 
 /* Now storing objects here, so they have access to all the right directories and CSS and suchlike. If this upset anyone, let me know. ~ Christopher */
@@ -75,8 +76,13 @@ function TopMenu({isOpen, setIsOpen}) {
                     <Link className='top-link' to='/me'>self</Link>
                     <Link className='top-link' to='/login'>logout</Link>
                 </div>
+                <Link className='top-link'>search</Link>
+                <SearchField
+                    placeholder="Search for a user"
+                />
             </div>
         </div>
+        
     );
 }
 export { TopMenu }

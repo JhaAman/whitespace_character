@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "react-search-field": "^1.2.0",
     "start": "^5.1.0"
   }
 }
