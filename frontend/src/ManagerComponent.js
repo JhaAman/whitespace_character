@@ -7,7 +7,7 @@ import Image from 'react-bootstrap/Image';
 import profilepic from './pics/arnold.jpg';
 import axios from 'axios';
 import './ManagerComponent.css';
-import { AuthenticationContext } from './AuthContext.js';
+import { AuthContext } from './AuthContext.js';
 
 
 function ManagerComp(){

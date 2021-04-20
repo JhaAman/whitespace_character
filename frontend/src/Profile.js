@@ -10,7 +10,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import {AuthenticationContext} from './AuthContext.js';
+import {AuthContext} from './AuthContext.js';
 import images from './Images.js';
 
 import { TopMenu } from './Components.js';
