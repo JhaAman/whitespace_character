@@ -253,9 +253,10 @@ function Profile() {
               <br/>
               
             </form>
-            <button onClick={e=>changePassword()}>
+            <button onClick={e=>changePassword()} hidden={newpass!==newpassagain}>
               Change Password
             </button>
+            <div hidden={newpass===newpassagain}>Please ensure your new password is typed the same in both boxes</div>
           </div>
           </Col>
             <Col>

@@ -11,6 +11,7 @@ import api.services.company as apiComp
 import api.services.team as apiTeam
 import api.services.notification as apiNotification
 import api.services.get_rockstars as apiRockstars
+import api.services.search as apiSearch
 
 import api.views as views
 
@@ -55,6 +56,9 @@ urlpatterns = [
     path('get_notif/', apiNotification.get_notif),
     path('update_notif/', apiNotification.update_notif),
 
+    # services/search endpoints
+    path('search/user/', apiSearch.search_user, name='search'),
+
     # services/profile endpoints
     path('get_profile/', apiProfile.get_profile, name='get_profile'),
 
@@ -69,9 +73,13 @@ urlpatterns = [
     path('get_rockstar/',apiRockstars.get_rockstars),
 
     # personal information
-    path('user/change_password/',apiUser.change_password),
+
     path('user/get_perInfo/',apiUser.personal_information),
     path('user/get_Image/',apiUser.get_Image),
+    path('user/change_password/',apiUser.change_password),
+    path('user/get_name/',apiUser.get_name),
+
+
     
     
     # swagger endpoints

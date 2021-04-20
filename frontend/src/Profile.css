@@ -37,6 +37,21 @@
   }
 }
 
+  .contentpanel{
+    background-color:#fde9e7;
+    height: 400px;
+  }
+
+  .optionbox{
+    background-color: chocolate;
+    border-radius: 10px;
+    height:300px;
+    padding-top:10px;
+    margin-top:20px;
+  }
+
+
+
 .top{
   background-color: #d3c4b7;
   justify-content: center;

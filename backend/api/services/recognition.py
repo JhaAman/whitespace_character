@@ -144,10 +144,8 @@ def get_batch(request):
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)
             
         # Get User object with 'uid'
-        
         requestDict = requestSrl.validated_data
-        userQs = User.objects.get(uid=uid)
-        password = userQs.password
+        userQs = User.objects.get(uid=requestDict['uid'])
         userDict = UserSrl(userQs).data
         # Get recognitions for requested user
         recogQsList = Recog.objects.filter(

@@ -14,9 +14,13 @@ API endpoints in service of User model object
 import io
 import json
 import datetime
+import re
 
 
 from django.db.models import Q
+from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.hashers import make_password
+
 
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
@@ -41,7 +45,6 @@ from api.db.serializers import \
 from api.db.utils import to_json
 import jwt
 import os
-import base64
 
 
 @swagger_auto_schema(method='post', 
@@ -187,7 +190,6 @@ def all(request):
         userQsList = User.objects.all()
         # Deserialize User objects to be send through API
         userDictList = UserSrl(userQsList, many=True).data
-        userJsonList = to_json(userDictList)
         # Return success report
         return \
             Response(
@@ -415,21 +417,31 @@ def update_user_profile_picture(request):
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
 
+#Call this API to change the password of the user
+#How to use: call the api without params
 @api_view(["POST"])
 def change_password(request):
     try:
-        uid = request.data["uid"]
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
         old_password = request.data["old"]
-        new_pasword = request.data["new"]
+        new_password = request.data["new"]
         user = User.objects.get(uid = uid)
+        auth_user = AuthUser.objects.get(id=uid)
         if old_password == user.password:
-            user.password = new_pasword
+            user.password = new_password
+            auth_user.password = make_password(new_password)
             user.save()
+            auth_user.save()
             return Response(None,status=status.HTTP_200_OK)
         else:
             return Response(None, status.HTTP_401_UNAUTHORIZED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+      
+#Call this API for the uid and role of the currently loggin in. 
+#How to use: call the api without params
 
 @api_view(["GET"])
 def personal_information(request):
@@ -445,13 +457,38 @@ def personal_information(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)  
 
+
+#For a given uid, this api will send back the URL to the place we store image that you can render
 @api_view(["GET"])
 def get_Image(request):
     try:
         if not 'uid' in request.query_params:
             return Response("Missing uid", status.HTTP_400_BAD_REQUEST)
         uid = request.query_params["uid"]
-        Image_path = User.objects.get(uid = uid).profile_picture.url
-        return Response(Image_path,status=status.HTTP_200_OK)
+        uid =  uid.split(",")
+        Ret = {}
+        for i in uid:
+            if not User.objects.get(uid = i).profile_picture == "":
+                Ret[i] = User.objects.get(uid = i).profile_picture.url
+            else:
+                Ret[i] = "Nothing"
+        return Response(Ret,status=status.HTTP_200_OK)
     except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)  
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+def get_name(request):
+    try:
+        if not 'uid' in request.query_params:
+            return Response("Missing uid", status.HTTP_400_BAD_REQUEST)
+        uid =  request.query_params["uid"]
+        uid =  uid.split(",")
+        Ret = {}
+        for i in uid:
+            user = User.objects.get(uid = i)
+            Ret[i] = user.first_name + " " + user.last_name
+        return Response(Ret,status=status.HTTP_200_OK)
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST) 
+
+ 

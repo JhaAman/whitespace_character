@@ -310,6 +310,9 @@ class UserManager(models.Manager):
         # Generate initial list 'network'
         kwargs['network'] = list()
 
+        if 'user_role' not in kwargs:
+            kwargs['user_role'] = "emp"
+
         # Creating fields for Auth object
         authObjFields = {
             'id':
@@ -467,6 +470,7 @@ class User(models.Model):
     profile_picture = models.ImageField(
         blank=True,
         null=True,
+        default="",
         upload_to="images/",
     )
 
