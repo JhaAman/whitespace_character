@@ -24,14 +24,15 @@ function AdminDashboard({ rID }) {
     useEffect(onStartup, []);
 
     return (
-        <div className='adminDashboard-main-container'>
-            <h1 style={{ fontSize: '20pt' }}>Administration Dashboard</h1>
-            {
-                reportedRecogs.map((recog) => {
-                    return <ReportedRecog rid={recog.rid} uidFrom={recog.uid_from} uidTo={recog.uid_to} comments={recog.comments} />;
-                })
-            }
-        </div>
+        reportedRecogs.length === 0 ? '' : (
+            <div className='adminDashboard-main-container'>
+                <h1 style={{ fontSize: '20pt', margin: 0}}>Reported Recogntions</h1>
+                {
+                    reportedRecogs.map((recog) => {
+                        return <ReportedRecog rid={recog.rid} uidFrom={recog.uid_from} uidTo={recog.uid_to} comments={recog.comments} />;
+                    })
+                }
+            </div>)
     );
 }
 

@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../AuthContext.js'
 import axios from 'axios';
+import Arnold from '../../../pics/arnold.jpg'
 import './ReportedRecog.css'
 
-function ReportedRecogs({ rid, uidFrom, uidTo, comments }) {
+function ReportedRecog({ rid, uidFrom, uidTo, comments }) {
     const context = useContext(AuthContext);
 
     const onIgnore = () => {
@@ -15,6 +16,7 @@ function ReportedRecogs({ rid, uidFrom, uidTo, comments }) {
             })
             .then((res) => {
                 console.log(res);
+                window.location.reload(true);
             }).catch((err) => {
                 console.log(err);
             });
@@ -29,21 +31,34 @@ function ReportedRecogs({ rid, uidFrom, uidTo, comments }) {
             })
             .then((res) => {
                 console.log(res);
+                window.location.reload(true);
             }).catch((err) => {
                 console.log(err);
             });
     }
 
     return (
-        <div className='reportedRecog-main-container'>
-            <h4>{uidFrom + " recognized " + uidTo}</h4>
-            <h4>{comments}</h4>
-            <div>
-                <button onClick={onIgnore}>Ignore</button>
-                <button onClick={onDelete}>Delete</button>
+        <div className='main-container'>
+            <div className='left-container'>
+                <div className='profile-container'>
+                    <img src={Arnold} style={{width: '90px', height: '90px', borderRadius: '50%', border: '2px solid black'}} />
+                </div>
+                <div style={{height: '50%', width: '100%'}} />
+            </div>
+            <div className='right-container'>
+                <div className='name-container'>
+                    <h1 style={{fontSize: '18pt'}}>{uidFrom} recognized {uidTo}</h1>
+                </div>
+                <div className='comment-container'>
+                    <p style={{textAlign: 'left'}}>{comments}</p>
+                </div>
+                <div className='comment-container'>
+                    <button onClick={onIgnore}>Ignore</button>
+                    <button onClick={onDelete}>Delete</button>
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default ReportedRecogs;
+export default ReportedRecog;
