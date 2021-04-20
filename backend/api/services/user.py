@@ -15,6 +15,7 @@ import io
 import json
 import datetime
 
+
 from django.db.models import Q
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.hashers import make_password
@@ -43,7 +44,6 @@ from api.db.serializers import \
 from api.db.utils import to_json
 import jwt
 import os
-
 
 
 @swagger_auto_schema(method='post', 
@@ -139,6 +139,7 @@ def create(request):
 @api_view(["POST"])
 def create_batch(request):
     try:
+        # Serialize incoming request data
         requestSrl = UserSrl(data=request.data, many=True)
 
         # If data fields are invalid, return error report

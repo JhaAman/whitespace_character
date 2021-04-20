@@ -94,7 +94,7 @@ function Rockstar({value, firstName, lastName}) {
             </div>
             <div style={{width: '100%', height: '80%', display: 'flex', flexDirection: 'row'}}>
                 <div style={{width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    <img src={ProfilePicture} style={{width: '100px', height: '100px', borderRadius: '50%', border: '2px solid black'}}/>
+                    <img src={ProfilePicture} alt="but a lad" style={{width: '100px', height: '100px', borderRadius: '50%', border: '2px solid black'}}/>
                 </div>
                 <div style={{width: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
                     <h2 style={{fontSize: '15pt', margin: 0}}>{firstName} {lastName}</h2>

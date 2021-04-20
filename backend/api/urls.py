@@ -16,6 +16,10 @@ import api.services.search as apiSearch
 import api.views as views
 
 
+import api.views as views
+import jwt
+
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Whitespace character endpoints",
@@ -33,6 +37,7 @@ urlpatterns = [
     path('user/get/', apiUser.get, name='get_user'),
     path('user/all/', apiUser.all, name='get_all_user'),
     path('user/mng/stats/', apiUser.mng_stats, name='get_mng_stats'),
+    path('user/uid/',apiUser.personal_information, name='get_personal_info'),
 
     # services/recognition endpoints
     path('recog/create/', apiRecog.create, name='create_recognition'),
@@ -68,6 +73,7 @@ urlpatterns = [
     path('get_rockstar/',apiRockstars.get_rockstars),
 
     # personal information
+    path('user/change_password/',apiUser.change_password),
     path('user/get_perInfo/',apiUser.personal_information),
     path('user/get_Image/',apiUser.get_Image),
     path('user/change_password/',apiUser.change_password),

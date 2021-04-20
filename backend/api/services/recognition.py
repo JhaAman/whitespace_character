@@ -90,49 +90,6 @@ def create_batch(request):
                     data= \
                         ApiRespSrl({
                             'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
-                            'msg': "Cannot create Company object: Invalid field",
-                            'trace': requestSrl.errors
-                        }).data,
-                    status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-
-        # Save object to database
-        requestSrl.save()
-        # Return success report
-        return \
-            Response(
-                data= \
-                    ApiRespSrl({
-                        'status': status.HTTP_201_CREATED,
-                        'msg': "Created Recognition object"
-                    }).data,
-                status=status.HTTP_201_CREATED)
-
-    except ValueError as e:
-        # If Exception occurs, return error report
-        return \
-            Response(
-                data=
-                    ApiRespSrl({
-                        'status': status.HTTP_400_BAD_REQUEST,
-                        'msg': "Cannot create Recognition object: Exception occured",
-                        'trace': e.args[0]
-                    }).data,
-                status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(["POST"])
-def create_batch(request):
-    try:
-        # Serializer incoming request data
-        requestSrl = RecogSrl(data=request.data, many=True)
-
-        # If request data fields are invalid, return error report
-        if not requestSrl.is_valid():
-            return \
-                Response(
-                    data= \
-                        ApiRespSrl({
-                            'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
                             'msg': "Cannot create batch Recognition object: Invalid field",
                             'trace': requestSrl.errors
                         }).data,
