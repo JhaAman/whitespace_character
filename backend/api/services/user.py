@@ -15,6 +15,7 @@ import io
 import json
 import datetime
 
+
 from django.db.models import Q
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.hashers import make_password
@@ -437,8 +438,10 @@ def change_password(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
+      
 #Call this API for the uid and role of the currently loggin in. 
 #How to use: call the api without params
+
 @api_view(["GET"])
 def personal_information(request):
     try:
@@ -477,4 +480,3 @@ def get_name(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST) 
 
- 

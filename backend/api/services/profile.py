@@ -17,7 +17,7 @@ def get_profile(request):
             return Response("Missing uid", status.HTTP_400_BAD_REQUEST)
         profile_data = {}
         user_id = request.query_params['uid']
-        user = User.objects.get(pk = user_id)
+        user = User.objects.get(uid = user_id)
         serializer = UserSrl(user)
         serialized_data = serializer.data
         serialized_data['network'] = []
