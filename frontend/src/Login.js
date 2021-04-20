@@ -15,26 +15,26 @@ function Login() {
     const onSubmit = (e) => {
         e.preventDefault();
         
-        axios.post("http://127.0.0.1:8000/api/get_token/", {
+        axios.post("http://localhost:8000/api/get_token/", {
             username: username,
             password: password
         }).then((res) => {
             console.log(res);
-            context.setToken(res.data.access)
-        }).catch((err) => {
-            console.log(err);
-        })
-
-        axios.get("http://localhost:8000/api/personal_information/", {
-            params: {
-                "token": context.token,
-            },
-            headers: {
-                "Authorization": "Bearer " + context.token
-            }
-        }).then((res) => {
-            console.log(res);
-            context.setAuthInfo(res.data.uid, username, password, res.data.role);
+            context.setToken(res.data.access);
+            context.setIsAuthenticated(true);
+            axios.get("http://localhost:8000/api/personal_information/", {
+                params: {
+                    token: context.token
+                },
+                headers: {
+                    "Authorization": "Bearer " + context.token
+                }
+            }).then((res) => {
+                console.log(res);
+                context.setAuthInfo(res.data.uid, username, password, res.data.role);
+            }).catch((err) => {
+                console.log(err);
+            })
         }).catch((err) => {
             console.log(err);
         })

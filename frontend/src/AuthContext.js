@@ -4,27 +4,27 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token') ? localStorage.getItem('token') : '';
-    const uID = localStorage.getItem('uID') ? localStorage.getItem('uID') : '';
-    const email = localStorage.getItem('email') ? localStorage.getItem('email') : '';
+    const uid = localStorage.getItem('uID') ? localStorage.getItem('uid') : '';
+    const username = localStorage.getItem('username') ? localStorage.getItem('username') : '';
     const password = localStorage.getItem('password') ? localStorage.getItem('password') : '';
     const role = localStorage.getItem('role') ? localStorage.getItem('role') : '';
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [ isAuthenticated, setIsAuthenticated ] = useState(false);
 
     const setToken = (t) => {
         localStorage.setItem('token', t);
     }
 
-    const setAuthInfo = (u, e, p, r) => {
-        localStorage.setItem('uID', u);
-        localStorage.setItem('email', e);
+    const setAuthInfo = (u, user, p, r) => {
+        localStorage.setItem('uid', u);
+        localStorage.setItem('username', user);
         localStorage.setItem('password', p);
         localStorage.setItem('role', r);
     }
 
     const logout = () => {
         localStorage.removeItem('token');
-        localStorage.removeItem('uID');
-        localStorage.removeItem('email');
+        localStorage.removeItem('uid');
+        localStorage.removeItem('username');
         localStorage.removeItem('password');
         localStorage.removeItem('role');
     }
@@ -33,8 +33,8 @@ const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 token,
-                uID,
-                email,
+                uid,
+                username,
                 password,
                 role,
                 isAuthenticated,
