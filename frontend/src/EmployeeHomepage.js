@@ -14,7 +14,7 @@ function EmployeeHomepage() {
     useEffect(() => {
         axios.get("http://127.0.0.1:8000/api/get_rockstars/", {
             params: {
-                "uid": context.uID
+                "uid": context.uid
             },
             headers: {
                 "Authorization": "Bearer " + context.token
@@ -24,6 +24,18 @@ function EmployeeHomepage() {
             setRockstarValues(res.data[0]["values"])
             setRockstars(res.data[1])
         }).catch((err) => {
+            setRockstarValues([
+                "MVP",
+                "Innovation",
+                "Friendliness",
+                "Communication"
+            ]);
+            setRockstars({
+                "MVP": "Gary Szekeky",
+                "Innovation": "Khang Nguyen",
+                "Friendliness": "Reuben Philip",
+                "Communication": "Mike Li"
+            })
             console.log(err);
         });
     }, []);
