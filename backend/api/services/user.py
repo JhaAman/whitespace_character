@@ -438,8 +438,10 @@ def change_password(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
+      
 #Call this API for the uid and role of the currently loggin in. 
 #How to use: call the api without params
+
 @api_view(["GET"])
 def personal_information(request):
     try:
