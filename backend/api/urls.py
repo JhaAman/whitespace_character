@@ -12,7 +12,7 @@ import api.services.team as apiTeam
 import api.services.notification as apiNotification
 import api.services.get_rockstars as apiRockstars
 import api.services.search as apiSearch
-
+import api.services.upload as apiUpload
 
 import api.views as views
 
@@ -56,6 +56,9 @@ urlpatterns = [
     # services/notification endpoints
     path('get_notif/', apiNotification.get_notif),
     path('update_notif/', apiNotification.update_notif),
+
+    # services/upload endpoints
+    path('upload/create/', apiUpload.create, name='upload_data'),
 
     # services/search endpoints
     path('search/user/', apiSearch.search_user, name='search'),
