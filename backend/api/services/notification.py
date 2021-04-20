@@ -6,14 +6,17 @@ from api.db.models import Notification as Notif
 from api.db.serializers import \
     NidFormSerializer as NidFormSrl, \
     NotificationSerializer as NotifSrl
+import jwt
+import os
 
-
+#Rather than you have to passed the UID to the param, the backend will read the uid from the token
+#How to call it: use it without the params
 @api_view(["GET"])
 def get_notif(request):
     try:
-        if not 'uid' in request.query_params:
-            return Response("Missing uid", status.HTTP_400_BAD_REQUEST)
-        qs = Notif.objects.filter(notif_uid=request.query_params['uid'])
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+        qs = Notif.objects.filter(notif_uid=uid)
         serializer = NotifSrl(qs, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
     except ValueError as e:

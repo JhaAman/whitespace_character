@@ -11,8 +11,13 @@ import api.services.company as apiComp
 import api.services.team as apiTeam
 import api.services.notification as apiNotification
 import api.services.get_rockstars as apiRockstars
+import api.services.search as apiSearch
 
 import api.views as views
+
+
+import api.views as views
+import jwt
 
 
 schema_view = get_schema_view(
@@ -26,13 +31,13 @@ schema_view = get_schema_view(
 
 urlpatterns = [
 
-
     # services/user endpoints
     path('user/create/', apiUser.create, name='create_user'),
     path('user/create_batch/', apiUser.create_batch, name='create_batch_user'),
     path('user/get/', apiUser.get, name='get_user'),
     path('user/all/', apiUser.all, name='get_all_user'),
     path('user/mng/stats/', apiUser.mng_stats, name='get_mng_stats'),
+    path('user/uid/',apiUser.personal_information, name='get_personal_info'),
 
     # services/recognition endpoints
     path('recog/create/', apiRecog.create, name='create_recognition'),
@@ -51,6 +56,9 @@ urlpatterns = [
     path('get_notif/', apiNotification.get_notif),
     path('update_notif/', apiNotification.update_notif),
 
+    # services/search endpoints
+    path('search/user/', apiSearch.search_user, name='search'),
+
     # services/profile endpoints
     path('get_profile/', apiProfile.get_profile, name='get_profile'),
 
@@ -65,8 +73,13 @@ urlpatterns = [
     path('get_rockstar/',apiRockstars.get_rockstars),
 
     # personal information
+
     path('user/get_perInfo/',apiUser.personal_information),
     path('user/get_Image/',apiUser.get_Image),
+    path('user/change_password/',apiUser.change_password),
+    path('user/get_name/',apiUser.get_name),
+
+
     
     
     # swagger endpoints

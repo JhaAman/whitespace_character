@@ -62,7 +62,9 @@ function ManagerComp(){
                     console.log(value.authenticationState);
                     //========================SET UP GRAPH=========================================
                     let len = 0;//number of elements in tagDistr, for some reason I couldnt use .length
+                    // eslint-disable-next-line
                     for(const a in response.data.data.tagDistr){
+                        
                         len++;
                     }
                     let lb = [];//labels in graph

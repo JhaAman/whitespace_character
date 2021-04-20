@@ -2,6 +2,10 @@
 
 'hello'
 
+##Frontend 
+
+For App.js, run commands 'npm install react-gauge-chart', 'npm install --save typefaces', and 'npm install react-js-banner'. 
+
 ## Backend
 
 There is a Swagger document at `http://localhost:8000/api/swagger/`
