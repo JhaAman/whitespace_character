@@ -1,0 +1,34 @@
+.App {
+    text-align: center;
+  }
+  
+  .false-notification{
+    color:blue;
+    
+    height: auto;
+    width: 400px;
+  }
+  .true-notification{
+    height: auto;
+    width: 400px;
+  }
+  
+  .Notification-Message{
+    
+    display:flex;
+  }
+  .space{
+    margin-top:10px;
+  }
+  .dropdown-menu{
+    width:auto;
+    max-height:200px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style:none;
+  }
+  .dropdown-menu::-webkit-scrollbar{
+    width: 0 !important;
+    display: none;
+  }
