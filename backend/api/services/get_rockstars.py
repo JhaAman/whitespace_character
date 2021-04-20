@@ -21,30 +21,29 @@ def get_rockstars(request):
         all_users = User.objects.all()
         user = User.objects.get(uid=uid)
         cid_current = Team.objects.get(tid=user.tid).cid
-        values = user.values_scores
         Ret = {}
         vals = {"values": []}
-        Ret["MVP"] = (0,"","")
+        Ret["MVP"] = (0,"")
         vals["values"].append("MVP")
-        for value in values:
-            Ret[value] = (0,"","")
+        for value in user.values_scores:
+            Ret[value] = (0,"")
             vals["values"].append(value)
         for user in all_users:
             if Team.objects.get(tid=user.tid).cid == cid_current:
                 count = 0
-                for value in values:
+                for value in user.values_scores:
                     count += user.values_scores[value]
                     if Ret[value][0] < user.values_scores[value]:
-                        Ret[value] = (user.values_scores[value],user.first_name + " "  + user.last_name,user.uid)
+                        Ret[value] = (user.values_scores[value],user.uid)
                     elif Ret[value][0] == user.values_scores[value] and not user.values_scores[value] == 0:
                         if random.choice([True, False]):
-                            Ret[value] = (user.values_scores[value],user.first_name + " "  + user.last_name,user.uid)
+                            Ret[value] = (user.values_scores[value],user.uid)
                 if count > Ret["MVP"][0]:
-                    Ret["MVP"] = (count,user.first_name + " "  + user.last_name,user.uid)
+                    Ret["MVP"] = (count,user.uid)
                 elif Ret["MVP"][0] == count and not count == 0:
                     if random.choice([True, False]):
-                        Ret["MVP"] = (count,user.first_name + " "  + user.last_name,user.uid)      
-        for value in values:
+                        Ret["MVP"] = (count,user.uid)      
+        for value in user.values_scores:
             Ret[value] = Ret[value][1]
         Ret["MVP"] = Ret["MVP"][1]
         return Response((vals,Ret) ,status=status.HTTP_200_OK)

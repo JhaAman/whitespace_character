@@ -14,6 +14,7 @@ API endpoints in service of User model object
 import io
 import json
 import datetime
+import re
 
 
 from django.db.models import Q
@@ -464,8 +465,14 @@ def get_Image(request):
         if not 'uid' in request.query_params:
             return Response("Missing uid", status.HTTP_400_BAD_REQUEST)
         uid = request.query_params["uid"]
-        Image_path = User.objects.get(uid = uid).profile_picture.url
-        return Response(Image_path,status=status.HTTP_200_OK)
+        uid =  uid.split(",")
+        Ret = {}
+        for i in uid:
+            if not User.objects.get(uid = i).profile_picture == "":
+                Ret[i] = User.objects.get(uid = i).profile_picture.url
+            else:
+                Ret[i] = "Nothing"
+        return Response(Ret,status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
@@ -475,8 +482,12 @@ def get_name(request):
         if not 'uid' in request.query_params:
             return Response("Missing uid", status.HTTP_400_BAD_REQUEST)
         uid =  request.query_params["uid"]
-        user = User.objects.get(uid = uid)
-        return Response(user.first_name + " " +  user.last_name,status=status.HTTP_200_OK)
+        uid =  uid.split(",")
+        Ret = {}
+        for i in uid:
+            user = User.objects.get(uid = i)
+            Ret[i] = user.first_name + " " + user.last_name
+        return Response(Ret,status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST) 
 
