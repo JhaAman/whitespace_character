@@ -3,11 +3,11 @@ import { AuthContext } from '../../../AuthContext.js'
 import axios from 'axios';
 import './ReportedRecog.css'
 
-function ReportedRecogs({ rID, recognizer, recognizee, recognition }) {
+function ReportedRecogs({ rid, uidFrom, uidTo, comments }) {
     const context = useContext(AuthContext);
 
     const onIgnore = () => {
-        axios.get('http://127.0.0.1:8000/api/approve_recognitions/?rid=' + rID + "&ignored=true",
+        axios.get('http://127.0.0.1:8000/api/approve_recognitions/?rid=' + rid + "&ignored=true",
             {
                 headers: {
                     'Authorization': 'Bearer ' + context.token
@@ -21,7 +21,7 @@ function ReportedRecogs({ rID, recognizer, recognizee, recognition }) {
     }
 
     const onDelete = () => {
-        axios.get('http://127.0.0.1:8000/api/approve_recognitions/?rid=' + rID + "&ignored=false",
+        axios.get('http://127.0.0.1:8000/api/approve_recognitions/?rid=' + rid + "&ignored=false",
             {
                 headers: {
                     'Authorization': 'Bearer ' + context.token
@@ -36,9 +36,8 @@ function ReportedRecogs({ rID, recognizer, recognizee, recognition }) {
 
     return (
         <div className='reportedRecog-main-container'>
-            <h4>RID: {rID}</h4>
-            <h4>{recognizer + " recognized " + recognizee}</h4>
-            <h4>{recognition}</h4>
+            <h4>{uidFrom + " recognized " + uidTo}</h4>
+            <h4>{comments}</h4>
             <div>
                 <button onClick={onIgnore}>Ignore</button>
                 <button onClick={onDelete}>Delete</button>

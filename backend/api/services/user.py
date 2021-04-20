@@ -196,7 +196,7 @@ def change_password(request):
 @api_view(["GET"])
 def personal_information(request):
     try:
-        token = request.query_params['token']
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
         uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
         if not uid == 1:
             role = User.objects.get(uid = uid).user_role
@@ -205,4 +205,4 @@ def personal_information(request):
         Ret = {"uid": uid, "role": role}
         return Response(Ret,status=status.HTTP_200_OK)
     except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST) 
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)  

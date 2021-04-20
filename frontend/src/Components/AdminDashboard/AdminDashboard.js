@@ -28,7 +28,7 @@ function AdminDashboard({ rID }) {
             <h1 style={{ fontSize: '20pt' }}>Administration Dashboard</h1>
             {
                 reportedRecogs.map((recog) => {
-                    return <ReportedRecog rID={recog.rid} recognizer={recog.uid_from} recognizee={recog.uid_to} recognition={recog.comments} />;
+                    return <ReportedRecog rid={recog.rid} uidFrom={recog.uid_from} uidTo={recog.uid_to} comments={recog.comments} />;
                 })
             }
         </div>
