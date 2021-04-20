@@ -4,8 +4,8 @@ import axios from 'axios'
 import { Header } from './Components.js'
 
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [ username, setUsername ] = useState("");
+    const [ password, setPassword ] = useState("");
     const context = useContext(AuthContext);
 
     function validate() {
@@ -13,20 +13,28 @@ function Login() {
     }
 
     const submit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        
         axios.post("http://localhost:8000/api/get_token/", {
             username: username,
             password: password
-
-        }, {
-            validateStatus: false
         }).then((res) => {
             console.log(res);
-            localStorage.setItem('userToken', res.data.access)
-            if (res.status === 200) {
-                context.setToken(res.data.access)
-                console.log(context.token)
-            }
+            context.setToken(res.data.access);
+            context.setIsAuthenticated(true);
+            axios.get("http://localhost:8000/api/personal_information/", {
+                params: {
+                    token: context.token
+                },
+                headers: {
+                    "Authorization": "Bearer " + context.token
+                }
+            }).then((res) => {
+                console.log(res);
+                context.setAuthInfo(res.data.uid, username, password, res.data.role);
+            }).catch((err) => {
+                console.log(err);
+            })
         }).catch((err) => {
             console.log(err);
         })

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
+import { AuthContext } from './AuthContext.js';
 import Popup from 'reactjs-popup';
 
 import NotificationButton
@@ -62,7 +63,9 @@ function Header({ isOpen, setIsOpen }) {
 export { Header }
 
 // eslint-disable-next-line
-function TopMenu({ isOpen, setIsOpen }) {
+function TopMenu({isOpen, setIsOpen}) {
+    const context = useContext(AuthContext);
+
     return (
         <div className='topmenu'>
             <div className="row">
@@ -72,7 +75,7 @@ function TopMenu({ isOpen, setIsOpen }) {
                 <div className='menu-center'>
                     <Link className='top-link' to='/home'>home</Link>
                     <Link className='top-link' to='/me'>self</Link>
-                    <Link className='top-link' to='/login'>logout</Link>
+                    <Link onClick={() => context.logout()}className='top-link' to='/login'>logout</Link>
                 </div>
                 <div className='menu-right'>
                     <NotificationButton />

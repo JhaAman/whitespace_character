@@ -21,7 +21,6 @@ function App() {
           <Route path='/u/:userid'>
             <Profile />
           </Route>
-
         </Switch>
       </AuthProvider>
     </Router>
