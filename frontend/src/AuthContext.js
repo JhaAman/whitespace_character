@@ -14,17 +14,17 @@ const AuthProvider = ({ children }) => {
         localStorage.setItem('token', t);
     }
 
-    const setAuthInfo = (u, e, p, r) => {
+    const setAuthInfo = (u, user, p, r) => {
         localStorage.setItem('uid', u);
-        localStorage.setItem('email', e);
+        localStorage.setItem('username', user);
         localStorage.setItem('password', p);
         localStorage.setItem('role', r);
     }
 
     const logout = () => {
         localStorage.removeItem('token');
-        localStorage.removeItem('uID');
-        localStorage.removeItem('email');
+        localStorage.removeItem('uid');
+        localStorage.removeItem('username');
         localStorage.removeItem('password');
         localStorage.removeItem('role');
     }

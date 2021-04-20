@@ -23,6 +23,9 @@ function Login() {
             context.setToken(res.data.access);
             context.setIsAuthenticated(true);
             axios.get("http://localhost:8000/api/personal_information/", {
+                params: {
+                    token: context.token
+                },
                 headers: {
                     "Authorization": "Bearer " + context.token
                 }
