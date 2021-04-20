@@ -4,8 +4,8 @@ import axios from 'axios'
 import { Header } from './Components.js'
 
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [ username, setUsername ] = useState("");
+    const [ password, setPassword ] = useState("");
     const context = useContext(AuthContext);
 
     function validate() {
@@ -21,10 +21,8 @@ function Login() {
         }).then((res) => {
             console.log(res);
             context.setToken(res.data.access);
+            context.setIsAuthenticated(true);
             axios.get("http://localhost:8000/api/personal_information/", {
-                params: {
-                    "token": context.token,
-                },
                 headers: {
                     "Authorization": "Bearer " + context.token
                 }

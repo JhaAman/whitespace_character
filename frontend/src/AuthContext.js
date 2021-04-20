@@ -4,8 +4,8 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token') ? localStorage.getItem('token') : '';
-    const uID = localStorage.getItem('uID') ? localStorage.getItem('uID') : '';
-    const email = localStorage.getItem('email') ? localStorage.getItem('email') : '';
+    const uid = localStorage.getItem('uID') ? localStorage.getItem('uid') : '';
+    const username = localStorage.getItem('username') ? localStorage.getItem('username') : '';
     const password = localStorage.getItem('password') ? localStorage.getItem('password') : '';
     const role = localStorage.getItem('role') ? localStorage.getItem('role') : '';
     const [ isAuthenticated, setIsAuthenticated ] = useState(false);
@@ -15,7 +15,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const setAuthInfo = (u, e, p, r) => {
-        localStorage.setItem('uID', u);
+        localStorage.setItem('uid', u);
         localStorage.setItem('email', e);
         localStorage.setItem('password', p);
         localStorage.setItem('role', r);
@@ -33,8 +33,8 @@ const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 token,
-                uID,
-                email,
+                uid,
+                username,
                 password,
                 role,
                 isAuthenticated,
