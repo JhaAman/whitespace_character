@@ -443,6 +443,7 @@ class SearchUserPostSerializer(serializers.Serializer):
             Job title
     """
 
+    uid = serializers.CharField(required=True)
     profile_picture = serializers.ImageField(allow_empty_file=True, allow_null=True)
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
@@ -450,3 +451,13 @@ class SearchUserPostSerializer(serializers.Serializer):
 
     class Meta:
         fields = ['profile_picture', 'first_name', 'last_name', 'title']
+
+
+'''class RockstarPostSerializer(serializers.Serializer):
+    uid = serializers.CharField(required=True)
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=True)
+    profile_picture = serializers.ImageField(allow_empty_file=True, allow_null=True)
+
+    class Meta:
+        fields = ['uid', 'first_name', 'last_name', 'profile_picture']'''

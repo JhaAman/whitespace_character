@@ -1,46 +1,29 @@
 import React, { useState, useContext } from 'react';
-import { AuthenticationContext } from './AuthContext.js';
+import { AuthContext } from './AuthContext.js';
 import axios from 'axios'
 import { Header } from './Components.js'
 import './Login.css'
 
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [token,setToken] = useState("");
-    const value = useContext(AuthenticationContext);
+    const [ username, setUsername ] = useState("");
+    const [ password, setPassword ] = useState("");
+    const context = useContext(AuthContext);
 
     function validate() {
         return username.length > 0 && password.length > 0;
     }
 
-    const submit = (e) => {
-        e.preventDefault()
+    const onSubmit = (e) => {
+        e.preventDefault();
+        
         axios.post("http://localhost:8000/api/get_token/", {
             username: username,
             password: password
-
-        }, {
-            validateStatus: false
         }).then((res) => {
             console.log(res);
-            if (res.status === 200) {
-                value.setAuthenticationState({ token: res.data.access, userInfo: { userID: res.data.user_id, username: username, password: password, role: 'employee' } })
-                setToken(res.data.access);
-            }
-        }).then(function(){
-            function sleep(ms){
-                return new Promise(resolve => setTimeout(resolve,ms));
-            }
-            sleep(1000).then(()=>{axios.get("http://localhost:8000/api/user/get_perInfo/",
-                    {headers:{
-                        Authorization:"Bearer "+token
-                    }}).then((res)=>{
-                        console.log(res);
-                        value.setAuthenticationState({token:token,userInfo:{userID:res.data.uid, username:username, password:password, role:res.data.role}})
-                    });
-        });})
-        .catch((err) => {
+            context.setToken(res.data.access);
+            context.setAuthInfo(res.data.uid, username, password, res.data.role);
+        }).catch((err) => {
             console.log(err);
         })
     }
@@ -49,8 +32,8 @@ function Login() {
         <div className="app">
             <Header/>
             <div className="body">
-                
-                <form onSubmit={submit}>
+                <form onSubmit={onSubmit}>
+
                     <br/>
                     <br/>
                     <label>

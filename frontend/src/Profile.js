@@ -9,8 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
-import {AuthenticationContext} from './AuthContext.js';
+import {AuthContext} from './AuthContext.js';
 import images from './Images.js';
 
 //import { TopMenu } from './Components.js';
@@ -62,7 +61,7 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const { userid } = useParams();
-  const value = useContext(AuthenticationContext);
+  const value = useContext(AuthContext);
   //const [pictures,setPictures] = useState([]);
   const [oldpass,setOldPass] = useState("");
   const [newpass,setNewPass] = useState("");
