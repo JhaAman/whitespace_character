@@ -95,8 +95,10 @@ function Recognition(props){
                 </form>
             </Popup>
         </div>
+      </div>
     )
 }
+
 export { Recognition }
 
 // eslint-disable-next-line
