@@ -23,11 +23,11 @@ function Pass() {
      🤮 Alack : thou hast forgotten thy <em>curlye brackets</em>, O knave, in thine import statement(s) from Components.js !
    </div>);
 }
- 
+
 
 // eslint-disable-next-line
 function Recognition(props){
-    return(
+    return (
         <div className="recognition rounded">
             <div className="topline">
                 <i><b>{props.recognizer}</b> cherishes <b>{props.recipient}</b></i>
@@ -83,7 +83,7 @@ function TopMenu({isOpen, setIsOpen}) {
 
     const actualEnterSearchBarHandler = async () => {
 
-        const authHeader = "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI2ODU4MzcxLCJqdGkiOiJiZDMzYWFhMGRlYmI0YjRmOTkyMDE1ZmM1NWRjMzg5ZSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.rXgaEWQvXGQGD9amh9LtylP022C0kW-wdXjy72lvcTA"
+        const authHeader = "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3NjgxODQyLCJqdGkiOiJjZDJiYTk0MjkwOTc0YWY3OGQ5ZDAxMmYxMDE3Y2M3NSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.duDXsRjKNlTteWaCnA5YLnUwN40qY5yS9usrkg3PXzU"
 
         const resp = await fetchAPI({
             method: "post",
@@ -94,8 +94,12 @@ function TopMenu({isOpen, setIsOpen}) {
 
         const data = resp.data.data
 
-        // === RENDER DATA BELOW === //
+        const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3NjgxODQyLCJqdGkiOiJjZDJiYTk0MjkwOTc0YWY3OGQ5ZDAxMmYxMDE3Y2M3NSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.duDXsRjKNlTteWaCnA5YLnUwN40qY5yS9usrkg3PXzU"
 
+        // === RENDER DATA BELOW === //
+        return (
+            data
+        );
         // console.log(data)
     }
 
