@@ -1,4 +1,4 @@
-import './NotificationPage.css';
+import './Components.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
