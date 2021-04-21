@@ -115,23 +115,23 @@ export { Header }
 
 // eslint-disable-next-line
 function TopMenu({isOpen, setIsOpen}) {
-    return (
-        <div className='topmenu'>
-            <div className="row">
-                <div className='menu-left'>
-                    ws
-                </div>
-                <div className='menu-center'>
-                    <Link className='top-link' to='/home'>home</Link>
-                    <Link className='top-link' to='/me'>self</Link>
-                    <Link className='top-link' to='/login'>logout</Link>
-                </div>
-                <div className='menu-right'>
-                    <Notification/>
-                </div>
-            </div>
-        </div>
-    );
+  return (
+      <div className='topmenu'>
+          <div className="row">
+              <div className='menu-left'>
+                  ws
+              </div>
+              <div className='menu-center'>
+                  <Link className='top-link' to='/home'>home</Link>
+                  <Link className='top-link' to={'/u/'}>self</Link>
+                  <Link className='top-link' to='/login'>logout</Link>
+              </div>
+              <div className='menu-right'>
+                  <Notification/>
+              </div>
+          </div>
+      </div>
+  );
 }
 
 
