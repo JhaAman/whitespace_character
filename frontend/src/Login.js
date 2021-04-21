@@ -30,7 +30,7 @@ function Login() {
 
     return (
         <div className="app">
-            <Header/>
+            <Header />
             <div className="body">
                 <form onSubmit={onSubmit}>
                     <br/>
@@ -46,7 +46,7 @@ function Login() {
                             />
                         </div>
                     </label>
-                    <br/>
+                    <br />
                     <label>
                         <input
                             type="password"

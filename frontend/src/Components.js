@@ -31,10 +31,10 @@ let profileAPI = "http://localhost:8000/api/get_profile/"
    Let me (Christopher) know, of course, be this a problem.
    For the common good, though, the Pass function will get a little queasy if you forget your curly brackets! */
 function Pass() {
-  return(
-    <div style={{fontSize: 40, font: 'AlegreyaSans', fontWeight: 'bold', color: 'red', backgroundColor: 'white'}}>
-      🤮 Alack : thou hast forgotten thy <em>curlye brackets</em>, O knave, in thine import statement(s) from Components.js !
-    </div>);
+    return (
+        <div style={{ fontSize: 40, font: 'AlegreyaSans', fontWeight: 'bold', color: 'red', backgroundColor: 'white' }}>
+            🤮 Alack : thou hast forgotten thy <em>curlye brackets</em>, O knave, in thine import statement(s) from Components.js !
+        </div>);
 }
 
 // eslint-disable-next-line
@@ -95,18 +95,17 @@ function Recognition(props){
                 </form>
             </Popup>
         </div>
-      </div>
-  )
+    )
 }
 export { Recognition }
 
 // eslint-disable-next-line
-function Header({isOpen, setIsOpen}) {
-  return (
-      <div className="header">
-          <i>whitespaß</i>
-      </div>
-  );
+function Header({ isOpen, setIsOpen }) {
+    return (
+        <div className="header">
+            <i>whitespaß</i>
+        </div>
+    );
 }
 export { Header }
 

@@ -38,7 +38,7 @@ def search_user(request):
                     data=
                         ApiRespSrl({
                             'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
-                            'msg': "Cannot create batch User objects: Invalid field",
+                            'msg': "Cannot return search result: Invalid field",
                             'trace': requestSrl.errors
                         }).data,
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -62,7 +62,7 @@ def search_user(request):
                     | Q(last_name__icontains=firstNameQ)
                     | Q(first_name__icontains=lastNameQ)
                     | Q(last_name__icontains=lastNameQ) )\
-                .values('profile_picture', 'first_name', 'last_name', 'title')
+                .values('uid', 'profile_picture', 'first_name', 'last_name', 'title')
 
         # Get dictionary data
         searchUserPostDictList = SearchUserPostSrl(searchUserPostQsList, many=True).data
@@ -85,7 +85,7 @@ def search_user(request):
                 data=
                     ApiRespSrl({
                         'status': status.HTTP_400_BAD_REQUEST,
-                        'msg': "Cannot fetch all users in database: Exception ocurred",
+                        'msg': "Cannot return search result: Exception ocurred",
                         'trace': e.args[0]
                     }).data,
                 status=status.HTTP_400_BAD_REQUEST)
