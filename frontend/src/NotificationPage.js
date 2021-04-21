@@ -1,3 +1,5 @@
+import './Components.css';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Row from 'react-bootstrap/Row';

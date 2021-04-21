@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import {AuthenticationContext} from './AuthContext.js';
+import {AuthContext} from './AuthContext.js';
 import images from './Images.js';
 import { TopMenu } from './Components.js'
 
@@ -205,7 +205,6 @@ function Profile() {
           <button className="button topbutton" onClick={() => setPage(1)}>network</button>
           <Col xs={1} hidden={userid!==value.authenticationState.userInfo.userID}></Col>
           <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.authenticationState.userInfo.userID}>Settings</button>
-
         </div>
       </div>
       {page === 0 ? (

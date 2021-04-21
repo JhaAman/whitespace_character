@@ -1,12 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import './Components.css';
+import './App.css';
+import { AuthContext } from './AuthContext.js';
 import Popup from 'reactjs-popup';
 
 import ProfilePicture from './pics/arnold.jpg'
-import defprofilepic from './pics/arnold.jpg';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -114,7 +113,8 @@ export { Header }
 
 // eslint-disable-next-line
 function TopMenu({isOpen, setIsOpen}) {
-    const value = useContext(AuthenticationContext);
+    const context = useContext(AuthContext);
+
     return (
         <div className='topmenu'>
             <div className="row">
@@ -124,7 +124,7 @@ function TopMenu({isOpen, setIsOpen}) {
                 <div className='menu-center'>
                     <Link className='top-link' to='/home'>home</Link>
                     <Link className='top-link' to={'/u/'+value.authenticationState.userInfo.userID}>self</Link>
-                    <Link className='top-link' to='/login'>logout</Link>
+                    <Link onClick={() => context.logout()}className='top-link' to='/login'>logout</Link>
                 </div>
                 <div className='menu-right'>
                     <Notification/>
@@ -184,7 +184,6 @@ function Rockstar({buzz, firstName, lastName}) {
   )
 }
 
-export { Rockstar };
 
 function Notification() {
   function BuildNotification(props){
