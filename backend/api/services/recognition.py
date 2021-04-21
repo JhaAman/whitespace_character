@@ -162,7 +162,7 @@ def get_batch(request):
                 data= \
                     ApiRespSrl({
                         'status': status.HTTP_200_OK,
-                        'msg': "Retrieved Recognition object",
+                        'msg': "Retrieved batch Recognition object",
                         'data': recogObjList
                     }).data,
                 status=status.HTTP_200_OK)
@@ -174,7 +174,7 @@ def get_batch(request):
                 data=
                     ApiRespSrl({
                         'status': status.HTTP_400_BAD_REQUEST,
-                        'msg': "Cannot create Company object: Exception ocurred",
+                        'msg': "Cannot create batch Recognition object: Exception ocurred",
                         'trace': e.args[0]
                     }).data,
                 status=status.HTTP_400_BAD_REQUEST)
