@@ -2,8 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import JsonResponse
-from api.models.Recognition import *
-from api.models.ApiSerializers import RidFormSerializer
+from api.db.models import Recognition
+from api.db.serializers import RidFormSerializer
 
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
