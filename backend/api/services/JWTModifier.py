@@ -1,7 +1,21 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from api.db.models import User 
+
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data['access'] = str(refresh.access_token)
+        # Add extra responses here
+        uid = str(self.user.id)
+        data['uid'] = uid
+        data['role'] = User.objects.get(uid = uid).user_role
+        return data
+    
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
