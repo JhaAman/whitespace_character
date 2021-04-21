@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import './App.css';
 import Popup from 'reactjs-popup';
 import SearchField from "react-search-field";
+<<<<<<< Updated upstream
  
+=======
+
+>>>>>>> Stashed changes
 import NotificationButton from './Notification';
  
 import ProfilePicture from './pics/arnold.jpg'
@@ -63,6 +67,7 @@ export { Header }
  
 // eslint-disable-next-line
 function TopMenu({isOpen, setIsOpen}) {
+<<<<<<< Updated upstream
    return (
        <div className='topmenu'>
            <div className="row">
@@ -84,6 +89,29 @@ function TopMenu({isOpen, setIsOpen}) {
            </div>
        </div>
    );
+=======
+    return (
+        <div className='topmenu'>
+            <div className="row">
+                <div className='menu-left'>
+                    ws
+                </div>
+                <div className='menu-center'>
+                    <Link className='top-link' to='/home'>home</Link>
+                    <Link className='top-link' to='/me'>self</Link>
+                    <Link className='top-link' to='/login'>logout</Link>
+                </div>
+                <Link className='top-link'>search</Link>
+                 <SearchField
+                     placeholder="Search for a user"
+                 />
+                <div className='menu-right'>
+                    <NotificationButton/>
+                </div>
+            </div>
+        </div>
+    );
+>>>>>>> Stashed changes
 }
  
  
