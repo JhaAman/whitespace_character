@@ -392,16 +392,32 @@ class HomePostSerializer(serializers.Serializer):
     """Home Post Form
 
     Contains the following fields:
-        'user' (JSON): 
-            Deserialized User object (=> see User model)
-        'recogs': 
-            List of all Recognitions objects for User
+        'name_from' (string): 
+            Name of sender
+        'uid_from' (string):
+            User ID of sender
+        'img_from' (string):
+            Sender's profile picture
+        'name_to':  
+            Name of receiver
+        'uid_to' (string):
+            User ID of receiver
+        'img_to' (string):
+            Receiver's profile picture
+        'tags': (array)
+            List of tags voted on
+        'comments':
+            Comments made by sender to receiver
     """
 
-    user = serializers.JSONField(required=True)
-    recogs = serializers.ListField(
-        child=serializers.JSONField(),
-        allow_null=True)
+    name_from = serializers.CharField(required=True)
+    uid_from = serializers.CharField(required=True)
+    img_from = serializers.ImageField(allow_empty_file=True, allow_null=True)
+    name_to = serializers.CharField(required=True)
+    uid_to = serializers.CharField(required=True)
+    img_to = serializers.ImageField(allow_empty_file=True, allow_null=True)
+    tags = serializers.ListField(child=serializers.CharField())
+    comments = serializers.CharField(required=True)
 
 
 class NotificationSerializer(serializers.ModelSerializer):
