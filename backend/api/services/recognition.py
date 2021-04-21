@@ -17,7 +17,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse
 from api.helpers.badges import updateBadges
-from api.helpers.notifications import makeNotification
+from api.helpers.notifications import make_notification
 import json
 from rest_framework import status, serializers
 from rest_framework.parsers import JSONParser
@@ -54,6 +54,7 @@ def create(request):
 
         # Save object to database
         requestSrl.save()
+        make_notification("Received a recognition from {name}".format(name=User.objects.get(uid=request.data['uid_from']).first_name), request.data['uid_to'], 'recognition_notif')
         # Return success report
         return \
             Response(

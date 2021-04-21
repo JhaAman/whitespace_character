@@ -1,31 +1,28 @@
 import React, { useState, useContext } from 'react';
-import { AuthenticationContext } from './AuthContext.js';
+import { AuthContext } from './AuthContext.js';
 import axios from 'axios'
 import { Header } from './Components.js'
 import './Login.css'
 
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const value = useContext(AuthenticationContext);
+    const [ username, setUsername ] = useState("");
+    const [ password, setPassword ] = useState("");
+    const context = useContext(AuthContext);
 
     function validate() {
         return username.length > 0 && password.length > 0;
     }
 
-    const submit = (e) => {
-        e.preventDefault()
+    const onSubmit = (e) => {
+        e.preventDefault();
+        
         axios.post("http://localhost:8000/api/get_token/", {
             username: username,
             password: password
-
-        }, {
-            validateStatus: false
         }).then((res) => {
             console.log(res);
-            if (res.status === 200) {
-                value.setAuthenticationState({ token: res.data.access, userInfo: { userID: res.data.user_id, username: username, password: password, role: 'employee' } })
-            }
+            context.setToken(res.data.access);
+            context.setAuthInfo(res.data.uid, username, password, res.data.role);
         }).catch((err) => {
             console.log(err);
         })
@@ -33,9 +30,10 @@ function Login() {
 
     return (
         <div className="app">
-            <Header/>
+            <Header />
             <div className="body">
-                <form onSubmit={submit}>
+                <form onSubmit={onSubmit}>
+
                     <br/>
                     <br/>
                     <label>
@@ -45,22 +43,22 @@ function Login() {
                                 placeholder="email"
                                 value={username}
                                 onChange={e => setUsername(e.target.value)}
-                                class="loginput"
+                                className="loginput"
                             />
                         </div>
                     </label>
-                    <br/>
+                    <br />
                     <label>
                         <input
                             type="password"
                             placeholder="password"
                             value={password}
                             onChange={e=>setPassword(e.target.value)}
-                            class="loginput"
+                            className="loginput"
                         />
                     </label>
                     <br/>
-                    <input type="Submit" value="submit" hidden={!validate()} class="login-button"/>
+                    <input type="Submit" value="submit" hidden={!validate()} className="login-button"/>
                 </form>
             </div>
         </div>

@@ -1,5 +1,41 @@
-/* Put here CSS that should be shared and synchronized across pages.
-   Put elsewhere CSS that should not be shared. */
+/* Our consolidated CSS file! For easy access to elements that should be shared. */
+/* My (Christopher’s) goal will be over the week of April 4 to organize this better and put some classes back into different CSS files.
+   Rename things, make the CSS easier to use, more consistent across pages, and suchlike. */
+
+.header {
+  width:100%;
+  height:110px;
+  font-family: Faune;
+  font-size: 70px;
+  color: #bba38e;
+  background-color: #58453B;
+  background-image: url("./pics/lumber.jpeg");
+  background-repeat: repeat;
+  text-align: center;
+}
+
+.infobox {
+  background-color: #d8b597;
+  color: #58453B;
+  min-height: 95%;
+  max-height: 100%;
+  position: relative;
+  margin-top: 10px;
+}
+
+.left-column {
+  width: 66.7%;
+  padding: 10px;
+}
+
+.right-column {
+  width: 33.3%;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
 
 .row {
   float: left;

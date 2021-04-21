@@ -7,13 +7,13 @@ import Image from 'react-bootstrap/Image';
 import profilepic from './pics/arnold.jpg';
 import axios from 'axios';
 import './ManagerComponent.css';
-import { AuthenticationContext } from './AuthContext.js';
+import { AuthContext } from './AuthContext.js';
 
 
 function ManagerComp(){
     
 
-    const value = useContext(AuthenticationContext);
+    const value = useContext(AuthContext);
     
     function EmployeeDisplay(props){
         return(
@@ -50,11 +50,12 @@ function ManagerComp(){
     }
     
     function getData(){
+        //console.log(value.authenticationState.userInfo.userID);
         axios.post("http://localhost:8000/api/user/mng/stats/",
-                {uid:57940164},
+                {uid:value.authenticationState.userInfo.userID},
                 {
                     headers:{
-                        Authorization:"Bearer "+value.authenticationState.token
+                        Authorization:"Bearer "+ value.token
                     }
                 }
                 )
@@ -110,16 +111,16 @@ function ManagerComp(){
     },[])//eslint-disable-line react-hooks/exhaustive-deps
 
 
-    if(loading)return(<div>WAITING ON A BACKEND FIX FOR GETTING UID</div>);
+    if(loading)return(<div>Loading</div>);
     return(
         <div>
         <div>
             <div/>
             <div className="title rounded" style={{marginBottom:'10px'}}>Your Team Dashboard</div>
-            <Button style={{marginBottom:'30px'}} onClick={
+            {/*<Button style={{marginBottom:'30px'}} onClick={
                 a=>{setFeed(!feed);
                 }}
-                >{feed?"Show Normal Feed":"Show Your Team Only"}</Button><br/>
+            >{feed?"Show Normal Feed":"Show Your Team Only"}</Button><br/>**/}
             <div style={{height:"200px"}}>
             
             <Pie data={data} options={options} />

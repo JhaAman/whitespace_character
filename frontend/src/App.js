@@ -4,7 +4,7 @@ import Login from './Login.js'
 import Home from './Home.js';
 import Profile from './Profile.js';
 import UploadData from './UploadData.js';
-import { AuthenticationProvider } from './AuthContext.js';
+import { AuthProvider } from './AuthContext.js';
 //import NotificationPage from './NotificationPage.js';
 import './App.css';
 
@@ -12,7 +12,7 @@ function App() {
   return (
     
     <Router>
-      <AuthenticationProvider>
+      <AuthProvider>
         <Switch>
           <Route path='/login'>
             <Login />
@@ -26,9 +26,8 @@ function App() {
           <Route path='/u/:userid'>
             <Profile />
           </Route>
-
         </Switch>
-      </AuthenticationProvider>
+      </AuthProvider>
     </Router>
   );
 }

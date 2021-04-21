@@ -9,11 +9,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
-import {AuthenticationContext} from './AuthContext.js';
+import {AuthContext} from './AuthContext.js';
 import images from './Images.js';
 
-import { TopMenu } from './Components.js';
+//import { TopMenu } from './Components.js';
 
 
 function Networkprofile(props) {
@@ -62,7 +61,7 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const { userid } = useParams();
-  const value = useContext(AuthenticationContext);
+  const value = useContext(AuthContext);
   //const [pictures,setPictures] = useState([]);
   const [oldpass,setOldPass] = useState("");
   const [newpass,setNewPass] = useState("");
@@ -172,9 +171,12 @@ function Profile() {
 
 
   //console.log(data);
+  //console.log(typeof(userid));
+  //console.log(typeof(value.authenticationState.userInfo.userID.toString()));
 
-
+  //console.log(value);
   return (
+    
     <div className="App">
 
       <div className="top">
@@ -192,8 +194,8 @@ function Profile() {
           <button className="button topbutton" onClick={() => setPage(0)}>Badges</button>
           <Col xs={1}></Col>
           <button className="button topbutton" onClick={() => setPage(1)}>Network</button>
-          <Col xs={1}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)}>Settings</button>
+          <Col xs={1} hidden={userid!==value.authenticationState.userInfo.userID.toString()}></Col>
+          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.authenticationState.userInfo.userID.toString()}>Settings</button>
 
         </div>
       </div>

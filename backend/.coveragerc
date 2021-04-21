@@ -1,0 +1,16 @@
+[run]
+    
+[report]
+exclude_lines =
+    # Ignore imports
+    from
+    import
+omit =
+    *site-packages*
+    *__init__*
+    backend/*
+    api/db/*
+    api/migrations/*
+    api/test/*
+    api/urls.py
+    manage.py   
