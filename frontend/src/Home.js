@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+
 import FeedRecognition from './Components/FeedRecognition/FeedRecognition.js';
 import SubmitRecog from './Components/SubmitRecog/SubmitRecog.js';
 import Rockstar from './Components/Rockstar/Rockstar.js';
@@ -52,6 +53,7 @@ function EmployeeHomepage() {
 
     useEffect(() => getRecognitions(), []);
 
+
     return (
         <div className="app">
             <TopMenu/>
@@ -67,7 +69,7 @@ function EmployeeHomepage() {
                         }
                     </div>
                     <div className='right-column'>
-                        <div className='autoinfobox rounded' style={{height:'auto'}}>
+                        <div className='autoinfobox rounded' style={{height:'auto'}} hidden={value.authenticationState.userInfo.role!=="mng"}>
                             <ManagerComp/>
                         </div>
                         <div className='infobox rounded'>

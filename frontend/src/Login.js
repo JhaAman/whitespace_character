@@ -33,6 +33,7 @@ function Login() {
             <Header/>
             <div className="body">
                 <form onSubmit={onSubmit}>
+
                     <br/>
                     <br/>
                     <label>
@@ -42,7 +43,7 @@ function Login() {
                                 placeholder="email"
                                 value={username}
                                 onChange={e => setUsername(e.target.value)}
-                                class="loginput"
+                                className="loginput"
                             />
                         </div>
                     </label>
@@ -53,11 +54,11 @@ function Login() {
                             placeholder="password"
                             value={password}
                             onChange={e=>setPassword(e.target.value)}
-                            class="loginput"
+                            className="loginput"
                         />
                     </label>
                     <br/>
-                    <input type="Submit" value="submit" hidden={!validate()} class="login-button"/>
+                    <input type="Submit" value="submit" hidden={!validate()} className="login-button"/>
                 </form>
             </div>
         </div>
