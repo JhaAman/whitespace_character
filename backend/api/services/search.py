@@ -62,7 +62,7 @@ def search_user(request):
                     | Q(last_name__icontains=firstNameQ)
                     | Q(first_name__icontains=lastNameQ)
                     | Q(last_name__icontains=lastNameQ) )\
-                .values('profile_picture', 'first_name', 'last_name', 'title')
+                .values('uid', 'profile_picture', 'first_name', 'last_name', 'title')
 
         # Get dictionary data
         searchUserPostDictList = SearchUserPostSrl(searchUserPostQsList, many=True).data
