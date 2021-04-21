@@ -16,10 +16,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import axios from 'axios';
 
-
-
-
-
 function App() {
   function Notification(props){
     return(
