@@ -13,7 +13,7 @@ import axios from 'axios';
 import {AuthenticationContext} from './AuthContext.js';
 import images from './Images.js';
 
-import { TopMenu } from './Components.js';
+//import { TopMenu } from './Components.js';
 
 
 function Networkprofile(props) {
@@ -172,9 +172,12 @@ function Profile() {
 
 
   //console.log(data);
+  //console.log(typeof(userid));
+  //console.log(typeof(value.authenticationState.userInfo.userID.toString()));
 
-
+  //console.log(value);
   return (
+    
     <div className="App">
 
       <div className="top">
@@ -192,8 +195,8 @@ function Profile() {
           <button className="button topbutton" onClick={() => setPage(0)}>Badges</button>
           <Col xs={1}></Col>
           <button className="button topbutton" onClick={() => setPage(1)}>Network</button>
-          <Col xs={1}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)}>Settings</button>
+          <Col xs={1} hidden={userid!==value.authenticationState.userInfo.userID.toString()}></Col>
+          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.authenticationState.userInfo.userID.toString()}>Settings</button>
 
         </div>
       </div>
