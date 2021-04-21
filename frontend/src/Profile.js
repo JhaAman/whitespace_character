@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import {AuthenticationContext} from './AuthContext.js';
 import images from './Images.js';
@@ -15,10 +15,17 @@ import { TopMenu } from './Components.js'
 
 function Networkprofile(props) {
   return (
-    <Row className="profile">
-      <Col xs={5}><Image src={props.picture} className="profilepic rounded-circle img-fluid" /></Col>
-      <Col xs={7}>{props.name}</Col>
-    </Row>
+    <div className="net-profile rounded">
+      <div className="left-column">
+        <img style={{border: "5px solid #58453B", width: "100px", height: "100px"}} src={props.picture} className="profilepic rounded-circle img-fluid" />
+      </div>
+      <div className="right-column">
+        <Link className='net-link' to={'/u/'+props.uid} style={{}}>{props.name}</Link> <br/>
+        <div style={{fontSize: "18px", fontStyle: "italic"}}>
+          {props.title}
+        </div>
+      </div>
+    </div>
   )
 }
 function Award(props) {
@@ -119,7 +126,7 @@ function Profile() {
           for (let i = 0; i < dpeople.length; i++) {
             //console.log(dpeople[i]);
             let name = dpeople[i].first_name + " " + dpeople[i].last_name;
-            p.push(<Networkprofile key={i} name={name} picture={profilepic} />)
+            p.push(<Networkprofile title={dpeople[i].title} uid={dpeople[i].uid} key={i} name={name} picture={"http://localhost:8000"+dpeople[i].profile_picture} />)
           }
           setPeople(p);
         }
@@ -185,7 +192,7 @@ function Profile() {
         </div>
         <div className="row button-row">
           <div className="lastname">
-            {data.data.job_title}
+            {data.data.title}
           </div>
         </div>
         <br />
