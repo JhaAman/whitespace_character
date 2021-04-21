@@ -203,8 +203,8 @@ function Profile() {
         <button className="button topbutton" onClick={() => setPage(0)}>badges</button>
           <Col xs={1}></Col>
           <button className="button topbutton" onClick={() => setPage(1)}>network</button>
-          <Col xs={1} hidden={userid!==value.authenticationState.userInfo.userID.toString()}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.authenticationState.userInfo.userID.toString()}>Settings</button>
+          <Col xs={1} hidden={userid!==value.authenticationState.userInfo.userID}></Col>
+          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.authenticationState.userInfo.userID}>Settings</button>
 
         </div>
       </div>

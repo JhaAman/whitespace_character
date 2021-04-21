@@ -19,15 +19,12 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import 'reactjs-popup/dist/index.css';
 import {faBell} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import {AuthenticationContext} from './AuthContext.js';
 import images from './Images.js';
 import { useParams } from 'react-router-dom';
 
 let profileAPI = "http://localhost:8000/api/get_profile/"
-
-import { AuthenticationContext } from './AuthContext.js';
 
 /* Now storing objects here, so they have access to all the right directories and CSS and suchlike. If this upset anyone, let me know. ~ Christopher */
 /* To add an object here, though, one must add the line “// eslint-disable-next-line” to escape the wrath of the garbage fairy. */
@@ -130,7 +127,7 @@ function TopMenu({isOpen, setIsOpen}) {
                     <Link className='top-link' to='/login'>logout</Link>
                 </div>
                 <div className='menu-right'>
-                    <NotificationButton/>
+                    <Notification/>
                 </div>
             </div>
         </div>
