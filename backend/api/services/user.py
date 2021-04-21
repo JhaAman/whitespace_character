@@ -421,9 +421,8 @@ def update_user_profile_picture(request):
 #How to use: call the api without params
 @api_view(["POST"])
 def change_password(request):
-    try:
-        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
-        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+    try:    
+        uid = request.data["uid"]
         old_password = request.data["old"]
         new_password = request.data["new"]
         user = User.objects.get(uid = uid)
@@ -460,7 +459,7 @@ def personal_information(request):
 
 #For a list uid, this api will send back the URL to the place we store image that you can render
 @api_view(["GET"])
-def get_Image(request):
+def get_image(request):
     try:
         if not 'uid' in request.query_params:
             return Response("Missing uid", status.HTTP_400_BAD_REQUEST)
