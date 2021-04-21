@@ -179,12 +179,12 @@ col{
   color: #58453B
 }
 
-.left-column {
+.pf-left-column {
   width: 38.2%;
   flex-direction: column;
 }
 
-.right-column {
+.pf-right-column {
   width: 61.8%;
   font-size: 25px;
   flex-direction: column;

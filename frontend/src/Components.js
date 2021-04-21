@@ -21,7 +21,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import images from './Images.js';
 import { useParams } from 'react-router-dom';
 import './Components.css'
-import './App.css'
 
 let profileAPI = "http://localhost:8000/api/get_profile/"
 
@@ -60,7 +59,7 @@ function Recognition(props){
         uid: userid
       },
       headers:{
-        Authorization:"Bearer "+value.authenticationState.token
+        Authorization:"Bearer "+value.token
       },
     })
       .then(function (res) {
@@ -158,7 +157,7 @@ function Rockstar({buzz, firstName, lastName}) {
         uid: userid
       },
       headers:{
-        Authorization:"Bearer "+value.authenticationState.token
+        Authorization:"Bearer "+value.token
       },
     })
       .then(function (res) {
@@ -183,6 +182,8 @@ function Rockstar({buzz, firstName, lastName}) {
       </div>
   )
 }
+
+export { Rockstar };
 
 
 function Notification() {

@@ -16,10 +16,10 @@ import { TopMenu } from './Components.js'
 function Networkprofile(props) {
   return (
     <div className="net-profile rounded">
-      <div className="left-column">
+      <div className="pf-left-column">
         <img style={{border: "5px solid #58453B", width: "100px", height: "100px"}} src={props.picture} className="profilepic rounded-circle img-fluid" />
       </div>
-      <div className="right-column">
+      <div className="pf-right-column">
         <Link className='net-link' to={'/u/'+props.uid} style={{}}>{props.name}</Link> <br/>
         <div style={{fontSize: "18px", fontStyle: "italic"}}>
           {props.title}

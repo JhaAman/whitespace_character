@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import FeedRecognition from './Components/FeedRecognition/FeedRecognition.js';
 import SubmitRecog from './Components/SubmitRecog/SubmitRecog.js';
-import Rockstar from './Components/Rockstar/Rockstar.js';
-import { TopMenu } from './Components.js';
+//import Rockstar from './Components/Rockstar/Rockstar.js';
+import { TopMenu, Rockstar } from './Components.js';
 import { AuthContext } from './AuthContext.js';
 import profilepic from './pics/arnold.jpg';
 import profilepic2 from './pics/regina.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css'
-import './App.css'
 import ManagerComp from './ManagerComponent.js';
 import axios from 'axios';
 
