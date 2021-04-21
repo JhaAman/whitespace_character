@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
 import { AuthContext } from './AuthContext.js';
@@ -18,10 +18,10 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import 'reactjs-popup/dist/index.css';
 import {faBell} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import axios from 'axios';
-import {AuthenticationContext} from './AuthContext.js';
 import images from './Images.js';
 import { useParams } from 'react-router-dom';
+import './Components.css'
+import './App.css'
 
 let profileAPI = "http://localhost:8000/api/get_profile/"
 
@@ -44,15 +44,15 @@ function Recognition(props){
   const [data, setData] = useState('');
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
-  const value = useContext(AuthenticationContext);
+  const value = useContext(AuthContext);
   //const [pictures,setPictures] = useState([]);
   const [oldpass,setOldPass] = useState("");
   const [newpass,setNewPass] = useState("");
   const [newpassagain,setNewPassAgain] = useState("");
   const [uploadexists,setUploadExists] = useState(false);
   const [ufile,setUFile] = useState("");
-  const [profilepic1,setProfilePic1] = useState(defprofilepic);
-  const [profilepic2,setProfilePic2] = useState(defprofilepic);
+  const [profilepic1,setProfilePic1] = useState(ProfilePicture);
+  const [profilepic2,setProfilePic2] = useState(ProfilePicture);
   const upload = React.useRef(null);
   let getData = (setProfilePic, userid) => {
     axios.get(profileAPI, {
@@ -123,7 +123,7 @@ function TopMenu({isOpen, setIsOpen}) {
                 </div>
                 <div className='menu-center'>
                     <Link className='top-link' to='/home'>home</Link>
-                    <Link className='top-link' to={'/u/'+value.authenticationState.userInfo.userID}>self</Link>
+                    <Link className='top-link' to={'/u/'+context.userID}>self</Link>
                     <Link onClick={() => context.logout()}className='top-link' to='/login'>logout</Link>
                 </div>
                 <div className='menu-right'>
@@ -143,14 +143,14 @@ function Rockstar({buzz, firstName, lastName}) {
   const [data, setData] = useState('');
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
-  const value = useContext(AuthenticationContext);
+  const value = useContext(AuthContext);
   //const [pictures,setPictures] = useState([]);
   const [oldpass,setOldPass] = useState("");
   const [newpass,setNewPass] = useState("");
   const [newpassagain,setNewPassAgain] = useState("");
   const [uploadexists,setUploadExists] = useState(false);
   const [ufile,setUFile] = useState("");
-  const [profilepic,setProfilePic] = useState(defprofilepic);
+  const [profilepic,setProfilePic] = useState(ProfilePicture);
   const upload = React.useRef(null);
   let getData = (setProfilePic, userid) => {
     axios.get(profileAPI, {

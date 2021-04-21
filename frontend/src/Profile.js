@@ -66,7 +66,7 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const { userid } = useParams();
-  const value = useContext(AuthenticationContext);
+  const value = useContext(AuthContext);
   //const [pictures,setPictures] = useState([]);
   const [oldpass,setOldPass] = useState("");
   const [newpass,setNewPass] = useState("");
@@ -104,7 +104,7 @@ function Profile() {
         uid: userid
       },
       headers:{
-        Authorization:"Bearer "+value.authenticationState.token
+        Authorization:"Bearer "+value.token
       },
     })
       .then(function (res) {
@@ -154,7 +154,7 @@ function Profile() {
     },
     {
     headers:{
-      Authentication:"Bearer "+value.authenticationState.token
+      Authentication:"Bearer "+value.token
     }},
     ).then(function(res){
       if(res.status===200){
@@ -182,7 +182,7 @@ function Profile() {
   //console.log(value);
   return (
     
-    <div className="App">
+    <div className="body">
       <TopMenu/>
       <div className="column header-box rounded">
         <div className="row profile-avatar">
@@ -203,8 +203,8 @@ function Profile() {
         <button className="button topbutton" onClick={() => setPage(0)}>badges</button>
           <Col xs={1}></Col>
           <button className="button topbutton" onClick={() => setPage(1)}>network</button>
-          <Col xs={1} hidden={userid!==value.authenticationState.userInfo.userID}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.authenticationState.userInfo.userID}>Settings</button>
+          <Col xs={1} hidden={userid!==value.userID}></Col>
+          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.userID}>Settings</button>
         </div>
       </div>
       {page === 0 ? (
