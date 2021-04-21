@@ -82,7 +82,7 @@ import os
         openapi.Parameter(
             name='profile_picture', in_=openapi.IN_FORM,
             type=openapi.TYPE_FILE,
-            description="user's profile picture"
+            description="user's profile picture address"
         )
     ], 
     responses={
@@ -344,13 +344,15 @@ def mng_stats(request):
                 'first_name': emplObj.first_name,
                 'last_name': emplObj.last_name,
                 'profile_picture': None, # TODO: Figure how to return profle pic
+                'profile_picture_url': emplObj.profile_picture.url,
                 'recogInCount': recogInCount,
                 'recogOutCount': recogOutCount,
                 'best_tag': str(best_tag)
             }
-            emplStatSrl = EmplStatSrl(data=emplStatDict)
-            lc = emplStatSrl.is_valid(raise_exception=True)
-            emplStatDict = emplStatSrl.validated_data
+            ## commented out by Christopher so that my invalid url field would not get forthrown
+            #emplStatSrl = EmplStatSrl(data=emplStatDict)
+            #lc = emplStatSrl.is_valid(raise_exception=True)
+            #emplStatDict = emplStatSrl.validated_data
             # Add Employee Stat object to list
             emplStatDictList.append(emplStatDict)
 

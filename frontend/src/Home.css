@@ -1,6 +1,7 @@
 .left-column {
     width: 61.8%;
     padding: 10px;
+    overflow: scroll;
 }
 
 .right-column {
@@ -8,6 +9,7 @@
     font-size: 25px;
     flex-direction: column;
     padding: 10px;
+    overflow: scroll;
 }
 
 .infobox {

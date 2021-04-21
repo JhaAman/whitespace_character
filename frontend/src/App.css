@@ -75,31 +75,6 @@ input:focus {
   border-right: 2px dotted #bba38e;
 }
 
-::-webkit-input-placeholder {
-  color: #bba38e;
-  text-align: center;
-}
-
-:-moz-placeholder {
-  color: #bba38e;
-  text-align: center;
-}
-
-::-moz-placeholder {
-  color: #bba38e;
-  text-align: center;
-}
-
-::placeholder {
-  color: #bba38e;
-  text-align: center;
-}
-
-:-ms-input-placeholder {
-  color: #bba38e;
-  text-align: center;
-}
-
 @font-face {
   font-family: Faune;
   src: url(./typefaces/Faune-DisplayBoldItalic.otf);

@@ -203,8 +203,9 @@ function Profile() {
         <button className="button topbutton" onClick={() => setPage(0)}>badges</button>
           <Col xs={1}></Col>
           <button className="button topbutton" onClick={() => setPage(1)}>network</button>
-          <Col xs={1} hidden={userid!==value.userID}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.userID}>Settings</button>
+          <Col xs={1} hidden={userid!==value.uid}></Col>
+          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.uid}>settings</button>
+
         </div>
       </div>
       {page === 0 ? (
@@ -231,13 +232,14 @@ function Profile() {
           <Row>
           <Col>
           <div className="optionbox">
-            <div>Change password</div>
+            <div><b>change password</b></div>
             <br/>
             <form >
               <label>
                 <input
+                className="input"
                 type="password"
-                placeholder="Old Password"
+                placeholder="old password"
                 value={oldpass}
                 onChange={e=>setOldPass(e.target.value)}
                 />
@@ -245,8 +247,9 @@ function Profile() {
               <br/>
               <label>
                 <input
+                className="input"
                 type="password"
-                placeholder="New Password"
+                placeholder="new password"
                 value={newpass}
                 onChange={e=>setNewPass(e.target.value)}
                 />
@@ -254,8 +257,9 @@ function Profile() {
               <br/>
               <label>
                 <input
+                className="input"
                 type="password"
-                placeholder="New Password Again"
+                placeholder="new password again"
                 value={newpassagain}
                 onChange={e=>setNewPassAgain(e.target.value)}
                 />
@@ -264,14 +268,14 @@ function Profile() {
               
             </form>
             <button onClick={e=>changePassword()} hidden={newpass!==newpassagain}>
-              Change Password
+              update
             </button>
             <div hidden={newpass===newpassagain}>Please ensure your new password is typed the same in both boxes</div>
           </div>
           </Col>
             <Col>
           <div className="optionbox">
-            <div>Upload a profile picture</div>
+            <div><b>upload avatar</b></div>
             <br/>
             <div className="picture">
               <form>

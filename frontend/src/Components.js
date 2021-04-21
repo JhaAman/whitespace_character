@@ -122,7 +122,7 @@ function TopMenu({isOpen, setIsOpen}) {
                 </div>
                 <div className='menu-center'>
                     <Link className='top-link' to='/home'>home</Link>
-                    <Link className='top-link' to={'/u/'+context.userID}>self</Link>
+                    <Link className='top-link' to={'/u/'+context.uid}>self</Link>
                     <Link onClick={() => context.logout()}className='top-link' to='/login'>logout</Link>
                 </div>
                 <div className='menu-right'>
@@ -137,7 +137,7 @@ function TopMenu({isOpen, setIsOpen}) {
 export { TopMenu }
 
 // eslint-disable-next-line
-function Rockstar({buzz, firstName, lastName}) {
+function Rockstar2({buzz, firstName, lastName}) {
   const [people, setPeople] = useState();
   const [data, setData] = useState('');
   const [loading, setLoading] = useState(true);
@@ -177,6 +177,24 @@ function Rockstar({buzz, firstName, lastName}) {
               <div style={{width: '62%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
                   <i>Rockstar of {buzz} : </i>
                   <b>{firstName} {lastName}</b>
+              </div>
+          </div>
+      </div>
+  )
+}
+
+function Rockstar({value, uid, name, profilePicture}) {
+  const context = useContext(AuthContext);
+
+  return (
+      <div class="rockstar rounded">
+          <div style={{width: '100%', height: '80%', display: 'flex', flexDirection: 'row'}}>
+              <div style={{width: '38%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                  <img src={(profilePicture === "Nothing" || profilePicture === "") ? ProfilePicture : profilePicture} style={{width: '100px', height: '100px', borderRadius: '50%', border: '2px solid black'}}/>
+              </div>
+              <div style={{width: '62%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
+                  <i>Rockstar of {value} : </i>
+                  <b>{name}</b>
               </div>
           </div>
       </div>
