@@ -1,4 +1,4 @@
-import './NotificationPage.css';
+import './Components.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -51,16 +51,22 @@ function Notification() {
     );
   }
   //let notifications = [];
-  const [notifs, setNotifs] = useState([]);
-  // eslint-disable-next-line
-  const [authenticated, setAuthenticated] = useState(false);
-  const [auth, setAuth] = useState();
-  const [newNotif, setNewNotif] = useState();
-  const [loading, setLoading] = useState(true);
-  function authenticate() {
-    axios.post("http://localhost:8000/api/get_token/", {
-      "username": "root",
-      "password": "pwd"
+  const [notifs,setNotifs] = useState([]);
+  //const [authenticated,setAuthenticated] = useState(false);
+  const [auth,setAuth] = useState();
+  const [newNotif,setNewNotif] = useState();
+  const [loading,setLoading] = useState(true);
+  
+  function authenticate(){
+    axios.post("http://localhost:8000/api/get_token/",{
+      "username":"root",
+      "password":"pwd"
+    })
+    .then(function(response){
+      setAuth(response.data.access);
+      //console.log("success");
+      //setAuthenticated(true);
+      getNotifications(response.data.access);
     })
       .then(function (response) {
         setAuth(response.data.access);
@@ -87,18 +93,18 @@ function Notification() {
         for (let i = 0; i < response.data.length; i++) {
           if (!response.data[i].seen) n = true;
 
-          setNotifs(notifs => [...notifs,
-          <BuildNotification key={response.data[i].nid}
-            message={response.data[i].notif_message}
-            type={response.data[i].notif_type}
-            time={timesince(Date.parse(response.data[i].date_created))}
-            seen={response.data[i].seen}
-            nid={response.data[i].nid} />
-          ]);
-          console.log(response.data[i]);
-        }
-        setNewNotif(n);
-      });
+        setNotifs(notifs => [...notifs,
+        <BuildNotification key={response.data[i].nid}
+        message={response.data[i].notif_message}
+        type={response.data[i].notif_type}
+        time={timesince(Date.parse(response.data[i].date_created))}
+        seen={response.data[i].seen}
+        nid={response.data[i].nid}/>
+        ]);
+        //console.log(response.data[i]);
+      }
+      setNewNotif(n);
+    });
   }
 
   function markSeen(nid) {

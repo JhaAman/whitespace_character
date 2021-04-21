@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from './AuthContext.js';
 import axios from 'axios'
 import { Header } from './Components.js'
+import './Login.css'
 
 function Login() {
     const [ username, setUsername ] = useState("");
@@ -12,7 +13,7 @@ function Login() {
         return username.length > 0 && password.length > 0;
     }
 
-    const submit = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         
         axios.post("http://localhost:8000/api/get_token/", {
@@ -21,20 +22,7 @@ function Login() {
         }).then((res) => {
             console.log(res);
             context.setToken(res.data.access);
-            context.setIsAuthenticated(true);
-            axios.get("http://localhost:8000/api/personal_information/", {
-                params: {
-                    token: context.token
-                },
-                headers: {
-                    "Authorization": "Bearer " + context.token
-                }
-            }).then((res) => {
-                console.log(res);
-                context.setAuthInfo(res.data.uid, username, password, res.data.role);
-            }).catch((err) => {
-                console.log(err);
-            })
+            context.setAuthInfo(res.data.uid, username, password, res.data.role);
         }).catch((err) => {
             console.log(err);
         })
@@ -44,9 +32,10 @@ function Login() {
         <div className="app">
             <Header />
             <div className="body">
-                <form onSubmit={submit}>
-                    <br />
-                    <br />
+                <form onSubmit={onSubmit}>
+
+                    <br/>
+                    <br/>
                     <label>
                         <div className='loginput rounded'>
                             <input
@@ -54,7 +43,7 @@ function Login() {
                                 placeholder="email"
                                 value={username}
                                 onChange={e => setUsername(e.target.value)}
-                                class="loginput"
+                                className="loginput"
                             />
                         </div>
                     </label>
@@ -64,12 +53,12 @@ function Login() {
                             type="password"
                             placeholder="password"
                             value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            class="loginput"
+                            onChange={e=>setPassword(e.target.value)}
+                            className="loginput"
                         />
                     </label>
-                    <br />
-                    <input type="Submit" value="submit" hidden={!validate()} class="login-button" />
+                    <br/>
+                    <input type="Submit" value="submit" hidden={!validate()} className="login-button"/>
                 </form>
             </div>
         </div>
