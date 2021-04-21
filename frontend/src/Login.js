@@ -22,16 +22,7 @@ function Login() {
         }).then((res) => {
             console.log(res);
             context.setToken(res.data.access);
-            axios.get("http://127.0.0.1:8000/api/user/get_perInfo/", {
-                headers: {
-                    "Authorization": "Bearer " + context.token
-                }
-            }).then((res) => {
-                console.log(res);
-                context.setAuthInfo(res.data.uid, username, password, res.data.role);
-            }).catch((err) => {
-                console.log(err);
-            })
+            context.setAuthInfo(res.data.uid, username, password, res.data.role);
         }).catch((err) => {
             console.log(err);
         })

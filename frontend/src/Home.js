@@ -73,7 +73,8 @@ function EmployeeHomepage() {
                         <div className='infobox rounded'>
                             {
                                 rockstarValues.map((e) => {
-                                    return (<Rockstar value={e} uid={rockstars[e]} />);
+                                    let rockstar = rockstars[e] ? rockstars[e] : {"uid": "", "name": "", "profile_picture": ""}
+                                    return (<Rockstar value={e} uid={rockstar["uid"]} name={rockstar["name"]} profilePicture={'http://localhost:8000' + rockstar["profile_picture"]} />);
                                 })
                             }
                         </div>

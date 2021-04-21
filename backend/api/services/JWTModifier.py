@@ -13,13 +13,15 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Add extra responses here
         uid = str(self.user.id)
         data['uid'] = uid
-        data['role'] = User.objects.get(uid = uid).user_role
+        if not uid == "1":
+            data['role'] = User.objects.get(uid = uid).user_role
+        else:
+            data['role'] = "SuperUser"
         return data
     
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-
         # ADD CUSTOM FIELD HERE
         token['is_staff'] = user.is_staff
         # ...

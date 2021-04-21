@@ -48,23 +48,23 @@ def get_rockstars(request):
                                 Ret[value]["profile_picture"] =  user.profile_picture.url
                             else:
                                 Ret[value]["profile_picture"] = ""
-                if count > Ret["MVP"]["count"]:
-                    Ret["MVP"]["count"] = user.values_scores[value]
+            if count > Ret["MVP"]["count"]:
+                Ret["MVP"]["count"] = count
+                Ret["MVP"]["uid"] = user.uid
+                Ret["MVP"]["name"] = user.first_name + " " + user.last_name
+                if not user.profile_picture == "":
+                        Ret["MVP"]["profile_picture"] =  user.profile_picture.url
+                else:
+                        Ret["MVP"]["profile_picture"] = ""
+            elif Ret["MVP"]["count"] == count and not count == 0:
+                if random.choice([True, False]):
+                    Ret["MVP"]["count"] = count
                     Ret["MVP"]["uid"] = user.uid
                     Ret["MVP"]["name"] = user.first_name + " " + user.last_name
                     if not user.profile_picture == "":
-                            Ret["MVP"]["profile_picture"] =  user.profile_picture.url
+                        Ret["MVP"]["profile_picture"] =  user.profile_picture.url
                     else:
-                            Ret["MVP"]["profile_picture"] = ""
-                elif Ret["MVP"]["count"] == count and not count == 0:
-                    if random.choice([True, False]):
-                        Ret["MVP"]["count"] = user.values_scores[value]
-                        Ret["MVP"]["uid"] = user.uid
-                        Ret["MVP"]["name"] = user.first_name + " " + user.last_name
-                        if not user.profile_picture == "":
-                            Ret["MVP"]["profile_picture"] =  user.profile_picture.url
-                        else:
-                            Ret["MVP"]["profile_picture"] = ""     
+                        Ret["MVP"]["profile_picture"] = ""     
         return Response((vals,Ret) ,status=status.HTTP_200_OK)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
