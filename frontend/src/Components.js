@@ -72,6 +72,9 @@ function TopMenu({isOpen, setIsOpen}) {
     // State hook for search bar text
     const [searchText, setSearchText] = useState("");
 
+    // State hook for search result list
+    const [searchResultList, setSearchResultList] = useState([])
+
     // Get JWT authorization context
     const value = useContext(AuthenticationContext);
 
@@ -93,10 +96,7 @@ function TopMenu({isOpen, setIsOpen}) {
         })
 
         const data = resp.data.data
-
-        // === RENDER DATA BELOW === //
-
-        // console.log(data)
+        setSearchResultList(data)
     }
 
     // Handler on user submitting search query
@@ -125,6 +125,15 @@ function TopMenu({isOpen, setIsOpen}) {
                     onEnter={onEnterSearchBar}
                     onChange={onChangeSearchBarText}
                  />
+                 { 
+                    searchResultList.map(
+                        // RENDER DATA HERE
+                        searchResult => 
+                        <div style={{marginLeft: '10px'}}>
+                            {searchResult.first_name}
+                        </div>
+                    ) 
+                 }
                 <div className='menu-right'>
                     <NotificationButton/>
                 </div>
