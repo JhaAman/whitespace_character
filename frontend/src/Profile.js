@@ -176,9 +176,12 @@ function Profile() {
 
 
   //console.log(data);
+  //console.log(typeof(userid));
+  //console.log(typeof(value.authenticationState.userInfo.userID.toString()));
 
-
+  //console.log(value);
   return (
+    
     <div className="App">
       <TopMenu/>
       <div className="column header-box rounded">
@@ -200,8 +203,9 @@ function Profile() {
         <button className="button topbutton" onClick={() => setPage(0)}>badges</button>
           <Col xs={1}></Col>
           <button className="button topbutton" onClick={() => setPage(1)}>network</button>
-          <Col xs={1}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)}>settings</button>
+          <Col xs={1} hidden={userid!==value.authenticationState.userInfo.userID.toString()}></Col>
+          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.authenticationState.userInfo.userID.toString()}>Settings</button>
+
         </div>
       </div>
       {page === 0 ? (

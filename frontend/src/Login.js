@@ -7,6 +7,7 @@ import './Login.css'
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [token,setToken] = useState("");
     const value = useContext(AuthenticationContext);
 
     function validate() {
@@ -25,8 +26,21 @@ function Login() {
             console.log(res);
             if (res.status === 200) {
                 value.setAuthenticationState({ token: res.data.access, userInfo: { userID: res.data.user_id, username: username, password: password, role: 'employee' } })
+                setToken(res.data.access);
             }
-        }).catch((err) => {
+        }).then(function(){
+            function sleep(ms){
+                return new Promise(resolve => setTimeout(resolve,ms));
+            }
+            sleep(1000).then(()=>{axios.get("http://localhost:8000/api/user/get_perInfo/",
+                    {headers:{
+                        Authorization:"Bearer "+token
+                    }}).then((res)=>{
+                        console.log(res);
+                        value.setAuthenticationState({token:token,userInfo:{userID:res.data.uid, username:username, password:password, role:res.data.role}})
+                    });
+        });})
+        .catch((err) => {
             console.log(err);
         })
     }
@@ -35,6 +49,7 @@ function Login() {
         <div className="app">
             <Header/>
             <div className="body">
+                
                 <form onSubmit={submit}>
                     <br/>
                     <br/>
@@ -45,7 +60,7 @@ function Login() {
                                 placeholder="email"
                                 value={username}
                                 onChange={e => setUsername(e.target.value)}
-                                class="loginput"
+                                className="loginput"
                             />
                         </div>
                     </label>
@@ -56,11 +71,11 @@ function Login() {
                             placeholder="password"
                             value={password}
                             onChange={e=>setPassword(e.target.value)}
-                            class="loginput"
+                            className="loginput"
                         />
                     </label>
                     <br/>
-                    <input type="Submit" value="submit" hidden={!validate()} class="login-button"/>
+                    <input type="Submit" value="submit" hidden={!validate()} className="login-button"/>
                 </form>
             </div>
         </div>
