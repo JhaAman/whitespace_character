@@ -4,7 +4,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token') ? localStorage.getItem('token') : '';
-    const uid = localStorage.getItem('uID') ? localStorage.getItem('uid') : '';
+    const uid = localStorage.getItem('uid') ? localStorage.getItem('uid') : '';
     const username = localStorage.getItem('username') ? localStorage.getItem('username') : '';
     const password = localStorage.getItem('password') ? localStorage.getItem('password') : '';
     const role = localStorage.getItem('role') ? localStorage.getItem('role') : '';
