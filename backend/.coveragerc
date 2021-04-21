@@ -1,0 +1,10 @@
+[run]
+omit =
+    *site-packages*
+    *__init__*
+    backend/*
+    api/db/*
+    api/migrations/*
+    api/test/*
+    api/urls.py
+    manage.py   
