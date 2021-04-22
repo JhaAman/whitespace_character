@@ -5,7 +5,7 @@ import Arnold from '../../../pics/arnold.jpg'
 import './ReportedRecog.css'
 
 function ReportedRecog({ rid, uidFrom, uidTo, comments }) {
-    const context = useContext(AuthContext);
+    const context = useContext(AuthenticationContext);
 
     const onIgnore = () => {
         axios.get('http://127.0.0.1:8000/api/approve_recognitions/?rid=' + rid + "&ignored=true",

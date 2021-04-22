@@ -4,7 +4,7 @@ import './SubmitRecog.css'
 import axios from 'axios';
 
 function SubmitRecog() {
-    const context = useContext(AuthContext);
+    const context = useContext(AuthenticationContext);
     const [ name, setName ] = useState("")
     const [ recognition, setRecognition ] = useState("");
     const [ onSuccess, setOnSuccess ] = useState(false);

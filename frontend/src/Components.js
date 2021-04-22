@@ -73,7 +73,7 @@ import fetchAPI from './services/api.js';
    const [searchResultList, setSearchResultList] = useState([])
  
    // Get JWT authorization context
-   const value = useContext(AuthContext);
+   const value = useContext(AuthenticationContext);
  
    // Handler on user typing in search bar
    const onChangeSearchBarText = newText => {
@@ -82,8 +82,10 @@ import fetchAPI from './services/api.js';
    }
  
    const actualEnterSearchBarHandler = async () => {
- 
-       const authHeader = "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3NzY2MTU4LCJqdGkiOiJhMWRjYmYyZTNjZWY0NTY3ODg1YzU2NTAyNWJlMWQwNSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.5KfI8UUJBjQnWIVkNRR4BIkjO7gAjedjFHpkX62UFb4"
+       
+       const arr = ['Bearer ', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3NzY2MTU4LCJqdGkiOiJhMWRjYmYyZTNjZWY0NTY3ODg1YzU2NTAyNWJlMWQwNSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.5KfI8UUJBjQnWIVkNRR4BIkjO7gAjedjFHpkX62UFb4']
+       const authHeader = arr.join();
+
  
        const resp = await fetchAPI({
            method: "post",

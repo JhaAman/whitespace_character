@@ -4,7 +4,7 @@ import ProfilePicture from './../../pics/arnold.jpg'
 import { AuthenticationContext } from './../AuthContext.js';
 
 function Rockstar({value, uid, name, profilePicture}) {
-    const context = useContext(AuthContext);
+    const context = useContext(AuthenticationContext);
 
     return (
         <div style={{height: '150px', width: '90%', border: '2px solid black', marginBottom: '5px', backgroundColor: 'grey'}}>

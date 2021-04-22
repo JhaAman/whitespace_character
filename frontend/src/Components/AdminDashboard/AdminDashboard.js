@@ -6,7 +6,7 @@ import './AdminDashboard.css';
 
 function AdminDashboard({ rID }) {
     const [ reportedRecogs, setReportedRecogs ] = useState([]);
-    const context = useContext(AuthContext);
+    const context = useContext(AuthenticationContext);
 
     const onStartup = () => {
         axios.get("http://127.0.0.1:8000/api/get_reported_recognitions/", {
