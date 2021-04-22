@@ -10,7 +10,7 @@ import axios from 'axios'
 import React, { useEffect, useContext } from 'react';
 import { Profile } from './Profile.js';
 import { AuthenticationContext } from './AuthContext.js';
-import { Rockstar } from './Components/Rockstar/Rockstar.js';
+import Rockstar from './Components/Rockstar/Rockstar.js';
 
 function EmployeeHomepage() {
     const rockstarsArray = [{value: 'Communications', firstName: 'Gary', lastName: 'Szekely'}, {value: 'Hard-Working', firstName: 'Reuben', lastName: 'Philip'}, {value: 'Inclusive', firstName: 'Khang', lastName: 'Nguyen'}]
