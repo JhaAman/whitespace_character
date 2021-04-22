@@ -15,16 +15,32 @@ function EmployeeHomepage() {
       useEffect(() => {
         const getData = () => {
             axios.post("http://localhost:8000/api/create_user/", {
-                    "tid": "37965959",
-                    "first_name": "Peter",
-                    "last_name": "Dent",
-                    "email": "pd@apple.com",
-                    "password": "elephant",
-                    "title": "Quality Engineer",
-                    "user_role": "emp"
-              })
-            .then(function(res){
-                console.log(res);
+                    "uid": "58853681",
+                    "date_created": "2021-04-07T01:07:21.379321Z",
+                    "tid": "75498409",
+                    "first_name": "George",
+                    "last_name": "Lee",
+                    "email": "glee@123.com",
+                    "password": "1234",
+                    "job_title": "Developer",
+                    "user_role": "emp",
+                    "title": "",
+                    "badges": [
+                        "Rockstar of the month in Jan 2019",
+                        "Best Dressed",
+                        "Collaboration Badge",
+                        "Innovation Badge",
+                        "Simplicity Badge",
+                        "10 Recognitions Received"
+                    ]
+                })
+            .then(function(){
+                return ({
+                    'method':'GET',
+                    'params': {
+                        'uid':'uid',
+                    },
+                })
             })
             .catch(error => {
                 console.error(error)
