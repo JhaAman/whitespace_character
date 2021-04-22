@@ -1,10 +1,47 @@
 import axios from 'axios';
 import React, { useState, useContext, useEffect } from 'react';
 import ProfilePicture from './../../pics/arnold.jpg'
-import { AuthContext } from './../../AuthContext.js';
+import { AuthenticationContext } from './../../AuthContext.js'
 
 function Rockstar({value, uid, name, profilePicture}) {
-    const context = useContext(AuthContext);
+    const context = useContext(AuthenticationContext);
+
+    useEffect(() => {
+        const getData = () => {
+            axios.post("http://localhost:8000/api/create_user/", {
+                    "uid": "58853681",
+                    "date_created": "2021-04-07T01:07:21.379321Z",
+                    "tid": "75498409",
+                    "first_name": "George",
+                    "last_name": "Lee",
+                    "email": "glee@123.com",
+                    "password": "1234",
+                    "job_title": "Developer",
+                    "user_role": "emp",
+                    "title": "",
+                    "badges": [
+                        "Rockstar of the month in Jan 2019",
+                        "Best Dressed",
+                        "Collaboration Badge",
+                        "Innovation Badge",
+                        "Simplicity Badge",
+                        "10 Recognitions Received"
+                    ]
+                })
+            .then(function(){
+                return ({
+                    'method':'GET',
+                    'params': {
+                        'uid':'uid',
+                    },
+                })
+            })
+            .catch(error => {
+                console.error(error)
+            });
+        }
+        getData();
+      }, []);
 
     return (
         <div style={{height: '150px', width: '90%', border: '2px solid black', marginBottom: '5px', backgroundColor: 'grey'}}>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../../../AuthContext.js'
+import { AuthenticationContext } from '../../../AuthContext.js'
 import axios from 'axios';
 import Arnold from '../../../pics/arnold.jpg'
 import './ReportedRecog.css'

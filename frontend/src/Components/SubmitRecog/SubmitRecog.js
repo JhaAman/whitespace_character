@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { AuthContext } from './../../AuthContext.js'
+import { AuthenticationContext } from './../../AuthContext.js'
 import './SubmitRecog.css'
 import axios from 'axios';
 
