@@ -72,6 +72,9 @@ function TopMenu({isOpen, setIsOpen}) {
     // State hook for search bar text
     const [searchText, setSearchText] = useState("");
 
+    // State hook for search result list
+    const [searchResultList, setSearchResultList] = useState([])
+
     // Get JWT authorization context
     const value = useContext(AuthenticationContext);
 
@@ -83,7 +86,7 @@ function TopMenu({isOpen, setIsOpen}) {
 
     const actualEnterSearchBarHandler = async () => {
 
-        const authHeader = "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3NjgxODQyLCJqdGkiOiJjZDJiYTk0MjkwOTc0YWY3OGQ5ZDAxMmYxMDE3Y2M3NSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.duDXsRjKNlTteWaCnA5YLnUwN40qY5yS9usrkg3PXzU"
+        const authHeader = "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3Njg3MjkzLCJqdGkiOiIyZWQ1N2ViYWQyYmE0OTMyOTgyMzI2YmJlYzdmZmZhNyIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.6Z3uVQUJyi99NB8dq-XU6yxVMSscvtX6PdR6WI_V-uI"
 
         const resp = await fetchAPI({
             method: "post",
@@ -93,14 +96,7 @@ function TopMenu({isOpen, setIsOpen}) {
         })
 
         const data = resp.data.data
-
-        const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3NjgxODQyLCJqdGkiOiJjZDJiYTk0MjkwOTc0YWY3OGQ5ZDAxMmYxMDE3Y2M3NSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.duDXsRjKNlTteWaCnA5YLnUwN40qY5yS9usrkg3PXzU"
-
-        // === RENDER DATA BELOW === //
-        return (
-            data
-        );
-        // console.log(data)
+        setSearchResultList(data)
     }
 
     // Handler on user submitting search query
@@ -129,6 +125,17 @@ function TopMenu({isOpen, setIsOpen}) {
                     onEnter={onEnterSearchBar}
                     onChange={onChangeSearchBarText}
                  />
+                 { 
+                    searchResultList.map(
+                        searchResult => 
+                        <div style={{marginLeft: '10px'}}>
+                            {searchResult.profile_picture}
+                            {searchResult.first_name}
+                            {searchResult.last_name}
+                            {searchResult.title}
+                        </div>
+                    ) 
+                 }
                 <div className='menu-right'>
                     <NotificationButton/>
                 </div>
