@@ -9,8 +9,7 @@ import axios from 'axios'
 import React, { useEffect, useContext } from 'react';
 import { Profile } from './Profile.js';
 import { AuthenticationContext } from './AuthContext.js';
-import { Rockstar } from './Components/Rockstar/Rockstar.js';
-
+import Rockstar from './Components/Rockstar/Rockstar.js';
 
 function EmployeeHomepage() {
 

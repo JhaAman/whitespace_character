@@ -9,7 +9,7 @@ import axios from 'axios';
 import { Rockstar } from './Components/Rockstar/Rockstar.js';
 import Image from 'react-bootstrap/Image';
 import SearchField from "react-search-field";
-//import fetchAPI from './services/api.js';
+import fetchAPI from './services/api.js';
  
 /* Now storing objects here, so they have access to all the right directories and CSS and suchlike. If this upset anyone, let me know. ~ Christopher */
 /* To add an object here, though, one must add the line “// eslint-disable-next-line” to escape the wrath of the garbage fairy. */
