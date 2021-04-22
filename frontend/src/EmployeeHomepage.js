@@ -1,4 +1,4 @@
-import { Recognition, TopMenu, Rockstar } from './Components.js';
+import { Recognition, TopMenu } from './Components.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import ManagerComp from './ManagerComponent.js';
@@ -9,6 +9,8 @@ import axios from 'axios'
 import React, { useEffect, useContext } from 'react';
 import { Profile } from './Profile.js';
 import { AuthenticationContext } from './AuthContext.js';
+import { Rockstar } from './Components/Rockstar/Rockstar.js';
+
 
 function EmployeeHomepage() {
 
