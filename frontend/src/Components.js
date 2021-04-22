@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import './App.css';
 import Popup from 'reactjs-popup';
 import Image from 'react-bootstrap/Image';
-
 import NotificationButton from './Notification';
-
-import ProfilePicture from './pics/arnold.jpg'
+import ProfilePicture from './pics/arnold.jpg';
+import SearchField from "react-search-field";
+import fetchAPI from './services/api.js'
+import { AuthenticationContext } from './AuthContext.js';
 
 
 /* Now storing objects here, so they have access to all the right directories and CSS and suchlike. If this upset anyone, let me know. ~ Christopher */
@@ -74,6 +75,28 @@ function TopMenu({isOpen, setIsOpen}) {
                     <Link className='top-link' to='/home'>home</Link>
                     <Link className='top-link' to='/me'>self</Link>
                     <Link className='top-link' to='/login'>logout</Link>
+                </div>
+                <Link className='top-link'>search</Link>
+                 <SearchField
+                    classNames="top-menu-search-bar"
+                    placeholder="Search for a user"
+                    searchText={searchText}
+                    onEnter={onEnterSearchBar}
+                    onChange={onChangeSearchBarText}
+                 />
+                 { 
+                    searchResultList.map(
+                        searchResult => 
+                        <div style={{marginLeft: '10px'}}>
+                            {searchResult.profile_picture}
+                            {searchResult.first_name}
+                            {searchResult.last_name}
+                            {searchResult.title}
+                        </div>
+                    ) 
+                 }
+                <div className='menu-right'>
+                    <NotificationButton/>
                 </div>
             </div>
         </div>
