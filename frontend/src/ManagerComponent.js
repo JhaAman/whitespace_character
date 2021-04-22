@@ -52,7 +52,7 @@ function ManagerComp(){
     function getData(){
         //console.log(value.authenticationState.userInfo.userID);
         axios.post("http://localhost:8000/api/user/mng/stats/",
-                {uid:value.authenticationState.userInfo.userID},
+                {uid:value.uid},
                 {
                     headers:{
                         Authorization:"Bearer "+ value.token
@@ -60,7 +60,7 @@ function ManagerComp(){
                 }
                 )
                 .then(function(response){
-                    console.log(value.authenticationState);
+
                     //========================SET UP GRAPH=========================================
                     let len = 0;//number of elements in tagDistr, for some reason I couldnt use .length
                     // eslint-disable-next-line

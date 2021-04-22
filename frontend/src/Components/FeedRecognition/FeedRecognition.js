@@ -8,7 +8,7 @@ function FeedRecognition({uidFrom, uidTo, comment}) {
     const context = useContext(AuthContext)
     const [ fromName, setFromName ] = useState("");
     const [ toName, setToName ] = useState("");
-    const [ profilePicture, setProfilePicture ] = useState("")
+    const [ profilePicture, setProfilePicture ] = useState("");
 
     const getNames = () => {
         axios.get("http://127.0.0.1:8000/api/user/get_name/", {

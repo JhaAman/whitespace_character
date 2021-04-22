@@ -8,22 +8,25 @@ import Col from 'react-bootstrap/Col';
 //import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/DropdownItem';
-//import Dropdown from 'react-bootstrap/Dropdown';
+import Dropdown from 'react-bootstrap/Dropdown';
 //import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-
+import { AuthContext } from './AuthContext.js';
 
 
 
 
 function Notification() {
   function BuildNotification(props) {
+
     return (
-      <DropdownItem onClick={() => markSeen(props.nid)}>
+      <Dropdown.ItemText onClick={() => {
+        //markSeen(props.nid)
+      }}>
         <div className={props.seen + "-notification"}>
           <Row>
             <Col>{
@@ -47,7 +50,7 @@ function Notification() {
 
           </Row>
         </div>
-      </DropdownItem>
+      </Dropdown.ItemText>
     );
   }
   //let notifications = [];
@@ -56,37 +59,21 @@ function Notification() {
   const [auth,setAuth] = useState();
   const [newNotif,setNewNotif] = useState();
   const [loading,setLoading] = useState(true);
-  
-  function authenticate(){
-    axios.post("http://localhost:8000/api/get_token/",{
-      "username":"root",
-      "password":"pwd"
-    })
-    .then(function(response){
-      setAuth(response.data.access);
-      //console.log("success");
-      //setAuthenticated(true);
-      getNotifications(response.data.access);
-    })
-      .then(function (response) {
-        setAuth(response.data.access);
-        console.log("success");
-        setAuthenticated(true);
-        getNotifications(response.data.access);
-      })
-
-  }
+  const [refresh,setRefresh] = useState();
+  const context = useContext(AuthContext);
+  let s = [];
 
   function getNotifications(a) {
     axios.get("http://localhost:8000/api/get_notif/", {
       params: {
-        uid: "78574359"
+        uid: context.uid
       },
       headers: {
-        Authorization: "Bearer " + a
+        Authorization: "Bearer " + context.token
       }
     })
       .then(function (response) {
+        console.log(response);
         let n = false;
         //console.log(Date.parse(response.data[0].date_created));
         //console.log(timesince(Date.parse(response.data[1].date_created)));
@@ -101,6 +88,7 @@ function Notification() {
         seen={response.data[i].seen}
         nid={response.data[i].nid}/>
         ]);
+        markSeen(response.data[i].nid);
         //console.log(response.data[i]);
       }
       setNewNotif(n);
@@ -108,6 +96,7 @@ function Notification() {
   }
 
   function markSeen(nid) {
+
     //console.log(nid);
     axios.put(
       "http://localhost:8000/api/update_notif/",
@@ -116,7 +105,7 @@ function Notification() {
       },
       {
         headers: {
-          Authorization: "Bearer " + auth
+          Authorization: "Bearer " + context.token
         }
       })
       .then(function (response) {
@@ -145,9 +134,9 @@ function Notification() {
     }
   }
   useEffect(() => {
-    authenticate();
+    //authenticate();
     //while(!authenticated);
-    //getNotifications();
+    getNotifications();
     setLoading(false);
   }, []);//eslint-disable-line react-hooks/exhaustive-deps
   if (loading) {
