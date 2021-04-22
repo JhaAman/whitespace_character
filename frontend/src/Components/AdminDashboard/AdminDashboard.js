@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { AuthContext } from './../../AuthContext.js'
+import { AuthenticationContext } from './../../AuthContext.js'
 import axios from 'axios';
 import ReportedRecog from './ReportedRecog/ReportedRecog.js'
 import './AdminDashboard.css';
