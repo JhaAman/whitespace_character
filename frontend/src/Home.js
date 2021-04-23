@@ -69,6 +69,7 @@ function TopMenu({isOpen, setIsOpen}) {
 
 
     return (
+<<<<<<< Updated upstream
         <div className='topmenu'>
             <div className="row">
                 <div className='menu-left'>
@@ -81,6 +82,34 @@ function TopMenu({isOpen, setIsOpen}) {
                 </div>
                 <div className='menu-right'>
                     <NotificationButton />
+=======
+        <div className="app">
+            <TopMenu/>
+            <div className="body">
+                <div className="row">
+                    <div className='left-column'>
+                        <SubmitRecog />
+                        <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
+                        {
+                            recognitions.map((e) => {
+                                return (<FeedRecognition uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} />);
+                            })
+                        }
+                    </div>
+                    <div className='right-column'>
+                        <div className='autoinfobox rounded' style={{height:'auto'}} hidden={context.role!=="mng"}>
+                            <ManagerComp/>
+                        </div>
+                        <div className='infobox rounded'>
+                            {
+                                rockstarValues.map((e) => {
+                                    let rockstar = rockstars[e] ? rockstars[e] : {"uid": "", "name": "", "profile_picture": ""}
+                                    return (<Rockstar value={e} uid={rockstar["uid"]} name={rockstar["name"]} profilePicture={'http://localhost:8000' + rockstar["profile_picture"]} />);
+                                })
+                            }
+                        </div>
+                    </div>
+>>>>>>> Stashed changes
                 </div>
             </div>
         </div>

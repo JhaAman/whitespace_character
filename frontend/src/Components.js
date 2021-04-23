@@ -1,8 +1,15 @@
+<<<<<<< Updated upstream
 import React, { useContext } from 'react';
+=======
+
+import React, { useContext, useState } from 'react';
+>>>>>>> Stashed changes
 import { Link } from 'react-router-dom';
 import './App.css';
 import { AuthContext } from './AuthContext.js';
 import Popup from 'reactjs-popup';
+import SearchField from "react-search-field";
+import fetchAPI from './services/api.js';
 
 import NotificationButton from './Notification';
 
@@ -65,9 +72,40 @@ export { Header }
 
 // eslint-disable-next-line
 function TopMenu({isOpen, setIsOpen}) {
+
     const context = useContext(AuthContext);
-
-
+    
+    // State hook for search bar text
+  const [searchText, setSearchText] = useState("");
+  // State hook for search result list
+  const [searchResultList, setSearchResultList] = useState([])
+  // Get JWT authorization context
+  const value = useContext(AuthContext);
+  // Handler on user typing in search bar
+  const onChangeSearchBarText = newText => {
+      // Set search text to new updated text
+      setSearchText(newText)
+  }
+  const actualEnterSearchBarHandler = async () => {
+     
+      const arr = ['Bearer ', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3NzY2MTU4LCJqdGkiOiJhMWRjYmYyZTNjZWY0NTY3ODg1YzU2NTAyNWJlMWQwNSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.5KfI8UUJBjQnWIVkNRR4BIkjO7gAjedjFHpkX62UFb4']
+      const authHeader = arr.join();
+ 
+      const resp = await fetchAPI({
+          method: "post",
+          endpoint: "search/user/",
+          headers: {"Authorization": authHeader},
+          data: {"query": searchText},
+      })
+      const data = resp.data.data
+      setSearchResultList(data)
+  }
+  // Handler on user submitting search query
+  // Has to call on a helper function for async/await, probably due to
+  //   react-search-field package design
+  const onEnterSearchBar = () => {
+      actualEnterSearchBarHandler()
+  }
     return (
         <div className='topmenu'>
             <div className="row">
@@ -79,17 +117,32 @@ function TopMenu({isOpen, setIsOpen}) {
                     <Link className='top-link' to='/me'>self</Link>
                     <Link onClick={() => context.logout()}className='top-link' to='/login'>logout</Link>
                 </div>
+                <Link className='top-link'>search</Link>
+                 <SearchField
+                    classNames="top-menu-search-bar"
+                    placeholder="Search for a user"
+                    searchText={searchText}
+                    onEnter={onEnterSearchBar}
+                    onChange={onChangeSearchBarText}
+                 />
+                 {
+                    searchResultList.map(
+                        searchResult =>
+                        <div style={{marginLeft: '10px'}}>
+                            {searchResult.profile_picture}
+                            {searchResult.first_name}
+                            {searchResult.last_name}
+                            {searchResult.title}
+                        </div>
+                    )
+                 }
                 <div className='menu-right'>
                     <NotificationButton/>
                 </div>
             </div>
         </div>
     );
-}
-
-
-export { TopMenu }
-
-
-
-export default Pass;
+ }
+ export { TopMenu }
+ 
+ export default Pass;

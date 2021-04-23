@@ -52,7 +52,7 @@ function ManagerComp(){
     function getData(){
         //console.log(value.authenticationState.userInfo.userID);
         axios.post("http://localhost:8000/api/user/mng/stats/",
-                {uid:value.authenticationState.userInfo.userID},
+                {uid:value.userID},
                 {
                     headers:{
                         Authorization:"Bearer "+ value.token
