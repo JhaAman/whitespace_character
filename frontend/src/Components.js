@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
-import React, { useContext } from 'react';
-=======
 
 import React, { useContext, useState } from 'react';
->>>>>>> Stashed changes
 import { Link } from 'react-router-dom';
 import './App.css';
 import { AuthContext } from './AuthContext.js';
