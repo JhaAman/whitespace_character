@@ -88,6 +88,10 @@ function Notification() {
         nid={response.data[i].nid}/>
         ]);
         markSeen(response.data[i].nid);
+        if(i!==response.data.length-1){
+          setNotifs(notifs=>[...notifs,
+          <Dropdown.Divider key={i+'notifdivider'}/>]);
+        }
         //console.log(response.data[i]);
       }
       setNewNotif(n);
