@@ -17,10 +17,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthContext.js';
 
-
-
-
 function Notification() {
+  const context = useContext(AuthContext);
 
   function BuildNotification(props) {
 
@@ -58,8 +56,7 @@ function Notification() {
   //const [auth,setAuth] = useState();
   const [newNotif,setNewNotif] = useState();
   const [loading,setLoading] = useState(true);
-  //const [refresh,setRefresh] = useState();
-  const context = useContext(AuthContext);
+
 
   function getNotifications(a) {
     axios.get("http://localhost:8000/api/get_notif/", {

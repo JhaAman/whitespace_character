@@ -1,10 +1,10 @@
-//import axios from 'axios';
-import React from 'react';
+
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import ProfilePicture from './../../pics/arnold.jpg'
-//import { AuthContext } from './../../AuthContext.js';
 
 function Rockstar({value, uid, name, profilePicture}) {
-    //const context = useContext(AuthContext);
+
 
     return (
         <div style={{height: '150px', width: '90%', border: '2px solid black', marginBottom: '5px', backgroundColor: 'grey'}}>
@@ -16,7 +16,7 @@ function Rockstar({value, uid, name, profilePicture}) {
                     <img src={(profilePicture === "Nothing" || profilePicture === "") ? ProfilePicture : profilePicture} style={{width: '100px', height: '100px', borderRadius: '50%', border: '2px solid black'}} alt=""/>
                 </div>
                 <div style={{width: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
-                    <h2 style={{fontSize: '15pt', margin: 0}}>{name}</h2>
+                    <Link to={'/u/' + uid}><h2 style={{fontSize: '15pt', margin: 0}}>{name}</h2></Link>
                 </div>
             </div>
         </div>
