@@ -24,8 +24,14 @@ function Notification() {
 
   function BuildNotification(props) {
 
+    
+
     return (
-      <Dropdown.ItemText >
+      <Dropdown.ItemText onClick={
+        e=>{
+          console.log(s);
+        }
+      }>
         <div className={props.seen + "-notification"}>
           <Row>
             <Col>{
@@ -54,12 +60,14 @@ function Notification() {
   }
   //let notifications = [];
   const [notifs,setNotifs] = useState([]);
+  const [s,setS] = useState([]);
   //const [authenticated,setAuthenticated] = useState(false);
   //const [auth,setAuth] = useState();
   const [newNotif,setNewNotif] = useState();
   const [loading,setLoading] = useState(true);
   //const [refresh,setRefresh] = useState();
   const context = useContext(AuthContext);
+
 
   function getNotifications(a) {
     axios.get("http://localhost:8000/api/get_notif/", {
@@ -73,11 +81,12 @@ function Notification() {
       .then(function (response) {
         //console.log(response);
         let n = false;
+        let a = [];
         //console.log(Date.parse(response.data[0].date_created));
         //console.log(timesince(Date.parse(response.data[1].date_created)));
         for (let i = 0; i < response.data.length; i++) {
           if (!response.data[i].seen) n = true;
-
+          a[i]=response.data[i].seen;
 
         setNotifs(notifs => [...notifs,
         <BuildNotification key={response.data[i].nid}
@@ -85,7 +94,8 @@ function Notification() {
         type={response.data[i].notif_type}
         time={timesince(Date.parse(response.data[i].date_created))}
         seen={response.data[i].seen}
-        nid={response.data[i].nid}/>
+        nid={response.data[i].nid}
+        i={i}/>
         ]);
         markSeen(response.data[i].nid);
         if(i!==response.data.length-1){
@@ -94,6 +104,10 @@ function Notification() {
         }
         //console.log(response.data[i]);
       }
+      console.log(a);
+      setS(a);
+      
+      console.log(s);
       setNewNotif(n);
     });
   }

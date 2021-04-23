@@ -99,7 +99,7 @@ function Profile() {
         uid: userid
       },
       headers:{
-        Authorization:"Bearer "+value.authenticationState.token
+        Authorization:"Bearer "+value.token
       },
     })
       .then(function (res) {
@@ -149,7 +149,7 @@ function Profile() {
     },
     {
     headers:{
-      Authentication:"Bearer "+value.authenticationState.token
+      Authentication:"Bearer "+value.token
     }},
     ).then(function(res){
       if(res.status===200){
@@ -194,8 +194,8 @@ function Profile() {
           <button className="button topbutton" onClick={() => setPage(0)}>Badges</button>
           <Col xs={1}></Col>
           <button className="button topbutton" onClick={() => setPage(1)}>Network</button>
-          <Col xs={1} hidden={userid!==value.authenticationState.userInfo.userID.toString()}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.authenticationState.userInfo.userID.toString()}>Settings</button>
+          <Col xs={1} hidden={userid!==value.uid.toString()}></Col>
+          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.uid.toString()}>Settings</button>
 
         </div>
       </div>

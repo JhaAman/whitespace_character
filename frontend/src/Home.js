@@ -49,9 +49,9 @@ function EmployeeHomepage() {
         }).catch((err) => {
             //console.log(err);
         })
-    },[]);
+    });
 
-    useEffect(() => getRecognitions(),[]);
+    useEffect(() => getRecognitions());
 
 
     return (
