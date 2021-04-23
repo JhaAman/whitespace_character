@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useContext, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from './../../AuthContext.js';
 import ProfilePicture from '../../pics/arnold.jpg'
 import './FeedRecognition.css'
@@ -56,7 +57,7 @@ function FeedRecognition({uidFrom, uidTo, comment}) {
             </div>
             <div className='right-container'>
                 <div className='name-container'>
-                    <h1 style={{fontSize: '20pt'}}>{fromName} recognized {toName}</h1>
+                    <h1 style={{fontSize: '20pt'}}><Link to={'/u/' + uidFrom}>{fromName}</Link> recognized <Link to={'/u/' + uidTo}>{toName}</Link></h1>
                 </div>
                 <div className='comment-container'>
                     <p style={{textAlign: 'left'}}>{comment}</p>
