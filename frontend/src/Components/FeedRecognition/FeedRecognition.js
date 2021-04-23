@@ -57,7 +57,7 @@ function FeedRecognition({uidFrom, uidTo, comment}) {
             </div>
             <div className='right-container'>
                 <div className='name-container'>
-                    <h1 style={{fontSize: '20pt'}}>{fromName} recognized {toName}</h1>
+                    <h1 style={{fontSize: '20pt'}}><Link to={'/u/' + uidFrom}>{fromName}</Link> recognized <Link to={'/u/' + uidTo}>{toName}</Link></h1>
                 </div>
                 <div className='comment-container'>
                     <p style={{textAlign: 'left'}}>{comment}</p>
