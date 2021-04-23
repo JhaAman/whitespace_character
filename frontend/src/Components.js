@@ -1,4 +1,3 @@
-
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './App.css';
@@ -19,48 +18,48 @@ import { AuthenticationContext } from './AuthContext.js';
    Let me (Christopher) know, of course, be this a problem.
    For the common good, though, the Pass function will get a little queasy if you forget your curly brackets! */
 function Pass() {
-    return (
-        <div style={{ fontSize: 40, font: 'AlegreyaSans', fontWeight: 'bold', color: 'red', backgroundColor: 'white' }}>
-            🤮 Alack : thou hast forgotten thy <em>curlye brackets</em>, O knave, in thine import statement(s) from Components.js !
-        </div>);
+  return(
+    <div style={{fontSize: 40, font: 'AlegreyaSans', fontWeight: 'bold', color: 'red', backgroundColor: 'white'}}>
+      🤮 Alack : thou hast forgotten thy <em>curlye brackets</em>, O knave, in thine import statement(s) from Components.js !
+    </div>);
 }
 
 // eslint-disable-next-line
-function Recognition(props) {
-    return (
-        <div className="recognition rounded">
-            <div className="topline">
-                <i><b>{props.recognizer}</b> cherishes <b>{props.recipient}</b></i>
-            </div>
-            <br></br>
-            <div>
-                {props.message}
-            </div>
-            <div style={{ textAlign: 'right' }}>
-                <Popup trigger={<button>report</button>} position="right center">
-                    <form>
-                        <div className="repbox">
-                            <label>
-                                <textarea rows="3" columns="20" placeholder="your worry" className="rep-input" />
-                            </label>
-                            <br />
-                            <input type="submit" value="submit" className="rep-button" />
-                        </div>
-                    </form>
-                </Popup>
-            </div>
+function Recognition(props){
+  return(
+      <div className="recognition rounded">
+          <div className="topline">
+              <i><b>{props.recognizer}</b> cherishes <b>{props.recipient}</b></i>
+          </div>
+          <br></br>
+          <div>
+              {props.message}
+          </div>
+          <div style={{textAlign: 'right'}}>
+            <Popup trigger={<button>report</button>} position="right center">
+                <form>
+                    <div className="repbox">
+                        <label>
+                            <textarea rows="3" columns="20" placeholder="your worry" className="rep-input"/>
+                        </label>
+                        <br/>
+                        <input type="submit" value="submit" className="rep-button"/>
+                    </div>
+                </form>
+            </Popup>
         </div>
-    )
+      </div>
+  )
 }
 export { Recognition }
 
 // eslint-disable-next-line
-function Header({ isOpen, setIsOpen }) {
-    return (
-        <div className="header">
-            <i>whitespaß</i>
-        </div>
-    );
+function Header({isOpen, setIsOpen}) {
+  return (
+      <div className="header">
+          <i>whitespaß</i>
+      </div>
+  );
 }
 export { Header }
 
@@ -81,7 +80,7 @@ function TopMenu({isOpen, setIsOpen}) {
                     <Link onClick={() => context.logout()}className='top-link' to='/login'>logout</Link>
                 </div>
                 <div className='menu-right'>
-                    <NotificationButton />
+                    <NotificationButton/>
                 </div>
             </div>
         </div>
