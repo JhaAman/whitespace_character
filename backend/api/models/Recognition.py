@@ -136,6 +136,6 @@ class RecognitionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recognition
-        fields = ['uid_from', 'uid_to', 'tags', 'comments']
+        fields = ['rid', 'uid_from', 'uid_to', 'tags', 'comments']
 
 

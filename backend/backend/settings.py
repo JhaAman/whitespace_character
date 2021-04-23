@@ -26,7 +26,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', '0.0.0.0', '*']
+# SECURITY WARNING: restrict allowed host to trusted entities in production
+if not DEBUG:
+    ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '[::1]', '0.0.0.0']
+else:
+    ALLOWED_HOSTS = ['*']    
 
 # Application definition
 
@@ -38,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
     # libraries
     'rest_framework',
     'corsheaders',
@@ -60,6 +63,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DATETIME_FORMAT': '%Y-%m-%d %H:%M %Z',
 }
 
 MIDDLEWARE = [
@@ -89,6 +95,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -105,20 +112,20 @@ if DEBUG:
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.environ.get('POSTGRES_LOCAL_DATABASE_NAME'),
-            'USER': os.environ.get('POSTGRES_LOCAL_USER'),
-            'PASSWORD': os.environ.get('POSTGRES_LOCAL_PASSWORD'),
+            'USER': "admin",
+            'PASSWORD': "password",
             'HOST': os.environ.get('POSTGRES_LOCAL_HOST'),
             'PORT': os.environ.get('POSTGRES_LOCAL_PORT'),
         }
     }
 else:
-    print("REMOTE_DB: " + env('POSTGRES_DATABASE_NAME'))
+    print("REMOTE_DB: " + os.environ.get('POSTGRES_DATABASE_NAME'))
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.environ.get('POSTGRES_DATABASE_NAME'),
-            'USER': os.environ.get('POSTGRES_USER'),
-            'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+            'USER': "admin",
+            'PASSWORD': "password",
             'HOST': os.environ.get('POSTGRES_HOST'),
             'PORT': os.environ.get('POSTGRES_PORT'),
             'TEST': {
@@ -127,12 +134,11 @@ else:
             }
         }
     }
-if 'test' in sys.argv:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'test_db'
-    }
-
+# if 'test' in sys.argv:
+#     DATABASES['default'] = {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'test_db'
+#     }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -180,3 +186,7 @@ STATICFILES_DIRS = [
 
 SITE_ID = 1
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=100),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=100),
+}
