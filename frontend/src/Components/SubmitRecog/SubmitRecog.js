@@ -5,8 +5,11 @@ import axios from 'axios';
 
 function SubmitRecog() {
     const context = useContext(AuthContext);
+    // eslint-disable-next-line
     const [ name, setName ] = useState("")
+    // eslint-disable-next-line
     const [ recognition, setRecognition ] = useState("");
+    // eslint-disable-next-line
     const [ onSuccess, setOnSuccess ] = useState(false);
 
     const onSubmit = () => {

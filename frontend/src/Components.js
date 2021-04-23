@@ -7,10 +7,10 @@ import Popup from 'reactjs-popup';
 
 import NotificationButton from './Notification';
 
-import ProfilePicture from './pics/arnold.jpg'
-import axios from 'axios';
+//import ProfilePicture from './pics/arnold.jpg'
+//import axios from 'axios';
 
-import { AuthenticationContext } from './AuthContext.js';
+//import { AuthenticationContext } from './AuthContext.js';
 
 /* Now storing objects here, so they have access to all the right directories and CSS and suchlike. If this upset anyone, let me know. ~ Christopher */
 /* To add an object here, though, one must add the line “// eslint-disable-next-line” to escape the wrath of the garbage fairy. */

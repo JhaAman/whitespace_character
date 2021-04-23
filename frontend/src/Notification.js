@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
 //import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import DropdownItem from 'react-bootstrap/DropdownItem';
+//import DropdownItem from 'react-bootstrap/DropdownItem';
 import Dropdown from 'react-bootstrap/Dropdown';
 //import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -21,12 +21,11 @@ import { AuthContext } from './AuthContext.js';
 
 
 function Notification() {
+
   function BuildNotification(props) {
 
     return (
-      <Dropdown.ItemText onClick={() => {
-        //markSeen(props.nid)
-      }}>
+      <Dropdown.ItemText >
         <div className={props.seen + "-notification"}>
           <Row>
             <Col>{
@@ -56,12 +55,11 @@ function Notification() {
   //let notifications = [];
   const [notifs,setNotifs] = useState([]);
   //const [authenticated,setAuthenticated] = useState(false);
-  const [auth,setAuth] = useState();
+  //const [auth,setAuth] = useState();
   const [newNotif,setNewNotif] = useState();
   const [loading,setLoading] = useState(true);
-  const [refresh,setRefresh] = useState();
+  //const [refresh,setRefresh] = useState();
   const context = useContext(AuthContext);
-  let s = [];
 
   function getNotifications(a) {
     axios.get("http://localhost:8000/api/get_notif/", {
@@ -73,12 +71,13 @@ function Notification() {
       }
     })
       .then(function (response) {
-        console.log(response);
+        //console.log(response);
         let n = false;
         //console.log(Date.parse(response.data[0].date_created));
         //console.log(timesince(Date.parse(response.data[1].date_created)));
         for (let i = 0; i < response.data.length; i++) {
           if (!response.data[i].seen) n = true;
+
 
         setNotifs(notifs => [...notifs,
         <BuildNotification key={response.data[i].nid}
@@ -110,7 +109,7 @@ function Notification() {
       })
       .then(function (response) {
 
-        console.log(response);
+        //console.log(response);
       });
   }
 

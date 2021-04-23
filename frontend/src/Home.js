@@ -5,8 +5,8 @@ import SubmitRecog from './Components/SubmitRecog/SubmitRecog.js';
 import Rockstar from './Components/Rockstar/Rockstar.js';
 import { TopMenu } from './Components.js';
 import { AuthContext } from './AuthContext.js';
-import profilepic from './pics/arnold.jpg';
-import profilepic2 from './pics/regina.png';
+//import profilepic from './pics/arnold.jpg';
+//import profilepic2 from './pics/regina.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css'
 import './App.css'
@@ -30,10 +30,10 @@ function EmployeeHomepage() {
                 "Authorization": "Bearer " + context.token
             }
         }).then((res) => {
-            console.log(res);
+            //console.log(res);
             setRecognitions(res.data.data);
         }).catch((err) => {
-            console.log(err);
+            //console.log(err);
         })
     }
 
@@ -45,13 +45,13 @@ function EmployeeHomepage() {
         }).then((res) => {
             setRockstarValues(res.data[0].values);
             setRockstars(res.data[1]);
-            console.log(res);
+            //console.log(res);
         }).catch((err) => {
-            console.log(err);
+            //console.log(err);
         })
-    }, []);
+    },[]);
 
-    useEffect(() => getRecognitions(), []);
+    useEffect(() => getRecognitions(),[]);
 
 
     return (

@@ -1,4 +1,4 @@
-import Button from 'react-bootstrap/Button';
+//import Button from 'react-bootstrap/Button';
 import React, { useState, useContext, useEffect } from 'react';
 import Pie from 'react-chartjs-2';
 import Col from 'react-bootstrap/Col';
@@ -35,7 +35,7 @@ function ManagerComp(){
         );
     }
 
-    const [feed,setFeed] = useState(false);
+    //const [feed,setFeed] = useState(false);
     const [data,setData] = useState();
     const [employeelist,setEmployeeList] = useState([]);
     const [loading,setLoading] = useState(true);
