@@ -84,8 +84,7 @@ function TopMenu({isOpen, setIsOpen}) {
   }
   const actualEnterSearchBarHandler = async () => {
      
-      const arr = ['Bearer ', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3NzY2MTU4LCJqdGkiOiJhMWRjYmYyZTNjZWY0NTY3ODg1YzU2NTAyNWJlMWQwNSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.5KfI8UUJBjQnWIVkNRR4BIkjO7gAjedjFHpkX62UFb4']
-      const authHeader = arr.join();
+      const authHeader = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3NzY2MTU4LCJqdGkiOiJhMWRjYmYyZTNjZWY0NTY3ODg1YzU2NTAyNWJlMWQwNSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.5KfI8UUJBjQnWIVkNRR4BIkjO7gAjedjFHpkX62UFb4'
  
       const resp = await fetchAPI({
           method: "post",
