@@ -6,7 +6,7 @@ import { AuthContext } from './AuthContext.js';
 import Popup from 'reactjs-popup';
 import SearchField from "react-search-field";
 import fetchAPI from './services/api.js';
-
+import Image from 'react-bootstrap/Image';
 import NotificationButton from './Notification';
 
 import ProfilePicture from './pics/arnold.jpg'
@@ -71,7 +71,7 @@ function SearchResult(props){ //edit this to make each search result clickable w
         <div className="recognition rounded">
             <div className="topline">
             <Image src={props.profile_picture} className="rounded-circle" width="30px" height="auto"></Image>
-            {searchResult.title} <Link className='link' to={'/u/'}><i><b>{props.first_name} {props.last_name}</b></i></Link>
+            {props.title} <Link className='link' to={'/u/'}><i><b>{props.first_name} {props.last_name}</b></i></Link>
           </div> 
         </div>
   )
@@ -136,11 +136,8 @@ function TopMenu({isOpen, setIsOpen}) {
                     {
                        searchResultList.map(
                            searchResult =>
-                           <div style={{marginLeft: '10px'}}>
-                               {searchResult.profile_picture}
-                               {searchResult.first_name}
-                               {searchResult.last_name}
-                               {searchResult.title}
+                           <div style={{marginLeft: '10px'}}> 
+                               <SearchResult/> 
                            </div>
                        )
                     }
