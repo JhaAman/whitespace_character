@@ -7,6 +7,7 @@ import Image from 'react-bootstrap/Image';
 import profilepic from './pics/arnold.jpg';
 import axios from 'axios';
 import './ManagerComponent.css';
+import { Link } from 'react-router-dom';
 import { AuthContext } from './AuthContext.js';
 
 
@@ -20,15 +21,26 @@ function ManagerComp(){
             <div className="employee_display">
                 <Row>
                     <Col xs={3}>
-                    <Image src={profilepic} className="employee_display_image" roundedCircle/>
+                        <img 
+                        style={{border: "5px solid #58453B", width: "75px", height: "75px"}}
+                        src={"http://localhost:8000"+props.profilepic}
+                        className="profilepic rounded-circle img-fluid"/>
                     </Col>
                     <Col>
-                    <div>{props.name}</div>
-                    <Row>
-                    <Col><div>Gave {props.gave}</div></Col>
-                    <Col><div>Received {props.recieved}</div></Col>
-                    </Row>
-                    Highest Value: {props.best}
+                        <Link className='net-link' to={'/u/'+props.uid} style={{fontWeight: "bold"}}>{props.name}</Link> <br/>
+                        <Row>
+                            <Col>
+                                <div>
+                                    Gave {props.gave}
+                                </div>
+                            </Col>
+                            <Col>
+                                <div>
+                                    Received {props.recieved}
+                                </div>
+                            </Col>
+                        </Row>
+                        Highest Value: {props.best}
                     </Col>
                 </Row>
             </div>
@@ -97,9 +109,11 @@ function ManagerComp(){
                             <EmployeeDisplay
                             key={a}
                             name={e[a].first_name+" "+e[a].last_name}
+                            uid={e[a].uid}
                             gave={e[a].recogOutCount}
                             recieved={e[a].recogInCount}
-                            best={e[a].best_tag}/>]
+                            best={e[a].best_tag}
+                            profilepic={e[a].profile_picture_url}/>]
                             );
                     }
                     setTotal(response.data.data.recogTotal);
@@ -118,19 +132,19 @@ function ManagerComp(){
         <div>
         <div>
             <div/>
-            <div className="title rounded" style={{marginBottom:'10px'}}>Your Team Dashboard</div>
+            <div className="title rounded" style={{marginBottom:'10px', fontWeight: "bold"}}>your team dashboard</div>
             {/*<Button style={{marginBottom:'30px'}} onClick={
                 a=>{setFeed(!feed);
                 }}
             >{feed?"Show Normal Feed":"Show Your Team Only"}</Button><br/>**/}
+             
             <div style={{height:"200px"}}>
-            
-            <Pie data={data} options={options} />
-            <div className="f">{total}<br/>Total
+                <Pie data={data} options={options} />
+            <div className="f">{total}<br/>total
             </div>
             </div>
             <div className="title rounded" >Employee Stats
-            <div style={{overflowY: 'scroll', height:'200px'}}>
+            <div style={{overflowY: 'scroll', height:'300px'}}>
             {employeelist}
             </div>
             </div>
