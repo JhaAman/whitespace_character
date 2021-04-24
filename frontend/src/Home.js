@@ -20,8 +20,8 @@ function EmployeeHomepage() {
     const [ rockstars, setRockstars ] = useState({});
 
     const [ recognitions, setRecognitions ] = useState([]);
-
-    const getRecognitions = () => {
+    //eslint-disable-next-line
+        const getRecognitions = () => {
         axios.get("http://localhost:8000/api/recog/get/user/", {
             params: {
                 "uid": context.uid
@@ -49,9 +49,23 @@ function EmployeeHomepage() {
         }).catch((err) => {
             //console.log(err);
         })
-    });
+    },[context.token]);
 
-    useEffect(() => getRecognitions());
+    useEffect(() => {
+        axios.get("http://localhost:8000/api/recog/get/user/", {
+            params: {
+                "uid": context.uid
+            },
+            headers: {
+                "Authorization": "Bearer " + context.token
+            }
+        }).then((res) => {
+            //console.log(res);
+            setRecognitions(res.data.data);
+        }).catch((err) => {
+            //console.log(err);
+        })
+    },[context.token,context.uid]);
 
 
     return (
