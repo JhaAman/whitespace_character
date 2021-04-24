@@ -66,6 +66,19 @@ function Header({isOpen, setIsOpen}) {
 }
 export { Header }
 
+function SearchResult(props){ //edit this to make each search result clickable with uid field in link
+    return (
+        <div className="recognition rounded">
+            <div className="topline">
+            <Image src={props.profile_picture} className="rounded-circle" width="30px" height="auto"></Image>
+            {searchResult.title} <Link className='link' to={'/u/'}><i><b>{props.first_name} {props.last_name}</b></i></Link>
+          </div> 
+        </div>
+  )
+ }
+
+ export { SearchResult }
+
 // eslint-disable-next-line
 function TopMenu({isOpen, setIsOpen}) {
 
@@ -119,25 +132,25 @@ function TopMenu({isOpen, setIsOpen}) {
                     searchText={searchText}
                     onEnter={onEnterSearchBar}
                     onChange={onChangeSearchBarText}
-                 />
-                 {
-                    searchResultList.map(
-                        searchResult =>
-                        <div style={{marginLeft: '10px'}}>
-                            {searchResult.profile_picture}
-                            {searchResult.first_name}
-                            {searchResult.last_name}
-                            {searchResult.title}
-                        </div>
-                    )
-                 }
-                <div className='menu-right'>
-                    <NotificationButton/>
-                </div>
-            </div>
-        </div>
-    );
- }
- export { TopMenu }
- 
- export default Pass;
+                    />
+                    {
+                       searchResultList.map(
+                           searchResult =>
+                           <div style={{marginLeft: '10px'}}>
+                               {searchResult.profile_picture}
+                               {searchResult.first_name}
+                               {searchResult.last_name}
+                               {searchResult.title}
+                           </div>
+                       )
+                    }
+                   <div className='menu-right'>
+                       <NotificationButton/>
+                   </div>
+               </div>
+           </div>
+       );
+    }
+    export { TopMenu }
+    
+    export default Pass;
