@@ -66,7 +66,7 @@ function Header({isOpen, setIsOpen}) {
 }
 export { Header }
 
-function SearchResult(props){ //edit this to make each search result clickable with uid field in link
+function SearchResultDisplay(props){ //edit this to make each search result clickable with uid field in link
     return (
         <div className="recognition rounded">
             <div className="topline">
@@ -77,7 +77,7 @@ function SearchResult(props){ //edit this to make each search result clickable w
   )
  }
 
- export { SearchResult }
+ export { SearchResultDisplay }
 
 // eslint-disable-next-line
 function TopMenu({isOpen, setIsOpen}) {
@@ -136,9 +136,7 @@ function TopMenu({isOpen, setIsOpen}) {
                     {
                        searchResultList.map(
                            searchResult =>
-                           <div style={{marginLeft: '10px'}}> 
-                               <SearchResult/> 
-                           </div>
+                               SearchResultDisplay(searchResult)
                        )
                     }
                    <div className='menu-right'>
