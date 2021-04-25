@@ -423,11 +423,18 @@ def update_user_profile_picture(request):
 def change_password(request):
     try:    
         uid = request.data["uid"]
-        old_password = request.data["old"]
+        if not "auth" in request.data:
+            auth = False
+        else:
+            auth = True
+        if not "old" in request.data:
+            old_password = ""
+        else:
+            old_password = request.data["old"]
         new_password = request.data["new"]
         user = User.objects.get(uid = uid)
         auth_user = AuthUser.objects.get(id=uid)
-        if old_password == user.password:
+        if auth or old_password == user.password:
             user.password = new_password
             auth_user.password = make_password(new_password)
             user.save()
@@ -489,6 +496,23 @@ def get_name(request):
             Ret[i] = user.first_name + " " + user.last_name
         return Response(Ret,status=status.HTTP_200_OK)
     except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST) 
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(["POST"])
+def checking_security(request):
+    try:
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+        user = User.objects.get(uid = uid)
+        question = user.question
+        if len(question) == 0:
+            return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        answers = request.data["question"]
+        for ans in answers:
+            if not question[ans] == answers[ans]:
+               return Response(None, status.HTTP_401_UNAUTHORIZED)
+        return Response(None,status=status.HTTP_200_OK)    
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
  
