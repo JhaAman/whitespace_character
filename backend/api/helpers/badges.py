@@ -1,12 +1,15 @@
-from api.models.User import User
-from api.models.User import UserSerializer
-from api.models.Recognition import Recognition
-from api.models.Recognition import RecognitionSerializer
-from api.helpers.notifications import makeNotification
+from api.helpers.notifications import make_notification
+from api.db.models import \
+    User as User, \
+    Recognition as Recog
+from api.db.serializers import \
+    RecognitionSerializer as RecogSrl, \
+    UserSerializer as UserSrl
+
 
 def updateBadges(useridto, useridfrom):
-    uid_to_received = Recognition.objects.filter(uid_to = useridto).count()
-    uid_from_sent = Recognition.objects.filter(uid_from = useridfrom).count()
+    uid_to_received = Recog.objects.filter(uid_to = useridto).count()
+    uid_from_sent = Recog.objects.filter(uid_from = useridfrom).count()
 
     if uid_to_received % 5 == 0:
         userRef = User.objects.get(pk = useridto)

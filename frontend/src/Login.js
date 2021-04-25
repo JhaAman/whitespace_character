@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from './AuthContext.js';
 import axios from 'axios'
 import { Header } from './Components.js'
+import './Login.css'
 
 function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [answer, setAnswer] = useState("");
+    const [ username, setUsername ] = useState("");
+    const [ password, setPassword ] = useState("");
     const context = useContext(AuthContext);
     const [ step, setStep ] = useState(1);
 
@@ -26,7 +26,7 @@ function Login() {
         return username.length > 0 && password.length > 0;
     }
 
-    const submit = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         
         axios.post("http://localhost:8000/api/get_token/", {
@@ -35,19 +35,7 @@ function Login() {
         }).then((res) => {
             console.log(res);
             context.setToken(res.data.access);
-            axios.get("http://localhost:8000/api/personal_information/", {
-                params: {
-                    "token": context.token,
-                },
-                headers: {
-                    "Authorization": "Bearer " + context.token
-                }
-            }).then((res) => {
-                console.log(res);
-                context.setAuthInfo(res.data.uid, username, password, res.data.role);
-            }).catch((err) => {
-                console.log(err);
-            })
+            context.setAuthInfo(res.data.uid, username, password, res.data.role);
         }).catch((err) => {
             console.log(err);
         })
@@ -55,7 +43,7 @@ function Login() {
 
     return (
         <div className="app">
-            <Header/>
+            <Header />
             <div className="body">
                 {
                     step === 1 && (
@@ -147,6 +135,34 @@ function Login() {
                         </div>
                     )
                 }
+                <form onSubmit={onSubmit}>
+
+                    <br/>
+                    <br/>
+                    <label>
+                        <div className='loginput rounded'>
+                            <input
+                                type="text"
+                                placeholder="email"
+                                value={username}
+                                onChange={e => setUsername(e.target.value)}
+                                className="loginput"
+                            />
+                        </div>
+                    </label>
+                    <br />
+                    <label>
+                        <input
+                            type="password"
+                            placeholder="password"
+                            value={password}
+                            onChange={e=>setPassword(e.target.value)}
+                            className="loginput"
+                        />
+                    </label>
+                    <br/>
+                    <input type="Submit" value="submit" hidden={!validate()} className="login-button"/>
+                </form>
             </div>
         </div>
     );
