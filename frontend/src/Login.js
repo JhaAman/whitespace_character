@@ -143,8 +143,8 @@ function Login() {
                                 <input
                                     type="answer"
                                     placeholder="new password"
-                                    value={answer}
-                                    onChange={e=>setAnswer(e.target.value)}
+                                    value={password}
+                                    onChange={e=>setPassword(e.target.value)}
                                     class="loginput"
                                 />
                                 </div>
@@ -154,8 +154,8 @@ function Login() {
                                 <input
                                     type="answer"
                                     placeholder="new password"
-                                    value={answer}
-                                    onChange={e=>setAnswer(e.target.value)}
+                                    value={password}
+                                    onChange={e=>setPassword(e.target.value)}
                                     class="loginput"
                                 />
                             </label>
