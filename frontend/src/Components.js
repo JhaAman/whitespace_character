@@ -8,7 +8,7 @@ import SearchField from "react-search-field";
 import fetchAPI from './services/api.js';
 import Image from 'react-bootstrap/Image';
 import NotificationButton from './Notification';
-import { View, Text } from "react-native";
+import FlexView from 'react-flexview';
 
 import ProfilePicture from './pics/arnold.jpg'
 import axios from 'axios';
@@ -69,18 +69,14 @@ export { Header }
 
 function SearchResultDisplay(props){ //edit this to make each search result clickable with uid field in link
     return (
-        <View style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap"
-        }}>
+        <FlexView column vAlignContent='top'>
         <div className="recognition rounded">
             <div className="topline">
             <Image src={props.profile_picture} className="rounded-circle" width="30px" height="auto"></Image>
             {props.title} <Link className='link' to={'/u/'}><i><b>{props.first_name} {props.last_name}</b></i></Link>
           </div> 
         </div>
-        </View>
+        </FlexView>
   )
  }
 
