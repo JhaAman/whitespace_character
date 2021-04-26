@@ -8,8 +8,12 @@ function Login() {
     const [ username, setUsername ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ answer, setAnswer ] = useState("");
+    const [ message, setMessage ] = useState("");
+    const [ rootToken, setRootToken ] = useState("");
+    const [ securityQuestion, setSecurityQuestion ] = useState("");
+    const [ newPasswordsEqual, setNewPasswordsEqual ] = useState(false);
     const context = useContext(AuthContext);
-    const [ step, setStep ] = useState(1);
+    const [ step, setStep ] = useState(4);
 
     const submit = (e) => {
         e.preventDefault();
@@ -20,10 +24,15 @@ function Login() {
     }
 
     const forgotPassword2 = () => {
+        onSubmitEmail();
         setStep(3);
     }
 
     const forgotPassword3 = () => {
+        onSubmitAnswer();
+    }
+    const forgotPassword4 = () => {
+        onResetPassword();
         setStep(1);
     }
 
@@ -44,17 +53,66 @@ function Login() {
         }).catch((err) => {
             console.log(err);
         })
+    }
 
-        axios.get("http://localhost:8000/api/get_question/", {
-            params: {
-                "username": username
-            },
+    const onSubmitEmail = () => {
+        axios.post("http://localhost:8000/api/get_token/", {
+            username: "root",
+            password: "pwd"
+        }).then((res) => {
+            console.log(res);
+            setRootToken(res.data.access);
+            axios.get("http://127.0.0.1:8000/api/user/get_question/", {
+                params: {
+                    "username": username
+                },
+                headers: {
+                    "Authorization": "Bearer " + rootToken
+                }
+            }).then((res) => {
+                console.log(res)
+                setSecurityQuestion(res.data["question"]);
+            }).catch((err) => {
+                console.log(err);
+            });
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+    const onSubmitAnswer = () => {
+        axios.post("http://127.0.0.1:8000/api/user/checking_security/", {
+            "question": securityQuestion,
+            "answer": answer,
+            "username": username
+        }, {
             headers: {
-                "Authorization": "Bearer " + context.token
+                "Authorization": "Bearer " + rootToken
             }
         }).then((res) => {
             console.log(res);
-            context.setAuthInfo(res.data.uid, username, res.data.role);
+            if (res.status === 200) {
+                setStep(4);
+                setMessage("");
+            } else {
+                setMessage("Incorrect answer");
+            }
+        }).catch((err) => {
+            console.log(err);
+            setMessage("Incorrect answer");
+        })
+    }
+
+    const onResetPassword = () => {
+        axios.post("", {
+            "username": username,
+            "new": password
+        }, {
+            headers: {
+                "Authorization": "Bearer " + rootToken
+            }
+        }).then((res) => {
+            console.log(res);
         }).catch((err) => {
             console.log(err);
         })
@@ -97,7 +155,8 @@ function Login() {
                         </form>
                     )
                 }
-                {
+
+{
                     step === 2 && (
                         <div>
                             <br/>
@@ -109,12 +168,22 @@ function Login() {
                                 onChange={e => setUsername(e.target.value)}
                                 class="loginput"
                             />
+                           <br/>
                             <br/>
+                            <button type="Submit" value="submit" class="login-button" onClick={forgotPassword2}>submit</button>
+                            <br/>
+                        </div>
+                    )
+                }
+
+                {
+                    step === 3 && (
+                        <div>
                             <br/>
                             <label>
                                 <div>
                                     <text>
-
+                                        { securityQuestion }
                                     </text>
                                 </div>
                             </label>
@@ -128,13 +197,15 @@ function Login() {
                                 />
                             </label>
                             <br/>
-                            <button type="Submit" value="submit" class="login-button" onClick={forgotPassword2}>submit</button>
+                            <text>{message}</text>
+                            <br/>
+                            <button type="Submit" value="submit" class="login-button" onClick={forgotPassword3}>submit</button>
                             <br/>
                         </div>
                     )
                 }
                 {
-                    step === 3 && (
+                    step === 4 && (
                         <div>
                             <br/>
                             <br/>
@@ -154,13 +225,12 @@ function Login() {
                                 <input
                                     type="answer"
                                     placeholder="new password"
-                                    value={password}
-                                    onChange={e=>setPassword(e.target.value)}
+                                    onChange={(e) => setNewPasswordsEqual(password === e.target.value)}
                                     class="loginput"
                                 />
                             </label>
                             <br/>
-                            <button type="Submit" value="submit" class="login-button" onClick={forgotPassword3}>submit </button>
+                            <button hidden={newPasswordsEqual} type="Submit" value="submit" class="login-button" onClick={forgotPassword4}>submit </button>
                             <br/>
                         </div>
                     )
