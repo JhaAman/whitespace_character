@@ -90,11 +90,13 @@ function TopMenu({isOpen, setIsOpen}) {
   const [searchResultList, setSearchResultList] = useState([])
   // Get JWT authorization context
   const value = useContext(AuthContext);
+
   // Handler on user typing in search bar
   const onChangeSearchBarText = newText => {
       // Set search text to new updated text
       setSearchText(newText)
   }
+
   const actualEnterSearchBarHandler = async () => {
      
       const authHeader = 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjI3NzY2MTU4LCJqdGkiOiJhMWRjYmYyZTNjZWY0NTY3ODg1YzU2NTAyNWJlMWQwNSIsInVzZXJfaWQiOjEsImlzX3N0YWZmIjp0cnVlfQ.5KfI8UUJBjQnWIVkNRR4BIkjO7gAjedjFHpkX62UFb4'
@@ -108,12 +110,14 @@ function TopMenu({isOpen, setIsOpen}) {
       const data = resp.data.data
       setSearchResultList(data)
   }
-  // Handler on user submitting search query
-  // Has to call on a helper function for async/await, probably due to
-  //   react-search-field package design
-  const onEnterSearchBar = () => {
-      actualEnterSearchBarHandler()
-  }
+
+    // Handler on user submitting search query
+    // Has to call on a helper function for async/await, probably due to
+    //   react-search-field package design
+    const onEnterSearchBar = () => {
+        actualEnterSearchBarHandler()
+    }
+
     return (
         <div className='topmenu'>
             <div className="row">
@@ -146,6 +150,8 @@ function TopMenu({isOpen, setIsOpen}) {
            </div>
        );
     }
-    export { TopMenu }
+
+
+export { TopMenu }
     
-    export default Pass;
+export default Pass;
