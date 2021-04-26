@@ -439,7 +439,7 @@ class SearchUserSerializer(serializers.Serializer):
             The query string to search for
     """
 
-    query = serializers.CharField(required=True)
+    query = serializers.CharField(required=True, allow_blank=True)
 
     class Meta:
         fields = ['query']
