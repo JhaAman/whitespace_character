@@ -18,11 +18,11 @@
   display: -webkit-flex;
   display: flex;
 
-  webkit-box-flex-direction: row;
-  moz-box-flex-direction: row;
-  ms-flex-direction: row;
-  webkit-flex-direction: row;
-  flex-direction: row;
+  webkit-box-flex-direction: column;
+  moz-box-flex-direction: column;
+  ms-flex-direction: column;
+  webkit-flex-direction: column;
+  flex-direction: column;
 
   webkit-box-flex: 1 1 200px;
   moz-box-flex: 1 1 200px;
