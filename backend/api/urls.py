@@ -88,7 +88,6 @@ urlpatterns = [
     path('get_rockstar/',apiRockstars.get_rockstars),
 
     # personal information
-
     path('user/get_perInfo/',apiUser.personal_information),
     path('user/get_Image/',apiUser.get_image),
     path('user/change_password/',apiUser.change_password),
