@@ -422,7 +422,8 @@ def update_user_profile_picture(request):
 @api_view(["POST"])
 def change_password(request):
     try:    
-        uid = request.data["uid"]
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
         if not "auth" in request.data:
             auth = False
         else:
@@ -515,4 +516,28 @@ def checking_security(request):
         return Response(None,status=status.HTTP_200_OK)    
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+def get_question(request):
+    try:
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+        user = User.objects.get(uid = uid)
+        question = user.question
+        if len(question) == 0:
+            return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        Ret = {"question":""}
+        for q in question:
+            Ret["question"] = q
+            break
+        return Response(Ret,status=status.HTTP_200_OK) 
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+@api_view(["POST"])
+def setting_security(request):
+    try:
+        a
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)   
  
