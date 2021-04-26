@@ -510,10 +510,10 @@ def checking_security(request):
         question = user.question
         if len(question) == 0:
             return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        answers = request.data["question"]
-        for ans in answers:
-            if not question[ans] == answers[ans]:
-               return Response(None, status.HTTP_401_UNAUTHORIZED)
+        answer = request.data["answer"]
+        res =  request.data["question"]
+        if not question[res] == answer:
+            return Response(None, status.HTTP_401_UNAUTHORIZED)
         return Response(None,status=status.HTTP_200_OK)    
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
@@ -523,7 +523,6 @@ def get_question(request):
     try:
         username = request.query_params["username"]
         user = User.objects.filter(email = username)[0]
-        question = user.question
         question = user.question
         if len(question) == 0:
             return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
