@@ -36,7 +36,7 @@ function SubmitRecog() {
                 <h1 style={{fontSize: '12pt', margin: 0}}>Recognition:</h1>
                 <span onChange={() => setRecognition("")} contentEditable={true} style={{width: '75%', textAlign: 'left', backgroundColor: 'white', border: '1px solid black'}}></span>
             </div>
-            <button onClick={() => onSubmit()} style={{width: '25%'}}>Submit Recognition</button>
+            <button onClick={() => onSubmit()} style={{width: '25%'}}>submit recognition</button>
         </div>
     );
 }
