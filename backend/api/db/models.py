@@ -474,7 +474,7 @@ class User(models.Model):
     profile_picture = models.ImageField(
         blank=True,
         null=True,
-        default="",
+        default="images/default.jpg",
         upload_to="images/",
     )
 
