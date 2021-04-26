@@ -72,6 +72,7 @@ function SearchResultDisplay(props){ //edit this to make each search result clic
             <div className="topline">
             <Image src={props.profile_picture} className="rounded-circle" width="30px" height="auto"></Image>
             {props.title} <Link className='link' to={'/u/'}><i><b>{props.first_name} {props.last_name}</b></i></Link>
+            <br> <br> <br>
           </div> 
         </div>
   )
