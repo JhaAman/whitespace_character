@@ -15,6 +15,7 @@ import io
 import json
 import datetime
 import re
+from django.db import reset_queries
 
 
 from django.db.models import Q
@@ -407,8 +408,10 @@ def mng_stats(request):
 def update_user_profile_picture(request):
     try:
         if 'profile_picture' not in request.data:
-            return Response({"error": "profile picture is empty"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        uid = request.user.id
+            return Response({"error": "profile_picture is empty"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        if 'uid' not in request.data:
+            return Response({"error": "uid is empty"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        uid = request.data['uid']
         userRef = User.objects.get(uid=uid)
         userRef.profile_picture = request.data['profile_picture']
         userRef.save()
