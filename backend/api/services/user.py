@@ -424,25 +424,24 @@ def change_password(request):
     try:    
         token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
         uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
-        if not "auth" in request.data:
-            auth = False
-        else:
-            auth = True
-        if not "old" in request.data:
-            old_password = ""
-        else:
-            old_password = request.data["old"]
-        new_password = request.data["new"]
-        user = User.objects.get(uid = uid)
-        auth_user = AuthUser.objects.get(id=uid)
-        if auth or old_password == user.password:
-            user.password = new_password
-            auth_user.password = make_password(new_password)
+        if uid == 1:
+            user = User.objects.filter(email = request.data["username"])[0]
+            authuser = AuthUser.objects.get(id = user.uid)
+            user.password = request.data["new"]
+            authuser.password = make_password(request.data["new"])
             user.save()
-            auth_user.save()
-            return Response(None,status=status.HTTP_200_OK)
+            authuser.save()
+            return Response(status=status.HTTP_200_OK)
         else:
-            return Response(None, status.HTTP_401_UNAUTHORIZED)
+            user = User.objects.get(uid = uid)
+            authuser = AuthUser.objects.get(id = uid)
+            if request.data["old"] == user.password:
+                user.password = request.data["new"]
+                authuser.password = make_password(request.data["new"])
+                user.save()
+                authuser.save()
+                return Response(status=status.HTTP_200_OK)
+        return Response(None, status.HTTP_401_UNAUTHORIZED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
@@ -503,9 +502,8 @@ def get_name(request):
 @api_view(["POST"])
 def checking_security(request):
     try:
-        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
-        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
-        user = User.objects.get(uid = uid)
+        username = request.data["username"]
+        user = User.objects.filter(email = username)[0]
         question = user.question
         if len(question) == 0:
             return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -520,24 +518,30 @@ def checking_security(request):
 @api_view(["GET"])
 def get_question(request):
     try:
-        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
-        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
-        user = User.objects.get(uid = uid)
+        username = request.query_params["username"]
+        user = User.objects.filter(email = username)[0]
+        question = user.question
         question = user.question
         if len(question) == 0:
             return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        Ret = {"question":""}
         for q in question:
-            Ret["question"] = q
-            break
-        return Response(Ret,status=status.HTTP_200_OK) 
+            return Response(q,status=status.HTTP_200_OK)
+            break 
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
 @api_view(["POST"])
 def setting_security(request):
     try:
-        a
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+        user = User.objects.get(uid = uid)
+        ques = request.data["question"]
+        ans =  request.data["answer"]
+        Ret = {ques:ans}
+        user.question = Ret
+        user.save()
+        return Response(None,status=status.HTTP_200_OK) 
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)   
  
