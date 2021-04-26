@@ -13,14 +13,12 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import 'reactjs-popup/dist/index.css';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-
-
-
-
+import { AuthContext } from './AuthContext.js';
 
 function Notification() {
+  const context = useContext(AuthContext);
   function BuildNotification(props) {
     return (
       <DropdownItem onClick={() => markSeen(props.nid)}>
@@ -61,19 +59,12 @@ function Notification() {
     axios.post("http://localhost:8000/api/get_token/",{
       "username":"root",
       "password":"pwd"
-    })
-    .then(function(response){
+    }).then(function(response){
       setAuth(response.data.access);
       //console.log("success");
       //setAuthenticated(true);
       getNotifications(response.data.access);
     })
-      .then(function (response) {
-        setAuth(response.data.access);
-        console.log("success");
-        setAuthenticated(true);
-        getNotifications(response.data.access);
-      })
 
   }
 

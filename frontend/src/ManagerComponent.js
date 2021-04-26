@@ -14,7 +14,7 @@ import { AuthContext } from './AuthContext.js';
 function ManagerComp(){
     
 
-    const value = useContext(AuthContext);
+    const context = useContext(AuthContext);
     
     function EmployeeDisplay(props){
         return(
@@ -64,15 +64,14 @@ function ManagerComp(){
     function getData(){
         //console.log(value.authenticationState.userInfo.userID);
         axios.post("http://localhost:8000/api/user/mng/stats/",
-                {uid:value.uid},
+                {uid: context.uid},
                 {
                     headers:{
-                        Authorization:"Bearer "+ value.token
+                        Authorization:"Bearer "+ context.token
                     }
                 }
                 )
                 .then(function(response){
-                    console.log(value.authenticationState);
                     //========================SET UP GRAPH=========================================
                     let len = 0;//number of elements in tagDistr, for some reason I couldnt use .length
                     // eslint-disable-next-line

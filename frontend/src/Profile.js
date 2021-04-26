@@ -66,7 +66,7 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const { userid } = useParams();
-  const value = useContext(AuthContext);
+  const context = useContext(AuthContext);
   //const [pictures,setPictures] = useState([]);
   const [oldpass,setOldPass] = useState("");
   const [newpass,setNewPass] = useState("");
@@ -104,7 +104,7 @@ function Profile() {
         uid: userid
       },
       headers:{
-        Authorization:"Bearer "+value.token
+        Authorization: "Bearer " + context.token
       },
     })
       .then(function (res) {
@@ -154,7 +154,7 @@ function Profile() {
     },
     {
     headers:{
-      Authentication:"Bearer "+value.token
+      Authentication: "Bearer " + context.token
     }},
     ).then(function(res){
       if(res.status===200){
@@ -202,9 +202,9 @@ function Profile() {
         <div className="row button-row">
         <button className="button topbutton" onClick={() => setPage(0)}>badges</button>
           <Col xs={1}></Col>
-          <button className="button topbutton" onClick={() => setPage(1)}>network</button>
-          <Col xs={1} hidden={userid!==value.uid}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==value.uid}>settings</button>
+          <button className="button topbutton" onClick={() => setPage(1)}>Network</button>
+          <Col xs={1} hidden={userid !== context.uid}></Col>
+          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==context.uid}>Settings</button>
 
         </div>
       </div>
@@ -303,7 +303,7 @@ function Profile() {
                   {
                     headers:{
                       'Content-Type': 'multipart/form-data',
-                      Authorization:"Bearer "+value.authenticationState.token
+                      Authorization:"Bearer "+ context.token
                     }
                   }).then(console.log("uploaded"))
                 }}/>
