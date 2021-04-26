@@ -146,15 +146,15 @@ function Profile() {
   }
 
   function changePassword(){
-    axios.post("http://localhost:8000/api/user/change_password/",
+    axios.put("http://localhost:8000/api/user/change_password/",
     {
-      uid:80917506,
+      uid:userid,
       old:oldpass,
       new:newpass,
     },
     {
     headers:{
-      Authentication: "Bearer " + context.token
+      Authorization: "Bearer " + context.token
     }},
     ).then(function(res){
       if(res.status===200){

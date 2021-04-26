@@ -1,4 +1,4 @@
-import Button from 'react-bootstrap/Button';
+//import Button from 'react-bootstrap/Button';
 import React, { useState, useContext, useEffect } from 'react';
 import Pie from 'react-chartjs-2';
 import Col from 'react-bootstrap/Col';
@@ -47,7 +47,7 @@ function ManagerComp(){
         );
     }
 
-    const [feed,setFeed] = useState(false);
+    //const [feed,setFeed] = useState(false);
     const [data,setData] = useState();
     const [employeelist,setEmployeeList] = useState([]);
     const [loading,setLoading] = useState(true);
@@ -64,7 +64,9 @@ function ManagerComp(){
     function getData(){
         //console.log(value.authenticationState.userInfo.userID);
         axios.post("http://localhost:8000/api/user/mng/stats/",
+
                 {uid: context.uid},
+
                 {
                     headers:{
                         Authorization:"Bearer "+ context.token
@@ -72,6 +74,7 @@ function ManagerComp(){
                 }
                 )
                 .then(function(response){
+
                     //========================SET UP GRAPH=========================================
                     let len = 0;//number of elements in tagDistr, for some reason I couldnt use .length
                     // eslint-disable-next-line

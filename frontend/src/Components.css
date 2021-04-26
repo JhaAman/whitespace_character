@@ -148,14 +148,14 @@
 
 .false-notification{
   color:blue;
-  
-  height: auto;
+  height: 50px;
   width: 400px;
 }
 .true-notification{
-  height: auto;
+  height: 50px;
   width: 400px;
 }
+
 
 .Notification-Message{
   
