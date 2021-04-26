@@ -202,9 +202,9 @@ function Profile() {
         <div className="row button-row">
         <button className="button topbutton" onClick={() => setPage(0)}>badges</button>
           <Col xs={1}></Col>
-          <button className="button topbutton" onClick={() => setPage(1)}>Network</button>
+          <button className="button topbutton" onClick={() => setPage(1)}>network</button>
           <Col xs={1} hidden={userid !== context.uid}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==context.uid}>Settings</button>
+          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==context.uid}>settings</button>
 
         </div>
       </div>
