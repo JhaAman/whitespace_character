@@ -9,11 +9,10 @@ function Login() {
     const [ password, setPassword ] = useState("");
     const [ answer, setAnswer ] = useState("");
     const [ message, setMessage ] = useState("");
-    const [ rootToken, setRootToken ] = useState("");
     const [ securityQuestion, setSecurityQuestion ] = useState("");
     const [ newPasswordsEqual, setNewPasswordsEqual ] = useState(false);
     const context = useContext(AuthContext);
-    const [ step, setStep ] = useState(4);
+    const [ step, setStep ] = useState(1);
 
     const submit = (e) => {
         e.preventDefault();
@@ -21,19 +20,6 @@ function Login() {
 
     const forgotPassword = () => {
         setStep(2);
-    }
-
-    const forgotPassword2 = () => {
-        onSubmitEmail();
-        setStep(3);
-    }
-
-    const forgotPassword3 = () => {
-        onSubmitAnswer();
-    }
-    const forgotPassword4 = () => {
-        onResetPassword();
-        setStep(1);
     }
 
     function validate() {
@@ -61,19 +47,21 @@ function Login() {
             password: "pwd"
         }).then((res) => {
             console.log(res);
-            setRootToken(res.data.access);
+            localStorage.setItem('rootToken', res.data.access)
             axios.get("http://127.0.0.1:8000/api/user/get_question/", {
                 params: {
                     "username": username
                 },
                 headers: {
-                    "Authorization": "Bearer " + rootToken
+                    "Authorization": "Bearer " + localStorage.getItem('rootToken')
                 }
             }).then((res) => {
                 console.log(res)
                 setSecurityQuestion(res.data["question"]);
+                setStep(3);
             }).catch((err) => {
                 console.log(err);
+
             });
         }).catch((err) => {
             console.log(err);
@@ -87,7 +75,7 @@ function Login() {
             "username": username
         }, {
             headers: {
-                "Authorization": "Bearer " + rootToken
+                "Authorization": "Bearer " + localStorage.getItem('rootToken')
             }
         }).then((res) => {
             console.log(res);
@@ -104,15 +92,17 @@ function Login() {
     }
 
     const onResetPassword = () => {
-        axios.post("", {
+        axios.post("http://127.0.0.1:8000/api/user/change_password/", {
             "username": username,
             "new": password
         }, {
             headers: {
-                "Authorization": "Bearer " + rootToken
+                "Authorization": "Bearer " + localStorage.getItem('rootToken')
             }
         }).then((res) => {
             console.log(res);
+            setStep(1);
+            setNewPasswordsEqual(false);
         }).catch((err) => {
             console.log(err);
         })
@@ -132,7 +122,6 @@ function Login() {
                                     <input
                                         type="text"
                                         placeholder="email"
-                                        value={username}
                                         onChange={e => setUsername(e.target.value)}
                                         class="loginput"
                                     />
@@ -143,7 +132,6 @@ function Login() {
                                 <input
                                     type="password"
                                     placeholder="password"
-                                    value={password}
                                     onChange={e=>setPassword(e.target.value)}
                                     class="loginput"
                                 />
@@ -164,13 +152,12 @@ function Login() {
                             <input
                                 type="text"
                                 placeholder="email"
-                                value={username}
                                 onChange={e => setUsername(e.target.value)}
                                 class="loginput"
                             />
                            <br/>
                             <br/>
-                            <button type="Submit" value="submit" class="login-button" onClick={forgotPassword2}>submit</button>
+                            <button type="Submit" value="submit" class="login-button" onClick={onSubmitEmail}>submit</button>
                             <br/>
                         </div>
                     )
@@ -191,7 +178,6 @@ function Login() {
                             <label>
                                 <input
                                     type="answer"
-                                    value={answer}
                                     onChange={e=>setAnswer(e.target.value)}
                                     class="loginput"
                                 />
@@ -199,7 +185,7 @@ function Login() {
                             <br/>
                             <text>{message}</text>
                             <br/>
-                            <button type="Submit" value="submit" class="login-button" onClick={forgotPassword3}>submit</button>
+                            <button type="Submit" value="submit" class="login-button" onClick={onSubmitAnswer}>submit</button>
                             <br/>
                         </div>
                     )
@@ -214,7 +200,6 @@ function Login() {
                                 <input
                                     type="answer"
                                     placeholder="new password"
-                                    value={password}
                                     onChange={e=>setPassword(e.target.value)}
                                     class="loginput"
                                 />
@@ -224,13 +209,13 @@ function Login() {
                             <label>
                                 <input
                                     type="answer"
-                                    placeholder="new password"
+                                    placeholder="confirm new password"
                                     onChange={(e) => setNewPasswordsEqual(password === e.target.value)}
                                     class="loginput"
                                 />
                             </label>
                             <br/>
-                            <button hidden={newPasswordsEqual} type="Submit" value="submit" class="login-button" onClick={forgotPassword4}>submit </button>
+                            <button hidden={!newPasswordsEqual  } type="Submit" value="submit" class="login-button" onClick={onResetPassword}>submit </button>
                             <br/>
                         </div>
                     )
