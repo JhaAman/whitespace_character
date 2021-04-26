@@ -16,7 +16,7 @@ def get_notif(request):
     try:
         token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
         uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
-        qs = Notif.objects.filter(notif_uid=uid)
+        qs = Notif.objects.filter(notif_uid=uid).order_by('-date_created')
         serializer = NotifSrl(qs, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
     except ValueError as e:
