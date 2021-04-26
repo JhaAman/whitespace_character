@@ -14,10 +14,6 @@ function Login() {
     const context = useContext(AuthContext);
     const [ step, setStep ] = useState(1);
 
-    const submit = (e) => {
-        e.preventDefault();
-    }
-
     const forgotPassword = () => {
         setStep(2);
     }
@@ -28,7 +24,6 @@ function Login() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        
         axios.post("http://localhost:8000/api/get_token/", {
             username: username,
             password: password
@@ -114,7 +109,7 @@ function Login() {
             <div className="body">
                 {
                     step === 1 && (
-                        <form onSubmit={submit}>
+                        <form onSubmit={onSubmit}>
                             <br/>
                             <br/>
                             <label>
