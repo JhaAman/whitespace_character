@@ -7,8 +7,13 @@ import './Login.css'
 function Login() {
     const [ username, setUsername ] = useState("");
     const [ password, setPassword ] = useState("");
+    const [ answer, setAnswer ] = useState("");
     const context = useContext(AuthContext);
     const [ step, setStep ] = useState(1);
+
+    const submit = (e) => {
+        e.preventDefault();
+    }
 
     const forgotPassword = () => {
         setStep(2);
@@ -36,6 +41,20 @@ function Login() {
             console.log(res);
             context.setToken(res.data.access);
             context.setAuthInfo(res.data.uid, username, password, res.data.role);
+        }).catch((err) => {
+            console.log(err);
+        })
+
+        axios.get("http://localhost:8000/api/get_question/", {
+            params: {
+                "username": username
+            },
+            headers: {
+                "Authorization": "Bearer " + context.token
+            }
+        }).then((res) => {
+            console.log(res);
+            context.setAuthInfo(res.data.uid, username, res.data.role);
         }).catch((err) => {
             console.log(err);
         })
@@ -83,9 +102,20 @@ function Login() {
                         <div>
                             <br/>
                             <br/>
+                            <input
+                                type="text"
+                                placeholder="email"
+                                value={username}
+                                onChange={e => setUsername(e.target.value)}
+                                class="loginput"
+                            />
+                            <br/>
+                            <br/>
                             <label>
                                 <div>
-                                    <text>Here is your question</text>
+                                    <text>
+
+                                    </text>
                                 </div>
                             </label>
                             <br/>
@@ -135,34 +165,6 @@ function Login() {
                         </div>
                     )
                 }
-                <form onSubmit={onSubmit}>
-
-                    <br/>
-                    <br/>
-                    <label>
-                        <div className='loginput rounded'>
-                            <input
-                                type="text"
-                                placeholder="email"
-                                value={username}
-                                onChange={e => setUsername(e.target.value)}
-                                className="loginput"
-                            />
-                        </div>
-                    </label>
-                    <br />
-                    <label>
-                        <input
-                            type="password"
-                            placeholder="password"
-                            value={password}
-                            onChange={e=>setPassword(e.target.value)}
-                            className="loginput"
-                        />
-                    </label>
-                    <br/>
-                    <input type="Submit" value="submit" hidden={!validate()} className="login-button"/>
-                </form>
             </div>
         </div>
     );

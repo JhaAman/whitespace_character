@@ -516,3 +516,21 @@ def checking_security(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
  
+@api_view(["GET"])
+def get_question(request):
+    try:
+        if not 'username' in request.query_params:
+            return Response("Missing email", status.HTTP_400_BAD_REQUEST)
+        user_name = request.query_params["username"]
+        user = User.objects.filter(email = user_name)
+        user = user[0]
+        question = user.question
+        if len(question) == 0:
+            return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        Ret = {"question":""}
+        for q in question:
+            Ret["question"] = q
+            break
+        return Response(Ret,status=status.HTTP_200_OK) 
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)

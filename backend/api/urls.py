@@ -94,6 +94,7 @@ urlpatterns = [
     path('user/change_password/',apiUser.change_password),
     path('user/checking_security/',apiUser.checking_security),
     path('user/get_name/',apiUser.get_name),
+    path('user/get_question/',apiUser.get_question),
 
 
     
