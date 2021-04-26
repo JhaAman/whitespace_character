@@ -69,14 +69,14 @@ export { Header }
 
 function SearchResultDisplay(props){ //edit this to make each search result clickable with uid field in link
     return (
-        <FlexView column vAlignContent='top'>
-        <div className="recognition rounded">
-            <div className="topline">
-            <Image src={props.profile_picture} className="rounded-circle" width="30px" height="auto"></Image>
-            {props.title} <Link className='link' to={'/u/'}><i><b>{props.first_name} {props.last_name}</b></i></Link>
-          </div> 
+        <div className="search-bar-container">
+            <div className="recognition rounded">
+                <div className="topline">
+                <Image src={props.profile_picture} className="rounded-circle" width="30px" height="auto"></Image>
+                {props.title} <Link className='link' to={'/u/'}><i><b>{props.first_name} {props.last_name}</b></i></Link>
+            </div> 
+            </div>
         </div>
-        </FlexView>
   )
  }
 
@@ -118,7 +118,11 @@ function TopMenu({isOpen, setIsOpen}) {
     // Has to call on a helper function for async/await, probably due to
     //   react-search-field package design
     const onEnterSearchBar = () => {
-        actualEnterSearchBarHandler()
+        console.log(searchText)
+        if (searchText !== "")
+            actualEnterSearchBarHandler()
+        else 
+            setSearchResultList([])
     }
 
     return (
@@ -132,20 +136,23 @@ function TopMenu({isOpen, setIsOpen}) {
                     <Link className='top-link' to='/me'>self</Link>
                     <Link onClick={() => context.logout()}className='top-link' to='/login'>logout</Link>
                 </div>
-                <Link className='top-link'>search</Link>
-                 <SearchField
-                    classNames="top-menu-search-bar"
-                    placeholder="Search for a user"
-                    searchText={searchText}
-                    onEnter={onEnterSearchBar}
-                    onChange={onChangeSearchBarText}
+                <div>
+                    <SearchField
+                        classNames="top-menu-search-bar"
+                        placeholder="Search for a user"
+                        searchText={searchText}
+                        onEnter={onEnterSearchBar}
+                        onChange={onChangeSearchBarText}
                     />
-                    {
-                       searchResultList.map(
-                           searchResult =>
-                               SearchResultDisplay(searchResult)
-                       )
-                    }
+                    <div className='search-res-container'>
+                        {
+                            searchResultList.map(
+                                searchResult =>
+                                    SearchResultDisplay(searchResult)
+                            )
+                        }
+                    </div>
+                </div>
                    <div className='menu-right'>
                        <NotificationButton/>
                    </div>

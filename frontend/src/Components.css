@@ -206,6 +206,9 @@
   color: #d8b597;
 }
 
+.search-bar-container {
+}
+
 .btn-notif:after {
   content: none !important;
   border: none;
@@ -213,4 +216,16 @@
 
 .btn-notif:focus {
   outline: none !important;
+}
+
+.top-menu-search-bar {
+  width: 300px;
+}
+
+.search-res-container {
+  overflow-y: scroll;
+  max-height: 60vh;
+  position: absolute;
+  top: 40px;
+  right: 10px;
 }
