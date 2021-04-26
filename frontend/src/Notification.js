@@ -69,6 +69,7 @@ function Notification() {
       getNotifications(response.data.access);
     })
       .then(function (response) {
+        // console.log(response)
         setAuth(response.data.access);
         console.log("success");
         setAuth(true);

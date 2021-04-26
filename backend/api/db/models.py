@@ -11,7 +11,9 @@ Detailed data schema can be found at:
         https://dbdiagram.io/d/60516c4becb54e10c33bc840
 """
 
+import os
 import pytz
+import random
 
 from django.db import models
 from django.db.models import F, Q
@@ -20,15 +22,15 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.postgres import fields
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.hashers import make_password
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 from rest_framework import serializers
 
 from api.db.constant import *
 from api.db.utils import create_unique_id
 
-"""
-Model field legends:
 
+"""Model field legends:
     || 'P'       : Primary key.
     || 'FK'      : Foreign key.
     || '*'       : Required, must be non-null and non-blank.
@@ -92,7 +94,7 @@ class Company(models.Model):
         - Badges serves as reward system
         - Employees earn badges with their values scores
         - List of 60-char strings
-    'date_created': (auto, default = datetime.now() UTC time)
+    'date_created': (auto, default = timezone.now UTC time)
         - Date object was created
         - Datetime
         - Date format reference at
@@ -136,12 +138,13 @@ class Company(models.Model):
 
     # Date object was created (auto, default = datetime.now() UTC time)
     date_created = models.DateTimeField(
-        default=dateformat.format(timezone.now(), 'Y-m-d H:i:s'),
+        default=timezone.now,
         auto_created=True,
         null=True)
 
     class Meta:
         verbose_name = "Company"
+        
 
 
 class TeamManager(models.Manager):
@@ -210,7 +213,7 @@ class Team(models.Model):
         - Badge names earned by Team
         - Badge names are specified by parent Company object
         - List of 60-char strings
-    'date_created': (auto, default = datetime.now() UTC time)
+    'date_created': (auto, default = timezone.now UTC time)
         - Date object was created
         - Datetime
         - Date format reference at
@@ -261,7 +264,7 @@ class Team(models.Model):
 
     # Date object was created (auto, default = datetime.now() UTC time)
     date_created = models.DateTimeField(
-        default=dateformat.format(timezone.now(), 'Y-m-d H:i:s'),
+        default=timezone.now,
         auto_created=True,
         null=True)
 
@@ -307,11 +310,13 @@ class UserManager(models.Manager):
         # Generate initial list 'badges'
         kwargs['badges'] = list()
 
-        # Generate initial list 'network'
-        kwargs['network'] = list()
-
+        # Set default user role to "emp"
         if 'user_role' not in kwargs:
             kwargs['user_role'] = "emp"
+
+        # Set default avatar if not specified in creation
+        if 'profile_picture' not in kwargs:
+            kwargs['profile_picture'] = random.choice(os.listdir('./media/stock/'))
 
         # Creating fields for Auth object
         authObjFields = {
@@ -320,7 +325,7 @@ class UserManager(models.Manager):
             'username':
                 kwargs['email'],
             'last_login':
-                dateformat.format(timezone.now(), 'Y-m-d H:i:s'),
+                timezone.now(),
             'is_staff':
                 kwargs['user_role'] == "mng"
                 or kwargs['user_role'] == "manager",
@@ -329,6 +334,7 @@ class UserManager(models.Manager):
             'email':
                 kwargs['email'],
         }
+
         # Regiser Authenticated User
         AuthUser.objects.create(**authObjFields)
 
@@ -403,10 +409,7 @@ class User(models.Model):
         - Badge names earned by User
         - Badge names are specified by parent Company object
         - List of 60-char strings
-    'network' (blank, default = []):
-        - List of references to other Users in the same Team
-        - List of 'uid'
-    'date_created': (auto, default = datetime.now() UTC time)
+    'date_created': (auto, default = timezone.now UTC time)
         - Date object was created
         - Datetime
         - Date format reference at
@@ -484,17 +487,9 @@ class User(models.Model):
             default=list, 
             blank=True)
 
-    # List of references to other Users in the same Team
-    #   (blank, default = [])
-    network = \
-        fields.ArrayField(
-            base_field=models.CharField(max_length=ID_LEN), 
-            default=list, 
-            blank=True)
-
     # Date object was created (auto, default = datetime.now() UTC time)
     date_created = models.DateTimeField(
-        default=dateformat.format(timezone.now(), 'Y-m-d H:i:s'),
+        default=timezone.now,
         auto_created=True,
         null=True)
 
@@ -575,7 +570,7 @@ class RecognitionManager(models.Manager):
                 date_created >= time_after \
                 if 'time_after' in kwargs \
                 else True
-            # Check involved party is part of team
+            # Check an involved party is part of team
             condTeam = \
                 recogObj.user_from.tid == kwargs['tid'] \
                 or recogObj.user_to.tid == kwargs['tid']
@@ -673,7 +668,7 @@ class Recognition(models.Model):
 
     # Date object was created (auto, default = datetime.now() UTC time)
     date_created = models.DateTimeField(
-        default=dateformat.format(timezone.now(), 'Y-m-d H:i:s'),
+        default=timezone.now,
         auto_created=True,
     )
 

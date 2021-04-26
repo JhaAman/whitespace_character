@@ -12,3 +12,5 @@ django-environ==0.4.5
 PyJWT==1.7.1
 djangorestframework-simplejwt==4.4.0
 coverage==5.5
+Faker==8.1.1
+py-avataaars==1.1.2
