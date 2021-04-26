@@ -27,40 +27,25 @@ class HomePageView(generics.ListAPIView):
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
-        recogAllQsList = Recog.objects.all()
-        recogAllDictList = RecogSrl(recogAllQsList, many=True).data
+        # get all users and their received recognitions
+        userObjList = User.objects.all()
+        userDictList = UserSrl(userObjList, many=True).data
+        recogDictListList = list()
+        for userObj in userObjList:
+            recogObjList = Recognition.objects.filter(uid_to=userObj.uid)
+            recogDictList = RecogSrl(recogObjList, many=True).data
+            recogDictListList.append(recogDictList)
 
         dataset = []
 
-        for recogDict in recogAllDictList:
-            userFrom = User.objects.get(uid=recogDict['uid_from']);
-            userFromName = userFrom.first_name + " " + userFrom.last_name
-            userFromId = userFrom.uid
-            userFromImg = None
-            userTo = User.objects.get(uid=recogDict['uid_to']);
-            userToName = userTo.first_name + " " + userTo.last_name
-            userToId = userTo.uid
-            userToImg = None
-            tags = recogDict['tags']
-            comments = recogDict['comments']
-            feedDict = {
-                'name_from': userFromName,
-                'uid_from': userFromId,
-                'img_from': userFromImg,
-                'name_to': userToName,
-                'uid_to': userToId,
-                'img_to': userToImg,
-                'tags': tags,
-                'comments': comments
-            }
-            dataset.append(feedDict)
+        for i in range(len(userDictList)):
+            dataset.append({
+              'user': userDictList[i],
+              'recogs': [ recogDict['rid'] for recogDict in recogDictListList[i] ]
+            })
 
-        homePostSrl = HomePostSrl(data=dataset, many=True)
-        lc = homePostSrl.is_valid(raise_exception=True)
-        dataset = homePostSrl.validated_data
-
+        #return queryset
         return dataset
-
 
     def post(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)

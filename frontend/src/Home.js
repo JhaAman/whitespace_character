@@ -69,7 +69,11 @@ function EmployeeHomepage() {
                         }
                     </div>
                     <div className='right-column'>
+<<<<<<< HEAD
                         <div className='autoinfobox rounded' style={{height:'auto'}} hidden={context.role !== "mng"}>
+=======
+                        <div className='autoinfobox rounded' style={{height:'auto'}} hidden={value.authenticationState.userInfo.role!=="mng"}>
+>>>>>>> main
                             <ManagerComp/>
                         </div>
                         <div className='infobox rounded'>

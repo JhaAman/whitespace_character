@@ -7,7 +7,11 @@ Authors:
     Myron Lacey,
 Created: April 4th, 2021
 
+<<<<<<< HEAD
 There are 4 model serializers:
+=======
+There are 5 model serializers:
+>>>>>>> main
     CompanySerializer, TeamSerializer, UserSerializer, RecognitionSerializer
 
 Serializer classes to handle API requests:
@@ -75,7 +79,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     Practical fields are as follows:
         'tid', 'uid', 'first_name', 'last_name', 'email', 'title'
+<<<<<<< HEAD
         , 'badges', 'values_scores', 'profile_picture'
+=======
+        , 'badges', 'network', 'values_scores', 'profile_picture'
+>>>>>>> main
         , 'user_role', 'date_created', 'password'
     """
 

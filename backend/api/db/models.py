@@ -22,7 +22,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.postgres import fields
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.hashers import make_password
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 from rest_framework import serializers
 
@@ -334,7 +333,6 @@ class UserManager(models.Manager):
             'email':
                 kwargs['email'],
         }
-
         # Regiser Authenticated User
         AuthUser.objects.create(**authObjFields)
 

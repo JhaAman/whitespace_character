@@ -1,6 +1,10 @@
 import axios from 'axios';
 import React, { useState, useContext, useEffect} from 'react';
+<<<<<<< HEAD
 import { AuthContext } from '../../AuthContext.js';
+=======
+import { AuthContext } from './../../AuthContext.js';
+>>>>>>> main
 import ProfilePicture from '../../pics/arnold.jpg'
 import './FeedRecognition.css'
 

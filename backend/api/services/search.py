@@ -1,7 +1,15 @@
 """Search Endpoints
 
 Org: Team Whitespace Character
+<<<<<<< HEAD
 Authors: Khai Nguyen, khainguyen@umass.edu
+=======
+Authors: 
+    Khai Nguyen, khainguyen@umass.edu
+    Myron Lacey, 
+    Duy Pham,
+    Khang Nguyen, 
+>>>>>>> main
 Created: April 17th, 2021
 
 API endpoints for search support

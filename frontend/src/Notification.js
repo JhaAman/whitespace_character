@@ -67,12 +67,19 @@ function Notification() {
       //console.log("success");
       //setAuthenticated(true);
       getNotifications(response.data.access);
+<<<<<<< HEAD
       return response
+=======
+>>>>>>> main
     })
       .then(function (response) {
         setAuth(response.data.access);
         console.log("success");
+<<<<<<< HEAD
         setAuth(true);
+=======
+        setAuthenticated(true);
+>>>>>>> main
         getNotifications(response.data.access);
       })
 

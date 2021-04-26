@@ -10,6 +10,7 @@
   padding: 2%;
 }
 
+<<<<<<< HEAD
 .flex-view {
   display: flexbox;
   display: -webkit-box;
@@ -31,6 +32,8 @@
   flex: 1 1 200px;
 }
 
+=======
+>>>>>>> main
 .rockstar {
   background-color: #d8b597;
   color: #58453B;
@@ -206,9 +209,12 @@
   color: #d8b597;
 }
 
+<<<<<<< HEAD
 .search-bar-container {
 }
 
+=======
+>>>>>>> main
 .btn-notif:after {
   content: none !important;
   border: none;
@@ -216,6 +222,7 @@
 
 .btn-notif:focus {
   outline: none !important;
+<<<<<<< HEAD
 }
 
 .top-menu-search-bar {
@@ -228,4 +235,6 @@
   position: absolute;
   top: 40px;
   right: 10px;
+=======
+>>>>>>> main
 }
