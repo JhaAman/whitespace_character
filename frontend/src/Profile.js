@@ -7,20 +7,25 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import {AuthContext} from './AuthContext.js';
 import images from './Images.js';
-
-//import { TopMenu } from './Components.js';
-
+import { TopMenu } from './Components.js'
 
 function Networkprofile(props) {
   return (
-    <Row className="profile">
-      <Col xs={5}><Image src={props.picture} className="profilepic rounded-circle img-fluid" /></Col>
-      <Col xs={7}>{props.name}</Col>
-    </Row>
+    <div className="net-profile rounded">
+      <div className="pf-left-column">
+        <img style={{border: "5px solid #58453B", width: "100px", height: "100px"}} src={props.picture} className="profilepic rounded-circle img-fluid" />
+      </div>
+      <div className="pf-right-column">
+        <Link className='net-link' to={'/u/'+props.uid} style={{}}>{props.name}</Link> <br/>
+        <div style={{fontSize: "18px", fontStyle: "italic"}}>
+          {props.title}
+        </div>
+      </div>
+    </div>
   )
 }
 function Award(props) {
@@ -121,7 +126,7 @@ function Profile() {
           for (let i = 0; i < dpeople.length; i++) {
             //console.log(dpeople[i]);
             let name = dpeople[i].first_name + " " + dpeople[i].last_name;
-            p.push(<Networkprofile key={i} name={name} picture={profilepic} />)
+            p.push(<Networkprofile title={dpeople[i].title} uid={dpeople[i].uid} key={i} name={name} picture={"http://localhost:8000"+dpeople[i].profile_picture} />)
           }
           setPeople(p);
         }
@@ -141,15 +146,15 @@ function Profile() {
   }
 
   function changePassword(){
-    axios.post("http://localhost:8000/api/user/change_password/",
+    axios.put("http://localhost:8000/api/user/change_password/",
     {
-      uid:80917506,
+      uid:userid,
       old:oldpass,
       new:newpass,
     },
     {
     headers:{
-      Authentication: "Bearer " + context.token
+      Authorization: "Bearer " + context.token
     }},
     ).then(function(res){
       if(res.status===200){
@@ -166,7 +171,7 @@ function Profile() {
   }
 
   if (loading) {
-    return <div className="App">Loading</div>
+    return <div className="App">Error: Non-authorized</div>
   }
 
 
@@ -177,25 +182,29 @@ function Profile() {
   //console.log(value);
   return (
     
-    <div className="App">
-
-      <div className="top">
-        <div className="row justify-content-md-center">
-          <img src={"http://localhost:8000"+profilepic} className="rounded-circle" width="150px" height="150px" alt="Smiling guy"></img>
+    <div className="body">
+      <TopMenu/>
+      <div className="column header-box rounded">
+        <div className="row profile-avatar">
+          <img style={{border: "10px solid #58453B"}} src={"http://localhost:8000"+profilepic} className="rounded-circle" width="150px" height="150px" alt="Smiling guy"></img>
         </div>
-        <div className="row justify-content-md-center">
-          {data.data.first_name} {data.data.last_name}
+        <div class="row button-row">
+          <div className="firstname">
+            {data.data.first_name} {data.data.last_name}
+          </div>
         </div>
-        <div className="row justify-content-md-center">
-          {data.data.title}
+        <div className="row button-row">
+          <div className="lastname">
+            {data.data.title}
+          </div>
         </div>
         <br />
-        <div className="row justify-content-md-center">
-          <button className="button topbutton" onClick={() => setPage(0)}>Badges</button>
+        <div className="row button-row">
+        <button className="button topbutton" onClick={() => setPage(0)}>badges</button>
           <Col xs={1}></Col>
-          <button className="button topbutton" onClick={() => setPage(1)}>Network</button>
+          <button className="button topbutton" onClick={() => setPage(1)}>network</button>
           <Col xs={1} hidden={userid !== context.uid}></Col>
-          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==context.uid}>Settings</button>
+          <button className="button topbutton" onClick={() => setPage(2)} hidden={userid!==context.uid}>settings</button>
 
         </div>
       </div>
@@ -223,13 +232,14 @@ function Profile() {
           <Row>
           <Col>
           <div className="optionbox">
-            <div>Change password</div>
+            <div><b>change password</b></div>
             <br/>
             <form >
               <label>
                 <input
+                className="input"
                 type="password"
-                placeholder="Old Password"
+                placeholder="old password"
                 value={oldpass}
                 onChange={e=>setOldPass(e.target.value)}
                 />
@@ -237,8 +247,9 @@ function Profile() {
               <br/>
               <label>
                 <input
+                className="input"
                 type="password"
-                placeholder="New Password"
+                placeholder="new password"
                 value={newpass}
                 onChange={e=>setNewPass(e.target.value)}
                 />
@@ -246,8 +257,9 @@ function Profile() {
               <br/>
               <label>
                 <input
+                className="input"
                 type="password"
-                placeholder="New Password Again"
+                placeholder="new password again"
                 value={newpassagain}
                 onChange={e=>setNewPassAgain(e.target.value)}
                 />
@@ -256,14 +268,14 @@ function Profile() {
               
             </form>
             <button onClick={e=>changePassword()} hidden={newpass!==newpassagain}>
-              Change Password
+              update
             </button>
             <div hidden={newpass===newpassagain}>Please ensure your new password is typed the same in both boxes</div>
           </div>
           </Col>
             <Col>
           <div className="optionbox">
-            <div>Upload a profile picture</div>
+            <div><b>upload avatar</b></div>
             <br/>
             <div className="picture">
               <form>

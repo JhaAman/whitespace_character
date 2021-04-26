@@ -9,7 +9,7 @@ function FeedRecognition({uidFrom, uidTo, comment}) {
     const context = useContext(AuthContext)
     const [ fromName, setFromName ] = useState("");
     const [ toName, setToName ] = useState("");
-    const [ profilePicture, setProfilePicture ] = useState("")
+    const [ profilePicture, setProfilePicture ] = useState("");
 
     const getNames = () => {
         axios.get("http://127.0.0.1:8000/api/user/get_name/", {
@@ -20,12 +20,12 @@ function FeedRecognition({uidFrom, uidTo, comment}) {
                 "Authorization": "Bearer " + context.token
             }
         }).then((res) => {
-            console.log(res);
+            //console.log(res);
             setFromName(res.data[uidFrom]);
             setToName(res.data[uidTo]);
             getImages();
         }).catch((err) => {
-            console.log(err);
+            //console.log(err);
         })
     }
 
@@ -38,20 +38,20 @@ function FeedRecognition({uidFrom, uidTo, comment}) {
                 "Authorization": "Bearer " + context.token
             }
         }).then((res) => {
-            console.log(res);
+            //console.log(res);
             setProfilePicture('http://localhost:8000' + res.data[uidFrom])
         }).catch((err) => {
-            console.log(err);
+            //console.log(err);
         })
     }
 
-    useEffect(() => getNames(), []);
+    useEffect(() => getNames());
 
     return (
         <div className='main-container'>
             <div className='left-container'>
                 <div className='profile-container'>
-                    <img src={(profilePicture === "Nothing" || profilePicture === "") ? ProfilePicture : profilePicture} style={{width: '125px', height: '125px', borderRadius: '50%', border: '2px solid black'}} />
+                    <img src={(profilePicture === "Nothing" || profilePicture === "") ? ProfilePicture : profilePicture} style={{width: '125px', height: '125px', borderRadius: '50%', border: '2px solid black'} } alt="" />
                 </div>
                 <div style={{height: '50%', width: '100%'}} />
             </div>

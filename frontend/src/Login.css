@@ -44,3 +44,28 @@
 .login-button:hover {
   font-weight: bold;
 }
+
+::-webkit-input-placeholder {
+  color: #bba38e;
+  text-align: center;
+}
+
+:-moz-placeholder {
+  color: #bba38e;
+  text-align: center;
+}
+
+::-moz-placeholder {
+  color: #bba38e;
+  text-align: center;
+}
+
+::placeholder {
+  color: #bba38e;
+  text-align: center;
+}
+
+:-ms-input-placeholder {
+  color: #bba38e;
+  text-align: center;
+}
