@@ -67,9 +67,9 @@ function Notification() {
       //console.log("success");
       //setAuthenticated(true);
       getNotifications(response.data.access);
+      return response
     })
       .then(function (response) {
-        // console.log(response)
         setAuth(response.data.access);
         console.log("success");
         setAuth(true);
