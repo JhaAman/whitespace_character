@@ -250,7 +250,7 @@ def get(request):
                     }).data,
                 status=status.HTTP_200_OK)
 
-    except ValueError as e:
+    except Exception as e:
         # If Exception occurs, return error report
         return \
             Response(

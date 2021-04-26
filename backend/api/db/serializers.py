@@ -7,7 +7,7 @@ Authors:
     Myron Lacey,
 Created: April 4th, 2021
 
-There are 5 model serializers:
+There are 4 model serializers:
     CompanySerializer, TeamSerializer, UserSerializer, RecognitionSerializer
 
 Serializer classes to handle API requests:
@@ -75,7 +75,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     Practical fields are as follows:
         'tid', 'uid', 'first_name', 'last_name', 'email', 'title'
-        , 'badges', 'network', 'values_scores', 'profile_picture'
+        , 'badges', 'values_scores', 'profile_picture'
         , 'user_role', 'date_created', 'password'
     """
 
@@ -97,8 +97,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = models.User
         fields = [
             'tid', 'uid', 'first_name', 'last_name', 'email', 'title', 'badges'
-            , 'network', 'values_scores', 'profile_picture', 'user_role'
-            , 'date_created', 'password']
+            , 'values_scores', 'profile_picture', 'user_role', 'date_created'
+            , 'password']
 
 
 class RecognitionSerializer(serializers.ModelSerializer):
