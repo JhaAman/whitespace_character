@@ -7,12 +7,43 @@ import { AuthContext } from './AuthContext.js';
 import profilepic from './pics/arnold.jpg';
 import profilepic2 from './pics/regina.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useParams } from 'react-router-dom';
 import './Home.css'
 import ManagerComp from './ManagerComponent.js';
 import axios from 'axios';
 
+let profileAPI = "http://localhost:8000/api/get_profile/"
+
 function EmployeeHomepage() {
     const context = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
+
+    const [data, setData] = useState('');
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    let getData = () => {
+        axios.get(profileAPI, {
+          params: {
+            uid: context.uid
+          },
+          headers:{
+            Authorization: "Bearer " + context.token
+          },
+        })
+          .then(function (res) {
+            if (res.status === 200) {
+              console.log("Success!");
+              setData(res);
+              setLoading(false);
+            }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
 
     const [ rockstarValues, setRockstarValues ] = useState([]);
     const [ rockstars, setRockstars ] = useState({});
@@ -50,6 +81,10 @@ function EmployeeHomepage() {
     }, []);
 
     useEffect(() => getRecognitions(), []);
+
+    if (loading) {
+        return <div className="App">Error: Non-authorized</div>
+    }
 
     return (
         <div className="app">

@@ -171,7 +171,7 @@ function Profile() {
   }
 
   if (loading) {
-    return <div className="App">Loading</div>
+    return <div className="App">Error: Non-authorized</div>
   }
 
 
