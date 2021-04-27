@@ -24,6 +24,35 @@ function EmployeeHomepage() {
         getData();
     }, []);
 
+    const getYourRecognitions = () => {
+        axios.get("http://localhost:8000/api/recog/get/user/", {
+            params: {
+                "uid": context.uid
+            },
+            headers: {
+                "Authorization": "Bearer " + context.token
+            }
+        }).then((res) => {
+            console.log(res);
+            setRecognitions(res.data.data);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+    const getAllRecognitions = () => {
+        axios.get("http://localhost:8000/api/recog/all/", {
+            headers: {
+                "Authorization": "Bearer " + context.token
+            }
+        }).then((res) => {
+            console.log(res);
+            setRecognitions(res.data.data);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
     let getData = () => {
         axios.get(profileAPI, {
           params: {
@@ -64,21 +93,7 @@ function EmployeeHomepage() {
         })
     },[context.token]);
 
-    useEffect(() => {
-        axios.get("http://localhost:8000/api/recog/get/user/", {
-            params: {
-                "uid": context.uid
-            },
-            headers: {
-                "Authorization": "Bearer " + context.token
-            }
-        }).then((res) => {
-            console.log(res);
-            setRecognitions(res.data.data);
-        }).catch((err) => {
-            console.log(err);
-        })
-    },[context.token,context.uid]);
+    useEffect(getYourRecognitions,[context.token,context.uid]);
 
     if (loading) {
         return <div className="App">Error: Non-authorized</div>
@@ -92,6 +107,10 @@ function EmployeeHomepage() {
                     <div className='left-column'>
                         <SubmitRecog />
                         <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
+                        <div style={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
+                            <button onClick={getYourRecognitions}>Your Recognitions</button>
+                            <button onClick={getAllRecognitions}>All Recognitions</button>
+                        </div>
                         {
                             recognitions.map((e, index) => {
                                 return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} />);
