@@ -11,13 +11,13 @@ import { useParams } from 'react-router-dom';
 import './Home.css'
 import ManagerComp from './ManagerComponent.js';
 import axios from 'axios';
+import AdminDashboard from './Components/AdminDashboard/AdminDashboard.js';
 
 let profileAPI = "http://localhost:8000/api/get_profile/"
 
 function EmployeeHomepage() {
     const context = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
-
     const [data, setData] = useState('');
 
     useEffect(() => {
@@ -59,10 +59,10 @@ function EmployeeHomepage() {
                 "Authorization": "Bearer " + context.token
             }
         }).then((res) => {
-            //console.log(res);
+            console.log(res);
             setRecognitions(res.data.data);
         }).catch((err) => {
-            //console.log(err);
+            console.log(err);
         })
     }
 
@@ -74,9 +74,9 @@ function EmployeeHomepage() {
         }).then((res) => {
             setRockstarValues(res.data[0].values);
             setRockstars(res.data[1]);
-            //console.log(res);
+            console.log(res);
         }).catch((err) => {
-            //console.log(err);
+            console.log(err);
         })
     },[context.token]);
 
@@ -89,10 +89,10 @@ function EmployeeHomepage() {
                 "Authorization": "Bearer " + context.token
             }
         }).then((res) => {
-            //console.log(res);
+            console.log(res);
             setRecognitions(res.data.data);
         }).catch((err) => {
-            //console.log(err);
+            console.log(err);
         })
     },[context.token,context.uid]);
 
@@ -110,14 +110,13 @@ function EmployeeHomepage() {
                         <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
                         {
                             recognitions.map((e, index) => {
-                                return (<FeedRecognition key={'feed'+index} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} />);
+                                return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} />);
                             })
                         }
                     </div>
                     <div className='right-column'>
-
+                        <AdminDashboard />
                         <div className='autoinfobox rounded' style={{height:'auto'}} hidden={context.role !== "mng"}>
-
                             <ManagerComp/>
                         </div>
                         <div className='infobox rounded'>

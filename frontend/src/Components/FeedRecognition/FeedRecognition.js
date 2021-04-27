@@ -5,11 +5,12 @@ import { AuthContext } from './../../AuthContext.js';
 import ProfilePicture from '../../pics/arnold.jpg'
 import './FeedRecognition.css'
 
-function FeedRecognition({uidFrom, uidTo, comment}) {
+function FeedRecognition({rid, uidFrom, uidTo, comment}) {
     const context = useContext(AuthContext)
     const [ fromName, setFromName ] = useState("");
     const [ toName, setToName ] = useState("");
     const [ profilePicture, setProfilePicture ] = useState("");
+    const [ reported, setReported ] = useState(false);
 
     const getNames = () => {
         axios.get("http://127.0.0.1:8000/api/user/get_name/", {
@@ -20,12 +21,10 @@ function FeedRecognition({uidFrom, uidTo, comment}) {
                 "Authorization": "Bearer " + context.token
             }
         }).then((res) => {
-            //console.log(res);
             setFromName(res.data[uidFrom]);
             setToName(res.data[uidTo]);
             getImages();
         }).catch((err) => {
-            //console.log(err);
         })
     }
 
@@ -38,10 +37,23 @@ function FeedRecognition({uidFrom, uidTo, comment}) {
                 "Authorization": "Bearer " + context.token
             }
         }).then((res) => {
-            //console.log(res);
             setProfilePicture('http://localhost:8000' + res.data[uidFrom])
         }).catch((err) => {
-            //console.log(err);
+        })
+    }
+
+    const reportRecog = () => {
+        axios.put("http://127.0.0.1:8000/api/recog/put_flag/", {
+            "rid": rid
+        }, {
+            headers: {
+                "Authorization": "Bearer " + context.token
+            }
+        }).then((res) => {
+            console.log(res);
+            setReported(true);
+        }).catch((err) => {
+            console.log(err);
         })
     }
 
@@ -61,6 +73,9 @@ function FeedRecognition({uidFrom, uidTo, comment}) {
                 </div>
                 <div className='comment-container'>
                     <p style={{textAlign: 'left'}}>{comment}</p>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'flex-end', padding: '5px'}}>
+                    <button disabled={reported} onClick={reportRecog}>{reported ? "Reported!" : "Report"}</button>
                 </div>
             </div>
         </div>

@@ -72,7 +72,7 @@ button {
   font-style: italic;
 }
 
-button:hover {
+button:hover:enabled {
   font-weight: bold;
 }
 
