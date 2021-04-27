@@ -137,12 +137,12 @@ function ManagerComp(){
                 a=>{setFeed(!feed);
                 }}
             >{feed?"Show Normal Feed":"Show Your Team Only"}</Button><br/>**/}
-            {/* I am commenting this out because the pie looks ugly as is and I don’t have the time or will to change it before the demo
+            
             <div style={{height:"200px"}}>
                 <Pie data={data} options={options} />
             <div className="f">{total}<br/>total
             </div>
-            </div>*/}
+            </div>
             <div className="title rounded" >Employee Stats
             <div style={{overflowY: 'scroll', height:'300px'}}>
             {employeelist}
