@@ -65,6 +65,8 @@ function Profile() {
   //const [pictures,setPictures] = useState([]);
   const [oldpass,setOldPass] = useState("");
   const [newpass,setNewPass] = useState("");
+  const [newQuestion, setNewQuestion] = useState("");
+  const [newAnswer, setNewAnswer] = useState("");
   const [newpassagain,setNewPassAgain] = useState("");
   const [uploadexists,setUploadExists] = useState(false);
   const [ufile,setUFile] = useState("");
@@ -304,6 +306,51 @@ function Profile() {
               </form>
               
             </div>
+          </div>
+          </Col>
+          <Col>
+          <div className="optionbox">
+            <div>Set Secuirty Question</div>
+            <br/>
+            <form >
+            <div>
+          <text>
+            1. What is your favorite color?
+          </text>
+          <br/>
+          <text>
+            2. What is your mother's Maiden name?
+          </text>
+          <br/>
+          <text>
+            3. What is your firt pets name?
+          </text>
+          <br/>
+          <button>
+            question 1
+          </button>
+          <button>
+            question 2
+          </button>
+          <button>
+            question 3
+          </button>
+          </div>
+              <br/>
+              <label>
+                <input
+                type="answer"
+                onChange={e=>setNewPass(e.target.value)}
+                />
+              </label>
+              <br/>
+              <br/>
+              
+            </form>
+            <button onClick={e=>changePassword()} hidden={newpass!==newpassagain}>
+              Change Password
+            </button>
+            <div hidden={newpass===newpassagain}>Please ensure your new password is typed the same in both boxes</div>
           </div>
           </Col>
           
