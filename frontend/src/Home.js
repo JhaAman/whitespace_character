@@ -18,6 +18,7 @@ let profileAPI = "http://localhost:8000/api/get_profile/"
 function EmployeeHomepage() {
     const context = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
+    const [ allFlag, setAllFlag ] = useState(false);
     const [data, setData] = useState('');
 
     useEffect(() => {
@@ -35,6 +36,7 @@ function EmployeeHomepage() {
         }).then((res) => {
             console.log(res);
             setRecognitions(res.data.data);
+            setAllFlag(false);
         }).catch((err) => {
             console.log(err);
         })
@@ -48,6 +50,7 @@ function EmployeeHomepage() {
         }).then((res) => {
             console.log(res);
             setRecognitions(res.data.data);
+            setAllFlag(true);
         }).catch((err) => {
             console.log(err);
         })
@@ -113,12 +116,12 @@ function EmployeeHomepage() {
                         </div>
                         {
                             recognitions.map((e, index) => {
-                                return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} />);
+                                return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} allFlag={allFlag}/>);
                             })
                         }
                     </div>
                     <div className='right-column'>
-                        <AdminDashboard />
+                        <AdminDashboard hidden={context.role !== "mng"} />
                         <div className='autoinfobox rounded' style={{height:'auto'}} hidden={context.role !== "mng"}>
                             <ManagerComp/>
                         </div>
