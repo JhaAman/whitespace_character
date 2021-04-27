@@ -15,7 +15,7 @@ import api.services.get_rockstars as apiRockstars
 import api.services.search as apiSearch
 import api.services.upload as apiUpload
 import api.services.badge as apiBadge
-
+import api.services.report as apiReport
 
 import api.views as views
 
@@ -79,6 +79,10 @@ urlpatterns = [
 
     # profile picture
     path('update_user_profile_picture/', apiUser.update_user_profile_picture),
+
+    #services/report endpoints
+    path('get_reported_recognitions/', apiReport.get_reported_recognitions),
+    path('approve_recognitions/', apiReport.approve_recognitions),
 
     # views endpoints
     path('home/posts/', views.HomePageView.as_view(), name='get_home_posts'),
