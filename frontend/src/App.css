@@ -26,6 +26,9 @@
 .left-column {
   width: 66.7%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .right-column {

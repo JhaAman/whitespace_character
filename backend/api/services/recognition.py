@@ -230,7 +230,7 @@ def put_flag(request):
 @api_view(["GET"])
 def all(request):
     try:
-        recogObjList = Recog.objects.all()
+        recogObjList = Recog.objects.all().order_by('-date_created')
         recogDictList = RecogSrl(recogObjList, many=True).data
         return \
             Response(
