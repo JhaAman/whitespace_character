@@ -120,6 +120,7 @@ function Login() {
                                 <div className='loginput rounded'>
                                     <input
                                         type="text"
+                                        value={username}
                                         placeholder="email"
                                         onChange={e => setUsername(e.target.value)}
                                         class="loginput"
@@ -130,6 +131,7 @@ function Login() {
                             <label>
                                 <input
                                     type="password"
+                                    value={password}
                                     placeholder="password"
                                     onChange={e=>setPassword(e.target.value)}
                                     class="loginput"
