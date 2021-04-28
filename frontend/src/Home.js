@@ -11,13 +11,14 @@ import { useParams } from 'react-router-dom';
 import './Home.css'
 import ManagerComp from './ManagerComponent.js';
 import axios from 'axios';
+import AdminDashboard from './Components/AdminDashboard/AdminDashboard.js';
 
 let profileAPI = "http://localhost:8000/api/get_profile/"
 
 function EmployeeHomepage() {
     const context = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
-
+    const [ allFlag, setAllFlag ] = useState(false);
     const [data, setData] = useState('');
 
     useEffect(() => {
@@ -35,6 +36,7 @@ function EmployeeHomepage() {
         }).then((res) => {
             console.log(res);
             setRecognitions(res.data.data);
+            setAllFlag(false);
         }).catch((err) => {
             console.log(err);
         })
@@ -48,6 +50,7 @@ function EmployeeHomepage() {
         }).then((res) => {
             console.log(res);
             setRecognitions(res.data.data);
+            setAllFlag(true);
         }).catch((err) => {
             console.log(err);
         })
@@ -78,22 +81,6 @@ function EmployeeHomepage() {
     const [ rockstars, setRockstars ] = useState({});
 
     const [ recognitions, setRecognitions ] = useState([]);
-    //eslint-disable-next-line
-        const getRecognitions = () => {
-        axios.get("http://localhost:8000/api/recog/get/user/", {
-            params: {
-                "uid": context.uid
-            },
-            headers: {
-                "Authorization": "Bearer " + context.token
-            }
-        }).then((res) => {
-            //console.log(res);
-            setRecognitions(res.data.data);
-        }).catch((err) => {
-            //console.log(err);
-        })
-    }
 
     useEffect(() => {
         axios.get("http://127.0.0.1:8000/api/get_rockstar/", {
@@ -103,9 +90,9 @@ function EmployeeHomepage() {
         }).then((res) => {
             setRockstarValues(res.data[0].values);
             setRockstars(res.data[1]);
-            //console.log(res);
+            console.log(res);
         }).catch((err) => {
-            //console.log(err);
+            console.log(err);
         })
     },[context.token]);
 
@@ -116,11 +103,11 @@ function EmployeeHomepage() {
     }
 
     return (
-        <div className="app">
+        <div className='app'>
             <TopMenu/>
             <div className="body">
                 <div className="row">
-                    <div className='left-column'>
+                    <div className='home-left-column'>
                         <SubmitRecog />
                         <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
                         <div style={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
@@ -129,11 +116,12 @@ function EmployeeHomepage() {
                         </div>
                         {
                             recognitions.map((e, index) => {
-                                return (<FeedRecognition key={'feed'+index} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} />);
+                                return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} allFlag={allFlag}/>);
                             })
                         }
                     </div>
-                    <div className='right-column'>
+                    <div className='home-right-column'>
+                        <AdminDashboard hidden={context.role !== "mng"} />
                         <div className='autoinfobox rounded' style={{height:'auto'}} hidden={context.role !== "mng"}>
                             <ManagerComp/>
                         </div>
