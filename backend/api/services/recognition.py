@@ -12,6 +12,8 @@ API endpoints in service of Recognition model object
 """
 
 import io
+import jwt
+import os
 
 import jwt
 import os
@@ -52,7 +54,7 @@ def create(request):
                     data= \
                         ApiRespSrl({
                             'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
-                            'msg': "Cannot create Company object: Invalid field",
+                            'msg': "Cannot create Recognition object: Invalid field",
                             'trace': requestSrl.errors
                         }).data,
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)

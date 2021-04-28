@@ -107,6 +107,77 @@ button:active {
   font-size: 50px;
 }
 
+.top-link {
+  font-family: AlegreyaSans;
+  color: #d1b297;
+  padding: 20px;
+}
+
+.top-link:hover {
+  font-family: AlegreyaSans;
+  color: #d8b597;
+  padding: 20px;
+}
+
+.top-link:active {
+  font-family: AlegreyaSans;
+  color: #fff1e5;
+  padding: 20px;
+}
+
+.loginput {
+  font-family: AlegreyaSans;
+  font-size: 30px;
+  background-color: #58453B;
+  text-align: center;
+  width: 280px;
+  border: none;
+  text-align: center;
+  background-color: #58453B;
+  color: #bba38e;
+  border-bottom: 2px dotted #58453B;
+  border-right: 2px dotted #58453B;
+}
+
+.login-button {
+  font-family: AlegreyaSans;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: lighter;
+  background-color: #58453B;
+  text-align: center;
+  width: 80px;
+  border: none;
+  text-align: center;
+  background-color: #58453B;
+  color: #bba38e;
+  border-bottom: 2px dotted #58453B;
+  border-right: 2px dotted #58453B;
+}
+
+.forgot-password-button {
+  color: blue;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.login-button:focus {
+  font-weight: bold;
+}
+
+.main-content-box {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-button:active {
+  font-weight: bold;
+}
+
+.login-button:hover {
+  font-weight: bold;
+}
+
 .submit {
   font-size: 25px;
 }

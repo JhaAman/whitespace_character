@@ -410,6 +410,10 @@ class User(models.Model):
         - Date object was created
         - Datetime
         - Date format reference at
+    'question':(blank,default = {})
+        - Holding the security question for resesting the password
+        - The corresponding question map to a number as key
+        - Value is the answer
             https://docs.djangoproject.com/en/3.1/ref/templates/builtins/#date
     """
 
@@ -497,6 +501,9 @@ class User(models.Model):
         default=dateformat.format(timezone.now(), 'Y-m-d H:i:s'),
         auto_created=True,
         null=True)
+    
+    # Questionare for resetting (blank, default = {})
+    question = models.JSONField(default=dict, blank=True)
 
     class Meta:
         verbose_name = "User"
