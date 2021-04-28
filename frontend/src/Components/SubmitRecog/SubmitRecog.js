@@ -50,7 +50,7 @@ function SubmitRecog() {
     return (
         <div className='submit-main-container'>
             <div style={{display: 'flex', flexDirection: 'row', width: '75%', justifyContent: 'space-between'}}>
-                <h1 style={{fontSize: '12pt', margin: 0}}>Name:</h1>
+                <h1 style={{fontSize: '12pt', margin: 0}}>Search Name:</h1>
                 <div style={{width: '75%'}}>
                     <input value={nameTo} onChange={(e) => { setNameTo(e.target.value); getSearchResults(e.target.value) }} style={{width: '100%'}}/>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -73,7 +73,7 @@ function SubmitRecog() {
             <div style={{display: 'flex', flexDirection: 'row', width: '90%', justifyContent: 'space-evenly'}}>
                 <h1 style={{fontSize: '12pt', margin: 0}}>Tags:</h1>
             </div>
-            <button onClick={() => onSubmit()} style={{width: '25%'}}>Submit Recognition</button>
+            <button hidden={comment === "" || uidTo === ""} onClick={() => onSubmit()} style={{width: '25%'}}>Submit Recognition</button>
         </div>
     );
 }
