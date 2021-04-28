@@ -1,6 +1,12 @@
 .title{
     background-color: rgb(255, 178, 89);
+    width: auto;
 }
+
+.autoinfobox {
+    width: 90%;
+}
+
 .employee_display{
     height:75px;
     width:auto;

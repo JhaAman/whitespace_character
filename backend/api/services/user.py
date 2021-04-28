@@ -83,7 +83,7 @@ import os
         openapi.Parameter(
             name='profile_picture', in_=openapi.IN_FORM,
             type=openapi.TYPE_FILE,
-            description="user's profile picture"
+            description="user's profile picture address"
         )
     ], 
     responses={
@@ -345,13 +345,15 @@ def mng_stats(request):
                 'first_name': emplObj.first_name,
                 'last_name': emplObj.last_name,
                 'profile_picture': None, # TODO: Figure how to return profle pic
+                'profile_picture_url': emplObj.profile_picture.url,
                 'recogInCount': recogInCount,
                 'recogOutCount': recogOutCount,
                 'best_tag': str(best_tag)
             }
-            emplStatSrl = EmplStatSrl(data=emplStatDict)
-            lc = emplStatSrl.is_valid(raise_exception=True)
-            emplStatDict = emplStatSrl.validated_data
+            ## commented out by Christopher so that my invalid url field would not get forthrown
+            #emplStatSrl = EmplStatSrl(data=emplStatDict)
+            #lc = emplStatSrl.is_valid(raise_exception=True)
+            #emplStatDict = emplStatSrl.validated_data
             # Add Employee Stat object to list
             emplStatDictList.append(emplStatDict)
 
@@ -422,7 +424,7 @@ def update_user_profile_picture(request):
 
 #Call this API to change the password of the user
 #How to use: call the api without params
-@api_view(["POST"])
+@api_view(["PUT"])
 def change_password(request):
     try:    
         token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
@@ -447,7 +449,6 @@ def change_password(request):
         return Response(None, status.HTTP_401_UNAUTHORIZED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
-
       
 #Call this API for the uid and role of the currently loggin in. 
 #How to use: call the api without params

@@ -80,6 +80,22 @@ button:active {
   font-weight: bold;
 }
 
+.button {
+  background-color: #d8b597;
+  color: #58453B;
+  border: none;
+  font-weight: lighter;
+  font-style: italic;
+}
+
+.button:hover {
+  font-weight: bold;
+}
+
+.button:active {
+  font-weight: bold;
+}
+
 .loading {
   font-family: AlegreyaSans;
   font-size: 50px;
@@ -164,31 +180,6 @@ input:focus {
   outline: none;
   border-bottom: 2px dotted #bba38e;
   border-right: 2px dotted #bba38e;
-}
-
-::-webkit-input-placeholder {
-  color: #bba38e;
-  text-align: center;
-}
-
-:-moz-placeholder {
-  color: #bba38e;
-  text-align: center;
-}
-
-::-moz-placeholder {
-  color: #bba38e;
-  text-align: center;
-}
-
-::placeholder {
-  color: #bba38e;
-  text-align: center;
-}
-
-:-ms-input-placeholder {
-  color: #bba38e;
-  text-align: center;
 }
 
 @font-face {

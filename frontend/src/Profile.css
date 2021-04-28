@@ -37,20 +37,18 @@
   }
 }
 
-  .contentpanel{
-    background-color:#fde9e7;
-    height: 400px;
-  }
+.contentpanel{
+  background-color:#fde9e7;
+  height: 400px;
+}
 
-  .optionbox{
-    background-color: chocolate;
-    border-radius: 10px;
-    height:300px;
-    padding-top:10px;
-    margin-top:20px;
-  }
-
-
+.optionbox{
+  background-color: chocolate;
+  border-radius: 10px;
+  height:300px;
+  padding-top:10px;
+  margin-top:20px;
+}
 
 .top{
   background-color: #d3c4b7;
@@ -101,14 +99,12 @@ col{
 }
 
 .firstname {
-  background-color: #d8b597;
   width: 500px;
   font-weight: bold;
   font-size: 25px;
 }
 
 .lastname {
-  background-color: #d8b597;
   width: 500px;
   font-size: 20px;
 }
@@ -136,11 +132,105 @@ col{
 
 .header-box {
   margin: auto;
-  background-color: #d8b597;
+  background-color: #bba38e;
   color: #58453B;
-  height:265px;
+  height:275px;
   font-size: 20px;
   flex-direction: column;
   flex: auto;
 }
+  
+.contentpanel{
+  background-color:#bba38e;
+  min-height: 500px;
+  max-height: auto;
+  overflow: scroll;
+  padding: 10px;
+}
 
+.optionbox{
+  background-color: #d8b597;
+  border-radius: 10px;
+  height:auto;
+  padding:10px;
+  margin-top:20px;
+}
+
+.net-profile {
+  margin: auto;
+  background-color: #d8b597;
+  color: #58453B;
+  height: auto;
+  min-width:auto;
+  max-width: 555px;
+  font-size: 20px;
+  margin-bottom: 10px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: row
+}
+
+.net-link {
+  color: #58453B
+}
+
+.net-link:hover {
+  color: #58453B
+}
+
+.pf-left-column {
+  width: 38.2%;
+  flex-direction: column;
+}
+
+.pf-right-column {
+  width: 61.8%;
+  font-size: 25px;
+  flex-direction: column;
+}
+
+input {
+  border: none;
+}
+
+input:focus {
+  outline: none;
+  border-bottom: 2px dotted #d8b597;
+  border-right: 2px dotted #d8b597;
+  border-top: none;
+  border-left: none;
+}
+
+.input {
+  text-align: center;
+  border: none;
+  text-align: center;
+  background-color: #bba38e;
+  color: #58453B;
+}
+
+::-webkit-input-placeholder {
+  color: #836759;
+  text-align: center;
+}
+
+:-moz-placeholder {
+  color: #836759;
+  text-align: center;
+}
+
+::-moz-placeholder {
+  color: #836759;
+  text-align: center;
+}
+
+::placeholder {
+  color: #836759;
+  text-align: center;
+}
+
+:-ms-input-placeholder {
+  color: #836759;
+  text-align: center;
+}
