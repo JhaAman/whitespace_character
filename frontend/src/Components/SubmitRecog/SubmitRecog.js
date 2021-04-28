@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from './../../AuthContext.js'
+import TagButton from './TagButton.js';
 import './SubmitRecog.css'
 import axios from 'axios';
 
@@ -12,6 +13,16 @@ function SubmitRecog() {
     const [ toSubmitTags, setToSubmitTags ] = useState([])
     const [ searchResults, setSearchResults ] = useState([])
     const [ onSuccess, setOnSuccess ] = useState(false);
+    const [ forceUpdate, setForceUpdate ] = useState(false)
+
+    const validSubmit = () => {
+        return uidTo !== "" && comment !== "" && toSubmitTags.length !== 0;
+    }
+
+    const setToSubmitTagsHelper = (tempArray) => {
+        setForceUpdate(!forceUpdate)
+        setToSubmitTags(tempArray);
+    }
 
     const getSearchResults = (query) => {
         if (query !== "") {
@@ -77,7 +88,7 @@ function SubmitRecog() {
                 <h1 style={{fontSize: '12pt', margin: 0}}>Search Name:</h1>
                 <div style={{width: '75%'}}>
                     <input value={nameTo} onChange={(e) => { setNameTo(e.target.value); getSearchResults(e.target.value) }} style={{width: '100%'}}/>
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                    <div style={{display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 99}}>
                         {
                             searchResults.map((e) => {
                                 return (
@@ -97,10 +108,12 @@ function SubmitRecog() {
             <div style={{display: 'flex', flexDirection: 'row', width: '90%', justifyContent: 'space-evenly'}}>
                 <h1 style={{fontSize: '12pt', margin: 0}}>Tags:</h1>
                 {
-                    tags.map((e) => <button onClick={() => toSubmitTags.push(e)}>{e}</button>)
+                    tags.map((e) => {
+                        return <TagButton toSubmitTags={toSubmitTags} setToSubmitTagsHelper={(e) => setToSubmitTagsHelper(e)}>{e}</TagButton>
+                    })
                 }
             </div>
-            <button hidden={comment === "" || uidTo === ""} onClick={() => onSubmit()} style={{width: '25%'}}>Submit Recognition</button>
+            <button disabled={!validSubmit()} onClick={() => onSubmit()} style={{width: '25%'}}>Submit Recognition</button>
         </div>
     );
 }

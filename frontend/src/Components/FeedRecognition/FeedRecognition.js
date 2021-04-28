@@ -76,6 +76,18 @@ function FeedRecognition({rid, uidFrom, uidTo, comment, tags, allFlag}) {
                 <div className='comment-container'>
                     <p style={{textAlign: 'left'}}>{comment}</p>
                 </div>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    Tags:{" "}
+                    {
+                        tags.map((e, index) => {
+                            if (index === tags.length - 1) {
+                                return <p>{e}</p>
+                            } else {
+                                return <p>{e + ","}{" "}</p>
+                            }
+                        })
+                    }
+                </div>
                 <div style={{display: 'flex', justifyContent: 'flex-end', padding: '5px'}}>
                     <button disabled={reported} onClick={reportRecog}>{reported ? "Reported!" : "Report"}</button>
                 </div>
