@@ -5,7 +5,7 @@ import { AuthContext } from './../../AuthContext.js';
 import ProfilePicture from '../../pics/arnold.jpg'
 import './FeedRecognition.css'
 
-function FeedRecognition({rid, uidFrom, uidTo, comment, allFlag}) {
+function FeedRecognition({rid, uidFrom, uidTo, comment, tags, allFlag}) {
     const context = useContext(AuthContext)
     const [ fromName, setFromName ] = useState("");
     const [ toName, setToName ] = useState("");
