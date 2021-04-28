@@ -49,6 +49,7 @@ urlpatterns = [
     path('recog/get/user/', apiRecog.get_batch, name='get_user_recogntions'),
     path('recog/all/', apiRecog.all, name='get_all_recogntions'),
     path('recog/put_flag/', apiRecog.put_flag, name='put_flag_recogntion'),
+    path('recog/get_tags/', apiRecog.get_tags),
 
     # services/company endpoints
     path('company/create/', apiComp.create, name='create_company'),

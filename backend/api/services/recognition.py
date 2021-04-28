@@ -12,6 +12,8 @@ API endpoints in service of Recognition model object
 """
 
 import io
+import jwt
+import os
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -24,7 +26,9 @@ from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 
 from api.db.models import \
-    User, \
+    Company as Comp,\
+    Team,\
+    User,\
     Recognition as Recog
 from api.db.serializers import \
     UserSerializer as UserSrl, \
@@ -47,7 +51,7 @@ def create(request):
                     data= \
                         ApiRespSrl({
                             'status': status.HTTP_422_UNPROCESSABLE_ENTITY,
-                            'msg': "Cannot create Company object: Invalid field",
+                            'msg': "Cannot create Recognition object: Invalid field",
                             'trace': requestSrl.errors
                         }).data,
                     status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -250,6 +254,30 @@ def all(request):
                     ApiRespSrl({
                         'status': status.HTTP_400_BAD_REQUEST,
                         'msg': "Cannot fetch all recognitions in database: Exception ocurred",
+                        'trace': e.args[0]
+                    }).data,
+                status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+def get_tags(request):
+    try:
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+        if not uid == 1:
+            tid = User.objects.get(uid = uid).tid
+            cid = Team.objects.get(tid = tid).cid
+            tags = Comp.objects.get(cid = cid).values
+            return Response(tags,status=status.HTTP_200_OK)
+        else:
+            return Response(None, status.HTTP_401_UNAUTHORIZED)
+    except ValueError as e:
+        # If Exception occurs, return error report
+        return \
+            Response(
+                data=
+                    ApiRespSrl({
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'msg': "Cannot fetch Company object: Exception ocurred",
                         'trace': e.args[0]
                     }).data,
                 status=status.HTTP_400_BAD_REQUEST)
