@@ -24,15 +24,18 @@
 }
 
 .left-column {
-  width: 66.7%;
+  width: 61.8%;
+  height: 100%;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 2px solid blue;
 }
 
 .right-column {
-  width: 33.3%;
+  width: 38.2%;
+  height: 100%;
   font-size: 25px;
   display: flex;
   flex-direction: column;
@@ -102,6 +105,77 @@ button:active {
 .loading {
   font-family: AlegreyaSans;
   font-size: 50px;
+}
+
+.top-link {
+  font-family: AlegreyaSans;
+  color: #d1b297;
+  padding: 20px;
+}
+
+.top-link:hover {
+  font-family: AlegreyaSans;
+  color: #d8b597;
+  padding: 20px;
+}
+
+.top-link:active {
+  font-family: AlegreyaSans;
+  color: #fff1e5;
+  padding: 20px;
+}
+
+.loginput {
+  font-family: AlegreyaSans;
+  font-size: 30px;
+  background-color: #58453B;
+  text-align: center;
+  width: 280px;
+  border: none;
+  text-align: center;
+  background-color: #58453B;
+  color: #bba38e;
+  border-bottom: 2px dotted #58453B;
+  border-right: 2px dotted #58453B;
+}
+
+.login-button {
+  font-family: AlegreyaSans;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: lighter;
+  background-color: #58453B;
+  text-align: center;
+  width: 80px;
+  border: none;
+  text-align: center;
+  background-color: #58453B;
+  color: #bba38e;
+  border-bottom: 2px dotted #58453B;
+  border-right: 2px dotted #58453B;
+}
+
+.forgot-password-button {
+  color: blue;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.login-button:focus {
+  font-weight: bold;
+}
+
+.main-content-box {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-button:active {
+  font-weight: bold;
+}
+
+.login-button:hover {
+  font-weight: bold;
 }
 
 .submit {
