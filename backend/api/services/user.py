@@ -555,8 +555,11 @@ def get_question(request):
             return Response("Missing email", status.HTTP_400_BAD_REQUEST)
         user_name = request.query_params["username"]
         user = User.objects.filter(email = user_name)
-        user = user[0]
-        question = user.question
+        if len(user)== 0:
+            return Response(None, status.HTTP_401_UNAUTHORIZED)
+        else:
+            user = user[0]
+            question = user.question
         if len(question) == 0:
             return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         Ret = {"question":""}
