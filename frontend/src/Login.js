@@ -1,17 +1,19 @@
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom'
 import { AuthContext } from './AuthContext.js';
 import axios from 'axios'
 import { Header } from './Components.js'
 import './Login.css'
 
 function Login() {
-    const [ username, setUsername ] = useState("");
-    const [ password, setPassword ] = useState("");
+    const [ username, setUsername ] = useState(localStorage.getItem('username') ? localStorage.getItem('username') : "");
+    const [ password, setPassword ] = useState(localStorage.getItem('password') ? localStorage.getItem('password') : "");
     const [ answer, setAnswer ] = useState("");
     const [ message, setMessage ] = useState("");
     const [ securityQuestion, setSecurityQuestion ] = useState("");
     const [ newPasswordsEqual, setNewPasswordsEqual ] = useState(false);
     const context = useContext(AuthContext);
+    const history = useHistory();
     const [ step, setStep ] = useState(1);
 
     const forgotPassword = () => {
@@ -31,6 +33,7 @@ function Login() {
             console.log(res);
             context.setToken(res.data.access);
             context.setAuthInfo(res.data.uid, username, password, res.data.role);
+            history.push('/home');
         }).catch((err) => {
             console.log(err);
         })
@@ -98,6 +101,7 @@ function Login() {
             console.log(res);
             setStep(1);
             setNewPasswordsEqual(false);
+            localStorage.removeItem('rootToken')
         }).catch((err) => {
             console.log(err);
         })
@@ -193,7 +197,7 @@ function Login() {
                             <label>
                                 <div>
                                 <input
-                                    type="answer"
+                                    type="password"
                                     placeholder="new password"
                                     onChange={e=>setPassword(e.target.value)}
                                     class="loginput"
@@ -203,7 +207,7 @@ function Login() {
                             <br/>
                             <label>
                                 <input
-                                    type="answer"
+                                    type="password"
                                     placeholder="confirm new password"
                                     onChange={(e) => setNewPasswordsEqual(password === e.target.value)}
                                     class="loginput"
