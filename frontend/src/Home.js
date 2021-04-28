@@ -116,7 +116,7 @@ function EmployeeHomepage() {
                         </div>
                         {
                             recognitions.map((e, index) => {
-                                return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} allFlag={allFlag}/>);
+                                return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} tags={e.tags} allFlag={allFlag}/>);
                             })
                         }
                     </div>

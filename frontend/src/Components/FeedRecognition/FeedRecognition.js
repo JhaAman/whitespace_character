@@ -5,7 +5,7 @@ import { AuthContext } from './../../AuthContext.js';
 import ProfilePicture from '../../pics/arnold.jpg'
 import './FeedRecognition.css'
 
-function FeedRecognition({rid, uidFrom, uidTo, comment, allFlag}) {
+function FeedRecognition({rid, uidFrom, uidTo, comment, tags, allFlag}) {
     const context = useContext(AuthContext)
     const [ fromName, setFromName ] = useState("");
     const [ toName, setToName ] = useState("");
@@ -75,6 +75,18 @@ function FeedRecognition({rid, uidFrom, uidTo, comment, allFlag}) {
                 </div>
                 <div className='comment-container'>
                     <p style={{textAlign: 'left'}}>{comment}</p>
+                </div>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    Tags:{" "}
+                    {
+                        tags.map((e, index) => {
+                            if (index === tags.length - 1) {
+                                return <p>{e}</p>
+                            } else {
+                                return <p>{e + ","}{" "}</p>
+                            }
+                        })
+                    }
                 </div>
                 <div style={{display: 'flex', justifyContent: 'flex-end', padding: '5px'}}>
                     <button disabled={reported} onClick={reportRecog}>{reported ? "Reported!" : "Report"}</button>
