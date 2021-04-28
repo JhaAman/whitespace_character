@@ -5,11 +5,8 @@ import axios from 'axios';
 
 function SubmitRecog() {
     const context = useContext(AuthContext);
-    // eslint-disable-next-line
     const [ name, setName ] = useState("")
-    // eslint-disable-next-line
     const [ recognition, setRecognition ] = useState("");
-    // eslint-disable-next-line
     const [ onSuccess, setOnSuccess ] = useState(false);
 
     const onSubmit = () => {
@@ -28,15 +25,19 @@ function SubmitRecog() {
 
     return (
         <div className='submit-main-container'>
-            <div style={{display: 'flex', flexDirection: 'row', width: '90%', justifyContent: 'space-evenly'}}>
-                <h1 style={{fontSize: '12pt', margin: 0}}>Recognizee's Name:</h1>
-                <span onChange={() => setName("")} contentEditable={true} style={{width: '75%', textAlign: 'left', backgroundColor: 'white', border: '1px solid black'}}></span>
+            <div style={{display: 'flex', flexDirection: 'row', width: '75%', justifyContent: 'space-between'}}>
+                <h1 style={{fontSize: '12pt', margin: 0}}>Name:</h1>
+                <input onChange={(e) => setName(e.target.value)} style={{width: '75%'}}/>
+            </div>
+            <div style={{display: 'flex', flexDirection: 'row', width: '75%', justifyContent: 'space-between'}}>
+                <h1 style={{fontSize: '12pt', margin: 0}}>Comment:</h1>
+                <input style={{width: '75%'}}/>
             </div>
             <div style={{display: 'flex', flexDirection: 'row', width: '90%', justifyContent: 'space-evenly'}}>
-                <h1 style={{fontSize: '12pt', margin: 0}}>Recognition:</h1>
-                <span onChange={() => setRecognition("")} contentEditable={true} style={{width: '75%', textAlign: 'left', backgroundColor: 'white', border: '1px solid black'}}></span>
+                <h1 style={{fontSize: '12pt', margin: 0}}>Tags:</h1>
+                <h1>{name}</h1>
             </div>
-            <button onClick={() => onSubmit()} style={{width: '25%'}}>submit recognition</button>
+            <button onClick={() => onSubmit()} style={{width: '25%'}}>Submit Recognition</button>
         </div>
     );
 }

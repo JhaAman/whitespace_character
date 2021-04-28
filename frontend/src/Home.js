@@ -103,11 +103,11 @@ function EmployeeHomepage() {
     }
 
     return (
-        <div className="app">
+        <div className='app'>
             <TopMenu/>
             <div className="body">
                 <div className="row">
-                    <div className='left-column'>
+                    <div className='home-left-column'>
                         <SubmitRecog />
                         <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
                         <div style={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
@@ -120,7 +120,7 @@ function EmployeeHomepage() {
                             })
                         }
                     </div>
-                    <div className='right-column'>
+                    <div className='home-right-column'>
                         <AdminDashboard hidden={context.role !== "mng"} />
                         <div className='autoinfobox rounded' style={{height:'auto'}} hidden={context.role !== "mng"}>
                             <ManagerComp/>
