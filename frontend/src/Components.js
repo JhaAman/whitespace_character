@@ -195,7 +195,7 @@ function Rockstar({value, uid, name, profilePicture}) {
               </div>
               <div style={{width: '62%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
                   <i>Rockstar of {value} : </i>
-                  <b>{name}</b>
+                  <Link to={'/u/' + uid}><h2 style={{fontSize: '15pt', margin: 0}}>{name}</h2></Link>
               </div>
           </div>
       </div>
