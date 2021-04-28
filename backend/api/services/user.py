@@ -424,7 +424,7 @@ def update_user_profile_picture(request):
 
 #Call this API to change the password of the user
 #How to use: call the api without params
-@api_view(["PUT"])
+@api_view(["POST"])
 def change_password(request):
     try:    
         token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
