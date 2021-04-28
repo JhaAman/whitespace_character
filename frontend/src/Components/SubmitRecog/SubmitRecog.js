@@ -5,21 +5,45 @@ import axios from 'axios';
 
 function SubmitRecog() {
     const context = useContext(AuthContext);
-    const [ name, setName ] = useState("")
-    const [ recognition, setRecognition ] = useState("");
-    const [ onSuccess, setOnSuccess ] = useState(false);
+    const [ nameTo, setNameTo ] = useState("")
+    const [ uidTo, setUidTo ] = useState("")
+    const [ comment, setComment ] = useState("");
+    const [ tags, setTags ] = useState([])
+    const [ searchResults, setSearchResults ] = useState([])
+
+    const getSearchResults = (query) => {
+        if (query !== "") {
+            axios.post("http://localhost:8000/api/search/user/", {
+                "query": query
+            }, {
+                headers: {
+                    "Authorization": "Bearer " + context.token
+                }
+            }).then((res) => {
+                console.log(res);
+                setSearchResults(res.data.data)
+            }).catch((err) => {
+                console.log(err);
+            })
+        } else {
+            setSearchResults([])
+        }
+    }
 
     const onSubmit = () => {
-        axios.post('http://localhost:8000/api/create_recognition/', {}, {
+        axios.post('http://127.0.0.1:8000/api/recog/create/', {
+            "uid_from": context.uid,
+            "uid_to": uidTo,
+            "tags": tags,
+            "comments": comment
+        }, {
             headers: {
                 "Authorization": "Bearer " + context.token
             }
         }).then((res) => {
-            if (res.status === 200) {
-                setOnSuccess(true);
-            } else {
-                setOnSuccess(false);
-            }
+            console.log(res)
+        }).catch((err) => {
+            console.log(err);
         })
     }
 
@@ -27,15 +51,27 @@ function SubmitRecog() {
         <div className='submit-main-container'>
             <div style={{display: 'flex', flexDirection: 'row', width: '75%', justifyContent: 'space-between'}}>
                 <h1 style={{fontSize: '12pt', margin: 0}}>Name:</h1>
-                <input onChange={(e) => setName(e.target.value)} style={{width: '75%'}}/>
+                <div style={{width: '75%'}}>
+                    <input value={nameTo} onChange={(e) => { setNameTo(e.target.value); getSearchResults(e.target.value) }} style={{width: '100%'}}/>
+                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                        {
+                            searchResults.map((e) => {
+                                return (
+                                    <div onClick={() => {setUidTo(e.uid); setNameTo(e.first_name + " " + e.last_name); setSearchResults([])}} style={{border: '1px solid black', backgroundColor: 'white', textAlign: 'left', padding: '2px', zIndex: '2'}}>
+                                        {e.first_name + " " + e.last_name}
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
             </div>
             <div style={{display: 'flex', flexDirection: 'row', width: '75%', justifyContent: 'space-between'}}>
                 <h1 style={{fontSize: '12pt', margin: 0}}>Comment:</h1>
-                <input style={{width: '75%'}}/>
+                <input onChange={(e) => setComment(e.target.value)} style={{width: '75%'}}/>
             </div>
             <div style={{display: 'flex', flexDirection: 'row', width: '90%', justifyContent: 'space-evenly'}}>
                 <h1 style={{fontSize: '12pt', margin: 0}}>Tags:</h1>
-                <h1>{name}</h1>
             </div>
             <button onClick={() => onSubmit()} style={{width: '25%'}}>Submit Recognition</button>
         </div>
