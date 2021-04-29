@@ -64,9 +64,10 @@ function Notification() {
   const [newNotif,setNewNotif] = useState();
   const [loading,setLoading] = useState(true);
 
-
+ 
 
   function getNotifications(a) {
+    
     axios.get("http://localhost:8000/api/get_notif/", {
       params: {
         uid: context.uid
@@ -76,7 +77,7 @@ function Notification() {
       }
     })
       .then(function (response) {
-        //console.log(response);
+        console.log(response);
         let n = false;
         let a = [];
         //console.log(Date.parse(response.data[0].date_created));
@@ -148,11 +149,10 @@ function Notification() {
     }
   }
   useEffect(() => {
-    //authenticate();
-    //while(!authenticated);
+    console.log("gettingnotif");
     getNotifications();
     setLoading(false);
-  }, []);//eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
   if (loading) {
     return (
       <div>

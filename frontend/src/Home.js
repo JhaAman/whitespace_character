@@ -83,7 +83,7 @@ function EmployeeHomepage() {
     const [ recognitions, setRecognitions ] = useState([]);
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/api/get_rockstar/", {
+        axios.get("http://localhost:8000/api/get_rockstar/", {
             headers: {
                 "Authorization": "Bearer " + context.token
             }

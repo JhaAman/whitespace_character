@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './App.css';
 import { AuthContext } from './AuthContext.js';
 import Popup from 'reactjs-popup';
-
+import Dropdown from 'react-bootstrap/Dropdown';
 import ProfilePicture from './pics/arnold.jpg'
 import axios from 'axios';
 
@@ -18,8 +18,7 @@ import DropdownItem from 'react-bootstrap/DropdownItem';
 import 'reactjs-popup/dist/index.css';
 import {faBell} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import images from './Images.js';
-import { useParams } from 'react-router-dom';
+
 import './Components.css'
 
 let profileAPI = "http://localhost:8000/api/get_profile/"
@@ -206,71 +205,73 @@ export { Rockstar };
 
 
 function Notification() {
-  function BuildNotification(props){
-    return(
-      <DropdownItem onClick={() => markSeen(props.nid)}>
-      <div className={props.seen+"-notification"}>
+  const context = useContext(AuthContext);
+
+  function BuildNotification(props) {
+
+    
+
+    return (
+      <Dropdown.ItemText onClick={
+        e=>{
+          console.log(s);
+        }
+      }>
+        <div className={props.seen + "-notification"}>
           <Row>
             <Col>{
-            props.type==="recognition_notif"
-            ?
-            "Recognition"
-            :
-            props.type==="recognition_badge"
-            ?
-            "Badge"
-            :
-            "unknown"
+              props.type === "recognition_notif"
+                ?
+                "Recognition"
+                :
+                props.type === "recognition_badge"
+                  ?
+                  "Badge"
+                  :
+                  "unknown"
             }</Col>
             <Col xs={4}>{props.time}</Col>
           </Row>
-          <br/>
+          <br />
           <Row>
             <Col>
               <div className="Notification-Message">{props.message}</div>
             </Col>
-  
+
           </Row>
-      </div>
-      </DropdownItem>
+        </div>
+      </Dropdown.ItemText>
     );
   }
   //let notifications = [];
   const [notifs,setNotifs] = useState([]);
+  const [s,setS] = useState([]);
   //const [authenticated,setAuthenticated] = useState(false);
-  const [auth,setAuth] = useState();
+  //const [auth,setAuth] = useState();
   const [newNotif,setNewNotif] = useState();
   const [loading,setLoading] = useState(true);
-  
-  function authenticate(){
-    axios.post("http://localhost:8000/api/get_token/",{
-      "username":"root",
-      "password":"pwd"
-    })
-    .then(function(response){
-      setAuth(response.data.access);
-      //console.log("success");
-      //setAuthenticated(true);
-      getNotifications(response.data.access);
-    })
 
-  }
+ 
 
-  function getNotifications(a){
-    axios.get("http://localhost:8000/api/get_notif/",{
-      params:{
-        uid:"78574359"
+  function getNotifications(a) {
+    
+    axios.get("http://localhost:8000/api/get_notif/", {
+      params: {
+        uid: context.uid
       },
-      headers:{
-        Authorization:"Bearer "+a
+      headers: {
+        Authorization: "Bearer " + context.token
       }
     })
-    .then(function(response){
-      let n = false;
-      //console.log(Date.parse(response.data[0].date_created));
-      //console.log(timesince(Date.parse(response.data[1].date_created)));
-      for(let i=0;i<response.data.length;i++){
-        if(!response.data[i].seen)n=true;
+      .then(function (response) {
+        console.log(response);
+        let n = false;
+        let a = [];
+        //console.log(Date.parse(response.data[0].date_created));
+        //console.log(timesince(Date.parse(response.data[1].date_created)));
+        for (let i = 0; i < response.data.length; i++) {
+          if (!response.data[i].seen) n = true;
+          a[i]=response.data[i].seen;
 
         setNotifs(notifs => [...notifs,
         <BuildNotification key={response.data[i].nid}
@@ -278,70 +279,78 @@ function Notification() {
         type={response.data[i].notif_type}
         time={timesince(Date.parse(response.data[i].date_created))}
         seen={response.data[i].seen}
-        nid={response.data[i].nid}/>
+        nid={response.data[i].nid}
+        i={i}/>
         ]);
+        markSeen(response.data[i].nid);
+        if(i!==response.data.length-1){
+          setNotifs(notifs=>[...notifs,
+          <Dropdown.Divider key={i+'notifdivider'}/>]);
+        }
         //console.log(response.data[i]);
       }
+      console.log(a);
+      setS(a);
+      
+      console.log(s);
       setNewNotif(n);
     });
   }
 
-  function markSeen(nid){
+  function markSeen(nid) {
+
     //console.log(nid);
     axios.put(
       "http://localhost:8000/api/update_notif/",
       {
-        nid:nid,
+        nid: nid,
       },
       {
-        headers:{
-          Authorization:"Bearer "+auth
+        headers: {
+          Authorization: "Bearer " + context.token
         }
       })
-    .then(function(response){
-      
-      console.log(response);
-    });
+      .then(function (response) {
+
+        //console.log(response);
+      });
   }
 
-  function timesince(m){
-    let a = new Date().getTime()-m;//difference in millis
-    if(a<60000){//less than one minute
+  function timesince(m) {
+    let a = new Date().getTime() - m;//difference in millis
+    if (a < 60000) {//less than one minute
       //return Math.floor(a/1000)+" seconds ago";
       return "<1 minute ago";
     }
-    else if(a<3600000){//less than one hour
-      return Math.floor((a/1000)/60)+" minutes ago";
+    else if (a < 3600000) {//less than one hour
+      return Math.floor((a / 1000) / 60) + " minutes ago";
     }
-    else if(a<86400000){//less than one day
-      return Math.floor(((a/1000)/60)/60)+" hours ago";
+    else if (a < 86400000) {//less than one day
+      return Math.floor(((a / 1000) / 60) / 60) + " hours ago";
     }
-    else if(a<604800000){//less than one week
-      return Math.floor((((a/1000)/60)/60)/24)+" days ago";
+    else if (a < 604800000) {//less than one week
+      return Math.floor((((a / 1000) / 60) / 60) / 24) + " days ago";
     }
-    else{
+    else {
       return "More than 1 week ago"
     }
   }
-  useEffect(()=>{
-    authenticate();
-    //while(!authenticated);
-    //getNotifications();
+  useEffect(() => {
+    console.log("gettingnotif");
+    getNotifications();
     setLoading(false);
-  },[]);//eslint-disable-line react-hooks/exhaustive-deps
-  if(loading){
-      return(
-          <div>
-              ...
-          </div>
-      )
+  }, []);
+  if (loading) {
+    return (
+      <div>
+        ...
+      </div>
+    )
   }
-  return (   
-    <div className="dropdown">
-      <DropdownButton style={{padding: "10px"}} variant="notif" title={<FontAwesomeIcon icon={faBell} color={newNotif?"#fff1e5":"#d8b597"}/>}>
-        {notifs}
-      </DropdownButton>
-</div>
+  return (
+    <DropdownButton variant="light" title={<FontAwesomeIcon icon={faBell} color={newNotif ? "blue" : "black"} />} >
+      {notifs}
+    </DropdownButton>
   );
 }
 
