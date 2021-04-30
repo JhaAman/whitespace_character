@@ -4,3 +4,10 @@
     --colorc: #bba38e;
     --colord: #fff1e5;
 }
+
+.marble-theme{
+    --colora:#cc0000;
+    --colorb:#cc00cc;
+    --colorc:#0000cc;
+    --colord:#ee10a4;
+}

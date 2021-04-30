@@ -8,7 +8,8 @@ import { AuthContext } from './AuthContext.js';
 //import profilepic2 from './pics/regina.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //import { useParams } from 'react-router-dom';
-import './Home.css'
+import './Home.css';
+import './Themes.css';
 import ManagerComp from './ManagerComponent.js';
 import axios from 'axios';
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard.js';
@@ -101,7 +102,7 @@ function EmployeeHomepage() {
     }
 
     return (
-        <div className="app wood-theme">
+        <div className="app marble-theme">
             <TopMenu/>
             <div className="body">
                 <div className="row">
