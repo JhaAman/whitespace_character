@@ -3,11 +3,13 @@
     --colorb: #58453B;
     --colorc: #bba38e;
     --colord: #fff1e5;
+    --colore: #d1b297;
 }
 
 .marble-theme{
-    --colora:#cc0000;
-    --colorb:#cc00cc;
-    --colorc:#0000cc;
-    --colord:#ee10a4;
+    --colora:#2579e7;
+    --colorb:#211352;
+    --colorc:#439cc5;
+    --colord:#857683;
+    --colore:#000;
 }
