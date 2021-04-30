@@ -20,7 +20,7 @@ function AdminDashboard({ rID }) {
             console.log(err);
         })
     }
-
+    // eslint-disable-next-line
     useEffect(onStartup, []);
 
     return (

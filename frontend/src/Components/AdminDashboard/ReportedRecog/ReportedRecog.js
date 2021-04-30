@@ -41,7 +41,7 @@ function ReportedRecog({ rid, uidFrom, uidTo, comments }) {
         <div className='main-container'>
             <div className='left-container'>
                 <div className='profile-container'>
-                    <img src={Arnold} style={{width: '90px', height: '90px', borderRadius: '50%', border: '2px solid black'}} />
+                    <img src={Arnold} style={{width: '90px', height: '90px', borderRadius: '50%', border: '2px solid black'}} alt=""/>
                 </div>
                 <div style={{height: '50%', width: '100%'}} />
             </div>

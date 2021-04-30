@@ -7,7 +7,7 @@ import { AuthContext } from './AuthContext.js';
 //import profilepic from './pics/arnold.jpg';
 //import profilepic2 from './pics/regina.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 import './Home.css'
 import ManagerComp from './ManagerComponent.js';
 import axios from 'axios';
@@ -18,10 +18,11 @@ let profileAPI = "http://localhost:8000/api/get_profile/"
 function EmployeeHomepage() {
     const context = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
-    const [data, setData] = useState('');
+    //const [data, setData] = useState('');
 
     useEffect(() => {
         getData();
+        // eslint-disable-next-line
     }, []);
 
     const getYourRecognitions = () => {
@@ -65,7 +66,7 @@ function EmployeeHomepage() {
           .then(function (res) {
             if (res.status === 200) {
               console.log("Success!");
-              setData(res);
+              //setData(res);
               setLoading(false);
             }
         })
@@ -100,7 +101,7 @@ function EmployeeHomepage() {
     }
 
     return (
-        <div className="app">
+        <div className="app wood-theme">
             <TopMenu/>
             <div className="body">
                 <div className="row">

@@ -17,7 +17,7 @@ function Networkprofile(props) {
   return (
     <div className="net-profile rounded">
       <div className="pf-left-column">
-        <img style={{border: "5px solid #58453B", width: "100px", height: "100px"}} src={props.picture} className="profilepic rounded-circle img-fluid" />
+        <img style={{border: "5px solid #58453B", width: "100px", height: "100px"}} src={props.picture} className="profilepic rounded-circle img-fluid" alt=""/>
       </div>
       <div className="pf-right-column">
         <Link className='net-link' to={'/u/'+props.uid} style={{}}>{props.name}</Link> <br/>
