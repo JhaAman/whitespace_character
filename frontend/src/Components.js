@@ -12,7 +12,7 @@ import Col from 'react-bootstrap/Col';
 //import Container from 'react-bootstrap/Container';
 //import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import DropdownItem from 'react-bootstrap/DropdownItem';
+//import DropdownItem from 'react-bootstrap/DropdownItem';
 //import Dropdown from 'react-bootstrap/Dropdown';
 //import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -338,6 +338,7 @@ function Notification() {
     console.log("gettingnotif");
     getNotifications();
     setLoading(false);
+    //eslint-disable-next-line
   }, []);
   if (loading) {
     return (

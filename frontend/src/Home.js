@@ -19,7 +19,7 @@ let profileAPI = "http://localhost:8000/api/get_profile/"
 function EmployeeHomepage() {
     const context = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
-    const [data, setData] = useState('');
+    //const [data, setData] = useState('');
     const [allFlag, setAllFlag] = useState(false);
 
     useEffect(() => {

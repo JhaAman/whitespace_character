@@ -182,7 +182,7 @@ function Profile() {
   //console.log(value);
   return (
     
-    <div className="body">
+    <div className="body wood-theme">
       <TopMenu/>
       <div className="column header-box rounded">
         <div className="row profile-avatar">
@@ -321,6 +321,20 @@ function Profile() {
           </Col>
           
           </Row>
+          <Row>
+            <Col>
+            <div className="optionbox">
+            <div><b>select theme</b></div>
+              <form>
+                <select>
+                  <option>Wood</option>
+                  <option>Marble</option>
+                </select>
+              </form>
+            </div>
+            </Col>
+          </Row>
+          
           </Container>
         </div>
 

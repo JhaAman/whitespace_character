@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../../AuthContext.js'
 import axios from 'axios';
-import Arnold from '../../../pics/arnold.jpg'
+//import Arnold from '../../../pics/arnold.jpg'
 import './ReportedRecog.css'
 
 function ReportedRecog({ rid, uidFrom, uidTo, comments }) {
@@ -78,7 +78,7 @@ function ReportedRecog({ rid, uidFrom, uidTo, comments }) {
         <div className='main-container'>
             <div className='side-container'>
                 <div className='profile-container'>
-                    <img src={fromProfilePic} style={{width: '75px', height: '75px', borderRadius: '50%', border: '2px solid black'}} />
+                    <img src={fromProfilePic} style={{width: '75px', height: '75px', borderRadius: '50%', border: '2px solid black'} }alt="" />
                 </div>
                 <div style={{height: '50%', width: '100%'}} />
             </div>
@@ -96,7 +96,7 @@ function ReportedRecog({ rid, uidFrom, uidTo, comments }) {
             </div>
             <div className='side-container'>
                 <div className='profile-container'>
-                    <img src={toProfilePic} style={{width: '75px', height: '75px', borderRadius: '50%', border: '2px solid black'}} />
+                    <img src={toProfilePic} style={{width: '75px', height: '75px', borderRadius: '50%', border: '2px solid black'}} alt="" />
                 </div>
                 <div style={{height: '50%', width: '100%'}} />
             </div>
