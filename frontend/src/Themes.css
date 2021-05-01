@@ -14,10 +14,13 @@
     --colorm: rgb(255,220,167);
 }
 
-.marble-theme{
-    --colora:#2579e7;
-    --colorb:#211352;
+.ocean-theme{
+    --colora:#354458;
+    --colorb:#aca6c2;
     --colorc:#439cc5;
     --colord:#857683;
     --colore:#000;
+    --colorg:#000;
+    --colorl:#7604c2;
+    --colorm:#4848cc;
 }

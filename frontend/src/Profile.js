@@ -75,6 +75,7 @@ function Profile() {
   const [ufile,setUFile] = useState("");
   const [profilepic,setProfilePic] = useState(defprofilepic);
   const upload = React.useRef(null);
+  const [theme,setTheme] = useState("wood-theme");
   const handleImageUpload = e =>{
     const [file] = e.target.files;
     setUploadExists(true);
@@ -93,7 +94,7 @@ function Profile() {
   useEffect(() => {
     MakePictureComponent();
     getData();
-    
+    setTheme(context.theme);
     //console.log(pictures);
     // eslint-disable-next-line
   }, []);
@@ -170,6 +171,7 @@ function Profile() {
     //console.log(newpassagain);
   }
 
+
   if (loading) {
     return <div className="App">Error: Non-authorized</div>
   }
@@ -182,7 +184,7 @@ function Profile() {
   //console.log(value);
   return (
     
-    <div className="body wood-theme">
+    <div className={"body "+theme}>
       <TopMenu/>
       <div className="column header-box rounded">
         <div className="row profile-avatar">
@@ -326,9 +328,9 @@ function Profile() {
             <div className="optionbox">
             <div><b>select theme</b></div>
               <form>
-                <select>
-                  <option>Wood</option>
-                  <option>Marble</option>
+                <select value={theme} onChange={e=>{setTheme(e.target.value);context.setTheme(e.target.value)}}>
+                  <option value="wood-theme">wood</option>
+                  <option value="ocean-theme">ocean</option>
                 </select>
               </form>
             </div>

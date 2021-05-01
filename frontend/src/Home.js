@@ -21,6 +21,7 @@ function EmployeeHomepage() {
     const [loading, setLoading] = useState(true);
     //const [data, setData] = useState('');
     const [allFlag, setAllFlag] = useState(false);
+    const [theme, setTheme] = useState('wood-theme');
 
     useEffect(() => {
         getData();
@@ -99,13 +100,13 @@ function EmployeeHomepage() {
     },[context.token]);
 
     useEffect(getYourRecognitions,[context.token,context.uid]);
-
+    
+    
     if (loading) {
         return <div className="App">Error: Non-authorized</div>
     }
-
     return (
-        <div className="app wood-theme">
+        <div className={"app "+context.theme}>
             <TopMenu/>
             <div className="body">
                 <div className="row">
