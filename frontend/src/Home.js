@@ -105,7 +105,7 @@ function EmployeeHomepage() {
     }
 
     return (
-        <div className="app marble-theme">
+        <div className="app wood-theme">
             <TopMenu/>
             <div className="body">
                 <div className="row">
