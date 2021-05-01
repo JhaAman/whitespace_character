@@ -331,6 +331,8 @@ function Profile() {
                 <select value={theme} onChange={e=>{setTheme(e.target.value);context.setTheme(e.target.value)}}>
                   <option value="wood-theme">wood</option>
                   <option value="ocean-theme">ocean</option>
+                  <option value="testa-theme">testa</option>
+                  <option value="testb-theme">testb</option>
                 </select>
               </form>
             </div>

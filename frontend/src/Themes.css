@@ -24,3 +24,10 @@
     --colorl:#7604c2;
     --colorm:#4848cc;
 }
+
+.testa-theme{
+    --colora:#000;
+}
+.testb-theme{
+    --colora:rgb(255, 0, 0);
+}  
