@@ -97,7 +97,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = models.User
         fields = [
             'tid', 'uid', 'first_name', 'last_name', 'email', 'title', 'badges'
-            , 'network', 'values_scores', 'profile_picture', 'user_role'
+            , 'network', 'values_scores', 'profile_picture', 'user_role', 'color_theme'
             , 'date_created', 'password']
 
 

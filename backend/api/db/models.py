@@ -484,6 +484,11 @@ class User(models.Model):
             default=list, 
             blank=True)
 
+    # Preference for the theme of the website
+    color_theme = models.CharField(
+        max_length=CHARFIELD_SHORT_LEN,
+        default='wood')
+
     # List of references to other Users in the same Team
     #   (blank, default = [])
     network = \

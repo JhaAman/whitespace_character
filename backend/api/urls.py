@@ -97,7 +97,7 @@ urlpatterns = [
     path('user/get_Image/',apiUser.get_image),
     path('user/change_password/',apiUser.change_password),
     path('user/get_name/',apiUser.get_name),
-
+    path('user/change_theme/', apiUser.change_theme),
 
     
     
