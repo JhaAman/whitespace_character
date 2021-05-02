@@ -332,7 +332,9 @@ function Profile() {
                   setTheme(e.target.value);
                   context.setTheme(e.target.value);
                   axios.put("http://localhost:8000/api/user/change_theme/",
-                  e.target.value,
+                  {
+                    color_theme:e.target.value
+                  },
                   {
                     headers:{
                       Authorization: "Bearer "+context.token
