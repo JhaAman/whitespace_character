@@ -96,7 +96,7 @@
   font-size: 25px;
   color: var(--colora);
   background-color: var(--colorb);
-  background-image: url("./pics/under-lumber.png");
+  background-image: var(--topmenuimage);
   background-repeat: repeat;
 }
 

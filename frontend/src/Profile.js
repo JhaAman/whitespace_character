@@ -328,7 +328,17 @@ function Profile() {
             <div className="optionbox">
             <div><b>select theme</b></div>
               <form>
-                <select value={theme} onChange={e=>{setTheme(e.target.value);context.setTheme(e.target.value)}}>
+                <select value={theme} onChange={e=>{
+                  setTheme(e.target.value);
+                  context.setTheme(e.target.value);
+                  axios.put("http://localhost:8000/api/user/change_theme/",
+                  e.target.value,
+                  {
+                    headers:{
+                      Authorization: "Bearer "+context.token
+                    }
+                  }).then(console.log("theme updated"));
+                  }}>
                   <option value="wood-theme">wood</option>
                   <option value="ocean-theme">ocean</option>
                   <option value="testa-theme">testa</option>

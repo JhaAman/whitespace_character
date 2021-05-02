@@ -33,7 +33,7 @@ function Login() {
             console.log(res);
             context.setToken(res.data.access);
             context.setAuthInfo(res.data.uid, username, password, res.data.role);
-            context.setTheme(res.data.theme);
+            context.setTheme(res.data.color_theme);
             history.push('/home');
         }).catch((err) => {
             console.log(err);
