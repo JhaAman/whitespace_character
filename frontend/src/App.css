@@ -7,16 +7,16 @@
   height:110px;
   font-family: Faune;
   font-size: 70px;
-  color: #bba38e;
-  background-color: #58453B;
+  color: var(--colorc);
+  background-color: var(--colorb);
   background-image: url("./pics/lumber.jpeg");
   background-repeat: repeat;
   text-align: center;
 }
 
 .infobox {
-  background-color: #d8b597;
-  color: #58453B;
+  background-color: var(--colora);
+  color: var(--colorb);
   min-height: 95%;
   max-height: 100%;
   position: relative;
@@ -24,15 +24,18 @@
 }
 
 .left-column {
-  width: 66.7%;
+  width: 61.8%;
+  height: 100%;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 2px solid blue;
 }
 
 .right-column {
-  width: 33.3%;
+  width: 38.2%;
+  height: 100%;
   font-size: 25px;
   display: flex;
   flex-direction: column;
@@ -52,8 +55,8 @@ body {
   width:100vw;
   height:100vh;
   font-family: AlegreyaSans;
-  color: #58453B;
-  background-color: #bba38e;
+  color: var(--colorb);
+  background-color: var(--colorc);
   text-align: center;
 }
 
@@ -62,14 +65,14 @@ body {
   width:100vw;
   height:100vh;
   font-family: AlegreyaSans;
-  color: #58453B;
-  background-color: #bba38e;
+  color: var(--colorb);
+  background-color: var(--colorc);
   text-align: center;
 }
 
 button {
-  background-color: #d8b597;
-  color: #58453B;
+  background-color: var(--colora);
+  color: var(--colorb);
   border: none;
   font-weight: lighter;
   font-style: italic;
@@ -84,8 +87,8 @@ button:active {
 }
 
 .button {
-  background-color: #d8b597;
-  color: #58453B;
+  background-color: var(--colora);
+  color: var(--colorb);
   border: none;
   font-weight: lighter;
   font-style: italic;
@@ -104,14 +107,85 @@ button:active {
   font-size: 50px;
 }
 
+.top-link {
+  font-family: AlegreyaSans;
+  color: var(--colore);
+  padding: 20px;
+}
+
+.top-link:hover {
+  font-family: AlegreyaSans;
+  color: var(--colora);
+  padding: 20px;
+}
+
+.top-link:active {
+  font-family: AlegreyaSans;
+  color: var(--colord);
+  padding: 20px;
+}
+
+.loginput {
+  font-family: AlegreyaSans;
+  font-size: 30px;
+  background-color: var(--colorb);
+  text-align: center;
+  width: 280px;
+  border: none;
+  text-align: center;
+  background-color: var(--colorb);
+  color: var(--colorc);
+  border-bottom: 2px dotted var(--colorb);
+  border-right: 2px dotted var(--colorb);
+}
+
+.login-button {
+  font-family: AlegreyaSans;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: lighter;
+  background-color: var(--colorb);
+  text-align: center;
+  width: 80px;
+  border: none;
+  text-align: center;
+  background-color: var(--colorb);
+  color: var(--colorc);
+  border-bottom: 2px dotted var(--colorb);
+  border-right: 2px dotted var(--colorb);
+}
+
+.forgot-password-button {
+  color: blue;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.login-button:focus {
+  font-weight: bold;
+}
+
+.main-content-box {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-button:active {
+  font-weight: bold;
+}
+
+.login-button:hover {
+  font-weight: bold;
+}
+
 .submit {
   font-size: 25px;
 }
 
 input:focus {
   outline: none;
-  border-bottom: 2px dotted #bba38e;
-  border-right: 2px dotted #bba38e;
+  border-bottom: 2px dotted var(--colorc);
+  border-right: 2px dotted var(--colorc);
 }
 
 @font-face {

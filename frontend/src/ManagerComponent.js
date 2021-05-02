@@ -3,8 +3,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import Pie from 'react-chartjs-2';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Image from 'react-bootstrap/Image';
-import profilepic from './pics/arnold.jpg';
+//import Image from 'react-bootstrap/Image';
+//import profilepic from './pics/arnold.jpg';
 import axios from 'axios';
 import './ManagerComponent.css';
 import { Link } from 'react-router-dom';
@@ -24,7 +24,7 @@ function ManagerComp(){
                         <img 
                         style={{border: "5px solid #58453B", width: "75px", height: "75px"}}
                         src={"http://localhost:8000"+props.profilepic}
-                        className="profilepic rounded-circle img-fluid"/>
+                        className="profilepic rounded-circle img-fluid" alt=""/>
                     </Col>
                     <Col>
                         <Link className='net-link' to={'/u/'+props.uid} style={{fontWeight: "bold"}}>{props.name}</Link> <br/>
@@ -137,12 +137,12 @@ function ManagerComp(){
                 a=>{setFeed(!feed);
                 }}
             >{feed?"Show Normal Feed":"Show Your Team Only"}</Button><br/>**/}
-            {/* I am commenting this out because the pie looks ugly as is and I don’t have the time or will to change it before the demo
+             
             <div style={{height:"200px"}}>
                 <Pie data={data} options={options} />
             <div className="f">{total}<br/>total
             </div>
-            </div>*/}
+            </div>
             <div className="title rounded" >Employee Stats
             <div style={{overflowY: 'scroll', height:'300px'}}>
             {employeelist}

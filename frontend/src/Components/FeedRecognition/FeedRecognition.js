@@ -5,11 +5,12 @@ import { AuthContext } from './../../AuthContext.js';
 import ProfilePicture from '../../pics/arnold.jpg'
 import './FeedRecognition.css'
 
-function FeedRecognition({rid, uidFrom, uidTo, comment}) {
+function FeedRecognition({rid, uidFrom, uidTo, comment, tags, allFlag}) {
     const context = useContext(AuthContext)
     const [ fromName, setFromName ] = useState("");
     const [ toName, setToName ] = useState("");
-    const [ profilePicture, setProfilePicture ] = useState("");
+    const [ fromProfilePic, setFromProfilePic ] = useState("");
+    const [ toProfilePic, setToProfilePic ] = useState("")
     const [ reported, setReported ] = useState(false);
 
     const getNames = () => {
@@ -31,13 +32,14 @@ function FeedRecognition({rid, uidFrom, uidTo, comment}) {
     const getImages = () => {
         axios.get("http://localhost:8000/api/user/get_Image/", {
             params: {
-                "uid": uidFrom
+                "uid": uidFrom + "," + uidTo
             },
             headers: {
                 "Authorization": "Bearer " + context.token
             }
         }).then((res) => {
-            setProfilePicture('http://localhost:8000' + res.data[uidFrom])
+            setFromProfilePic('http://localhost:8000' + res.data[uidFrom])
+            setToProfilePic('http://localhost:8000' + res.data[uidTo])
         }).catch((err) => {
         })
     }
@@ -61,23 +63,45 @@ function FeedRecognition({rid, uidFrom, uidTo, comment}) {
 
     return (
         <div className='main-container'>
-            <div className='left-container'>
+            <div className='fr-side-container'>
                 <div className='profile-container'>
-                    <img src={(profilePicture === "Nothing" || profilePicture === "") ? ProfilePicture : profilePicture} style={{width: '125px', height: '125px', borderRadius: '50%', border: '2px solid black'} } alt="" />
+                    <img src={fromProfilePic} style={{width: '125px', height: '125px', borderRadius: '50%', border: '2px solid black'} } alt="" />
                 </div>
                 <div style={{height: '50%', width: '100%'}} />
             </div>
-            <div className='right-container'>
+            <div className='fr-middle-container'>
                 <div className='name-container'>
                     <h1 style={{fontSize: '20pt'}}><Link to={'/u/' + uidFrom}>{fromName}</Link> recognized <Link to={'/u/' + uidTo}>{toName}</Link></h1>
                 </div>
                 <div className='comment-container'>
                     <p style={{textAlign: 'left'}}>{comment}</p>
                 </div>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
+                    Tags:{" "}
+                    {
+                        tags.map((e, index) => {
+                            if (index === tags.length - 1) {
+                                return <p>{e}</p>
+                            } else {
+                                return <p>{e + ","}{" "}</p>
+                            }
+                        })
+                    }
+                </div>
                 <div style={{display: 'flex', justifyContent: 'flex-end', padding: '5px'}}>
                     <button disabled={reported} onClick={reportRecog}>{reported ? "Reported!" : "Report"}</button>
                 </div>
             </div>
+            {
+                allFlag ? 
+                <div className='fr-side-container'>
+                    <div className='profile-container'>
+                        <img src={toProfilePic} style={{width: '125px', height: '125px', borderRadius: '50%', border: '2px solid black'} } alt="" />
+                    </div>
+                    <div style={{height: '50%', width: '100%'}} />
+                </div> :
+                undefined
+            }
         </div>
     )
 }

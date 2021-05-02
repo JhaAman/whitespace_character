@@ -424,32 +424,29 @@ def update_user_profile_picture(request):
 
 #Call this API to change the password of the user
 #How to use: call the api without params
-@api_view(["PUT"])
+@api_view(["POST"])
 def change_password(request):
     try:    
         token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
         uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
-        auth = False
-        if not uid == 1:
-            old_password = request.data["old"]
-            new_password = request.data["new"]
-            user = User.objects.get(uid = uid)
-            auth_user = AuthUser.objects.get(id=uid)
-        else:
-            user_name = request.data["user"]
-            new_password = request.data["new"]
-            user = User.objects.filter(email = user_name)
-            auth_user = AuthUser.objects.get(username=user_name)
-            user = user[0]
-            auth = True
-        if auth or old_password == user.password:
-            user.password = new_password
-            auth_user.password = make_password(new_password)
+        if uid == 1:
+            user = User.objects.filter(email = request.data["username"])[0]
+            authuser = AuthUser.objects.get(id = user.uid)
+            user.password = request.data["new"]
+            authuser.password = make_password(request.data["new"])
             user.save()
-            auth_user.save()
-            return Response(None,status=status.HTTP_200_OK)
+            authuser.save()
+            return Response(status=status.HTTP_200_OK)
         else:
-            return Response(None, status.HTTP_401_UNAUTHORIZED)
+            user = User.objects.get(uid = uid)
+            authuser = AuthUser.objects.get(id = uid)
+            if request.data["old"] == user.password:
+                user.password = request.data["new"]
+                authuser.password = make_password(request.data["new"])
+                user.save()
+                authuser.save()
+                return Response(status=status.HTTP_200_OK)
+        return Response(None, status.HTTP_401_UNAUTHORIZED)
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
       
@@ -503,7 +500,77 @@ def get_name(request):
             Ret[i] = user.first_name + " " + user.last_name
         return Response(Ret,status=status.HTTP_200_OK)
     except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST) 
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+def checking_security(request):
+    try:
+        username = request.data["username"]
+        user = User.objects.filter(email = username)[0]
+        question = user.question
+        if len(question) == 0:
+            return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        answer = request.data["answer"]
+        res =  request.data["question"]
+        if not question[res] == answer:
+            return Response(None, status.HTTP_401_UNAUTHORIZED)
+        return Response(None,status=status.HTTP_200_OK)    
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+@api_view(["GET"])
+def get_question(request):
+    try:
+        username = request.query_params["username"]
+        user = User.objects.filter(email = username)[0]
+        question = user.question
+        if len(question) == 0:
+            return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        for q in question:
+            return Response(q,status=status.HTTP_200_OK)
+            break 
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+def setting_security(request):
+    try:
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+        user = User.objects.get(uid = uid)
+        ques = request.data["question"]
+        ans =  request.data["answer"]
+        Ret = {ques:ans}
+        user.question = Ret
+        user.save()
+        return Response(None,status=status.HTTP_200_OK) 
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)   
+ 
+@api_view(["GET"])
+def get_question(request):
+    try:
+        if not 'username' in request.query_params:
+            return Response("Missing email", status.HTTP_400_BAD_REQUEST)
+        user_name = request.query_params["username"]
+        user = User.objects.filter(email = user_name)
+        if len(user)== 0:
+            return Response(None, status.HTTP_401_UNAUTHORIZED)
+        else:
+            user = user[0]
+            question = user.question
+        if len(question) == 0:
+            return Response({"error": "The security has not been set up"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        Ret = {"question":""}
+        for q in question:
+            Ret["question"] = q
+            break
+        return Response(Ret,status=status.HTTP_200_OK) 
+    except ValueError as e:
+        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
 
 # Call this api to change the user's theme
 # How to use: Include a valid "color_theme" in the body of the request

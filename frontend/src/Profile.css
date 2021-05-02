@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--colorf);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--colorg);
 }
 
 @keyframes App-logo-spin {
@@ -38,12 +38,12 @@
 }
 
 .contentpanel{
-  background-color:#fde9e7;
+  background-color:var(--colorh);
   height: 400px;
 }
 
 .optionbox{
-  background-color: chocolate;
+  background-color: var(--colori);
   border-radius: 10px;
   height:300px;
   padding-top:10px;
@@ -51,7 +51,7 @@
 }
 
 .top{
-  background-color: #d3c4b7;
+  background-color: var(--colorj);
   justify-content: center;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .profile{
-  background: #d3c4b7;
+  background: var(--colorj);
   border-radius: 50px;
   height: 100px;
   margin-top: 5px;
@@ -91,7 +91,7 @@ col{
 .award{
   justify-content: center;
   align-items: center;
-  background-color: #fef2e6;
+  background-color: var(--colord);
   border-radius:10px;
   margin:5px;
   height:100px!important;
@@ -132,7 +132,7 @@ col{
 
 .header-box {
   margin: auto;
-  background-color: #bba38e;
+  background-color: var(--colorc);
   color: #58453B;
   height:275px;
   font-size: 20px;
@@ -141,7 +141,7 @@ col{
 }
   
 .contentpanel{
-  background-color:#bba38e;
+  background-color:var(--colorc);
   min-height: 500px;
   max-height: auto;
   overflow: scroll;
@@ -149,7 +149,7 @@ col{
 }
 
 .optionbox{
-  background-color: #d8b597;
+  background-color: var(--colora);
   border-radius: 10px;
   height:auto;
   padding:10px;
@@ -158,8 +158,8 @@ col{
 
 .net-profile {
   margin: auto;
-  background-color: #d8b597;
-  color: #58453B;
+  background-color: var(--colora);
+  color: var(--colorb);
   height: auto;
   min-width:auto;
   max-width: 555px;
@@ -172,11 +172,11 @@ col{
 }
 
 .net-link {
-  color: #58453B
+  color: var(--colorb);
 }
 
 .net-link:hover {
-  color: #58453B
+  color: var(--colorb);
 }
 
 .pf-left-column {
@@ -196,8 +196,8 @@ input {
 
 input:focus {
   outline: none;
-  border-bottom: 2px dotted #d8b597;
-  border-right: 2px dotted #d8b597;
+  border-bottom: 2px dotted var(--colora);
+  border-right: 2px dotted var(--colora);
   border-top: none;
   border-left: none;
 }
@@ -206,31 +206,31 @@ input:focus {
   text-align: center;
   border: none;
   text-align: center;
-  background-color: #bba38e;
-  color: #58453B;
+  background-color: var(--colorc);
+  color: var(--colorb);
 }
 
 ::-webkit-input-placeholder {
-  color: #836759;
+  color: var(--colork);
   text-align: center;
 }
 
 :-moz-placeholder {
-  color: #836759;
+  color: var(--colork);
   text-align: center;
 }
 
 ::-moz-placeholder {
-  color: #836759;
+  color: var(--colork);
   text-align: center;
 }
 
 ::placeholder {
-  color: #836759;
+  color: var(--colork);
   text-align: center;
 }
 
 :-ms-input-placeholder {
-  color: #836759;
+  color: var(--colork);
   text-align: center;
 }

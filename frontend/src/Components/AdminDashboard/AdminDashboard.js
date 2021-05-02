@@ -4,7 +4,7 @@ import axios from 'axios';
 import ReportedRecog from './ReportedRecog/ReportedRecog.js'
 import './AdminDashboard.css';
 
-function AdminDashboard({ rID }) {
+function AdminDashboard({ rID , hidden}) {
     const [ reportedRecogs, setReportedRecogs ] = useState([]);
     const context = useContext(AuthContext);
 
@@ -20,12 +20,12 @@ function AdminDashboard({ rID }) {
             console.log(err);
         })
     }
-
+    // eslint-disable-next-line
     useEffect(onStartup, []);
 
     return (
         reportedRecogs.length === 0 ? '' : (
-            <div className='adminDashboard-main-container'>
+            <div className='adminDashboard-main-container' hidden={hidden}>
                 <h1 style={{ fontSize: '20pt', margin: 0}}>Reported Recogntions</h1>
                 {
                     reportedRecogs.map((recog) => {
