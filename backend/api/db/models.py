@@ -403,6 +403,8 @@ class User(models.Model):
         - Badge names earned by User
         - Badge names are specified by parent Company object
         - List of 60-char strings
+    'color_theme' (default = "wood-theme")
+        - Preference for the theme of the website
     'network' (blank, default = []):
         - List of references to other Users in the same Team
         - List of 'uid'
@@ -491,7 +493,7 @@ class User(models.Model):
     # Preference for the theme of the website
     color_theme = models.CharField(
         max_length=CHARFIELD_SHORT_LEN,
-        default='wood')
+        default='wood-theme')
 
     # List of references to other Users in the same Team
     #   (blank, default = [])
