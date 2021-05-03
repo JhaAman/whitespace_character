@@ -533,6 +533,7 @@ def get_question(request):
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["POST"])
 def setting_security(request):
     try:
@@ -569,3 +570,44 @@ def get_question(request):
         return Response(Ret,status=status.HTTP_200_OK) 
     except ValueError as e:
         return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+
+
+# Call this api to change the user's theme
+# How to use: Include a valid "color_theme" in the body of the request
+@api_view(["PUT"])
+def change_theme(request):
+    try:
+        # Check if a color theme is provided in request body
+        if 'color_theme' not in request.data:
+            return Response({"error": "color_theme is empty"}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+        # Get the uid from the user's token
+        token = request.META.get('HTTP_AUTHORIZATION').replace("Bearer ","")
+        uid = jwt.decode(token, os.environ.get('SECRET_KEY'), os.environ.get('ALGORITHM'))["user_id"]
+
+        # Create a reference to the user and change color_theme
+        userRef = User.objects.get(uid=uid)
+        userRef.color_theme = request.data['color_theme']
+        userRef.save()
+
+        # Return success report
+        return \
+            Response(
+                data= \
+                    ApiRespSrl({
+                        'status': status.HTTP_200_OK,
+                        'msg': "Changed color theme of the user to: {theme}".format(theme=request.data['color_theme'])
+                    }).data,
+                status=status.HTTP_200_OK)
+
+    except ValueError as e:
+        # If Exception occurs, return error report
+        return \
+            Response(
+                data=
+                    ApiRespSrl({
+                        'status': status.HTTP_400_BAD_REQUEST,
+                        'msg': "Cannot change the color theme of the user: Exception ocurred",
+                        'trace': e.args[0]
+                    }).data,
+                status=status.HTTP_400_BAD_REQUEST)

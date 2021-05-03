@@ -7,8 +7,9 @@ import { AuthContext } from './AuthContext.js';
 //import profilepic from './pics/arnold.jpg';
 //import profilepic2 from './pics/regina.png';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useParams } from 'react-router-dom';
-import './Home.css'
+//import { useParams } from 'react-router-dom';
+import './Home.css';
+import './Themes.css';
 import ManagerComp from './ManagerComponent.js';
 import axios from 'axios';
 import AdminDashboard from './Components/AdminDashboard/AdminDashboard.js';
@@ -18,11 +19,13 @@ let profileAPI = "http://localhost:8000/api/get_profile/"
 function EmployeeHomepage() {
     const context = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
-    const [ allFlag, setAllFlag ] = useState(false);
-    const [data, setData] = useState('');
+    //const [data, setData] = useState('');
+    const [allFlag, setAllFlag] = useState(false);
+    //const [theme, setTheme] = useState('wood-theme');
 
     useEffect(() => {
         getData();
+        // eslint-disable-next-line
     }, []);
 
     const getYourRecognitions = () => {
@@ -68,7 +71,7 @@ function EmployeeHomepage() {
           .then(function (res) {
             if (res.status === 200) {
               console.log("Success!");
-              setData(res);
+              //setData(res);
               setLoading(false);
             }
         })
@@ -97,32 +100,36 @@ function EmployeeHomepage() {
     },[context.token]);
 
     useEffect(getYourRecognitions,[context.token,context.uid]);
-
+    
+    
     if (loading) {
         return <div className="App">Error: Non-authorized</div>
     }
-
     return (
-        <div className='app'>
+        <div className={"app "+context.theme}>
             <TopMenu/>
             <div className="body">
                 <div className="row">
                     <div className='home-left-column'>
-                        <SubmitRecog />
-                        <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
-                        <div style={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
-                            <button onClick={getYourRecognitions}>Your Recognitions</button>
-                            <button onClick={getAllRecognitions}>All Recognitions</button>
+                        <div className="row">
+                            <SubmitRecog />
+                            <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
+                            <div style={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
+                                <button onClick={getYourRecognitions}>Your Recognitions</button>
+                                <button onClick={getAllRecognitions}>All Recognitions</button>
+                            </div>
                         </div>
-                        {
-                            recognitions.map((e, index) => {
-                                return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} tags={e.tags} allFlag={allFlag}/>);
-                            })
-                        }
+                        <div className="row" style={{marginTop: '30px'}}>
+                            {
+                                recognitions.map((e, index) => {
+                                    return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} tags={e.tags} allFlag={allFlag}/>);
+                                })
+                            }
+                        </div>
                     </div>
                     <div className='home-right-column'>
                         <AdminDashboard hidden={context.role !== "mng"} />
-                        <div className='autoinfobox rounded' style={{height:'auto'}} hidden={context.role !== "mng"}>
+                        <div className='autoinfobox rounded' style={{height:'auto'}} hidden={context.role!=="mng"}>
                             <ManagerComp/>
                         </div>
                         <div className='infobox rounded'>

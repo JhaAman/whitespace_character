@@ -17,7 +17,7 @@ function Networkprofile(props) {
   return (
     <div className="net-profile rounded">
       <div className="pf-left-column">
-        <img style={{border: "5px solid #58453B", width: "100px", height: "100px"}} src={props.picture} className="profilepic rounded-circle img-fluid" />
+        <img style={{width: "100px", height: "100px"}} src={props.picture} className="profilepic rounded-circle img-fluid five-pic" alt=""/>
       </div>
       <div className="pf-right-column">
         <Link className='net-link' to={'/u/'+props.uid} style={{}}>{props.name}</Link> <br/>
@@ -75,6 +75,7 @@ function Profile() {
   const [ufile,setUFile] = useState("");
   const [profilepic,setProfilePic] = useState(defprofilepic);
   const upload = React.useRef(null);
+  const [theme,setTheme] = useState("wood-theme");
   const handleImageUpload = e =>{
     const [file] = e.target.files;
     setUploadExists(true);
@@ -93,7 +94,7 @@ function Profile() {
   useEffect(() => {
     MakePictureComponent();
     getData();
-    
+    setTheme(context.theme);
     //console.log(pictures);
     // eslint-disable-next-line
   }, []);
@@ -170,6 +171,7 @@ function Profile() {
     //console.log(newpassagain);
   }
 
+
   if (loading) {
     return <div className="App">Error: Non-authorized</div>
   }
@@ -182,11 +184,11 @@ function Profile() {
   //console.log(value);
   return (
     
-    <div className="body">
+    <div className={"body "+theme}>
       <TopMenu/>
       <div className="column header-box rounded">
         <div className="row profile-avatar">
-          <img style={{border: "10px solid #58453B"}} src={"http://localhost:8000"+profilepic} className="rounded-circle" width="150px" height="150px" alt="Smiling guy"></img>
+          <img src={"http://localhost:8000"+profilepic} className="rounded-circle ten-border" width="150px" height="150px" alt="Smiling guy"></img>
         </div>
         <div class="row button-row">
           <div className="firstname">
@@ -321,6 +323,39 @@ function Profile() {
           </Col>
           
           </Row>
+          <Row>
+            <Col>
+            <div className="optionbox">
+            <div><b>select theme</b></div>
+              <form>
+                <select value={theme} onChange={e=>{
+                  setTheme(e.target.value);
+                  context.setTheme(e.target.value);
+                  axios.put("http://localhost:8000/api/user/change_theme/",
+                  {
+                    color_theme:e.target.value
+                  },
+                  {
+                    headers:{
+                      Authorization: "Bearer "+context.token
+                    }
+                  }).then(console.log("theme updated"));
+                  }}>
+                  <option value="wood-theme">lumber</option>
+                  <option value="ocean-theme">ocean</option>
+                  <option value="pluto-theme">pluto</option>
+                  <option value="meadow-theme">meadow</option>
+                  <option value="cottage-theme">cottage</option>
+                  <option value="volcano-theme">volcano</option>
+                  <option value="jungle-theme">jungle</option>
+                  <option value="desert-theme">desert</option>
+                  <option value="bruh-theme">bruh moment</option>
+                </select>
+              </form>
+            </div>
+            </Col>
+          </Row>
+          
           </Container>
         </div>
 

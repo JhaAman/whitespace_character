@@ -2,7 +2,7 @@
     height: auto;
     width: 75%;
     margin: 10px;
-    background-color: #fff1e5;
+    background-color: var(--colord);
     border: 2px solid black;
     display: flex;
     flex-direction: row;
@@ -35,7 +35,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    border-bottom: 2px dashed #bba38e;
+    border-bottom: 2px dashed var(--colorc);
 }
 
 .comment-container {

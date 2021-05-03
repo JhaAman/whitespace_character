@@ -1,5 +1,5 @@
 .title{
-    background-color: rgb(255, 178, 89);
+    background-color: var(--colorl);
     width: auto;
 }
 
@@ -10,7 +10,7 @@
 .employee_display{
     height:75px;
     width:auto;
-    background-color: rgb(255, 220, 167);
+    background-color: var(--colorm);
     font-size: 15px;
     border-radius: 37.5px;
     margin:1%;

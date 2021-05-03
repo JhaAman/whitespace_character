@@ -1,22 +1,20 @@
 /* Our consolidated CSS file! For easy access to elements that should be shared. */
-/* My (Christopher’s) goal will be over the week of April 4 to organize this better and put some classes back into different CSS files.
-   Rename things, make the CSS easier to use, more consistent across pages, and suchlike. */
 
 .header {
   width:100%;
   height:110px;
   font-family: Faune;
   font-size: 70px;
-  color: #bba38e;
-  background-color: #58453B;
+  color: var(--colorc);
+  background-color: var(--colorb);
   background-image: url("./pics/lumber.jpeg");
   background-repeat: repeat;
   text-align: center;
 }
 
 .infobox {
-  background-color: #d8b597;
-  color: #58453B;
+  background-color: var(--colora);
+  color: var(--colorb);
   min-height: 95%;
   max-height: 100%;
   position: relative;
@@ -55,8 +53,8 @@ body {
   width:100vw;
   height:100vh;
   font-family: AlegreyaSans;
-  color: #58453B;
-  background-color: #bba38e;
+  color: var(--colorb);
+  background-color: var(--colorc);
   text-align: center;
 }
 
@@ -65,14 +63,14 @@ body {
   width:100vw;
   height:100vh;
   font-family: AlegreyaSans;
-  color: #58453B;
-  background-color: #bba38e;
+  color: var(--colorb);
+  background-color: var(--colorc);
   text-align: center;
 }
 
 button {
-  background-color: #d8b597;
-  color: #58453B;
+  background-color: var(--colora);
+  color: var(--colorb);
   border: none;
   font-weight: lighter;
   font-style: italic;
@@ -87,8 +85,8 @@ button:active {
 }
 
 .button {
-  background-color: #d8b597;
-  color: #58453B;
+  background-color: var(--colora);
+  color: var(--colorb);
   border: none;
   font-weight: lighter;
   font-style: italic;
@@ -109,34 +107,34 @@ button:active {
 
 .top-link {
   font-family: AlegreyaSans;
-  color: #d1b297;
+  color: var(--colore);
   padding: 20px;
 }
 
 .top-link:hover {
   font-family: AlegreyaSans;
-  color: #d8b597;
+  color: var(--colora);
   padding: 20px;
 }
 
 .top-link:active {
   font-family: AlegreyaSans;
-  color: #fff1e5;
+  color: var(--colord);
   padding: 20px;
 }
 
 .loginput {
   font-family: AlegreyaSans;
   font-size: 30px;
-  background-color: #58453B;
+  background-color: var(--colorb);
   text-align: center;
   width: 280px;
   border: none;
   text-align: center;
-  background-color: #58453B;
-  color: #bba38e;
-  border-bottom: 2px dotted #58453B;
-  border-right: 2px dotted #58453B;
+  background-color: var(--colorb);
+  color: var(--colorc);
+  border-bottom: 2px dotted var(--colorb);
+  border-right: 2px dotted var(--colorb);
 }
 
 .login-button {
@@ -144,15 +142,15 @@ button:active {
   font-size: 20px;
   font-style: italic;
   font-weight: lighter;
-  background-color: #58453B;
+  background-color: var(--colorb);
   text-align: center;
   width: 80px;
   border: none;
   text-align: center;
-  background-color: #58453B;
-  color: #bba38e;
-  border-bottom: 2px dotted #58453B;
-  border-right: 2px dotted #58453B;
+  background-color: var(--colorb);
+  color: var(--colorc);
+  border-bottom: 2px dotted var(--colorb);
+  border-right: 2px dotted var(--colorb);
 }
 
 .forgot-password-button {
@@ -184,8 +182,16 @@ button:active {
 
 input:focus {
   outline: none;
-  border-bottom: 2px dotted #bba38e;
-  border-right: 2px dotted #bba38e;
+  border-bottom: 2px dotted var(--colorc);
+  border-right: 2px dotted var(--colorc);
+}
+
+.ten-border {
+  border: 10px solid var(--colorr)
+}
+
+.five-pic {
+  border: 5px solid var(--colorr)
 }
 
 @font-face {

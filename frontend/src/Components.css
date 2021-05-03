@@ -1,7 +1,7 @@
 .recognition {
   margin: auto;
-  background-color: #d8b597;
-  color: #58453B;
+  background-color: var(--colora);
+  color: var(--colorb);
   height:auto;
   min-width:auto;
   max-width: 90%;
@@ -11,8 +11,8 @@
 }
 
 .rockstar {
-  background-color: #d8b597;
-  color: #58453B;
+  background-color: var(--colora);
+  color: var(--colorb);
   height:auto;
   width: 100%;
   font-size: 20px;
@@ -27,26 +27,26 @@
   padding: 10px;
   font-family: AlegreyaSans;
   font-size: 20px;
-  background-color: #bba38e;
+  background-color: var(--colorc);
 }
 
 .rep-input {
   font-family: AlegreyaSans;
   font-size: 20px;
-  background-color: #d8b597;
+  background-color: var(--colora);
   text-align: center;
   width: 280px;
   border: none;
   text-align: center;
-  color: #58453B;
-  border-bottom: 2px dotted #bba38e;
-  border-right: 2px dotted #bba38e;
+  color: var(--colorb);
+  border-bottom: 2px dotted var(--colorc);
+  border-right: 2px dotted var(--colorc);
 }
 
 .rep-input:focus {
   outline: none;
-  border-bottom: 2px dotted #bba38e;
-  border-right: 2px dotted #bba38e;
+  border-bottom: 2px dotted var(--colorc);
+  border-right: 2px dotted var(--colorc);
 }
 
 .rep-button {
@@ -54,15 +54,15 @@
   font-size: 20px;
   font-style: italic;
   font-weight: lighter;
-  background-color: #58453B;
+  background-color: var(--colorb);
   text-align: center;
   width: 280px;
   border: none;
   text-align: center;
-  background-color: #58453B;
-  color: #bba38e;
-  border-bottom: 2px dotted #58453B;
-  border-right: 2px dotted #58453B;
+  background-color: var(--colorb);
+  color: var(--colorc);
+  border-bottom: 2px dotted var(--colorb);
+  border-right: 2px dotted var(--colorb);
 }
 
 .rep-button:active {
@@ -82,8 +82,8 @@
   height:110px;
   font-family: Faune;
   font-size: 70px;
-  color: #bba38e;
-  background-color: #58453B;
+  color: var(--colorc);
+  background-color: var(--colorb);
   background-image: url("./pics/lumber.jpeg");
   background-repeat: repeat;
   text-align: center;
@@ -94,9 +94,9 @@
   height:60px;
   font-family: AlegreyaSans;
   font-size: 25px;
-  color: #d8b597;
-  background-color: #58453B;
-  background-image: url("./pics/under-lumber.png");
+  color: var(--colorn);
+  background-color: var(--colorb);
+  background-image: var(--navbartile);
   background-repeat: repeat;
 }
 
@@ -127,19 +127,19 @@
 
 .top-link {
   font-family: AlegreyaSans;
-  color: #d8b597;
+  color: var(--colorn);
   padding: 20px;
 }
 
 .top-link:hover {
   font-family: AlegreyaSans;
-  color: #d8b597;
+  color: var(--colorn);
   padding: 20px;
 }
 
 .top-link:active {
   font-family: AlegreyaSans;
-  color: #fff1e5;
+  color: var(--colord);
   padding: 20px;
 }
 
@@ -182,7 +182,7 @@
   content: none !important;
   border: none !important;
   overflow: hidden !important;
-  color: #d8b597;
+  color: var(--colora);
 }
 
 .btn-notif:after {

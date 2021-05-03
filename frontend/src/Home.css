@@ -21,9 +21,9 @@
 
 .infobox {
     padding-top: 3px;
-    border: 5px hidden #58453B;
+    border: 5px hidden var(--colorb);
     background-color: transparent;
-    color: #58453B;
+    color: var(--colorb);
     min-height: 95%;
     width: 90%;
 }

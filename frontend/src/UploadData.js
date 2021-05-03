@@ -55,7 +55,7 @@ const UploadData = () => {
     }, []);
 
     return (
-        <div className="app">
+        <div className="app wood-theme">
             <Header />
             <div className="body">
                 <form onSubmit={handleSubmit}>

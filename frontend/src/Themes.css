@@ -1,0 +1,135 @@
+/*
+colora: accent color for boxes
+colorb: body text
+colorc: background
+colord: recognition create background
+colorn: navbar text
+colorl: admin dash bg
+colorm: admin dash accent
+colorr: ring around profile pic
+*/
+
+
+.wood-theme{
+    --colora: #d8b597;
+    --colorb: #58453B;
+    --colorc: #bba38e;
+    --colord: #fff1e5;
+    --colore: var(--colora);
+    --colorf: #282c34;
+    --colorg: #61dafb;
+    --colorh: #fde9e7;
+    --colori: chocolate;
+    --colorj: #d3c4b7;
+    --colork: #836759;
+    --colorl: rgb(255,178,89);
+    --colorm: rgb(255,220,167);
+    --colorn: var(--colora);
+    --colorr: var(--colorb);
+    --navbartile: url("./pics/themes/under-lumber.png")
+}
+
+.ocean-theme{
+    --colora:#84b2d1;
+    --colorb:#314055;
+    --colorc:#7895c0;
+    --colord:#9fc6d4;
+    --colore:#000;
+    --colorg:#000;
+    --colorl:#707aff;
+    --colorm:#5ba7ff;
+    --colorn: var(--colora);
+    --colorr: var(--colorb);
+    --navbartile: url("./pics/themes/ocean.png")
+}
+
+.cottage-theme{
+    --colora:#d6d4c3;
+    --colorb:#3d2600;
+    --colorc:#f3e9c7;
+    --colord:#c7c7c7;
+    --colorl: #c0957d;
+    --colorm: #bdbdbd;
+    --colorn:#eee8d3;
+    --colorr: var(--colorb);
+    --navbartile: url("./pics/themes/thatch.jpeg")
+}
+
+.volcano-theme{
+    --colora:#252421;
+    --colorb:#cf6a4b;
+    --colorc:#111111;
+    --colord:var(--colora);
+    --colorl:var(--colora);
+    --colorm:var(--colorc);
+    --colorn: rgb(154, 156, 2);
+    --colorr: rgb(170, 65, 5);
+    --navbartile: url("./pics/themes/volcano.jpg")
+}
+
+.jungle-theme{
+    --colora:#3a2818;
+    --colorb:rgb(192, 148, 139);
+    --colorc:#172216;
+    --colord:#2d5f3e;
+    --colorl:#832a1b;
+    --colorm:#805728;
+    --colorn: rgb(84, 190, 111);
+    --colorr: var(--colorb);
+    --navbartile: url("./pics/themes/green.jpg")
+}
+
+.meadow-theme{
+    --colora:#7fbe71;
+    --colorb:rgb(12, 87, 31);
+    --colorc:#a7c584;
+    --colord:#9ed6aa;
+    --colorm:#f0c871;
+    --colorl:#e99bbf;
+    --colorn: rgb(255, 252, 103);
+    --colorr: rgb(162, 88, 172);
+    --navbartile: url("./pics/themes/grass.jpeg")
+}
+
+.desert-theme{
+    --colorc:#c0b16d;
+    --colorb:rgb(70, 56, 49);
+    --colora:#dbc075;
+    --colord:#bb744b;
+    --colorl:#317cd1;
+    --colorm:#9cbedd;
+    --colorn: rgb(215, 222, 230);
+    --colorr: var(--colorb);
+    --navbartile: url("./pics/themes/sky.jpeg")
+}
+
+.pluto-theme{
+    --colorc:#cabdca;
+    --colorb:rgb(85, 0, 40);
+    --colora:#d1cfc6;
+    --colord:#b2a5b6;
+    --colorl:#ccd8da;
+    --colorm:#b1beca;
+    --colorn: rgb(112, 4, 55);
+    --colorr: var(--colorb);
+    --navbartile: url("./pics/themes/pluto.jpeg")
+}
+
+.bruh-theme{
+    --colorc:#334881;
+    --colorb:#dfa279;
+    --colora:#4d391b;
+    --colord:#5a5a5a;
+    --colorl: rgb(51, 51, 51);
+    --colorm: var(--colord);
+    --colorn:#0ff;
+    --colorr: var(--colorb);
+    --navbartile: url("./pics/themes/BRUH.png")
+}
+
+.testa-theme{
+    --colora:#000;
+}
+.testb-theme{
+    --colora:rgb(255, 0, 0);
+}  

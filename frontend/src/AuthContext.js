@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
     const password = localStorage.getItem('password') ? localStorage.getItem('password') : '';
     const role = localStorage.getItem('role') ? localStorage.getItem('role') : '';
     const [ isAuthenticated, setIsAuthenticated ] = useState(false);
+    const [theme,sTheme] = useState('wood-theme');
 
     const setToken = (t) => {
         localStorage.setItem('token', t);
@@ -19,6 +20,11 @@ const AuthProvider = ({ children }) => {
         localStorage.setItem('username', user);
         localStorage.setItem('password', p);
         localStorage.setItem('role', r);
+    }
+
+    const setTheme = (t) => {
+        localStorage.setItem('theme',t);
+        sTheme(t);
     }
 
     const logout = () => {
@@ -38,9 +44,11 @@ const AuthProvider = ({ children }) => {
                 password,
                 role,
                 isAuthenticated,
+                theme,
                 setIsAuthenticated,
                 setToken,
                 setAuthInfo,
+                setTheme,
                 logout
             }}
         >
