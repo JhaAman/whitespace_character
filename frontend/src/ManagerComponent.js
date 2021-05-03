@@ -22,9 +22,9 @@ function ManagerComp(){
                 <Row>
                     <Col xs={3}>
                         <img 
-                        style={{border: "5px solid #58453B", width: "75px", height: "75px"}}
+                        style={{width: "75px", height: "75px"}}
                         src={"http://localhost:8000"+props.profilepic}
-                        className="profilepic rounded-circle img-fluid" alt=""/>
+                        className="profilepic rounded-circle img-fluid five-pic" alt=""/>
                     </Col>
                     <Col>
                         <Link className='net-link' to={'/u/'+props.uid} style={{fontWeight: "bold"}}>{props.name}</Link> <br/>

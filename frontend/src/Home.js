@@ -111,17 +111,21 @@ function EmployeeHomepage() {
             <div className="body">
                 <div className="row">
                     <div className='home-left-column'>
-                        <SubmitRecog />
-                        <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
-                        <div style={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
-                            <button onClick={getYourRecognitions}>Your Recognitions</button>
-                            <button onClick={getAllRecognitions}>All Recognitions</button>
+                        <div className="row">
+                            <SubmitRecog />
+                            <div style={{width: '100%', marginBottom: '10px', height: '10px', borderBottom: '2px dashed white'}} />
+                            <div style={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
+                                <button onClick={getYourRecognitions}>Your Recognitions</button>
+                                <button onClick={getAllRecognitions}>All Recognitions</button>
+                            </div>
                         </div>
-                        {
-                            recognitions.map((e, index) => {
-                                return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} tags={e.tags} allFlag={allFlag}/>);
-                            })
-                        }
+                        <div className="row" style={{marginTop: '30px'}}>
+                            {
+                                recognitions.map((e, index) => {
+                                    return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} tags={e.tags} allFlag={allFlag}/>);
+                                })
+                            }
+                        </div>
                     </div>
                     <div className='home-right-column'>
                         <AdminDashboard hidden={context.role !== "mng"} />

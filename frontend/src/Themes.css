@@ -24,7 +24,7 @@ colorm: admin dash accent
     --colorl: rgb(255,178,89);
     --colorm: rgb(255,220,167);
     --colorn: var(--colora);
-    --navbartile: url("./pics/under-lumber.png")
+    --navbartile: url("./pics/themes/under-lumber.png")
 }
 
 .ocean-theme{
@@ -37,40 +37,73 @@ colorm: admin dash accent
     --colorl:#707aff;
     --colorm:#5ba7ff;
     --colorn: var(--colora);
-    --navbartile: url("./pics/ocean.png")
+    --navbartile: url("./pics/themes/ocean.png")
 }
 
 .cottage-theme{
-    --colora:#c7c7c7;
+    --colora:#ccc8c8;
     --colorb:#3d2600;
-    --colorc:#eee8d3;
+    --colorc:#e0dac1;
     --colord:#c7c7c7;
-    --colorl: #bda291;
-    --colorm: #c7c7c7;
+    --colorl: #c0957d;
+    --colorm: #bdbdbd;
     --colorn:#eee8d3;
-    --navbartile: url("./pics/thatch.jpeg")
+    --navbartile: url("./pics/themes/thatch.jpeg")
 }
 
 .volcano-theme{
-    --colora:#201b10;
-    --colorb:#ff3232;
-    --colorc:#161616;
-    --colord:#460619;
-    --colorl:#41180b;
-    --colorm:#662d1f;
-    --colorn: rgb(237, 240, 58);
-    --navbartile: url("./pics/volcano.jpg")
+    --colora:#1f1c17;
+    --colorb:#dd3e29;
+    --colorc:#111111;
+    --colord:var(--colora);
+    --colorl:var(--colora);
+    --colorm:var(--colorc);
+    --colorn: rgb(194, 197, 0);
+    --navbartile: url("./pics/themes/volcano.jpg")
 }
 
 .jungle-theme{
     --colora:#533b24;
-    --colorb:rgb(69, 170, 94);
-    --colorc:#1d3819;
+    --colorb:rgb(107, 170, 123);
+    --colorc:#1b2e18;
     --colord:#2d5f38;
-    --colorl:#0055a5;
-    --colorm:#004280;
+    --colorl:#832a1b;
+    --colorm:#805728;
     --colorn: rgb(75, 250, 119);
-    --navbartile: url("./pics/green.jpg")
+    --navbartile: url("./pics/themes/green.jpg")
+}
+
+.meadow-theme{
+    --colora:#b8e0af;
+    --colorb:rgb(92, 40, 99);
+    --colorc:#caf39c;
+    --colord:#9ed6aa;
+    --colorm:#ffcb59;
+    --colorl:#ff8fc3;
+    --colorn: rgb(255, 252, 103);
+    --navbartile: url("./pics/themes/grass.jpeg")
+}
+
+.desert-theme{
+    --colorc:#c0b16d;
+    --colorb:rgb(70, 56, 49);
+    --colora:#dbc075;
+    --colord:#bb744b;
+    --colorl:#317cd1;
+    --colorm:#9cbedd;
+    --colorn: rgb(215, 222, 230);
+    --navbartile: url("./pics/themes/sky.jpeg")
+}
+
+.pluto-theme{
+    --colorc:#c9b7c9;
+    --colorb:rgb(85, 0, 40);
+    --colora:#d6d3c8;
+    --colord:#b2a5b6;
+    --colorl:#ccd8da;
+    --colorm:#b1beca;
+    --colorn: rgb(112, 4, 55);
+    --navbartile: url("./pics/themes/pluto.jpeg")
 }
 
 .bruh-theme{
@@ -81,7 +114,7 @@ colorm: admin dash accent
     --colorl: rgb(0, 0, 0);
     --colorm: rgb(127, 0, 0);
     --colorn:#0ff;
-    --navbartile: url("./pics/BRUH.png")
+    --navbartile: url("./pics/themes/BRUH.png")
 }
 
 .testa-theme{

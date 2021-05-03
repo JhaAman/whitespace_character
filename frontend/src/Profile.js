@@ -341,11 +341,14 @@ function Profile() {
                     }
                   }).then(console.log("theme updated"));
                   }}>
-                  <option value="wood-theme">wood</option>
+                  <option value="wood-theme">lumber</option>
                   <option value="ocean-theme">ocean</option>
                   <option value="cottage-theme">cottage</option>
                   <option value="volcano-theme">volcano</option>
                   <option value="jungle-theme">jungle</option>
+                  <option value="meadow-theme">meadow</option>
+                  <option value="desert-theme">desert</option>
+                  <option value="pluto-theme">pluto</option>
                   <option value="bruh-theme">bruh moment</option>
                 </select>
               </form>
