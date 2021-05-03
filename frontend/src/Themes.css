@@ -76,9 +76,9 @@ colorm: admin dash accent
 .bruh-theme{
     --colora:#3a3a3a;
     --colorb:#ff0000;
-    --colorc:#303030;
+    --colorc:#00666d;
     --colord:#5a5a5a;
-    --colorl: rgb(127, 0, 0);
+    --colorl: rgb(0, 0, 0);
     --colorm: rgb(127, 0, 0);
     --colorn:#0ff;
     --navbartile: url("./pics/BRUH.png")
