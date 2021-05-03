@@ -17,6 +17,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             data['role'] = User.objects.get(uid = uid).user_role
         else:
             data['role'] = "SuperUser"
+        data['theme'] = User.objects.get(uid = uid).color_theme
         return data
     
     @classmethod
