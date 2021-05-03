@@ -171,7 +171,7 @@ function Rockstar2({buzz, firstName, lastName}) {
       <div class="rockstar rounded">
           <div style={{width: '100%', height: '80%', display: 'flex', flexDirection: 'row'}}>
               <div style={{width: '38%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                  <img src={ProfilePicture} style={{width: '100px', height: '100px', border: '5px solid #58453B'}} className="rounded-circle" alt=""/>
+                  <img src={ProfilePicture} style={{width: '100px', height: '100px'}} className="rounded-circle five-pic" alt=""/>
               </div>
               <div style={{width: '62%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
                   <i>Rockstar of {buzz} : </i>

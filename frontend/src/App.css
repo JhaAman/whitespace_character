@@ -190,6 +190,10 @@ input:focus {
   border: 10px solid var(--colorb)
 }
 
+.five-pic {
+  border: 5px solid var(--colorb)
+}
+
 @font-face {
   font-family: Faune;
   src: url(./typefaces/Faune-DisplayBoldItalic.otf);
