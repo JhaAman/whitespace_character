@@ -44,9 +44,9 @@ colorr: ring around profile pic
 }
 
 .cottage-theme{
-    --colora:#c2c0b3;
+    --colora:#cfcdc0;
     --colorb:#3d2600;
-    --colorc:#dfd9c6;
+    --colorc:#ece4ca;
     --colord:#c7c7c7;
     --colorl: #c0957d;
     --colorm: #bdbdbd;
@@ -57,21 +57,21 @@ colorr: ring around profile pic
 
 .volcano-theme{
     --colora:#252421;
-    --colorb:#db562d;
+    --colorb:#cc8069;
     --colorc:#111111;
     --colord:var(--colora);
     --colorl:var(--colora);
     --colorm:var(--colorc);
     --colorn: rgb(154, 156, 2);
-    --colorr: var(--colorb);
+    --colorr: rgb(170, 65, 5);
     --navbartile: url("./pics/themes/volcano.jpg")
 }
 
 .jungle-theme{
-    --colora:#533b24;
-    --colorb:rgb(212, 143, 122);
-    --colorc:#1b2e18;
-    --colord:#2d5f38;
+    --colora:#3a2818;
+    --colorb:rgb(192, 148, 139);
+    --colorc:#172216;
+    --colord:#2d5f3e;
     --colorl:#832a1b;
     --colorm:#805728;
     --colorn: rgb(84, 190, 111);
