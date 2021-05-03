@@ -21,7 +21,7 @@ function EmployeeHomepage() {
     const [loading, setLoading] = useState(true);
     //const [data, setData] = useState('');
     const [allFlag, setAllFlag] = useState(false);
-    const [theme, setTheme] = useState('wood-theme');
+    //const [theme, setTheme] = useState('wood-theme');
 
     useEffect(() => {
         getData();
