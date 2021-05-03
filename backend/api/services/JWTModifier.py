@@ -15,9 +15,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['uid'] = uid
         if not uid == "1":
             data['role'] = User.objects.get(uid = uid).user_role
+            data['color_theme'] = User.objects.get(uid = uid).color_theme
         else:
             data['role'] = "SuperUser"
-        data['color_theme'] = User.objects.get(uid = uid).color_theme
         return data
     
     @classmethod
