@@ -187,11 +187,11 @@ input:focus {
 }
 
 .ten-border {
-  border: 10px solid var(--colorb)
+  border: 10px solid var(--colorr)
 }
 
 .five-pic {
-  border: 5px solid var(--colorb)
+  border: 5px solid var(--colorr)
 }
 
 @font-face {

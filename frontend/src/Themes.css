@@ -6,6 +6,7 @@ colord: recognition create background
 colorn: navbar text
 colorl: admin dash bg
 colorm: admin dash accent
+colorr: ring around profile pic
 */
 
 
@@ -24,6 +25,7 @@ colorm: admin dash accent
     --colorl: rgb(255,178,89);
     --colorm: rgb(255,220,167);
     --colorn: var(--colora);
+    --colorr: var(--colorb);
     --navbartile: url("./pics/themes/under-lumber.png")
 }
 
@@ -37,50 +39,55 @@ colorm: admin dash accent
     --colorl:#707aff;
     --colorm:#5ba7ff;
     --colorn: var(--colora);
+    --colorr: var(--colorb);
     --navbartile: url("./pics/themes/ocean.png")
 }
 
 .cottage-theme{
-    --colora:#ccc8c8;
+    --colora:#c2c0b3;
     --colorb:#3d2600;
-    --colorc:#e0dac1;
+    --colorc:#dfd9c6;
     --colord:#c7c7c7;
     --colorl: #c0957d;
     --colorm: #bdbdbd;
     --colorn:#eee8d3;
+    --colorr: var(--colorb);
     --navbartile: url("./pics/themes/thatch.jpeg")
 }
 
 .volcano-theme{
-    --colora:#1f1c17;
-    --colorb:#dd3e29;
+    --colora:#252421;
+    --colorb:#db562d;
     --colorc:#111111;
     --colord:var(--colora);
     --colorl:var(--colora);
     --colorm:var(--colorc);
-    --colorn: rgb(194, 197, 0);
+    --colorn: rgb(154, 156, 2);
+    --colorr: var(--colorb);
     --navbartile: url("./pics/themes/volcano.jpg")
 }
 
 .jungle-theme{
     --colora:#533b24;
-    --colorb:rgb(107, 170, 123);
+    --colorb:rgb(212, 143, 122);
     --colorc:#1b2e18;
     --colord:#2d5f38;
     --colorl:#832a1b;
     --colorm:#805728;
-    --colorn: rgb(75, 250, 119);
+    --colorn: rgb(84, 190, 111);
+    --colorr: var(--colorb);
     --navbartile: url("./pics/themes/green.jpg")
 }
 
 .meadow-theme{
-    --colora:#b8e0af;
-    --colorb:rgb(92, 40, 99);
-    --colorc:#caf39c;
+    --colora:#7fbe71;
+    --colorb:rgb(12, 87, 31);
+    --colorc:#a7c584;
     --colord:#9ed6aa;
-    --colorm:#ffcb59;
-    --colorl:#ff8fc3;
+    --colorm:#f0c871;
+    --colorl:#e99bbf;
     --colorn: rgb(255, 252, 103);
+    --colorr: rgb(162, 88, 172);
     --navbartile: url("./pics/themes/grass.jpeg")
 }
 
@@ -92,28 +99,31 @@ colorm: admin dash accent
     --colorl:#317cd1;
     --colorm:#9cbedd;
     --colorn: rgb(215, 222, 230);
+    --colorr: var(--colorb);
     --navbartile: url("./pics/themes/sky.jpeg")
 }
 
 .pluto-theme{
-    --colorc:#c9b7c9;
+    --colorc:#cabdca;
     --colorb:rgb(85, 0, 40);
-    --colora:#d6d3c8;
+    --colora:#d1cfc6;
     --colord:#b2a5b6;
     --colorl:#ccd8da;
     --colorm:#b1beca;
     --colorn: rgb(112, 4, 55);
+    --colorr: var(--colorb);
     --navbartile: url("./pics/themes/pluto.jpeg")
 }
 
 .bruh-theme{
-    --colora:#3a3a3a;
-    --colorb:#ff0000;
-    --colorc:#00666d;
+    --colorc:#334881;
+    --colorb:#dfa279;
+    --colora:#4d391b;
     --colord:#5a5a5a;
-    --colorl: rgb(0, 0, 0);
-    --colorm: rgb(127, 0, 0);
+    --colorl: rgb(51, 51, 51);
+    --colorm: var(--colord);
     --colorn:#0ff;
+    --colorr: var(--colorb);
     --navbartile: url("./pics/themes/BRUH.png")
 }
 
