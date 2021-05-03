@@ -52,10 +52,10 @@ colorm: admin dash accent
 }
 
 .volcano-theme{
-    --colora:#41392a;
-    --colorb:#c03d3d;
-    --colorc:#1f1e1e;
-    --colord:#29000c;
+    --colora:#201b10;
+    --colorb:#ff3232;
+    --colorc:#161616;
+    --colord:#460619;
     --colorl:#41180b;
     --colorm:#662d1f;
     --colorn: rgb(237, 240, 58);
@@ -63,13 +63,13 @@ colorm: admin dash accent
 }
 
 .jungle-theme{
-    --colora:#41392a;
-    --colorb:#c03d3d;
-    --colorc:#1f1e1e;
-    --colord:#29000c;
-    --colorl:#41180b;
-    --colorm:#662d1f;
-    --colorn: rgb(237, 240, 58);
+    --colora:#533b24;
+    --colorb:rgb(69, 170, 94);
+    --colorc:#1d3819;
+    --colord:#2d5f38;
+    --colorl:#0055a5;
+    --colorm:#004280;
+    --colorn: rgb(75, 250, 119);
     --navbartile: url("./pics/green.jpg")
 }
 
