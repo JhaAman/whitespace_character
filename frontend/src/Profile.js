@@ -188,7 +188,7 @@ function Profile() {
       <TopMenu/>
       <div className="column header-box rounded">
         <div className="row profile-avatar">
-          <img style={{border: "10px solid #58453B"}} src={"http://localhost:8000"+profilepic} className="rounded-circle" width="150px" height="150px" alt="Smiling guy"></img>
+          <img src={"http://localhost:8000"+profilepic} className="rounded-circle ten-border" width="150px" height="150px" alt="Smiling guy"></img>
         </div>
         <div class="row button-row">
           <div className="firstname">
@@ -329,10 +329,12 @@ function Profile() {
             <div><b>select theme</b></div>
               <form>
                 <select value={theme} onChange={e=>{setTheme(e.target.value);context.setTheme(e.target.value)}}>
-                  <option value="wood-theme">wood</option>
+                  <option value="wood-theme">lumber</option>
                   <option value="ocean-theme">ocean</option>
-                  <option value="testa-theme">testa</option>
-                  <option value="testb-theme">testb</option>
+                  <option value="cottage-theme">cottage</option>
+                  <option value="volcano-theme">volcano</option>
+                  <option value="jungle-theme">jungle</option>
+                  <option value="bruh-theme">bruh moment</option>
                 </select>
               </form>
             </div>

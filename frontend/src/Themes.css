@@ -1,9 +1,20 @@
+/*
+colora: accent color for boxes
+colorb: body text
+colorc: background
+colord: recognition create background
+colorn: navbar text
+colorl: admin dash bg
+colorm: admin dash accent
+*/
+
+
 .wood-theme{
     --colora: #d8b597;
     --colorb: #58453B;
     --colorc: #bba38e;
     --colord: #fff1e5;
-    --colore: #d1b297;
+    --colore: var(--colora);
     --colorf: #282c34;
     --colorg: #61dafb;
     --colorh: #fde9e7;
@@ -12,17 +23,65 @@
     --colork: #836759;
     --colorl: rgb(255,178,89);
     --colorm: rgb(255,220,167);
+    --colorn: var(--colora);
+    --navbartile: url("./pics/under-lumber.png")
 }
 
 .ocean-theme{
-    --colora:#354458;
-    --colorb:#aca6c2;
-    --colorc:#439cc5;
-    --colord:#857683;
+    --colora:#84b2d1;
+    --colorb:#314055;
+    --colorc:#7895c0;
+    --colord:#9fc6d4;
     --colore:#000;
     --colorg:#000;
-    --colorl:#7604c2;
-    --colorm:#4848cc;
+    --colorl:#707aff;
+    --colorm:#5ba7ff;
+    --colorn: var(--colora);
+    --navbartile: url("./pics/ocean.png")
+}
+
+.cottage-theme{
+    --colora:#c7c7c7;
+    --colorb:#3d2600;
+    --colorc:#eee8d3;
+    --colord:#c7c7c7;
+    --colorl: #bda291;
+    --colorm: #c7c7c7;
+    --colorn:#eee8d3;
+    --navbartile: url("./pics/thatch.jpeg")
+}
+
+.volcano-theme{
+    --colora:#41392a;
+    --colorb:#c03d3d;
+    --colorc:#1f1e1e;
+    --colord:#29000c;
+    --colorl:#41180b;
+    --colorm:#662d1f;
+    --colorn: rgb(237, 240, 58);
+    --navbartile: url("./pics/volcano.jpg")
+}
+
+.jungle-theme{
+    --colora:#41392a;
+    --colorb:#c03d3d;
+    --colorc:#1f1e1e;
+    --colord:#29000c;
+    --colorl:#41180b;
+    --colorm:#662d1f;
+    --colorn: rgb(237, 240, 58);
+    --navbartile: url("./pics/green.jpg")
+}
+
+.bruh-theme{
+    --colora:#3a3a3a;
+    --colorb:#ff0000;
+    --colorc:#303030;
+    --colord:#5a5a5a;
+    --colorl: rgb(127, 0, 0);
+    --colorm: rgb(127, 0, 0);
+    --colorn:#0ff;
+    --navbartile: url("./pics/BRUH.png")
 }
 
 .testa-theme{

@@ -94,9 +94,9 @@
   height:60px;
   font-family: AlegreyaSans;
   font-size: 25px;
-  color: var(--colora);
+  color: var(--colorn);
   background-color: var(--colorb);
-  background-image: url("./pics/under-lumber.png");
+  background-image: var(--navbartile);
   background-repeat: repeat;
 }
 
@@ -127,13 +127,13 @@
 
 .top-link {
   font-family: AlegreyaSans;
-  color: var(--colora);
+  color: var(--colorn);
   padding: 20px;
 }
 
 .top-link:hover {
   font-family: AlegreyaSans;
-  color: var(--colora);
+  color: var(--colorn);
   padding: 20px;
 }
 

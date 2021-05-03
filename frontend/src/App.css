@@ -1,6 +1,4 @@
 /* Our consolidated CSS file! For easy access to elements that should be shared. */
-/* My (Christopher’s) goal will be over the week of April 4 to organize this better and put some classes back into different CSS files.
-   Rename things, make the CSS easier to use, more consistent across pages, and suchlike. */
 
 .header {
   width:100%;
@@ -186,6 +184,10 @@ input:focus {
   outline: none;
   border-bottom: 2px dotted var(--colorc);
   border-right: 2px dotted var(--colorc);
+}
+
+.ten-border {
+  border: 10px solid var(--colorb)
 }
 
 @font-face {

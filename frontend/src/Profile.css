@@ -133,7 +133,7 @@ col{
 .header-box {
   margin: auto;
   background-color: var(--colorc);
-  color: #58453B;
+  color: var(--colorb);
   height:275px;
   font-size: 20px;
   flex-direction: column;
