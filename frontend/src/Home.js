@@ -119,13 +119,11 @@ function EmployeeHomepage() {
                                 <button onClick={getAllRecognitions}>All Recognitions</button>
                             </div>
                         </div>
-                        <div className="row" style={{marginTop: '30px'}}>
                             {
                                 recognitions.map((e, index) => {
                                     return (<FeedRecognition key={'feed'+index} rid={e.rid} uidFrom={e.uid_from} uidTo={e.uid_to} comment={e.comments} tags={e.tags} allFlag={allFlag}/>);
                                 })
                             }
-                        </div>
                     </div>
                     <div className='home-right-column'>
                         <AdminDashboard hidden={context.role !== "mng"} />

@@ -42,9 +42,8 @@
 }
 
 .row {
-  float: left;
   flex-direction: row;
-  flex: 1;
+  justify-content: center;
   width: 100%;
 }
 

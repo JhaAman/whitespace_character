@@ -299,13 +299,13 @@ function Profile() {
                   const data = new FormData();
                   //console.log(ufile);
                   data.append('profile_picture',ufile)
+                  data.append('uid', context.uid);
                   axios.put("http://localhost:8000/api/update_user_profile_picture/",
-                    data
-                ,
+                    data,
                   {
                     headers:{
                       'Content-Type': 'multipart/form-data',
-                      Authorization:"Bearer "+ context.token
+                      Authorization: "Bearer "+ context.token
                     }
                   }).then(console.log("uploaded"))
                 }}/>

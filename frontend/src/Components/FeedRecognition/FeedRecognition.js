@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useState, useContext, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from './../../AuthContext.js';
-import ProfilePicture from '../../pics/arnold.jpg'
 import './FeedRecognition.css'
 
 function FeedRecognition({rid, uidFrom, uidTo, comment, tags, allFlag}) {
